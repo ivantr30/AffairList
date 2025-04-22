@@ -5,6 +5,12 @@ namespace AffairList
         public AffairList()
         {
             InitializeComponent();
+
+            string path = Application.StartupPath;
+            if (!File.Exists(path+"\\list.txt"))
+            {
+                File.Create(path + "\\list.txt");
+            }
         }
 
         private void CloseButton_Click(object sender, EventArgs e)

@@ -50,9 +50,11 @@
             ClientSize = new Size(1061, 640);
             Controls.Add(Affairs);
             FormBorderStyle = FormBorderStyle.None;
+            KeyPreview = true;
             Name = "List";
             Text = "List";
             TransparencyKey = Color.Black;
+            KeyDown += List_KeyDown;
             ResumeLayout(false);
             PerformLayout();
         }

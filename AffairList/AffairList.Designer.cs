@@ -29,13 +29,14 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            ChangeKeysButton = new Button();
+            OpenListButton = new Button();
             ReplaceAffairListButton = new Button();
             ChangeListButton = new Button();
             ClearListButton = new Button();
             NameBackground = new Panel();
             CloseButton = new Label();
             AffairListLab = new Label();
-            OpenListButton = new Button();
             panel1.SuspendLayout();
             NameBackground.SuspendLayout();
             SuspendLayout();
@@ -43,6 +44,7 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(72, 3, 111);
+            panel1.Controls.Add(ChangeKeysButton);
             panel1.Controls.Add(OpenListButton);
             panel1.Controls.Add(ReplaceAffairListButton);
             panel1.Controls.Add(ChangeListButton);
@@ -53,6 +55,35 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(450, 432);
             panel1.TabIndex = 0;
+            // 
+            // ChangeKeysButton
+            // 
+            ChangeKeysButton.BackColor = Color.FromArgb(173, 102, 213);
+            ChangeKeysButton.FlatAppearance.BorderSize = 0;
+            ChangeKeysButton.FlatStyle = FlatStyle.Flat;
+            ChangeKeysButton.Font = new Font("Tahoma", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            ChangeKeysButton.ForeColor = SystemColors.ButtonHighlight;
+            ChangeKeysButton.Location = new Point(175, 157);
+            ChangeKeysButton.Name = "ChangeKeysButton";
+            ChangeKeysButton.Size = new Size(100, 28);
+            ChangeKeysButton.TabIndex = 5;
+            ChangeKeysButton.Text = "ChangeKeys";
+            ChangeKeysButton.UseVisualStyleBackColor = false;
+            // 
+            // OpenListButton
+            // 
+            OpenListButton.BackColor = Color.FromArgb(173, 102, 213);
+            OpenListButton.FlatAppearance.BorderSize = 0;
+            OpenListButton.FlatStyle = FlatStyle.Flat;
+            OpenListButton.Font = new Font("Tahoma", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            OpenListButton.ForeColor = SystemColors.ButtonHighlight;
+            OpenListButton.Location = new Point(35, 320);
+            OpenListButton.Name = "OpenListButton";
+            OpenListButton.Size = new Size(380, 100);
+            OpenListButton.TabIndex = 4;
+            OpenListButton.Text = "OpenList";
+            OpenListButton.UseVisualStyleBackColor = false;
+            OpenListButton.Click += OpenListButton_Click;
             // 
             // ReplaceAffairListButton
             // 
@@ -136,21 +167,6 @@
             AffairListLab.MouseDown += AffairListLab_MouseDown;
             AffairListLab.MouseMove += AffairListLab_MouseMove;
             // 
-            // OpenListButton
-            // 
-            OpenListButton.BackColor = Color.FromArgb(173, 102, 213);
-            OpenListButton.FlatAppearance.BorderSize = 0;
-            OpenListButton.FlatStyle = FlatStyle.Flat;
-            OpenListButton.Font = new Font("Tahoma", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            OpenListButton.ForeColor = SystemColors.ButtonHighlight;
-            OpenListButton.Location = new Point(35, 320);
-            OpenListButton.Name = "OpenListButton";
-            OpenListButton.Size = new Size(380, 100);
-            OpenListButton.TabIndex = 4;
-            OpenListButton.Text = "OpenList";
-            OpenListButton.UseVisualStyleBackColor = false;
-            OpenListButton.Click += OpenListButton_Click;
-            // 
             // AffairList
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -176,5 +192,6 @@
         private Button ClearListButton;
         private Label CloseButton;
         private Button OpenListButton;
+        private Button ChangeKeysButton;
     }
 }
