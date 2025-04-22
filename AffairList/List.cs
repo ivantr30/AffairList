@@ -19,7 +19,7 @@ namespace AffairList
             InitializeComponent();
             Width = Screen.PrimaryScreen.WorkingArea.Width;
             Height = Screen.PrimaryScreen.WorkingArea.Height + Screen.PrimaryScreen.WorkingArea.Height / 10;
-            TopLevel = true;
+            TopMost = true;
             Affairs.Left = Width - Width / 6;
             Affairs.Padding = new Padding(0, 0, 180, 0);
             Affairs.Size = new Size(500, Height);

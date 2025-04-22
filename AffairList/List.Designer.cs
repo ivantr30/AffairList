@@ -52,6 +52,7 @@
             FormBorderStyle = FormBorderStyle.None;
             KeyPreview = true;
             Name = "List";
+            ShowInTaskbar = false;
             Text = "List";
             TransparencyKey = Color.Black;
             KeyDown += List_KeyDown;
