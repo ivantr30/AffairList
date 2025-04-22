@@ -15,3 +15,4 @@ C:\Users\Ivan\source\repos\AffairList\AffairList\obj\Debug\net8.0-windows\refint
 C:\Users\Ivan\source\repos\AffairList\AffairList\obj\Debug\net8.0-windows\AffairList.pdb
 C:\Users\Ivan\source\repos\AffairList\AffairList\obj\Debug\net8.0-windows\AffairList.genruntimeconfig.cache
 C:\Users\Ivan\source\repos\AffairList\AffairList\obj\Debug\net8.0-windows\ref\AffairList.dll
+C:\Users\Ivan\source\repos\AffairList\AffairList\obj\Debug\net8.0-windows\AffairList.List.resources

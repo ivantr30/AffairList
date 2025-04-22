@@ -50,5 +50,12 @@ namespace AffairList
         {
             lastPoint = new Point(e.X, e.Y);
         }
+
+        private void OpenListButton_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            List list = new List();
+            list.Show();
+        }
     }
 }

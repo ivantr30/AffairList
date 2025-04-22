@@ -35,6 +35,7 @@
             NameBackground = new Panel();
             CloseButton = new Label();
             AffairListLab = new Label();
+            OpenListButton = new Button();
             panel1.SuspendLayout();
             NameBackground.SuspendLayout();
             SuspendLayout();
@@ -42,6 +43,7 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(72, 3, 111);
+            panel1.Controls.Add(OpenListButton);
             panel1.Controls.Add(ReplaceAffairListButton);
             panel1.Controls.Add(ChangeListButton);
             panel1.Controls.Add(ClearListButton);
@@ -49,7 +51,7 @@
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(450, 354);
+            panel1.Size = new Size(450, 432);
             panel1.TabIndex = 0;
             // 
             // ReplaceAffairListButton
@@ -134,11 +136,26 @@
             AffairListLab.MouseDown += AffairListLab_MouseDown;
             AffairListLab.MouseMove += AffairListLab_MouseMove;
             // 
+            // OpenListButton
+            // 
+            OpenListButton.BackColor = Color.FromArgb(173, 102, 213);
+            OpenListButton.FlatAppearance.BorderSize = 0;
+            OpenListButton.FlatStyle = FlatStyle.Flat;
+            OpenListButton.Font = new Font("Tahoma", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            OpenListButton.ForeColor = SystemColors.ButtonHighlight;
+            OpenListButton.Location = new Point(35, 320);
+            OpenListButton.Name = "OpenListButton";
+            OpenListButton.Size = new Size(380, 100);
+            OpenListButton.TabIndex = 4;
+            OpenListButton.Text = "OpenList";
+            OpenListButton.UseVisualStyleBackColor = false;
+            OpenListButton.Click += OpenListButton_Click;
+            // 
             // AffairList
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(450, 354);
+            ClientSize = new Size(450, 432);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "AffairList";
@@ -158,5 +175,6 @@
         private Button ChangeListButton;
         private Button ClearListButton;
         private Label CloseButton;
+        private Button OpenListButton;
     }
 }
