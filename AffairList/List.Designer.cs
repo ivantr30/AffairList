@@ -29,18 +29,26 @@
         private void InitializeComponent()
         {
             Affairs = new Label();
+            OuterLine = new Label();
             SuspendLayout();
             // 
             // Affairs
             // 
             Affairs.AutoSize = true;
-            Affairs.Font = new Font("Gill Sans Ultra Bold", 12F, FontStyle.Bold);
-            Affairs.ForeColor = Color.White;
+            Affairs.Font = new Font("Modern No. 20", 16F, FontStyle.Bold);
+            Affairs.ForeColor = Color.MediumSpringGreen;
             Affairs.Location = new Point(981, 9);
             Affairs.Name = "Affairs";
-            Affairs.Size = new Size(39, 23);
+            Affairs.Size = new Size(39, 24);
             Affairs.TabIndex = 0;
             Affairs.Text = "хуй";
+            // 
+            // OuterLine
+            // 
+            OuterLine.Location = new Point(0, 0);
+            OuterLine.Name = "OuterLine";
+            OuterLine.Size = new Size(100, 23);
+            OuterLine.TabIndex = 0;
             // 
             // List
             // 
@@ -48,14 +56,13 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
             ClientSize = new Size(1061, 640);
+            Controls.Add(OuterLine);
             Controls.Add(Affairs);
             FormBorderStyle = FormBorderStyle.None;
-            KeyPreview = true;
             Name = "List";
             ShowInTaskbar = false;
             Text = "List";
             TransparencyKey = Color.Black;
-            KeyDown += List_KeyDown;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -63,5 +70,6 @@
         #endregion
 
         private Label Affairs;
+        private Label OuterLine;
     }
 }

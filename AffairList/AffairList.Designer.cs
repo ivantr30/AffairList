@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            ChangeKeysButton = new Button();
+            SettingsButton = new Button();
             OpenListButton = new Button();
             ReplaceAffairListButton = new Button();
             ChangeListButton = new Button();
@@ -44,7 +44,7 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(72, 3, 111);
-            panel1.Controls.Add(ChangeKeysButton);
+            panel1.Controls.Add(SettingsButton);
             panel1.Controls.Add(OpenListButton);
             panel1.Controls.Add(ReplaceAffairListButton);
             panel1.Controls.Add(ChangeListButton);
@@ -56,19 +56,19 @@
             panel1.Size = new Size(450, 432);
             panel1.TabIndex = 0;
             // 
-            // ChangeKeysButton
+            // SettingsButton
             // 
-            ChangeKeysButton.BackColor = Color.FromArgb(173, 102, 213);
-            ChangeKeysButton.FlatAppearance.BorderSize = 0;
-            ChangeKeysButton.FlatStyle = FlatStyle.Flat;
-            ChangeKeysButton.Font = new Font("Tahoma", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            ChangeKeysButton.ForeColor = SystemColors.ButtonHighlight;
-            ChangeKeysButton.Location = new Point(175, 157);
-            ChangeKeysButton.Name = "ChangeKeysButton";
-            ChangeKeysButton.Size = new Size(100, 28);
-            ChangeKeysButton.TabIndex = 5;
-            ChangeKeysButton.Text = "ChangeKeys";
-            ChangeKeysButton.UseVisualStyleBackColor = false;
+            SettingsButton.BackColor = Color.FromArgb(173, 102, 213);
+            SettingsButton.FlatAppearance.BorderSize = 0;
+            SettingsButton.FlatStyle = FlatStyle.Flat;
+            SettingsButton.Font = new Font("Tahoma", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            SettingsButton.ForeColor = SystemColors.ButtonHighlight;
+            SettingsButton.Location = new Point(175, 157);
+            SettingsButton.Name = "SettingsButton";
+            SettingsButton.Size = new Size(100, 28);
+            SettingsButton.TabIndex = 5;
+            SettingsButton.Text = "Settings";
+            SettingsButton.UseVisualStyleBackColor = false;
             // 
             // OpenListButton
             // 
@@ -112,6 +112,7 @@
             ChangeListButton.TabIndex = 2;
             ChangeListButton.Text = "ChangeList";
             ChangeListButton.UseVisualStyleBackColor = false;
+            ChangeListButton.Click += ChangeListButton_Click;
             // 
             // ClearListButton
             // 
@@ -126,6 +127,7 @@
             ClearListButton.TabIndex = 1;
             ClearListButton.Text = "ClearList";
             ClearListButton.UseVisualStyleBackColor = false;
+            ClearListButton.Click += ClearListButton_Click;
             // 
             // NameBackground
             // 
@@ -192,6 +194,6 @@
         private Button ClearListButton;
         private Label CloseButton;
         private Button OpenListButton;
-        private Button ChangeKeysButton;
+        private Button SettingsButton;
     }
 }

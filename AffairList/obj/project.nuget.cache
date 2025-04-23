@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "BvBvIJ4+PLY=",
+  "dgSpecHash": "1pyzaJ0IOWI=",
   "success": true,
   "projectFilePath": "C:\\Users\\Ivan\\source\\repos\\AffairList\\AffairList\\AffairList.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Ivan\\.nuget\\packages\\mousekeyhook\\5.7.1\\mousekeyhook.5.7.1.nupkg.sha512"
+  ],
   "logs": []
 }

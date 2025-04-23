@@ -7,6 +7,9 @@
     <Compile Update="AffairList.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="ChangeListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="List.cs">
       <SubType>Form</SubType>
     </Compile>

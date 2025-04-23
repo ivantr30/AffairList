@@ -2,14 +2,14 @@ namespace AffairList
 {
     public partial class AffairList : Form
     {
+        string listFileFullPath = Application.StartupPath + "\\list.txt";
         public AffairList()
         {
             InitializeComponent();
 
-            string path = Application.StartupPath;
-            if (!File.Exists(path+"\\list.txt"))
+            if (!File.Exists(listFileFullPath))
             {
-                File.Create(path + "\\list.txt");
+                File.Create(listFileFullPath);
             }
         }
 
@@ -62,6 +62,34 @@ namespace AffairList
             this.Hide();
             List list = new List();
             list.Show();
+        }
+
+        private void ClearListButton_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show(
+            "Вы уверены, что хотите очистить список дел?",
+            "Подтверждение действия",
+            MessageBoxButtons.YesNo,
+            MessageBoxIcon.Question
+            );
+
+            if (result == DialogResult.Yes)
+            {
+                if (!File.Exists(listFileFullPath))
+                {
+                    MessageBox.Show("Ошибка, список не найден");
+                    return;
+                }
+                File.WriteAllText(listFileFullPath, "");
+                MessageBox.Show("Список очищен");
+            }
+        }
+
+        private void ChangeListButton_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            ChangeListForm listForm = new ChangeListForm();
+            listForm.Show();
         }
     }
 }
