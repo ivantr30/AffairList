@@ -6,24 +6,57 @@ namespace AffairList
     {
         private IKeyboardMouseEvents globalHook;
         public bool canReplace = false;
+        private int x, y;
+        private int prevTextPosX, prevTextPosY;
+
         Point lastPoint;
         public List()
         {
             InitializeComponent();
+            Width = Screen.PrimaryScreen.WorkingArea.Width;
+            Height = Screen.PrimaryScreen.WorkingArea.Height + Screen.PrimaryScreen.WorkingArea.Height / 10;
+            x = Width - Width / 6;
+            y = Height / 90;
+            prevTextPosX = x;
+            prevTextPosY = y;
             SubscribeGlobalHook();
             LoadText();
+            LoadSettings();
             SetLocation();
         }
         private void SetLocation()
         {
-            Width = Screen.PrimaryScreen.WorkingArea.Width;
-            Height = Screen.PrimaryScreen.WorkingArea.Height + Screen.PrimaryScreen.WorkingArea.Height / 10;
             TopMost = true;
 
-            Affairs.Left = Width - Width / 6;
+            Affairs.Left = x;
+            Affairs.Top = y;
             Affairs.AutoSize = false;
             Affairs.Padding = new Padding(0, 0, 180, 0);
             Affairs.Size = new Size(500, Height);
+        }
+        private void LoadSettings()
+        {
+            if (File.Exists(Application.StartupPath + "\\settings.txt"))
+            {
+                var settingLines = File.ReadAllLines(Application.StartupPath + "\\settings.txt");
+                foreach (var line in settingLines)
+                {
+                    if (line.StartsWith("x,y: "))
+                    {
+                        string[] xy = line.Substring("x,y: ".Length).Split(" ");
+                        if (xy.Length == 2)
+                        {
+                            x = int.Parse(xy[0]);
+                            y = int.Parse(xy[1]);
+                            return;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Нет настроек");
+            }
         }
         private void LoadText()
         {
@@ -71,8 +104,8 @@ namespace AffairList
         {
             if (e.Button == MouseButtons.Left && canReplace)
             {
-                this.Left += e.X - lastPoint.X;
-                this.Top += e.Y - lastPoint.Y;
+                this.Left += e.X - Affairs.Left;
+                this.Top += e.Y - Affairs.Top;
             }
         }
 
@@ -81,6 +114,18 @@ namespace AffairList
             if (e.Button == MouseButtons.Left && canReplace)
             {
                 canReplace = false;
+                if (File.Exists(Application.StartupPath + "\\settings.txt"))
+                {
+                    var settingLines = File.ReadAllLines(Application.StartupPath + "\\settings.txt");
+                    for(int i = 0; i < settingLines.Length; i++)
+                    {
+                        if (settingLines[i].StartsWith("x,y:"))
+                        {
+                            settingLines[i] = "x,y: " + (this.Left + e.X) + " " + (this.Top + e.Y);
+                        }
+                    }
+                    File.WriteAllLines(Application.StartupPath + "\\settings.txt", settingLines);
+                }
                 CloseList();
             }
         }
