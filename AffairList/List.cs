@@ -5,6 +5,8 @@ namespace AffairList
     public partial class List : Form
     {
         private IKeyboardMouseEvents globalHook;
+        public bool canReplace = false;
+        Point lastPoint;
         public List()
         {
             InitializeComponent();
@@ -40,6 +42,13 @@ namespace AffairList
             globalHook = Hook.GlobalEvents();
             globalHook.KeyDown += GlobalHook_KeyDown;
         }
+        private void CloseList()
+        {
+
+            this.Close();
+            Application.Restart();
+            Application.Run(new AffairList());
+        }
         private void GlobalHook_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F7)
@@ -48,9 +57,31 @@ namespace AffairList
             }
             if (e.KeyCode == Keys.F6)
             {
-                this.Close();
-                Application.Restart();
-                Application.Run(new AffairList());
+                CloseList();
+            }
+        }
+
+        private void List_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (canReplace)
+                lastPoint = new Point(e.X, e.Y);
+        }
+
+        private void List_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && canReplace)
+            {
+                this.Left += e.X - lastPoint.X;
+                this.Top += e.Y - lastPoint.Y;
+            }
+        }
+
+        private void List_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && canReplace)
+            {
+                canReplace = false;
+                CloseList();
             }
         }
     }

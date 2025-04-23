@@ -3,6 +3,8 @@ namespace AffairList
     public partial class AffairList : Form
     {
         string listFileFullPath = Application.StartupPath + "\\list.txt";
+        string settingsFileFullPath = Application.StartupPath + "\\settings.txt";
+        Point lastPoint;
         public AffairList()
         {
             InitializeComponent();
@@ -10,6 +12,10 @@ namespace AffairList
             if (!File.Exists(listFileFullPath))
             {
                 File.Create(listFileFullPath);
+            }
+            if (!File.Exists(settingsFileFullPath))
+            {
+                File.Create(settingsFileFullPath);
             }
         }
 
@@ -28,7 +34,6 @@ namespace AffairList
             CloseButton.ForeColor = Color.Black;
         }
 
-        Point lastPoint;
         private void NameBackground_MouseDown(object sender, MouseEventArgs e)
         {
             lastPoint = new Point(e.X, e.Y);
@@ -94,7 +99,11 @@ namespace AffairList
 
         private void ReplaceAffairListButton_Click(object sender, EventArgs e)
         {
-
+            this.Hide();
+            List list = new List();
+            list.BackColor = Color.White;
+            list.canReplace = true;
+            list.Show();
         }
     }
 }

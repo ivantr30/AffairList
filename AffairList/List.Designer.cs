@@ -63,6 +63,9 @@
             ShowInTaskbar = false;
             Text = "List";
             TransparencyKey = Color.Black;
+            MouseDown += List_MouseDown;
+            MouseMove += List_MouseMove;
+            MouseUp += List_MouseUp;
             ResumeLayout(false);
             PerformLayout();
         }

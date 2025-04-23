@@ -13,6 +13,7 @@ namespace AffairList
 {
     public partial class ChangeListForm : Form
     {
+        Point lastPoint;
         public ChangeListForm()
         {
             InitializeComponent();
@@ -44,7 +45,6 @@ namespace AffairList
         {
             Application.Exit();
         }
-        Point lastPoint;
 
         private void AffairsLab_MouseDown(object sender, MouseEventArgs e)
         {
