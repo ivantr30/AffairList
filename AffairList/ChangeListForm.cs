@@ -13,11 +13,9 @@ namespace AffairList
 {
     public partial class ChangeListForm : Form
     {
-        private IKeyboardMouseEvents globalHook;
         public ChangeListForm()
         {
             InitializeComponent();
-            SubscribeGlobalHook();
             LoadText();
         }
         private void LoadText()
@@ -30,11 +28,6 @@ namespace AffairList
                 }
             }
         }
-        private void SubscribeGlobalHook()
-        {
-            globalHook = Hook.GlobalEvents();
-            globalHook.KeyDown += GlobalHook_KeyDown;
-        }
         private void GlobalHook_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F7)
@@ -43,11 +36,7 @@ namespace AffairList
             }
             if (e.KeyCode == Keys.F6)
             {
-                this.Hide();
-                AffairList list = new AffairList();
-                globalHook.KeyDown -= GlobalHook_KeyDown;
-                globalHook.Dispose();
-                list.Show();
+                Application.Restart();
             }
         }
 
@@ -115,9 +104,7 @@ namespace AffairList
 
         private void BackButton_Click(object sender, EventArgs e)
         {
-            this.Hide();
-            AffairList list = new AffairList();
-            list.Show();
+            Application.Restart();
         }
 
         int? currentIndex = null;

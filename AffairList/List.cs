@@ -1,15 +1,4 @@
 ﻿using Gma.System.MouseKeyHook;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace AffairList
 {
@@ -31,7 +20,7 @@ namespace AffairList
 
             Affairs.Left = Width - Width / 6;
             Affairs.AutoSize = false;
-            Affairs.Padding = new Padding(0,0,180,0);
+            Affairs.Padding = new Padding(0, 0, 180, 0);
             Affairs.Size = new Size(500, Height);
         }
         private void LoadText()
@@ -59,11 +48,9 @@ namespace AffairList
             }
             if (e.KeyCode == Keys.F6)
             {
-                this.Hide();
-                AffairList list = new AffairList();
-                globalHook.KeyDown -= GlobalHook_KeyDown;
-                globalHook.Dispose();
-                list.Show();
+                this.Close();
+                Application.Restart();
+                Application.Run(new AffairList());
             }
         }
     }

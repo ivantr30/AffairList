@@ -6,7 +6,7 @@ namespace AffairList
         public AffairList()
         {
             InitializeComponent();
-
+            
             if (!File.Exists(listFileFullPath))
             {
                 File.Create(listFileFullPath);
@@ -90,6 +90,11 @@ namespace AffairList
             this.Hide();
             ChangeListForm listForm = new ChangeListForm();
             listForm.Show();
+        }
+
+        private void ReplaceAffairListButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

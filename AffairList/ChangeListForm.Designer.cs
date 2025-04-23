@@ -160,8 +160,10 @@
             ClientSize = new Size(453, 390);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
+            KeyPreview = true;
             Name = "ChangeListForm";
             Text = "ChangeListForm";
+            KeyDown += GlobalHook_KeyDown;
             NameBackground.ResumeLayout(false);
             NameBackground.PerformLayout();
             panel1.ResumeLayout(false);

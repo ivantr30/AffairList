@@ -98,6 +98,7 @@
             ReplaceAffairListButton.TabIndex = 3;
             ReplaceAffairListButton.Text = "ReplaceList";
             ReplaceAffairListButton.UseVisualStyleBackColor = false;
+            ReplaceAffairListButton.Click += ReplaceAffairListButton_Click;
             // 
             // ChangeListButton
             // 
@@ -177,6 +178,7 @@
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "AffairList";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
             panel1.ResumeLayout(false);
             NameBackground.ResumeLayout(false);
