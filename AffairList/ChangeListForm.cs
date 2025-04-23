@@ -129,9 +129,9 @@ namespace AffairList
                 {
                     if (File.Exists(Application.StartupPath + "\\list.txt"))
                     {
-                        string fileText = File.ReadAllText(Application.StartupPath + "\\list.txt");
-                        fileText.Replace(Affairs.Items[(int)currentIndex].ToString(), "");
-                        File.WriteAllText(Application.StartupPath + "\\list.txt", fileText);
+                        var fileText = File.ReadAllLines(Application.StartupPath + "\\list.txt").ToList();
+                        fileText.RemoveAt((int)currentIndex); 
+                        File.WriteAllLines(Application.StartupPath + "\\list.txt", fileText);
                     }
                     Affairs.Items.RemoveAt((int)currentIndex);
                 }
