@@ -16,6 +16,8 @@ namespace AffairList
             if (!File.Exists(settingsFileFullPath))
             {
                 File.Create(settingsFileFullPath);
+                File.WriteAllText(settingsFileFullPath, "x,y: \nmusicOn: \ntextColor: \nbackTextColor: \n" +
+                    "");
             }
         }
 

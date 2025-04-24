@@ -32,6 +32,7 @@
             CloseButton = new Label();
             AffairsLab = new Label();
             panel1 = new Panel();
+            DeleteButton = new Button();
             BackButton = new Button();
             Affairs = new ListBox();
             ClearButton = new Button();
@@ -85,6 +86,7 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(72, 3, 111);
+            panel1.Controls.Add(DeleteButton);
             panel1.Controls.Add(BackButton);
             panel1.Controls.Add(Affairs);
             panel1.Controls.Add(ClearButton);
@@ -96,6 +98,18 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(453, 390);
             panel1.TabIndex = 1;
+            // 
+            // DeleteButton
+            // 
+            DeleteButton.BackColor = Color.FromArgb(173, 102, 213);
+            DeleteButton.FlatStyle = FlatStyle.Flat;
+            DeleteButton.Location = new Point(204, 351);
+            DeleteButton.Name = "DeleteButton";
+            DeleteButton.Size = new Size(75, 27);
+            DeleteButton.TabIndex = 6;
+            DeleteButton.Text = "Delete";
+            DeleteButton.UseVisualStyleBackColor = false;
+            DeleteButton.Click += DeleteButton_Click;
             // 
             // BackButton
             // 
@@ -136,7 +150,7 @@
             // 
             AddAffairButton.BackColor = Color.FromArgb(173, 102, 213);
             AddAffairButton.FlatStyle = FlatStyle.Flat;
-            AddAffairButton.Location = new Point(204, 351);
+            AddAffairButton.Location = new Point(123, 351);
             AddAffairButton.Name = "AddAffairButton";
             AddAffairButton.Size = new Size(75, 27);
             AddAffairButton.TabIndex = 2;
@@ -152,6 +166,7 @@
             AffairInput.PlaceholderText = "Введите название дела";
             AffairInput.Size = new Size(429, 31);
             AffairInput.TabIndex = 1;
+            AffairInput.KeyDown += AffairInput_KeyDown;
             // 
             // ChangeListForm
             // 
@@ -182,5 +197,6 @@
         private Button AddAffairButton;
         private ListBox Affairs;
         private Button BackButton;
+        private Button DeleteButton;
     }
 }

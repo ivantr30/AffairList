@@ -14,6 +14,7 @@ namespace AffairList
     public partial class ChangeListForm : Form
     {
         Point lastPoint;
+        int? currentIndex = null;
         public ChangeListForm()
         {
             InitializeComponent();
@@ -87,8 +88,13 @@ namespace AffairList
             CloseButton.ForeColor = Color.Black;
         }
 
-        private void AddAffairButton_Click(object sender, EventArgs e)
+        private void AddAffair()
         {
+            if (AffairInput.Text == "")
+            {
+                MessageBox.Show("Error, textbox is null");
+                return;
+            }
             Affairs.Items.Add(AffairInput.Text);
             if (File.Exists(Application.StartupPath + "\\list.txt"))
             {
@@ -96,7 +102,31 @@ namespace AffairList
             }
             AffairInput.Text = "";
         }
-
+        private void AddAffairButton_Click(object sender, EventArgs e)
+        {
+            AddAffair();
+        }
+        private void Affairs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            currentIndex = Affairs.SelectedIndex;
+        }
+        private void DeleteAffair()
+        {
+            if (currentIndex != null)
+            {
+                if (File.Exists(Application.StartupPath + "\\list.txt"))
+                {
+                    var fileText = File.ReadAllLines(Application.StartupPath + "\\list.txt").ToList();
+                    fileText.RemoveAt((int)currentIndex);
+                    File.WriteAllLines(Application.StartupPath + "\\list.txt", fileText);
+                }
+                Affairs.Items.RemoveAt((int)currentIndex);
+            }
+        }
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+            DeleteAffair();
+        }
         private void ClearButton_Click(object sender, EventArgs e)
         {
             AffairInput.Text = "";
@@ -107,27 +137,20 @@ namespace AffairList
             Application.Restart();
         }
 
-        int? currentIndex = null;
         private void Affairs_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Delete)
             {
-                if (currentIndex != null)
-                {
-                    if (File.Exists(Application.StartupPath + "\\list.txt"))
-                    {
-                        var fileText = File.ReadAllLines(Application.StartupPath + "\\list.txt").ToList();
-                        fileText.RemoveAt((int)currentIndex); 
-                        File.WriteAllLines(Application.StartupPath + "\\list.txt", fileText);
-                    }
-                    Affairs.Items.RemoveAt((int)currentIndex);
-                }
+                DeleteAffair();
             }
         }
 
-        private void Affairs_SelectedIndexChanged(object sender, EventArgs e)
+        private void AffairInput_KeyDown(object sender, KeyEventArgs e)
         {
-            currentIndex = Affairs.SelectedIndex;
+            if (e.KeyCode == Keys.Enter)
+            {
+                AddAffair();
+            }
         }
     }
 }
