@@ -30,24 +30,26 @@ namespace AffairList
                 }
             }
         }
+        private void CloseOrExit(Action action)
+        {
+            AffairList.trayIcon.Visible = false;
+            action();
+        }
         private void GlobalHook_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F7)
             {
-                AffairList.trayIcon.Visible = false;
-                Application.Exit();
+                CloseOrExit(Application.Exit);
             }
             if (e.KeyCode == Keys.F6)
             {
-                AffairList.trayIcon.Visible = false;
-                Application.Restart();
+                CloseOrExit(Application.Restart);
             }
         }
 
         private void CloseButton_Click(object sender, EventArgs e)
         {
-            AffairList.trayIcon.Visible = false;
-            Application.Exit();
+            CloseOrExit(Application.Exit);
         }
 
         private void AffairsLab_MouseDown(object sender, MouseEventArgs e)
@@ -137,8 +139,7 @@ namespace AffairList
 
         private void BackButton_Click(object sender, EventArgs e)
         {
-            AffairList.trayIcon.Visible = false;
-            Application.Restart();
+            CloseOrExit(Application.Restart);
         }
 
         private void Affairs_KeyDown(object sender, KeyEventArgs e)

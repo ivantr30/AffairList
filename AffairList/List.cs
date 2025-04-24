@@ -15,6 +15,18 @@ namespace AffairList
             LoadText();
             SetLocation();
         }
+        private void Exit()
+        {
+            AffairList.trayIcon.Visible = false;
+            Application.Exit();
+        }
+        private async void Return()
+        {
+            AffairList.trayIcon.Visible = false;
+            this.Close();
+            await Task.Delay(1);
+            Application.Restart();
+        }
         private void SetLocation()
         {
             TopMost = true;
@@ -66,23 +78,15 @@ namespace AffairList
             globalHook = Hook.GlobalEvents();
             globalHook.KeyDown += GlobalHook_KeyDown;
         }
-        private void CloseList()
-        {
-            this.Close();
-            AffairList.trayIcon.Visible = false;
-            Application.Restart();
-            Application.Run(new AffairList());
-        }
         private void GlobalHook_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F7)
             {
-                AffairList.trayIcon.Visible = false;
-                Application.Exit();
+                Exit();
             }
             if (e.KeyCode == Keys.F6)
             {
-                CloseList();
+                Return();
             }
         }
 
@@ -118,7 +122,7 @@ namespace AffairList
                     }
                     File.WriteAllLines(Application.StartupPath + "\\settings.txt", settingLines);
                 }
-                CloseList();
+                Return();
             }
         }
     }

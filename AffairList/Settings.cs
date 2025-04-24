@@ -40,23 +40,25 @@ namespace AffairList
         {
 
         }
-        private void CloseButton_Click(object sender, EventArgs e)
+        private void CloseOrExit(Action action)
         {
             AffairList.trayIcon.Visible = false;
-            Application.Exit();
+            action();
+        }
+        private void CloseButton_Click(object sender, EventArgs e)
+        {
+            CloseOrExit(Application.Exit);
         }
 
         private void Settings_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F7)
             {
-                AffairList.trayIcon.Visible = false;
-                Application.Exit();
+                CloseOrExit(Application.Exit);
             }
             if (e.KeyCode == Keys.F6)
             {
-                AffairList.trayIcon.Visible = false;
-                Application.Restart();
+                CloseOrExit(Application.Restart);
             }
         }
 
@@ -112,8 +114,7 @@ namespace AffairList
                     return;
                 }
             }
-            AffairList.trayIcon.Visible = false;
-            Application.Restart();
+            CloseOrExit(Application.Restart);
         }
 
         private void ResetButton_Click(object sender, EventArgs e)

@@ -55,17 +55,21 @@ namespace AffairList
             }
             ConfigureSettings();
         }
+        private void CloseOrExit(Action action)
+        {
+            AffairList.trayIcon.Visible = false;
+            action();
+        }
         private void OnOpen(object sender, EventArgs e)
         {
-            Application.Restart();
+            CloseOrExit(Application.Restart);
             this.WindowState = FormWindowState.Normal;
             this.ShowInTaskbar = true;
         }
 
         private void OnExit(object sender, EventArgs e)
         {
-            trayIcon.Visible = false;
-            Application.Exit();
+            CloseOrExit(Application.Exit);
         }
         private void ConfigureSettings()
         {
@@ -98,8 +102,7 @@ namespace AffairList
 
         private void CloseButton_Click(object sender, EventArgs e)
         {
-            trayIcon.Visible = false;
-            Application.Exit();
+            CloseOrExit(Application.Exit);
         }
 
         private void CloseButton_MouseEnter(object sender, EventArgs e)
