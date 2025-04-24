@@ -15,6 +15,9 @@ namespace AffairList
         Point lastPoint;
         string settingsFileFullPath = Application.StartupPath + "\\settings.txt";
         bool isConfirmed = true;
+
+        //состояния самих настроек
+        bool musicState = true; // базовая настройка
         public Settings()
         {
             InitializeComponent();
@@ -119,6 +122,36 @@ namespace AffairList
         {
             isConfirmed = true;
             // дописать вписание настроек в файл
+        }
+
+        private void StateLab_MouseLeave(object sender, EventArgs e)
+        {
+            StateLab.ForeColor = Color.White;
+        }
+
+
+        private void StateLab_MouseUp(object sender, MouseEventArgs e)
+        {
+            StateLab.ForeColor = Color.White;
+        }
+
+        private void StateLab_MouseEnter(object sender, EventArgs e)
+        {
+
+            StateLab.ForeColor = Color.Gray;
+        }
+
+        private void StateLab_MouseDown(object sender, MouseEventArgs e)
+        {
+            StateLab.ForeColor = Color.DarkGray;
+            if (StateLab.Text == "On")
+            {
+                StateLab.Text = "OFF";
+                musicState = false;
+                return;
+            }
+            StateLab.Text = "On";
+            musicState = true;
         }
     }
 }
