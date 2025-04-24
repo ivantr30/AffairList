@@ -8,17 +8,45 @@ namespace AffairList
         public AffairList()
         {
             InitializeComponent();
-            
+
             if (!File.Exists(listFileFullPath))
             {
-                File.Create(listFileFullPath);
+                using (File.Create(listFileFullPath))
+                {
+
+                }
             }
             if (!File.Exists(settingsFileFullPath))
             {
-                File.Create(settingsFileFullPath);
+                using (File.Create(settingsFileFullPath))
+                {
+
+                }
                 File.WriteAllText(settingsFileFullPath, "x,y: \nmusicOn: \ntextColor: \nbackTextColor: \n" +
-                    "");
+                        "");
             }
+            ConfigureSettings();
+        }
+        private void ConfigureSettings()
+        {
+            string[] settingLines = File.ReadAllLines(settingsFileFullPath);
+            for (int i = 0; i < settingLines.Length; i++)
+            {
+                string[] lineSplitted = settingLines[i].Split(":");
+                if (lineSplitted[1].Trim().Length > 0)
+                {
+                    continue;
+                }
+                if (lineSplitted[0].StartsWith("x,y"))
+                {
+                    int width = Screen.PrimaryScreen.WorkingArea.Width;
+                    int height = Screen.PrimaryScreen.WorkingArea.Height + Screen.PrimaryScreen.WorkingArea.Height / 10;
+                    lineSplitted[1] = width - width / 6 + " " + height / 90;
+                }
+
+                settingLines[i] = lineSplitted[0] + ": " + lineSplitted[1];
+            }
+            File.WriteAllLines(settingsFileFullPath,settingLines);
         }
 
         private void CloseButton_Click(object sender, EventArgs e)
@@ -74,8 +102,8 @@ namespace AffairList
         private void ClearListButton_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show(
-            "Вы уверены, что хотите очистить список дел?",
-            "Подтверждение действия",
+            "Are you sure to clear your affair list?",
+            "Confirm window",
             MessageBoxButtons.YesNo,
             MessageBoxIcon.Question
             );
@@ -84,11 +112,11 @@ namespace AffairList
             {
                 if (!File.Exists(listFileFullPath))
                 {
-                    MessageBox.Show("Ошибка, список не найден");
+                    MessageBox.Show("Error, list file does not exist");
                     return;
                 }
                 File.WriteAllText(listFileFullPath, "");
-                MessageBox.Show("Список очищен");
+                MessageBox.Show("The list is cleared");
             }
         }
 
@@ -106,6 +134,13 @@ namespace AffairList
             list.BackColor = Color.White;
             list.canReplace = true;
             list.Show();
+        }
+
+        private void SettingsButton_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            Settings settings = new Settings();
+            settings.Show();
         }
     }
 }

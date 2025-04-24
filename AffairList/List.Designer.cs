@@ -35,11 +35,11 @@
             // Affairs
             // 
             Affairs.AutoSize = true;
-            Affairs.Font = new Font("Modern No. 20", 16F, FontStyle.Bold);
+            Affairs.Font = new Font("Berlin Sans FB Demi", 16F, FontStyle.Bold);
             Affairs.ForeColor = Color.MediumSpringGreen;
             Affairs.Location = new Point(981, 9);
             Affairs.Name = "Affairs";
-            Affairs.Size = new Size(39, 24);
+            Affairs.Size = new Size(45, 25);
             Affairs.TabIndex = 0;
             Affairs.Text = "хуй";
             // 

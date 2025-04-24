@@ -20,3 +20,4 @@ C:\Users\Ivan\source\repos\AffairList\AffairList\bin\Debug\net8.0-windows\Gma.Sy
 C:\Users\Ivan\source\repos\AffairList\AffairList\obj\Debug\net8.0-windows\AffairList.csproj.AssemblyReference.cache
 C:\Users\Ivan\source\repos\AffairList\AffairList\obj\Debug\net8.0-windows\AffairList.csproj.Up2Date
 C:\Users\Ivan\source\repos\AffairList\AffairList\obj\Debug\net8.0-windows\AffairList.ChangeListForm.resources
+C:\Users\Ivan\source\repos\AffairList\AffairList\obj\Debug\net8.0-windows\AffairList.Settings.resources

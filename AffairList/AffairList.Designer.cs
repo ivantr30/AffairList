@@ -69,6 +69,7 @@
             SettingsButton.TabIndex = 5;
             SettingsButton.Text = "Settings";
             SettingsButton.UseVisualStyleBackColor = false;
+            SettingsButton.Click += SettingsButton_Click;
             // 
             // OpenListButton
             // 

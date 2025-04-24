@@ -6,30 +6,22 @@ namespace AffairList
     {
         private IKeyboardMouseEvents globalHook;
         public bool canReplace = false;
-        private int x, y;
-        private int prevTextPosX, prevTextPosY;
 
         Point lastPoint;
         public List()
         {
             InitializeComponent();
-            Width = Screen.PrimaryScreen.WorkingArea.Width;
-            Height = Screen.PrimaryScreen.WorkingArea.Height + Screen.PrimaryScreen.WorkingArea.Height / 10;
-            x = Width - Width / 6;
-            y = Height / 90;
-            prevTextPosX = x;
-            prevTextPosY = y;
             SubscribeGlobalHook();
             LoadText();
-            LoadSettings();
             SetLocation();
         }
         private void SetLocation()
         {
             TopMost = true;
 
-            Affairs.Left = x;
-            Affairs.Top = y;
+            LoadSettings();
+            Width = Screen.PrimaryScreen.WorkingArea.Width;
+            Height = Screen.PrimaryScreen.WorkingArea.Height + Screen.PrimaryScreen.WorkingArea.Height / 10;
             Affairs.AutoSize = false;
             Affairs.Padding = new Padding(0, 0, 180, 0);
             Affairs.Size = new Size(500, Height);
@@ -41,14 +33,13 @@ namespace AffairList
                 var settingLines = File.ReadAllLines(Application.StartupPath + "\\settings.txt");
                 foreach (var line in settingLines)
                 {
-                    if (line.StartsWith("x,y: "))
+                    if (line.StartsWith("x,y:"))
                     {
-                        string[] xy = line.Substring("x,y: ".Length).Split(" ");
-                        if (xy.Length == 2)
+                        string[] xy = line.Replace("x,y:", "").Split(" ");
+                        if (xy.Length == 3)
                         {
-                            x = int.Parse(xy[0]);
-                            y = int.Parse(xy[1]);
-                            return;
+                            Affairs.Left = int.Parse(xy[1]);
+                            Affairs.Top = int.Parse(xy[2]);
                         }
                     }
                 }
@@ -77,7 +68,6 @@ namespace AffairList
         }
         private void CloseList()
         {
-
             this.Close();
             Application.Restart();
             Application.Run(new AffairList());

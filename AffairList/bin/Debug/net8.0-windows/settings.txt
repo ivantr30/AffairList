@@ -1,1 +1,4 @@
-x,y: 1639 9
+x,y: 1600 12
+musicOn:                  
+textColor:                  
+backTextColor:                  
