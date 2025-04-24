@@ -63,11 +63,11 @@
             SettingsButton.FlatStyle = FlatStyle.Flat;
             SettingsButton.Font = new Font("Tahoma", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
             SettingsButton.ForeColor = SystemColors.ButtonHighlight;
-            SettingsButton.Location = new Point(175, 157);
+            SettingsButton.Location = new Point(135, 157);
             SettingsButton.Name = "SettingsButton";
-            SettingsButton.Size = new Size(100, 28);
+            SettingsButton.Size = new Size(180, 28);
             SettingsButton.TabIndex = 5;
-            SettingsButton.Text = "Settings";
+            SettingsButton.Text = "Settings-Customize";
             SettingsButton.UseVisualStyleBackColor = false;
             SettingsButton.Click += SettingsButton_Click;
             // 
@@ -180,7 +180,7 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "AffairList";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Form1";
+            Text = "AffairList";
             panel1.ResumeLayout(false);
             NameBackground.ResumeLayout(false);
             NameBackground.PerformLayout();

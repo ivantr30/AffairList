@@ -1,3 +1,4 @@
+
 namespace AffairList
 {
     public partial class AffairList : Form
@@ -5,9 +6,23 @@ namespace AffairList
         string listFileFullPath = Application.StartupPath + "\\list.txt";
         string settingsFileFullPath = Application.StartupPath + "\\settings.txt";
         Point lastPoint;
+        private NotifyIcon trayIcon;
+        private ContextMenuStrip trayMenu;
         public AffairList()
         {
             InitializeComponent();
+
+            trayMenu = new ContextMenuStrip();
+            trayMenu.Items.Add("Открыть", null, OnOpen);
+            trayMenu.Items.Add("Выход", null, OnExit);
+
+            // Создаём иконку
+            trayIcon = new NotifyIcon();
+            trayIcon.Text = "Фоновое приложение";
+            trayIcon.Icon = SystemIcons.Application;
+
+            trayIcon.ContextMenuStrip = trayMenu;
+            trayIcon.Visible = true;
 
             if (!File.Exists(listFileFullPath))
             {
@@ -23,9 +38,21 @@ namespace AffairList
 
                 }
                 File.WriteAllText(settingsFileFullPath, "x,y: \nmusicOn: \ntextColor: \nbackTextColor: \n" +
-                        "");
+                        "musicVolume: \nautostarts: \n");
             }
             ConfigureSettings();
+        }
+        private void OnOpen(object sender, EventArgs e)
+        {
+            Application.Restart();
+            this.WindowState = FormWindowState.Normal;
+            this.ShowInTaskbar = true;
+        }
+
+        private void OnExit(object sender, EventArgs e)
+        {
+            trayIcon.Visible = false;
+            Application.Exit();
         }
         private void ConfigureSettings()
         {
@@ -46,7 +73,7 @@ namespace AffairList
 
                 settingLines[i] = lineSplitted[0] + ": " + lineSplitted[1];
             }
-            File.WriteAllLines(settingsFileFullPath,settingLines);
+            File.WriteAllLines(settingsFileFullPath, settingLines);
         }
 
         private void CloseButton_Click(object sender, EventArgs e)
@@ -142,5 +169,6 @@ namespace AffairList
             Settings settings = new Settings();
             settings.Show();
         }
+
     }
 }

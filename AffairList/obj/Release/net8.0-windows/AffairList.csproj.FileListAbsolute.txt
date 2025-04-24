@@ -16,3 +16,8 @@ C:\Users\Ivan\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\refi
 C:\Users\Ivan\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\AffairList.pdb
 C:\Users\Ivan\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\AffairList.genruntimeconfig.cache
 C:\Users\Ivan\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\ref\AffairList.dll
+C:\Users\Ivan\source\repos\AffairList\AffairList\bin\Release\net8.0-windows\Gma.System.MouseKeyHook.dll
+C:\Users\Ivan\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\AffairList.csproj.AssemblyReference.cache
+C:\Users\Ivan\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\AffairList.ChangeListForm.resources
+C:\Users\Ivan\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\AffairList.Settings.resources
+C:\Users\Ivan\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\AffairList.csproj.Up2Date

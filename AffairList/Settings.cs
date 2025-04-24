@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -18,6 +19,18 @@ namespace AffairList
 
         //состояния самих настроек
         bool musicState = true; // базовая настройка
+
+        private void EnableAutoStart(string appName, string exePath)
+        {
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+            key.SetValue(appName, $"\"{exePath}\"");
+        }
+        private void DisableAutoStart(string appName)
+        {
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+            key.DeleteValue(appName, false);
+        }
+        //EnableAutoStart("AffairList", Application.ExecutablePath);
         public Settings()
         {
             InitializeComponent();
@@ -108,7 +121,7 @@ namespace AffairList
             if (result == DialogResult.Yes)
             {
                 File.WriteAllText(settingsFileFullPath, "x,y: \nmusicOn: \ntextColor: \nbackTextColor: \n" +
-                            "");
+                            "musicVolume: \nautostarts: \n");
                 if (!File.Exists(settingsFileFullPath))
                 {
                     MessageBox.Show("Error, settings file does not exist");
@@ -152,6 +165,7 @@ namespace AffairList
             }
             StateLab.Text = "On";
             musicState = true;
+            isConfirmed = false;
         }
     }
 }
