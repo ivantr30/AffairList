@@ -1,4 +1,6 @@
 x,y: 1600 12
-musicOn:                        
-textColor:                        
-backTextColor:                        
+musicOn: 
+textColor: 
+backTextColor: 
+musicVolume: 
+autostarts: false

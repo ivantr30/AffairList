@@ -34,6 +34,7 @@ namespace AffairList
         public Settings()
         {
             InitializeComponent();
+            LoadSettings();
         }
         private void LoadSettings()
         {

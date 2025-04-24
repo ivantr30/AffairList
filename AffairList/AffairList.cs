@@ -1,4 +1,6 @@
 
+using Microsoft.Win32;
+
 namespace AffairList
 {
     public partial class AffairList : Form
@@ -8,6 +10,17 @@ namespace AffairList
         Point lastPoint;
         private NotifyIcon trayIcon;
         private ContextMenuStrip trayMenu;
+
+        private void EnableAutoStart(string appName, string exePath)
+        {
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+            key.SetValue(appName, $"\"{exePath}\"");
+        }
+        private void DisableAutoStart(string appName)
+        {
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
+            key.DeleteValue(appName, false);
+        }
         public AffairList()
         {
             InitializeComponent();
@@ -18,7 +31,7 @@ namespace AffairList
 
             // Создаём иконку
             trayIcon = new NotifyIcon();
-            trayIcon.Text = "Фоновое приложение";
+            trayIcon.Text = "AffairList";
             trayIcon.Icon = SystemIcons.Application;
 
             trayIcon.ContextMenuStrip = trayMenu;
@@ -38,7 +51,7 @@ namespace AffairList
 
                 }
                 File.WriteAllText(settingsFileFullPath, "x,y: \nmusicOn: \ntextColor: \nbackTextColor: \n" +
-                        "musicVolume: \nautostarts: \n");
+                        "musicVolume: \nautostarts: true\n");
             }
             ConfigureSettings();
         }
@@ -60,18 +73,25 @@ namespace AffairList
             for (int i = 0; i < settingLines.Length; i++)
             {
                 string[] lineSplitted = settingLines[i].Split(":");
-                if (lineSplitted[1].Trim().Length > 0)
-                {
-                    continue;
-                }
-                if (lineSplitted[0].StartsWith("x,y"))
+                if (lineSplitted[0].StartsWith("x,y") && lineSplitted[1].Trim().Length == 0)
                 {
                     int width = Screen.PrimaryScreen.WorkingArea.Width;
                     int height = Screen.PrimaryScreen.WorkingArea.Height + Screen.PrimaryScreen.WorkingArea.Height / 10;
                     lineSplitted[1] = width - width / 6 + " " + height / 90;
                 }
+                if (lineSplitted[0].Contains("autostarts"))
+                {
+                    if(lineSplitted[1].Contains("true"))
+                    {
+                        EnableAutoStart("AffairList", Application.ExecutablePath);
+                    }
+                    else
+                    {
+                        DisableAutoStart("AffairList");
+                    }
+                }
 
-                settingLines[i] = lineSplitted[0] + ": " + lineSplitted[1];
+                settingLines[i] = lineSplitted[0].Trim() + ": " + lineSplitted[1].Trim();
             }
             File.WriteAllLines(settingsFileFullPath, settingLines);
         }

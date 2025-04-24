@@ -32,6 +32,8 @@
             CloseButton = new Label();
             SettingsLab = new Label();
             panel1 = new Panel();
+            MusicVolumeLab = new Label();
+            AutostartLab = new Label();
             StateLab = new Label();
             MusicStateLab = new Label();
             ListBgTextColorLab = new Label();
@@ -41,8 +43,6 @@
             ConfirmButton = new Button();
             ResetButton = new Button();
             BackButton = new Button();
-            AutostartLab = new Label();
-            MusicVolumeLab = new Label();
             NameBackground.SuspendLayout();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -107,6 +107,32 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(440, 511);
             panel1.TabIndex = 1;
+            // 
+            // MusicVolumeLab
+            // 
+            MusicVolumeLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            MusicVolumeLab.AutoSize = true;
+            MusicVolumeLab.Font = new Font("Unispace", 13F);
+            MusicVolumeLab.ForeColor = Color.White;
+            MusicVolumeLab.Location = new Point(12, 295);
+            MusicVolumeLab.Name = "MusicVolumeLab";
+            MusicVolumeLab.Size = new Size(142, 21);
+            MusicVolumeLab.TabIndex = 15;
+            MusicVolumeLab.Text = "Music volume";
+            MusicVolumeLab.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // AutostartLab
+            // 
+            AutostartLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            AutostartLab.AutoSize = true;
+            AutostartLab.Font = new Font("Unispace", 13F);
+            AutostartLab.ForeColor = Color.White;
+            AutostartLab.Location = new Point(12, 330);
+            AutostartLab.Name = "AutostartLab";
+            AutostartLab.Size = new Size(175, 21);
+            AutostartLab.TabIndex = 14;
+            AutostartLab.Text = "Autostart state";
+            AutostartLab.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // StateLab
             // 
@@ -226,32 +252,6 @@
             BackButton.UseVisualStyleBackColor = false;
             BackButton.Click += BackButton_Click;
             // 
-            // AutostartLab
-            // 
-            AutostartLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            AutostartLab.AutoSize = true;
-            AutostartLab.Font = new Font("Unispace", 13F);
-            AutostartLab.ForeColor = Color.White;
-            AutostartLab.Location = new Point(12, 330);
-            AutostartLab.Name = "AutostartLab";
-            AutostartLab.Size = new Size(175, 21);
-            AutostartLab.TabIndex = 14;
-            AutostartLab.Text = "Autostart state";
-            AutostartLab.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // MusicVolumeLab
-            // 
-            MusicVolumeLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            MusicVolumeLab.AutoSize = true;
-            MusicVolumeLab.Font = new Font("Unispace", 13F);
-            MusicVolumeLab.ForeColor = Color.White;
-            MusicVolumeLab.Location = new Point(12, 295);
-            MusicVolumeLab.Name = "MusicVolumeLab";
-            MusicVolumeLab.Size = new Size(142, 21);
-            MusicVolumeLab.TabIndex = 15;
-            MusicVolumeLab.Text = "Music volume";
-            MusicVolumeLab.TextAlign = ContentAlignment.MiddleCenter;
-            // 
             // Settings
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -261,6 +261,7 @@
             FormBorderStyle = FormBorderStyle.None;
             KeyPreview = true;
             Name = "Settings";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Settings";
             KeyDown += Settings_KeyDown;
             NameBackground.ResumeLayout(false);
