@@ -32,6 +32,11 @@
             CloseButton = new Label();
             SettingsLab = new Label();
             panel1 = new Panel();
+            VolumeValueLab = new Label();
+            VolumeBar = new TrackBar();
+            PickBgColorButton = new Button();
+            PickTextColorButton = new Button();
+            autostartStateLab = new Label();
             MusicVolumeLab = new Label();
             AutostartLab = new Label();
             StateLab = new Label();
@@ -43,8 +48,10 @@
             ConfirmButton = new Button();
             ResetButton = new Button();
             BackButton = new Button();
+            ColorPicker = new ColorDialog();
             NameBackground.SuspendLayout();
             panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)VolumeBar).BeginInit();
             SuspendLayout();
             // 
             // NameBackground
@@ -90,6 +97,11 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(72, 3, 111);
+            panel1.Controls.Add(VolumeValueLab);
+            panel1.Controls.Add(VolumeBar);
+            panel1.Controls.Add(PickBgColorButton);
+            panel1.Controls.Add(PickTextColorButton);
+            panel1.Controls.Add(autostartStateLab);
             panel1.Controls.Add(MusicVolumeLab);
             panel1.Controls.Add(AutostartLab);
             panel1.Controls.Add(StateLab);
@@ -107,6 +119,76 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(440, 511);
             panel1.TabIndex = 1;
+            // 
+            // VolumeValueLab
+            // 
+            VolumeValueLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            VolumeValueLab.AutoSize = true;
+            VolumeValueLab.Font = new Font("Unispace", 13F);
+            VolumeValueLab.ForeColor = Color.White;
+            VolumeValueLab.Location = new Point(209, 295);
+            VolumeValueLab.Name = "VolumeValueLab";
+            VolumeValueLab.Size = new Size(21, 21);
+            VolumeValueLab.TabIndex = 20;
+            VolumeValueLab.Text = "0";
+            VolumeValueLab.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // VolumeBar
+            // 
+            VolumeBar.Location = new Point(247, 295);
+            VolumeBar.Maximum = 100;
+            VolumeBar.Name = "VolumeBar";
+            VolumeBar.Size = new Size(160, 45);
+            VolumeBar.TabIndex = 19;
+            VolumeBar.Value = 35;
+            VolumeBar.Scroll += VolumeBar_Scroll;
+            // 
+            // PickBgColorButton
+            // 
+            PickBgColorButton.BackColor = Color.FromArgb(173, 102, 213);
+            PickBgColorButton.FlatAppearance.BorderSize = 0;
+            PickBgColorButton.FlatStyle = FlatStyle.Flat;
+            PickBgColorButton.Font = new Font("Tahoma", 10F);
+            PickBgColorButton.ForeColor = Color.White;
+            PickBgColorButton.Location = new Point(332, 223);
+            PickBgColorButton.Name = "PickBgColorButton";
+            PickBgColorButton.Size = new Size(75, 23);
+            PickBgColorButton.TabIndex = 18;
+            PickBgColorButton.Text = "Pick color";
+            PickBgColorButton.UseVisualStyleBackColor = false;
+            PickBgColorButton.Click += PickBgColorButton_Click;
+            // 
+            // PickTextColorButton
+            // 
+            PickTextColorButton.BackColor = Color.FromArgb(173, 102, 213);
+            PickTextColorButton.FlatAppearance.BorderSize = 0;
+            PickTextColorButton.FlatStyle = FlatStyle.Flat;
+            PickTextColorButton.Font = new Font("Tahoma", 10F);
+            PickTextColorButton.ForeColor = Color.White;
+            PickTextColorButton.Location = new Point(332, 188);
+            PickTextColorButton.Name = "PickTextColorButton";
+            PickTextColorButton.Size = new Size(75, 23);
+            PickTextColorButton.TabIndex = 17;
+            PickTextColorButton.Text = "Pick color";
+            PickTextColorButton.UseVisualStyleBackColor = false;
+            PickTextColorButton.Click += PickTextColorButton_Click;
+            // 
+            // autostartStateLab
+            // 
+            autostartStateLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            autostartStateLab.AutoSize = true;
+            autostartStateLab.Font = new Font("Unispace", 13F);
+            autostartStateLab.ForeColor = Color.White;
+            autostartStateLab.Location = new Point(364, 343);
+            autostartStateLab.Name = "autostartStateLab";
+            autostartStateLab.Size = new Size(32, 21);
+            autostartStateLab.TabIndex = 16;
+            autostartStateLab.Text = "On";
+            autostartStateLab.TextAlign = ContentAlignment.MiddleCenter;
+            autostartStateLab.MouseDown += autostartStateLab_MouseDown;
+            autostartStateLab.MouseEnter += autostartStateLab_MouseEnter;
+            autostartStateLab.MouseLeave += autostartStateLab_MouseLeave;
+            autostartStateLab.MouseUp += autostartStateLab_MouseUp;
             // 
             // MusicVolumeLab
             // 
@@ -127,7 +209,7 @@
             AutostartLab.AutoSize = true;
             AutostartLab.Font = new Font("Unispace", 13F);
             AutostartLab.ForeColor = Color.White;
-            AutostartLab.Location = new Point(12, 330);
+            AutostartLab.Location = new Point(12, 343);
             AutostartLab.Name = "AutostartLab";
             AutostartLab.Size = new Size(175, 21);
             AutostartLab.TabIndex = 14;
@@ -268,6 +350,7 @@
             NameBackground.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)VolumeBar).EndInit();
             ResumeLayout(false);
         }
 
@@ -288,5 +371,11 @@
         private Label StateLab;
         private Label MusicVolumeLab;
         private Label AutostartLab;
+        private Label autostartStateLab;
+        private ColorDialog ColorPicker;
+        private Button PickTextColorButton;
+        private Button PickBgColorButton;
+        private TrackBar VolumeBar;
+        private Label VolumeValueLab;
     }
 }

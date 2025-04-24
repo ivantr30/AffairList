@@ -16,10 +16,9 @@ namespace AffairList
         Point lastPoint;
         string settingsFileFullPath = Application.StartupPath + "\\settings.txt";
         bool isConfirmed = true;
-
-        //состояния самих настроек
-        bool musicState = true; // базовая настройка
-
+        bool musicState = true;
+        bool autostartState = true;
+        int currentVolume = 0;
         private void EnableAutoStart(string appName, string exePath)
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
@@ -34,6 +33,8 @@ namespace AffairList
         public Settings()
         {
             InitializeComponent();
+            currentVolume = VolumeBar.Value;
+            VolumeValueLab.Text = currentVolume.ToString();
             LoadSettings();
         }
         private void LoadSettings()
@@ -156,7 +157,6 @@ namespace AffairList
 
         private void StateLab_MouseEnter(object sender, EventArgs e)
         {
-
             StateLab.ForeColor = Color.Gray;
         }
 
@@ -172,6 +172,59 @@ namespace AffairList
             StateLab.Text = "On";
             musicState = true;
             isConfirmed = false;
+        }
+
+        private void autostartStateLab_MouseDown(object sender, MouseEventArgs e)
+        {
+            autostartStateLab.ForeColor = Color.DarkGray;
+            if (autostartStateLab.Text == "On")
+            {
+                autostartStateLab.Text = "OFF";
+                autostartState = false;
+                return;
+            }
+            autostartStateLab.Text = "On";
+            autostartState = true;
+            isConfirmed = false;
+        }
+
+        private void autostartStateLab_MouseLeave(object sender, EventArgs e)
+        {
+            autostartStateLab.ForeColor = Color.White;
+        }
+
+        private void autostartStateLab_MouseUp(object sender, MouseEventArgs e)
+        {
+            autostartStateLab.ForeColor = Color.White;
+        }
+
+        private void autostartStateLab_MouseEnter(object sender, EventArgs e)
+        {
+            autostartStateLab.ForeColor = Color.Gray;
+        }
+
+        private void PickTextColorButton_Click(object sender, EventArgs e)
+        {
+            var res = ColorPicker.ShowDialog();
+            if (res == DialogResult.OK)
+            {
+                // написать реализацию записи текста в файл настроек и заданию этого текста в List
+            }
+        }
+
+        private void PickBgColorButton_Click(object sender, EventArgs e)
+        {
+            var res = ColorPicker.ShowDialog();
+            if (res == DialogResult.OK)
+            {
+                // написать реализацию записи текста в файл настроек и заданию этого текста в List
+            }
+        }
+
+        private void VolumeBar_Scroll(object sender, EventArgs e)
+        {
+            currentVolume = VolumeBar.Value;
+            VolumeValueLab.Text = currentVolume.ToString();
         }
     }
 }
