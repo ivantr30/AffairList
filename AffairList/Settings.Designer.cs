@@ -102,6 +102,7 @@
             ConfirmButton.TabIndex = 8;
             ConfirmButton.Text = "Confirm";
             ConfirmButton.UseVisualStyleBackColor = false;
+            ConfirmButton.Click += ConfirmButton_Click;
             // 
             // ResetButton
             // 

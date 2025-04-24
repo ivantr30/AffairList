@@ -14,6 +14,7 @@ namespace AffairList
     {
         Point lastPoint;
         string settingsFileFullPath = Application.StartupPath + "\\settings.txt";
+        bool isConfirmed = true;
         public Settings()
         {
             InitializeComponent();
@@ -79,6 +80,18 @@ namespace AffairList
 
         private void BackButton_Click(object sender, EventArgs e)
         {
+            if (!isConfirmed)
+            {
+                DialogResult result = MessageBox.Show(
+                    "Are you sure to leave with unsaved settings?",
+                    "Confirm window",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+                if (result == DialogResult.No)
+                {
+                    return;
+                }
+            }
             Application.Restart();
         }
 
@@ -100,6 +113,12 @@ namespace AffairList
                 }
                 MessageBox.Show("The settings were reseted succesfully");
             }
+        }
+
+        private void ConfirmButton_Click(object sender, EventArgs e)
+        {
+            isConfirmed = true;
+            // дописать вписание настроек в файл
         }
     }
 }
