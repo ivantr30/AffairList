@@ -34,16 +34,19 @@ namespace AffairList
         {
             if (e.KeyCode == Keys.F7)
             {
+                AffairList.trayIcon.Visible = false;
                 Application.Exit();
             }
             if (e.KeyCode == Keys.F6)
             {
+                AffairList.trayIcon.Visible = false;
                 Application.Restart();
             }
         }
 
         private void CloseButton_Click(object sender, EventArgs e)
         {
+            AffairList.trayIcon.Visible = false;
             Application.Exit();
         }
 
@@ -134,6 +137,7 @@ namespace AffairList
 
         private void BackButton_Click(object sender, EventArgs e)
         {
+            AffairList.trayIcon.Visible = false;
             Application.Restart();
         }
 

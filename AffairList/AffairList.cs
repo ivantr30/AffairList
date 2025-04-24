@@ -8,7 +8,7 @@ namespace AffairList
         string listFileFullPath = Application.StartupPath + "\\list.txt";
         string settingsFileFullPath = Application.StartupPath + "\\settings.txt";
         Point lastPoint;
-        private NotifyIcon trayIcon;
+        public static NotifyIcon trayIcon;
         private ContextMenuStrip trayMenu;
 
         private void EnableAutoStart(string appName, string exePath)

@@ -69,6 +69,7 @@ namespace AffairList
         private void CloseList()
         {
             this.Close();
+            AffairList.trayIcon.Visible = false;
             Application.Restart();
             Application.Run(new AffairList());
         }
@@ -76,6 +77,7 @@ namespace AffairList
         {
             if (e.KeyCode == Keys.F7)
             {
+                AffairList.trayIcon.Visible = false;
                 Application.Exit();
             }
             if (e.KeyCode == Keys.F6)
