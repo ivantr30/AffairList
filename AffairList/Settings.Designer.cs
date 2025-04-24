@@ -32,9 +32,14 @@
             CloseButton = new Label();
             SettingsLab = new Label();
             panel1 = new Panel();
+            ListLocationLab = new Label();
             ConfirmButton = new Button();
             ResetButton = new Button();
             BackButton = new Button();
+            label2 = new Label();
+            ListTextColorLab = new Label();
+            ListBgTextColorLab = new Label();
+            MusicStateLab = new Label();
             NameBackground.SuspendLayout();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -82,6 +87,11 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(72, 3, 111);
+            panel1.Controls.Add(MusicStateLab);
+            panel1.Controls.Add(ListBgTextColorLab);
+            panel1.Controls.Add(ListTextColorLab);
+            panel1.Controls.Add(label2);
+            panel1.Controls.Add(ListLocationLab);
             panel1.Controls.Add(ConfirmButton);
             panel1.Controls.Add(ResetButton);
             panel1.Controls.Add(BackButton);
@@ -91,6 +101,19 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(440, 511);
             panel1.TabIndex = 1;
+            // 
+            // ListLocationLab
+            // 
+            ListLocationLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            ListLocationLab.AutoSize = true;
+            ListLocationLab.Font = new Font("Unispace", 13F);
+            ListLocationLab.ForeColor = Color.White;
+            ListLocationLab.Location = new Point(12, 155);
+            ListLocationLab.Name = "ListLocationLab";
+            ListLocationLab.Size = new Size(197, 21);
+            ListLocationLab.TabIndex = 3;
+            ListLocationLab.Text = "List x,y location";
+            ListLocationLab.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // ConfirmButton
             // 
@@ -128,6 +151,58 @@
             BackButton.UseVisualStyleBackColor = false;
             BackButton.Click += BackButton_Click;
             // 
+            // label2
+            // 
+            label2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            label2.AutoSize = true;
+            label2.Font = new Font("Unispace", 13F);
+            label2.ForeColor = Color.White;
+            label2.Location = new Point(353, 154);
+            label2.Name = "label2";
+            label2.Size = new Size(54, 21);
+            label2.TabIndex = 9;
+            label2.Text = "0, 0";
+            label2.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // ListTextColorLab
+            // 
+            ListTextColorLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            ListTextColorLab.AutoSize = true;
+            ListTextColorLab.Font = new Font("Unispace", 13F);
+            ListTextColorLab.ForeColor = Color.White;
+            ListTextColorLab.Location = new Point(12, 190);
+            ListTextColorLab.Name = "ListTextColorLab";
+            ListTextColorLab.Size = new Size(175, 21);
+            ListTextColorLab.TabIndex = 10;
+            ListTextColorLab.Text = "List text color";
+            ListTextColorLab.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // ListBgTextColorLab
+            // 
+            ListBgTextColorLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            ListBgTextColorLab.AutoSize = true;
+            ListBgTextColorLab.Font = new Font("Unispace", 13F);
+            ListBgTextColorLab.ForeColor = Color.White;
+            ListBgTextColorLab.Location = new Point(12, 225);
+            ListBgTextColorLab.Name = "ListBgTextColorLab";
+            ListBgTextColorLab.Size = new Size(296, 21);
+            ListBgTextColorLab.TabIndex = 11;
+            ListBgTextColorLab.Text = "List background text color";
+            ListBgTextColorLab.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // MusicStateLab
+            // 
+            MusicStateLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            MusicStateLab.AutoSize = true;
+            MusicStateLab.Font = new Font("Unispace", 13F);
+            MusicStateLab.ForeColor = Color.White;
+            MusicStateLab.Location = new Point(12, 260);
+            MusicStateLab.Name = "MusicStateLab";
+            MusicStateLab.Size = new Size(131, 21);
+            MusicStateLab.TabIndex = 12;
+            MusicStateLab.Text = "Music state";
+            MusicStateLab.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // Settings
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -142,6 +217,7 @@
             NameBackground.ResumeLayout(false);
             NameBackground.PerformLayout();
             panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -154,5 +230,10 @@
         private Button ConfirmButton;
         private Button ResetButton;
         private Button BackButton;
+        private Label ListLocationLab;
+        private Label ListBgTextColorLab;
+        private Label ListTextColorLab;
+        private Label label2;
+        private Label MusicStateLab;
     }
 }
