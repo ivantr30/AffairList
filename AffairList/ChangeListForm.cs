@@ -117,7 +117,7 @@ namespace AffairList
         }
         private void DeleteAffair()
         {
-            if (currentIndex != null)
+            if (currentIndex != -1)
             {
                 if (File.Exists(Application.StartupPath + "\\list.txt"))
                 {
