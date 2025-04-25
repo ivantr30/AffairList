@@ -132,7 +132,6 @@
             Affairs.Size = new Size(429, 191);
             Affairs.TabIndex = 4;
             Affairs.SelectedIndexChanged += Affairs_SelectedIndexChanged;
-            Affairs.KeyDown += Affairs_KeyDown;
             // 
             // ClearButton
             // 
@@ -166,7 +165,6 @@
             AffairInput.PlaceholderText = "Введите название дела";
             AffairInput.Size = new Size(429, 31);
             AffairInput.TabIndex = 1;
-            AffairInput.KeyDown += AffairInput_KeyDown;
             // 
             // ChangeListForm
             // 

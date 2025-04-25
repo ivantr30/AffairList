@@ -27,6 +27,7 @@ namespace AffairList
                 foreach (string line in File.ReadAllLines(Application.StartupPath + "\\list.txt"))
                 {
                     Affairs.Items.Add(line);
+                    Affairs.SelectedIndex++;
                 }
             }
         }
@@ -44,6 +45,14 @@ namespace AffairList
             if (e.KeyCode == Keys.F6)
             {
                 CloseOrExit(Application.Restart);
+            }
+            if (e.KeyCode == Keys.Enter)
+            {
+                AddAffair();
+            }
+            if (e.KeyCode == Keys.Delete)
+            {
+                DeleteAffair();
             }
         }
 
@@ -107,17 +116,9 @@ namespace AffairList
             }
             AffairInput.Text = "";
         }
-        private void AddAffairButton_Click(object sender, EventArgs e)
-        {
-            AddAffair();
-        }
-        private void Affairs_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            currentIndex = Affairs.SelectedIndex;
-        }
         private void DeleteAffair()
         {
-            if (currentIndex != -1)
+            if (currentIndex != -1 && currentIndex != null)
             {
                 if (File.Exists(Application.StartupPath + "\\list.txt"))
                 {
@@ -127,6 +128,14 @@ namespace AffairList
                 }
                 Affairs.Items.RemoveAt((int)currentIndex);
             }
+        }
+        private void AddAffairButton_Click(object sender, EventArgs e)
+        {
+            AddAffair();
+        }
+        private void Affairs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            currentIndex = Affairs.SelectedIndex;
         }
         private void DeleteButton_Click(object sender, EventArgs e)
         {
@@ -140,22 +149,6 @@ namespace AffairList
         private void BackButton_Click(object sender, EventArgs e)
         {
             CloseOrExit(Application.Restart);
-        }
-
-        private void Affairs_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Delete)
-            {
-                DeleteAffair();
-            }
-        }
-
-        private void AffairInput_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                AddAffair();
-            }
         }
 
         private void ChangeListForm_FormClosing(object sender, FormClosingEventArgs e)
