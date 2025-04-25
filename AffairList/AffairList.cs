@@ -211,7 +211,7 @@ namespace AffairList
 
         private void AffairList_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Application.Exit();
+            CloseOrExit(Application.Exit);
         }
     }
 }

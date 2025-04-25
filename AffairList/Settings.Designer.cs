@@ -177,7 +177,7 @@
             PickBgColorButton.ForeColor = Color.White;
             PickBgColorButton.Location = new Point(332, 223);
             PickBgColorButton.Name = "PickBgColorButton";
-            PickBgColorButton.Size = new Size(75, 23);
+            PickBgColorButton.Size = new Size(75, 30);
             PickBgColorButton.TabIndex = 18;
             PickBgColorButton.Text = "Pick color";
             PickBgColorButton.UseVisualStyleBackColor = false;
@@ -192,7 +192,7 @@
             PickTextColorButton.ForeColor = Color.White;
             PickTextColorButton.Location = new Point(332, 188);
             PickTextColorButton.Name = "PickTextColorButton";
-            PickTextColorButton.Size = new Size(75, 23);
+            PickTextColorButton.Size = new Size(75, 30);
             PickTextColorButton.TabIndex = 17;
             PickTextColorButton.Text = "Pick color";
             PickTextColorButton.UseVisualStyleBackColor = false;

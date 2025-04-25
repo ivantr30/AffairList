@@ -160,7 +160,7 @@ namespace AffairList
 
         private void ChangeListForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Application.Exit();
+            CloseOrExit(Application.Exit);
         }
     }
 }

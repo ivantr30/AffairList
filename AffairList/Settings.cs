@@ -181,7 +181,7 @@ namespace AffairList
                 }
                 MessageBox.Show("The settings were reseted succesfully");
             }
-            Application.Restart();
+            CloseOrExit(Application.Restart);
         }
 
         private void ConfirmButton_Click(object sender, EventArgs e)
@@ -341,7 +341,7 @@ namespace AffairList
 
         private void Settings_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Application.Exit();
+            CloseOrExit(Application.Exit);
         }
 
         private void LocationLab_MouseEnter(object sender, EventArgs e)
