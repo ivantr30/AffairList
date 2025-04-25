@@ -346,12 +346,12 @@ namespace AffairList
 
         private void LocationLab_MouseEnter(object sender, EventArgs e)
         {
-
+            LocationLab.ForeColor = Color.Gray;
         }
 
         private void LocationLab_MouseLeave(object sender, EventArgs e)
         {
-
+            LocationLab.ForeColor = Color.White;
         }
     }
 }
