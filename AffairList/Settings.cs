@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using Microsoft.VisualBasic;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -39,15 +40,47 @@ namespace AffairList
                     x = int.Parse(currentSetting[1]);
                     y = int.Parse(currentSetting[2]);
 
-                    LocationLab.Text = x + ", " + y ;
+                    LocationLab.Text = x + ", " + y;
                 }
-                if (settingLine[i].Contains("textColor:"))
+                if (settingLine[i].Contains("textColor"))
                 {
-                    ListTextColorLab.ForeColor = Color.FromName(currentSetting[1]);
+                    ListTextColorLab.ForeColor = Color.FromArgb(0, int.Parse(currentSetting[1]), int.Parse(currentSetting[2]),
+                        int.Parse(currentSetting[3]));
                 }
                 if (settingLine[i].Contains("backTextColor:"))
                 {
-                    ListBgTextColorLab.ForeColor = Color.FromName(currentSetting[1]);
+                    ListBgTextColorLab.ForeColor = Color.FromArgb(0, int.Parse(currentSetting[1]), int.Parse(currentSetting[2]),
+                        int.Parse(currentSetting[3]));
+                }
+                if (settingLine[i].Contains("musicOn"))
+                {
+                    if (currentSetting[1].Contains("True"))
+                    {
+                        StateLab.Text = "On";
+                        musicState = true;
+                    }
+                    else
+                    {
+                        StateLab.Text = "OFF";
+                        musicState = false;
+                    }
+                }
+                if (settingLine[i].Contains("autostarts"))
+                {
+                    if (currentSetting[1].Contains("True"))
+                    {
+                        autostartStateLab.Text = "On";
+                        autostartState = true;
+                    }
+                    else
+                    {
+                        autostartStateLab.Text = "OFF";
+                        autostartState = false;
+                    }
+                }
+                if (settingLine[i].Contains("musicVolume"))
+                {
+                    VolumeValueLab.Text = currentSetting[1];
                 }
             }
         }
@@ -138,8 +171,9 @@ namespace AffairList
             if (result == DialogResult.Yes)
             {
                 File.WriteAllText(settingsFileFullPath, "x,y: \nmusicOn: true" +
-                    $"\ntextColor: {KnownColor.MediumSpringGreen}\nbackTextColor: Black\n" +
-                            "musicVolume: 35\nautostarts: true\n");
+                    $"\ntextColor: {Color.MediumSpringGreen.R} {Color.MediumSpringGreen.G} {Color.MediumSpringGreen.B}" +
+                    $"\nbackTextColor: {Color.Black.R} {Color.Black.G} {Color.Black.B}\n" +
+                        "musicVolume: 35\nautostarts: true\n");
                 if (!File.Exists(settingsFileFullPath))
                 {
                     MessageBox.Show("Error, settings file does not exist");
@@ -153,7 +187,45 @@ namespace AffairList
         private void ConfirmButton_Click(object sender, EventArgs e)
         {
             isConfirmed = true;
-            // дописать вписание настроек в файл
+            string[] settingLines = File.ReadAllLines(settingsFileFullPath);
+            for (int i = 0; i < settingLines.Length; i++)
+            {
+                if (settingLines[i].Contains("x,y:"))
+                {
+                    settingLines[i] = settingLines[i].Substring(0, settingLines[i].IndexOf(":")) +
+                        ": " + x + " " + y;
+
+                    LocationLab.Text = x + ", " + y;
+                }
+                if (settingLines[i].Contains("textColor"))
+                {
+                    settingLines[i] = settingLines[i].Substring(0, settingLines[i].IndexOf(":")) +
+                        ": " + ListTextColorLab.ForeColor.R + " " + ListTextColorLab.ForeColor.G
+                        + " " + ListTextColorLab.ForeColor.B;
+                }
+                if (settingLines[i].Contains("backTextColor"))
+                {
+                    settingLines[i] = settingLines[i].Substring(0, settingLines[i].IndexOf(":")) +
+                        ": " + ListBgTextColorLab.ForeColor.R + " " + ListBgTextColorLab.ForeColor.G
+                        + " " + ListBgTextColorLab.ForeColor.B;
+                }
+                if (settingLines[i].Contains("musicOn"))
+                {
+                    settingLines[i] = settingLines[i].Substring(0, settingLines[i].IndexOf(":")) +
+                        ": " + musicState;
+                }
+                if (settingLines[i].Contains("autostarts"))
+                {
+                    settingLines[i] = settingLines[i].Substring(0, settingLines[i].IndexOf(":")) +
+                        ": " + autostartState;
+                }
+                if (settingLines[i].Contains("musicVolume"))
+                {
+                    settingLines[i] = settingLines[i].Substring(0, settingLines[i].IndexOf(":")) +
+                        ": " + VolumeBar.Value;
+                }
+            }
+            File.WriteAllLines(settingsFileFullPath, settingLines);
         }
 
         private void StateLab_MouseLeave(object sender, EventArgs e)
@@ -220,7 +292,7 @@ namespace AffairList
             var res = ColorPicker.ShowDialog();
             if (res == DialogResult.OK)
             {
-                // написать реализацию записи текста в файл настроек и заданию этого текста в List
+                ListTextColorLab.ForeColor = ColorPicker.Color;
             }
         }
 
@@ -229,7 +301,7 @@ namespace AffairList
             var res = ColorPicker.ShowDialog();
             if (res == DialogResult.OK)
             {
-                // написать реализацию записи текста в файл настроек и заданию этого текста в List
+                ListBgTextColorLab.ForeColor = ColorPicker.Color;
             }
         }
 
@@ -237,16 +309,49 @@ namespace AffairList
         {
             currentVolume = VolumeBar.Value;
             VolumeValueLab.Text = currentVolume.ToString();
+            isConfirmed = false;
         }
 
         private void LocationLab_DoubleClick(object sender, EventArgs e)
         {
-
+            int prevX = x, prevY = y;
+            try
+            {
+                x = int.Parse(Interaction.InputBox("Enter x coordinate", "InputWindow", ""));
+            }
+            catch
+            {
+                MessageBox.Show("Error");
+                x = prevX;
+                return;
+            }
+            try
+            {
+                y = int.Parse(Interaction.InputBox("Enter y coordinate", "InputWindow", ""));
+            }
+            catch
+            {
+                MessageBox.Show("Error");
+                y = prevY;
+                return;
+            }
+            isConfirmed = false;
+            LocationLab.Text = x + ", " + y;
         }
 
         private void Settings_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void LocationLab_MouseEnter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void LocationLab_MouseLeave(object sender, EventArgs e)
+        {
+
         }
     }
 }

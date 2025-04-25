@@ -8,8 +8,8 @@ namespace AffairList
         string listFileFullPath = Application.StartupPath + "\\list.txt";
         string settingsFileFullPath = Application.StartupPath + "\\settings.txt";
         Point lastPoint;
-        public static Color textColor;
-        public static Color bgtextColor;
+        public static Color textColor = Color.MediumSpringGreen;
+        public static Color bgtextColor = Color.Black;
         public static NotifyIcon trayIcon;
         private ContextMenuStrip trayMenu;
 
@@ -53,7 +53,8 @@ namespace AffairList
 
                 }
                 File.WriteAllText(settingsFileFullPath, "x,y: \nmusicOn: true" +
-                    $"\ntextColor: {KnownColor.MediumSpringGreen}\nbackTextColor: Black\n" +
+                    $"\ntextColor: {textColor.R} {textColor.G} {textColor.B}" +
+                    $"\nbackTextColor: {bgtextColor.R} {bgtextColor.G} {bgtextColor.B}\n" +
                         "musicVolume: 35\nautostarts: true\n");
             }
             ConfigureSettings();
@@ -89,7 +90,7 @@ namespace AffairList
                 }
                 if (settingLines[i].Contains("autostarts"))
                 {
-                    if (lineSplitted[1].Contains("true"))
+                    if (lineSplitted[1].Contains("True"))
                     {
                         EnableAutoStart("AffairList", Application.ExecutablePath);
                     }
@@ -100,11 +101,13 @@ namespace AffairList
                 }
                 if (settingLines[i].Contains("textColor"))
                 {
-                    textColor = Color.FromName(lineSplitted[1]);
+                    textColor = Color.FromArgb(255, int.Parse(lineSplitted[1]), int.Parse(lineSplitted[2]),
+                        int.Parse(lineSplitted[3]));
                 }
                 if (settingLines[i].Contains("backTextColor:"))
                 {
-                    bgtextColor = Color.FromName(lineSplitted[1]);
+                    bgtextColor = Color.FromArgb(255, int.Parse(lineSplitted[1]), int.Parse(lineSplitted[2]),
+                        int.Parse(lineSplitted[3]));
                 }
                 settingLines[i] = settingLines[i].Substring(0, settingLines[i].IndexOf(":"))
                     + string.Join(" ", lineSplitted);

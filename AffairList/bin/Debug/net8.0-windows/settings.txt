@@ -1,6 +1,6 @@
-x,y: 1373 968
-musicOn: true
-textColor: White
-backTextColor: Gray
+x,y: 1600 10
+musicOn: False
+textColor: 0 250 154
+backTextColor: 0 0 0
 musicVolume: 35
-autostarts: false
+autostarts: False

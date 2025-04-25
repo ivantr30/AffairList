@@ -310,6 +310,8 @@
             LocationLab.Text = "0, 0";
             LocationLab.TextAlign = ContentAlignment.MiddleRight;
             LocationLab.DoubleClick += LocationLab_DoubleClick;
+            LocationLab.MouseEnter += LocationLab_MouseEnter;
+            LocationLab.MouseLeave += LocationLab_MouseLeave;
             // 
             // ListLocationLab
             // 
