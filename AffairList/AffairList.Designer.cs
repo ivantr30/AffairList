@@ -181,6 +181,7 @@
             Name = "AffairList";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "AffairList";
+            FormClosing += AffairList_FormClosing;
             panel1.ResumeLayout(false);
             NameBackground.ResumeLayout(false);
             NameBackground.PerformLayout();

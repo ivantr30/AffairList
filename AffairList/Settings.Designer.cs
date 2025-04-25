@@ -32,6 +32,8 @@
             CloseButton = new Label();
             SettingsLab = new Label();
             panel1 = new Panel();
+            ThemeBoxCB = new ComboBox();
+            ChooseThemeLab = new Label();
             VolumeValueLab = new Label();
             VolumeBar = new TrackBar();
             PickBgColorButton = new Button();
@@ -49,8 +51,6 @@
             ResetButton = new Button();
             BackButton = new Button();
             ColorPicker = new ColorDialog();
-            ChooseThemeLab = new Label();
-            ThemeBoxCB = new ComboBox();
             NameBackground.SuspendLayout();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)VolumeBar).BeginInit();
@@ -123,6 +123,27 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(440, 511);
             panel1.TabIndex = 1;
+            // 
+            // ThemeBoxCB
+            // 
+            ThemeBoxCB.FormattingEnabled = true;
+            ThemeBoxCB.Location = new Point(286, 378);
+            ThemeBoxCB.Name = "ThemeBoxCB";
+            ThemeBoxCB.Size = new Size(121, 25);
+            ThemeBoxCB.TabIndex = 22;
+            // 
+            // ChooseThemeLab
+            // 
+            ChooseThemeLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            ChooseThemeLab.AutoSize = true;
+            ChooseThemeLab.Font = new Font("Unispace", 13F);
+            ChooseThemeLab.ForeColor = Color.White;
+            ChooseThemeLab.Location = new Point(12, 378);
+            ChooseThemeLab.Name = "ChooseThemeLab";
+            ChooseThemeLab.Size = new Size(142, 21);
+            ChooseThemeLab.TabIndex = 21;
+            ChooseThemeLab.Text = "Choose theme";
+            ChooseThemeLab.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // VolumeValueLab
             // 
@@ -279,15 +300,16 @@
             // LocationLab
             // 
             LocationLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            LocationLab.AutoSize = true;
             LocationLab.Font = new Font("Unispace", 13F);
             LocationLab.ForeColor = Color.White;
-            LocationLab.Location = new Point(353, 154);
+            LocationLab.Location = new Point(286, 155);
             LocationLab.Name = "LocationLab";
-            LocationLab.Size = new Size(54, 21);
+            LocationLab.RightToLeft = RightToLeft.No;
+            LocationLab.Size = new Size(121, 21);
             LocationLab.TabIndex = 9;
             LocationLab.Text = "0, 0";
-            LocationLab.TextAlign = ContentAlignment.MiddleCenter;
+            LocationLab.TextAlign = ContentAlignment.MiddleRight;
+            LocationLab.DoubleClick += LocationLab_DoubleClick;
             // 
             // ListLocationLab
             // 
@@ -338,27 +360,6 @@
             BackButton.UseVisualStyleBackColor = false;
             BackButton.Click += BackButton_Click;
             // 
-            // ChooseThemeLab
-            // 
-            ChooseThemeLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            ChooseThemeLab.AutoSize = true;
-            ChooseThemeLab.Font = new Font("Unispace", 13F);
-            ChooseThemeLab.ForeColor = Color.White;
-            ChooseThemeLab.Location = new Point(12, 378);
-            ChooseThemeLab.Name = "ChooseThemeLab";
-            ChooseThemeLab.Size = new Size(142, 21);
-            ChooseThemeLab.TabIndex = 21;
-            ChooseThemeLab.Text = "Choose theme";
-            ChooseThemeLab.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // ThemeBoxCB
-            // 
-            ThemeBoxCB.FormattingEnabled = true;
-            ThemeBoxCB.Location = new Point(286, 378);
-            ThemeBoxCB.Name = "ThemeBoxCB";
-            ThemeBoxCB.Size = new Size(121, 25);
-            ThemeBoxCB.TabIndex = 22;
-            // 
             // Settings
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -370,6 +371,7 @@
             Name = "Settings";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Settings";
+            FormClosing += Settings_FormClosing;
             KeyDown += Settings_KeyDown;
             NameBackground.ResumeLayout(false);
             NameBackground.PerformLayout();

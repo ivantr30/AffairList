@@ -19,17 +19,7 @@ namespace AffairList
         bool musicState = true;
         bool autostartState = true;
         int currentVolume = 0;
-        private void EnableAutoStart(string appName, string exePath)
-        {
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
-            key.SetValue(appName, $"\"{exePath}\"");
-        }
-        private void DisableAutoStart(string appName)
-        {
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
-            key.DeleteValue(appName, false);
-        }
-        //EnableAutoStart("AffairList", Application.ExecutablePath);
+        int x, y;
         public Settings()
         {
             InitializeComponent();
@@ -39,7 +29,27 @@ namespace AffairList
         }
         private void LoadSettings()
         {
+            string[] settingLine = File.ReadAllLines(settingsFileFullPath);
+            for (int i = 0; i < settingLine.Length; i++)
+            {
+                string[] currentSetting = settingLine[i].Substring(settingLine[i].IndexOf(":")
+                    ).Split(" ");
+                if (settingLine[i].Contains("x,y:"))
+                {
+                    x = int.Parse(currentSetting[1]);
+                    y = int.Parse(currentSetting[2]);
 
+                    LocationLab.Text = x + ", " + y ;
+                }
+                if (settingLine[i].Contains("textColor:"))
+                {
+                    ListTextColorLab.ForeColor = Color.FromName(currentSetting[1]);
+                }
+                if (settingLine[i].Contains("backTextColor:"))
+                {
+                    ListBgTextColorLab.ForeColor = Color.FromName(currentSetting[1]);
+                }
+            }
         }
         private void CloseOrExit(Action action)
         {
@@ -127,8 +137,9 @@ namespace AffairList
                 MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                File.WriteAllText(settingsFileFullPath, "x,y: \nmusicOn: \ntextColor: \nbackTextColor: \n" +
-                            "musicVolume: \nautostarts: \n");
+                File.WriteAllText(settingsFileFullPath, "x,y: \nmusicOn: true" +
+                    $"\ntextColor: {KnownColor.MediumSpringGreen}\nbackTextColor: Black\n" +
+                            "musicVolume: 35\nautostarts: true\n");
                 if (!File.Exists(settingsFileFullPath))
                 {
                     MessageBox.Show("Error, settings file does not exist");
@@ -136,6 +147,7 @@ namespace AffairList
                 }
                 MessageBox.Show("The settings were reseted succesfully");
             }
+            Application.Restart();
         }
 
         private void ConfirmButton_Click(object sender, EventArgs e)
@@ -225,6 +237,16 @@ namespace AffairList
         {
             currentVolume = VolumeBar.Value;
             VolumeValueLab.Text = currentVolume.ToString();
+        }
+
+        private void LocationLab_DoubleClick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Settings_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

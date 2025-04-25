@@ -20,12 +20,12 @@ namespace AffairList
             AffairList.trayIcon.Visible = false;
             Application.Exit();
         }
-        private async void Return()
+        private void Return()
         {
             AffairList.trayIcon.Visible = false;
             this.Close();
-            await Task.Delay(1);
             Application.Restart();
+            Application.Run();
         }
         private void SetLocation()
         {
@@ -37,6 +37,9 @@ namespace AffairList
             Affairs.AutoSize = false;
             Affairs.Padding = new Padding(0, 0, 180, 0);
             Affairs.Size = new Size(500, Height);
+            Affairs.ForeColor = AffairList.textColor;
+            BackColor = AffairList.bgtextColor;
+            TransparencyKey = AffairList.bgtextColor;
         }
         private void LoadSettings()
         {

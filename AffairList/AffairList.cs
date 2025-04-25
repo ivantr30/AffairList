@@ -8,6 +8,8 @@ namespace AffairList
         string listFileFullPath = Application.StartupPath + "\\list.txt";
         string settingsFileFullPath = Application.StartupPath + "\\settings.txt";
         Point lastPoint;
+        public static Color textColor;
+        public static Color bgtextColor;
         public static NotifyIcon trayIcon;
         private ContextMenuStrip trayMenu;
 
@@ -50,8 +52,9 @@ namespace AffairList
                 {
 
                 }
-                File.WriteAllText(settingsFileFullPath, "x,y: \nmusicOn: \ntextColor: \nbackTextColor: \n" +
-                        "musicVolume: \nautostarts: true\n");
+                File.WriteAllText(settingsFileFullPath, "x,y: \nmusicOn: true" +
+                    $"\ntextColor: {KnownColor.MediumSpringGreen}\nbackTextColor: Black\n" +
+                        "musicVolume: 35\nautostarts: true\n");
             }
             ConfigureSettings();
         }
@@ -76,16 +79,17 @@ namespace AffairList
             string[] settingLines = File.ReadAllLines(settingsFileFullPath);
             for (int i = 0; i < settingLines.Length; i++)
             {
-                string[] lineSplitted = settingLines[i].Split(":");
-                if (lineSplitted[0].StartsWith("x,y") && lineSplitted[1].Trim().Length == 0)
+                string[] lineSplitted = settingLines[i].Substring(settingLines[i].IndexOf(":"))
+                    .Split(" ");
+                if (settingLines[i].Contains("x,y") && lineSplitted[1].Length < 2)
                 {
                     int width = Screen.PrimaryScreen.WorkingArea.Width;
                     int height = Screen.PrimaryScreen.WorkingArea.Height + Screen.PrimaryScreen.WorkingArea.Height / 10;
                     lineSplitted[1] = width - width / 6 + " " + height / 90;
                 }
-                if (lineSplitted[0].Contains("autostarts"))
+                if (settingLines[i].Contains("autostarts"))
                 {
-                    if(lineSplitted[1].Contains("true"))
+                    if (lineSplitted[1].Contains("true"))
                     {
                         EnableAutoStart("AffairList", Application.ExecutablePath);
                     }
@@ -94,8 +98,16 @@ namespace AffairList
                         DisableAutoStart("AffairList");
                     }
                 }
-
-                settingLines[i] = lineSplitted[0].Trim() + ": " + lineSplitted[1].Trim();
+                if (settingLines[i].Contains("textColor"))
+                {
+                    textColor = Color.FromName(lineSplitted[1]);
+                }
+                if (settingLines[i].Contains("backTextColor:"))
+                {
+                    bgtextColor = Color.FromName(lineSplitted[1]);
+                }
+                settingLines[i] = settingLines[i].Substring(0, settingLines[i].IndexOf(":"))
+                    + string.Join(" ", lineSplitted);
             }
             File.WriteAllLines(settingsFileFullPath, settingLines);
         }
@@ -194,5 +206,9 @@ namespace AffairList
             settings.Show();
         }
 
+        private void AffairList_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

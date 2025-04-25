@@ -157,5 +157,10 @@ namespace AffairList
                 AddAffair();
             }
         }
+
+        private void ChangeListForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }

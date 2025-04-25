@@ -179,6 +179,7 @@
             Name = "ChangeListForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ChangeListForm";
+            FormClosing += ChangeListForm_FormClosing;
             KeyDown += GlobalHook_KeyDown;
             NameBackground.ResumeLayout(false);
             NameBackground.PerformLayout();
