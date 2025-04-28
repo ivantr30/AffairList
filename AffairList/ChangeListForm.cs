@@ -14,7 +14,8 @@ namespace AffairList
     public partial class ChangeListForm : Form
     {
         Point lastPoint;
-        int? currentIndex = null;
+        int currentDragIndex = 0;
+        bool isDragging = false;
         public ChangeListForm()
         {
             InitializeComponent();
@@ -118,24 +119,20 @@ namespace AffairList
         }
         private void DeleteAffair()
         {
-            if (currentIndex != -1 && currentIndex != null)
+            if (Affairs.SelectedIndex != -1)
             {
                 if (File.Exists(Application.StartupPath + "\\list.txt"))
                 {
                     var fileText = File.ReadAllLines(Application.StartupPath + "\\list.txt").ToList();
-                    fileText.RemoveAt((int)currentIndex);
+                    fileText.RemoveAt(Affairs.SelectedIndex);
                     File.WriteAllLines(Application.StartupPath + "\\list.txt", fileText);
                 }
-                Affairs.Items.RemoveAt((int)currentIndex);
+                Affairs.Items.RemoveAt(Affairs.SelectedIndex);
             }
         }
         private void AddAffairButton_Click(object sender, EventArgs e)
         {
             AddAffair();
-        }
-        private void Affairs_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            currentIndex = Affairs.SelectedIndex;
         }
         private void DeleteButton_Click(object sender, EventArgs e)
         {
@@ -154,6 +151,40 @@ namespace AffairList
         private void ChangeListForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             CloseOrExit(Application.Exit);
+        }
+
+        private void AddDeadlineButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PriorityButton_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void Affairs_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (!isDragging)
+            {
+                isDragging = true;
+                currentDragIndex = Affairs.SelectedIndex;
+            }
+        }
+
+        private void Affairs_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (currentDragIndex == -1)
+                return;
+            var temp = Affairs.Items[currentDragIndex];
+            Affairs.Items[currentDragIndex] = Affairs.Items[Affairs.SelectedIndex];
+            Affairs.Items[Affairs.SelectedIndex] = temp;
+            string[] res = new string[Affairs.Items.Count];
+            for (int i = 0; i < res.Length; i++)
+            {
+                res[i] = (string)Affairs.Items[i];
+            }
+            File.WriteAllLines(Application.StartupPath + "\\list.txt", res);
+            isDragging = false;
         }
     }
 }
