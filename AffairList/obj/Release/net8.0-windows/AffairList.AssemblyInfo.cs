@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AffairList")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6b9c1e182ab6c392fc197c3d5eec04363df799f9")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2f8a5071649fb4ec6f58310fe216911731f73e28")]
 [assembly: System.Reflection.AssemblyProductAttribute("AffairList")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AffairList")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

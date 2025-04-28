@@ -139,8 +139,8 @@ namespace AffairList
         {
             if (e.Button == MouseButtons.Left)
             {
-                this.Left = e.X - lastPoint.X;
-                this.Top = e.Y - lastPoint.Y;
+                this.Left += e.X - lastPoint.X;
+                this.Top += e.Y - lastPoint.Y;
             }
         }
 
