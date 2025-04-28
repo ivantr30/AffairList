@@ -1,9 +1,11 @@
 ﻿using Gma.System.MouseKeyHook;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -105,7 +107,7 @@ namespace AffairList
 
         private void AddAffair()
         {
-            if (AffairInput.Text == "")
+            if (AffairInput.Text.Trim() == "")
             {
                 MessageBox.Show("Error, textbox is null");
                 return;
@@ -155,7 +157,32 @@ namespace AffairList
 
         private void AddDeadlineButton_Click(object sender, EventArgs e)
         {
-
+            if (Affairs.SelectedIndex == -1)
+                return;
+            string res;
+            string temp = (string)Affairs.Items[Affairs.SelectedIndex];
+            try
+            {
+                DateTime.ParseExact(temp.Substring(0,10),"dd.MM.yyyy", null, DateTimeStyles.None);
+                temp = temp.Substring(10).Trim();
+            }
+            catch
+            {
+                temp = temp.Trim();
+            }
+            res = DateTime.ParseExact(
+                        Interaction.InputBox(
+                        "Enter Deadline in format dd-MM-yyyy",
+                        "DateTime input box"), "dd-MM-yyyy", null, DateTimeStyles.None).ToString();
+            res = res.Substring(0, 10).Trim();
+            Affairs.Items[Affairs.SelectedIndex] = res + " " + temp;
+                ;
+            string[] output = new string[Affairs.Items.Count];
+            for (int i = 0; i < output.Length; i++)
+            {
+                output[i] = (string)Affairs.Items[i];
+            }
+            File.WriteAllLines(Application.StartupPath + "\\list.txt", output);
         }
 
         private void PriorityButton_Click(object sender, EventArgs e)
