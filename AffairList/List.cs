@@ -68,13 +68,21 @@ namespace AffairList
         {
             if (File.Exists(Application.StartupPath + "\\list.txt"))
             {
-                Affairs.Text = File.ReadAllText(Application.StartupPath + "\\list.txt");
+                string[] result = File.ReadAllLines(Application.StartupPath + "\\list.txt");
+                for(int i = 0; i < result.Length; i++)
+                {
+                    if (result[i].EndsWith("<priority>"))
+                    {
+                        result[i] = result[i].Substring(0, result[i].Length - "<priority>".Length);
+                    }
+                }
+                Affairs.Text = string.Join("\n", result);
             }
             else
             {
                 Affairs.Text = "Нет дел";
             }
-            Affairs.Text += "Это весь список ваших дел";
+            Affairs.Text += "\nЭто весь список ваших дел";
         }
         private void SubscribeGlobalHook()
         {

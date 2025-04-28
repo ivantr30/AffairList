@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.LinkLabel;
 
 namespace AffairList
 {
@@ -18,18 +19,27 @@ namespace AffairList
         Point lastPoint;
         int currentDragIndex = 0;
         bool isDragging = false;
+        string[] lines;
         public ChangeListForm()
         {
             InitializeComponent();
+            lines = File.ReadAllLines(Application.StartupPath + "\\list.txt")
+            .OrderByDescending(x => x.EndsWith("<priority>")).ToArray();
             LoadText();
         }
         private void LoadText()
         {
             if (File.Exists(Application.StartupPath + "\\list.txt"))
             {
-                foreach (string line in File.ReadAllLines(Application.StartupPath + "\\list.txt"))
+                foreach (string line in lines)
                 {
-                    Affairs.Items.Add(line);
+                    var temp = line.Trim();
+                    if (temp.EndsWith("<priority>"))
+                    {
+                        temp = temp.Substring(0, temp.Length - "<priority>".Length);
+                        temp += " \"Приоритное\"";
+                    }
+                    Affairs.Items.Add(temp);
                     Affairs.SelectedIndex++;
                 }
             }
@@ -113,9 +123,12 @@ namespace AffairList
                 return;
             }
             Affairs.Items.Add(AffairInput.Text);
+            var temp = lines.ToList();
+            temp.Add(AffairInput.Text);
+            lines = temp.ToArray();
             if (File.Exists(Application.StartupPath + "\\list.txt"))
             {
-                File.AppendAllText(Application.StartupPath + "\\list.txt", AffairInput.Text + ",\n");
+                File.AppendAllText(Application.StartupPath + "\\list.txt", AffairInput.Text + "\n");
             }
             AffairInput.Text = "";
         }
@@ -125,9 +138,10 @@ namespace AffairList
             {
                 if (File.Exists(Application.StartupPath + "\\list.txt"))
                 {
-                    var fileText = File.ReadAllLines(Application.StartupPath + "\\list.txt").ToList();
-                    fileText.RemoveAt(Affairs.SelectedIndex);
-                    File.WriteAllLines(Application.StartupPath + "\\list.txt", fileText);
+                    var temp = lines.ToList();
+                    temp.RemoveAt(Affairs.SelectedIndex);
+                    lines = temp.ToArray();
+                    File.WriteAllLines(Application.StartupPath + "\\list.txt", lines);
                 }
                 Affairs.Items.RemoveAt(Affairs.SelectedIndex);
             }
@@ -165,29 +179,65 @@ namespace AffairList
             {
                 DateTime.ParseExact(temp.Substring(0,10),"dd.MM.yyyy", null, DateTimeStyles.None);
                 temp = temp.Substring(10).Trim();
+
+                DialogResult dialogres = MessageBox.Show("Do you want to delete the deadline?",
+                    "Confirm form",
+                    MessageBoxButtons.YesNo);
+                if (dialogres == DialogResult.Yes)
+                {
+                    Affairs.Items[Affairs.SelectedIndex] = temp;
+
+                    lines[Affairs.SelectedIndex] = lines[Affairs.SelectedIndex].Substring(11);
+
+                    File.WriteAllLines(Application.StartupPath + "\\list.txt", lines);
+                    return;
+                }
             }
             catch
             {
                 temp = temp.Trim();
             }
-            res = DateTime.ParseExact(
-                        Interaction.InputBox(
-                        "Enter Deadline in format dd-MM-yyyy",
-                        "DateTime input box"), "dd-MM-yyyy", null, DateTimeStyles.None).ToString();
-            res = res.Substring(0, 10).Trim();
-            Affairs.Items[Affairs.SelectedIndex] = res + " " + temp;
-                ;
-            string[] output = new string[Affairs.Items.Count];
-            for (int i = 0; i < output.Length; i++)
+            try
             {
-                output[i] = (string)Affairs.Items[i];
+                res = DateTime.ParseExact(
+                            Interaction.InputBox(
+                            "Enter Deadline in format dd-MM-yyyy",
+                            "DateTime input box"), "dd-MM-yyyy", null, DateTimeStyles.None).ToString();
+                res = res.Substring(0, 10).Trim();
+                Affairs.Items[Affairs.SelectedIndex] = res + " " + temp;
+
+                lines[Affairs.SelectedIndex] = res + " " + lines[Affairs.SelectedIndex];
+
+                File.WriteAllLines(Application.StartupPath + "\\list.txt", lines);
             }
-            File.WriteAllLines(Application.StartupPath + "\\list.txt", output);
+            catch
+            {
+                MessageBox.Show("Error, wrong input format");
+                return;
+            }
         }
 
         private void PriorityButton_Click(object sender, EventArgs e)
         {
+            if(Affairs.SelectedIndex == -1) return;
 
+            if (lines[Affairs.SelectedIndex].EndsWith("<priority>"))
+            {
+                string currentLine = (string)Affairs.Items[Affairs.SelectedIndex];
+                Affairs.Items[Affairs.SelectedIndex] = currentLine.Replace(" \"Приоритное\"", "");
+                var temp = ((string)(lines[Affairs.SelectedIndex])).Split(" ").Reverse().ToArray()[0];
+                if (temp == "<priority>")
+                {
+                    lines[Affairs.SelectedIndex] = lines[Affairs.SelectedIndex]
+                        .Substring(0, lines[Affairs.SelectedIndex].Length - " <priority>".Length);
+                    File.WriteAllLines(Application.StartupPath + "\\list.txt", lines);
+                }
+                return;
+            }
+            Affairs.Items[Affairs.SelectedIndex] += " \"Приоритное\"";
+            lines[Affairs.SelectedIndex] += " <priority>";
+            lines = lines.OrderByDescending(x => x.Contains("<priority>")).ToArray();
+            File.WriteAllLines(Application.StartupPath + "\\list.txt", lines);
         }
         private void Affairs_MouseDown(object sender, MouseEventArgs e)
         {
@@ -195,22 +245,34 @@ namespace AffairList
             {
                 isDragging = true;
                 currentDragIndex = Affairs.SelectedIndex;
+                if(currentDragIndex == Affairs.SelectedIndex)
+                    isDragging = false;
             }
         }
 
         private void Affairs_MouseUp(object sender, MouseEventArgs e)
         {
-            if (currentDragIndex == -1)
+            if (currentDragIndex == -1 || lines.Length <= Affairs.SelectedIndex)
+            {
                 return;
+            }
+            bool newPlacePriority = lines[Affairs.SelectedIndex].EndsWith("<priority>");
+            bool oldPlacePriority = lines[currentDragIndex].EndsWith("<priority>");
+            if (
+                (newPlacePriority && !oldPlacePriority) ||
+                (!newPlacePriority && oldPlacePriority))
+            {
+                return;
+            }
             var temp = Affairs.Items[currentDragIndex];
             Affairs.Items[currentDragIndex] = Affairs.Items[Affairs.SelectedIndex];
             Affairs.Items[Affairs.SelectedIndex] = temp;
-            string[] res = new string[Affairs.Items.Count];
-            for (int i = 0; i < res.Length; i++)
-            {
-                res[i] = (string)Affairs.Items[i];
-            }
-            File.WriteAllLines(Application.StartupPath + "\\list.txt", res);
+
+            temp = lines[currentDragIndex];
+            lines[currentDragIndex] = lines[Affairs.SelectedIndex];
+            lines[Affairs.SelectedIndex] = (string)temp;
+
+            File.WriteAllLines(Application.StartupPath + "\\list.txt", lines);
             isDragging = false;
         }
     }
