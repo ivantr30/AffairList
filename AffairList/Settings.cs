@@ -406,5 +406,20 @@ namespace AffairList
         {
             AskToDeleteState.ForeColor = Color.White;
         }
+
+        private void MinimizeButton_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Minimized;
+        }
+
+        private void MinimizeButton_MouseEnter(object sender, EventArgs e)
+        {
+            MinimizeButton.ForeColor = Color.Gray;
+        }
+
+        private void MinimizeButton_MouseLeave(object sender, EventArgs e)
+        {
+            MinimizeButton.ForeColor = Color.Black;
+        }
     }
 }

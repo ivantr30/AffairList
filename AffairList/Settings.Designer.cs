@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             NameBackground = new Panel();
+            MinimizeButton = new Label();
             CloseButton = new Label();
             SettingsLab = new Label();
             panel1 = new Panel();
@@ -61,6 +62,7 @@
             // NameBackground
             // 
             NameBackground.BackColor = Color.FromArgb(159, 62, 213);
+            NameBackground.Controls.Add(MinimizeButton);
             NameBackground.Controls.Add(CloseButton);
             NameBackground.Controls.Add(SettingsLab);
             NameBackground.Dock = DockStyle.Top;
@@ -70,6 +72,19 @@
             NameBackground.TabIndex = 0;
             NameBackground.MouseDown += NameBackground_MouseDown;
             NameBackground.MouseMove += NameBackground_MouseMove;
+            // 
+            // MinimizeButton
+            // 
+            MinimizeButton.AutoSize = true;
+            MinimizeButton.Font = new Font("Unispace", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            MinimizeButton.Location = new Point(376, 0);
+            MinimizeButton.Name = "MinimizeButton";
+            MinimizeButton.Size = new Size(31, 33);
+            MinimizeButton.TabIndex = 25;
+            MinimizeButton.Text = "-";
+            MinimizeButton.Click += MinimizeButton_Click;
+            MinimizeButton.MouseEnter += MinimizeButton_MouseEnter;
+            MinimizeButton.MouseLeave += MinimizeButton_MouseLeave;
             // 
             // CloseButton
             // 
@@ -444,5 +459,6 @@
         private Label AskToDelete;
         private Label autostartStateLab;
         private Label AutostartLab;
+        private Label MinimizeButton;
     }
 }

@@ -185,7 +185,7 @@ namespace AffairList
             string temp = (string)Affairs.Items[Affairs.SelectedIndex];
             try
             {
-                DateTime.ParseExact(temp.Substring(0,10),"dd.MM.yyyy", null, DateTimeStyles.None);
+                DateTime.ParseExact(temp.Substring(0, 10), "dd.MM.yyyy", null, DateTimeStyles.None);
                 temp = temp.Substring(10).Trim();
 
                 DialogResult dialogres = MessageBox.Show("Do you want to delete the deadline?",
@@ -227,7 +227,7 @@ namespace AffairList
 
         private void PriorityButton_Click(object sender, EventArgs e)
         {
-            if(Affairs.SelectedIndex == -1) return;
+            if (Affairs.SelectedIndex == -1) return;
 
             if (lines[Affairs.SelectedIndex].EndsWith("<priority>"))
             {
@@ -255,7 +255,7 @@ namespace AffairList
             {
                 isDragging = true;
                 currentDragIndex = Affairs.SelectedIndex;
-                if(currentDragIndex == Affairs.SelectedIndex)
+                if (currentDragIndex == Affairs.SelectedIndex)
                     isDragging = false;
             }
         }
@@ -284,6 +284,21 @@ namespace AffairList
 
             File.WriteAllLines(Application.StartupPath + "\\list.txt", lines);
             isDragging = false;
+        }
+
+        private void MinimizeButton_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Minimized;
+        }
+
+        private void MinimizeButton_MouseEnter(object sender, EventArgs e)
+        {
+            MinimizeButton.ForeColor = Color.Gray;
+        }
+
+        private void MinimizeButton_MouseLeave(object sender, EventArgs e)
+        {
+            MinimizeButton.ForeColor = Color.Black;
         }
     }
 }

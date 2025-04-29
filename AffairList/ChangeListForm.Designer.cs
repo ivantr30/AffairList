@@ -29,10 +29,12 @@
         private void InitializeComponent()
         {
             NameBackground = new Panel();
+            MinimizeButton = new Label();
             CloseButton = new Label();
             AffairsLab = new Label();
             panel1 = new Panel();
             AddDeadlineButton = new Button();
+            DeadlineLab = new Label();
             PriorityButton = new Button();
             DeleteButton = new Button();
             BackButton = new Button();
@@ -40,7 +42,6 @@
             ClearButton = new Button();
             AddAffairButton = new Button();
             AffairInput = new TextBox();
-            DeadlineLab = new Label();
             NameBackground.SuspendLayout();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -48,6 +49,7 @@
             // NameBackground
             // 
             NameBackground.BackColor = Color.FromArgb(159, 62, 213);
+            NameBackground.Controls.Add(MinimizeButton);
             NameBackground.Controls.Add(CloseButton);
             NameBackground.Controls.Add(AffairsLab);
             NameBackground.Dock = DockStyle.Top;
@@ -57,6 +59,19 @@
             NameBackground.TabIndex = 0;
             NameBackground.MouseDown += NameBackground_MouseDown_1;
             NameBackground.MouseMove += NameBackground_MouseMove_1;
+            // 
+            // MinimizeButton
+            // 
+            MinimizeButton.AutoSize = true;
+            MinimizeButton.Font = new Font("Unispace", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            MinimizeButton.Location = new Point(426, 0);
+            MinimizeButton.Name = "MinimizeButton";
+            MinimizeButton.Size = new Size(31, 33);
+            MinimizeButton.TabIndex = 4;
+            MinimizeButton.Text = "-";
+            MinimizeButton.Click += MinimizeButton_Click;
+            MinimizeButton.MouseEnter += MinimizeButton_MouseEnter;
+            MinimizeButton.MouseLeave += MinimizeButton_MouseLeave;
             // 
             // CloseButton
             // 
@@ -116,6 +131,19 @@
             AddDeadlineButton.Text = "AddDeadline";
             AddDeadlineButton.UseVisualStyleBackColor = false;
             AddDeadlineButton.Click += AddDeadlineButton_Click;
+            // 
+            // DeadlineLab
+            // 
+            DeadlineLab.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            DeadlineLab.AutoSize = true;
+            DeadlineLab.Font = new Font("Unispace", 15F);
+            DeadlineLab.ForeColor = SystemColors.ButtonHighlight;
+            DeadlineLab.Location = new Point(10, 89);
+            DeadlineLab.Name = "DeadlineLab";
+            DeadlineLab.Size = new Size(262, 24);
+            DeadlineLab.TabIndex = 3;
+            DeadlineLab.Text = "Deadline, Affair name";
+            DeadlineLab.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // PriorityButton
             // 
@@ -200,19 +228,6 @@
             AffairInput.Size = new Size(470, 31);
             AffairInput.TabIndex = 1;
             // 
-            // DeadlineLab
-            // 
-            DeadlineLab.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            DeadlineLab.AutoSize = true;
-            DeadlineLab.Font = new Font("Unispace", 15F);
-            DeadlineLab.ForeColor = SystemColors.ButtonHighlight;
-            DeadlineLab.Location = new Point(10, 89);
-            DeadlineLab.Name = "DeadlineLab";
-            DeadlineLab.Size = new Size(262, 24);
-            DeadlineLab.TabIndex = 3;
-            DeadlineLab.Text = "Deadline, Affair name";
-            DeadlineLab.TextAlign = ContentAlignment.MiddleCenter;
-            // 
             // ChangeListForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -248,5 +263,6 @@
         private Button PriorityButton;
         private Button AddDeadlineButton;
         private Label DeadlineLab;
+        private Label MinimizeButton;
     }
 }

@@ -67,6 +67,7 @@ namespace AffairList
             AffairList.trayIcon.Visible = false;
             action();
         }
+
         private void OnOpen(object sender, EventArgs e)
         {
             CloseOrExit(Application.Restart);
@@ -219,6 +220,21 @@ namespace AffairList
         private void AffairList_FormClosing(object sender, FormClosingEventArgs e)
         {
             CloseOrExit(Application.Exit);
+        }
+
+        private void MinimizeButton_Click(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Minimized;
+        }
+
+        private void MinimizeButton_MouseEnter(object sender, EventArgs e)
+        {
+            MinimizeButton.ForeColor = Color.Gray;
+        }
+
+        private void MinimizeButton_MouseLeave(object sender, EventArgs e)
+        {
+            MinimizeButton.ForeColor = Color.Black;
         }
     }
 }
