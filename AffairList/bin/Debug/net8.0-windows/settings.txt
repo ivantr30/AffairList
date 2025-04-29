@@ -4,4 +4,4 @@ textColor: 0 250 154
 backTextColor: 0 0 0
 musicVolume: 35
 autostarts: False
-askToDelete: True
+askToDelete: False
