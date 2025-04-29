@@ -24,7 +24,7 @@ namespace AffairList
         {
             InitializeComponent();
             lines = File.ReadAllLines(Application.StartupPath + "\\list.txt")
-            .OrderByDescending(x => x.EndsWith("<priority>")).ToArray();
+                .OrderByDescending(x => x.EndsWith("<priority>")).ToArray();
             LoadText();
         }
         private void LoadText()
@@ -136,6 +136,14 @@ namespace AffairList
         {
             if (Affairs.SelectedIndex != -1)
             {
+                if (AffairList.askToDelete)
+                {
+                    DialogResult dialogres = MessageBox.Show("Do you want to delete the affair?",
+                        "Confirm form",
+                        MessageBoxButtons.YesNo);
+                    if (dialogres == DialogResult.No) return;
+                }
+
                 if (File.Exists(Application.StartupPath + "\\list.txt"))
                 {
                     var temp = lines.ToList();
@@ -238,6 +246,8 @@ namespace AffairList
             lines[Affairs.SelectedIndex] += " <priority>";
             lines = lines.OrderByDescending(x => x.Contains("<priority>")).ToArray();
             File.WriteAllLines(Application.StartupPath + "\\list.txt", lines);
+            Affairs.Items.Clear();
+            LoadText();
         }
         private void Affairs_MouseDown(object sender, MouseEventArgs e)
         {

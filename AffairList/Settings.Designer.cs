@@ -32,6 +32,8 @@
             CloseButton = new Label();
             SettingsLab = new Label();
             panel1 = new Panel();
+            AskToDeleteState = new Label();
+            AskToDelete = new Label();
             ThemeBoxCB = new ComboBox();
             ChooseThemeLab = new Label();
             VolumeValueLab = new Label();
@@ -99,6 +101,8 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(72, 3, 111);
+            panel1.Controls.Add(AskToDeleteState);
+            panel1.Controls.Add(AskToDelete);
             panel1.Controls.Add(ThemeBoxCB);
             panel1.Controls.Add(ChooseThemeLab);
             panel1.Controls.Add(VolumeValueLab);
@@ -123,6 +127,36 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(440, 511);
             panel1.TabIndex = 1;
+            // 
+            // AskToDeleteState
+            // 
+            AskToDeleteState.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            AskToDeleteState.AutoSize = true;
+            AskToDeleteState.Font = new Font("Unispace", 13F);
+            AskToDeleteState.ForeColor = Color.White;
+            AskToDeleteState.Location = new Point(364, 410);
+            AskToDeleteState.Name = "AskToDeleteState";
+            AskToDeleteState.Size = new Size(32, 21);
+            AskToDeleteState.TabIndex = 24;
+            AskToDeleteState.Text = "On";
+            AskToDeleteState.TextAlign = ContentAlignment.MiddleCenter;
+            AskToDeleteState.MouseDown += AskToDeleteState_MouseDown;
+            AskToDeleteState.MouseEnter += AskToDeleteState_MouseEnter;
+            AskToDeleteState.MouseLeave += AskToDeleteState_MouseLeave;
+            AskToDeleteState.MouseUp += AskToDeleteState_MouseUp;
+            // 
+            // AskToDelete
+            // 
+            AskToDelete.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            AskToDelete.AutoSize = true;
+            AskToDelete.Font = new Font("Unispace", 13F);
+            AskToDelete.ForeColor = Color.White;
+            AskToDelete.Location = new Point(12, 410);
+            AskToDelete.Name = "AskToDelete";
+            AskToDelete.Size = new Size(153, 21);
+            AskToDelete.TabIndex = 23;
+            AskToDelete.Text = "Ask to delete";
+            AskToDelete.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // ThemeBoxCB
             // 
@@ -399,8 +433,6 @@
         private Label MusicStateLab;
         private Label StateLab;
         private Label MusicVolumeLab;
-        private Label AutostartLab;
-        private Label autostartStateLab;
         private ColorDialog ColorPicker;
         private Button PickTextColorButton;
         private Button PickBgColorButton;
@@ -408,5 +440,9 @@
         private Label VolumeValueLab;
         private ComboBox ThemeBoxCB;
         private Label ChooseThemeLab;
+        private Label AskToDeleteState;
+        private Label AskToDelete;
+        private Label autostartStateLab;
+        private Label AutostartLab;
     }
 }

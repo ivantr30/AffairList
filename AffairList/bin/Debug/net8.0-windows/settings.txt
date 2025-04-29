@@ -1,6 +1,7 @@
 x,y: 1600 12
-musicOn: true
+musicOn: False
 textColor: 0 250 154
 backTextColor: 0 0 0
 musicVolume: 35
-autostarts: true
+autostarts: False
+askToDelete: True

@@ -10,6 +10,7 @@ namespace AffairList
         Point lastPoint;
         public static Color textColor = Color.MediumSpringGreen;
         public static Color bgtextColor = Color.Black;
+        public static bool askToDelete = true;
         public static NotifyIcon trayIcon;
         private ContextMenuStrip trayMenu;
 
@@ -55,7 +56,9 @@ namespace AffairList
                 File.WriteAllText(settingsFileFullPath, "x,y: \nmusicOn: true" +
                     $"\ntextColor: {textColor.R} {textColor.G} {textColor.B}" +
                     $"\nbackTextColor: {bgtextColor.R} {bgtextColor.G} {bgtextColor.B}\n" +
-                        "musicVolume: 35\nautostarts: true\n");
+                        "musicVolume: 35\n" +
+                        "autostarts: true\n" +
+                        "askToDelete: true\n");
             }
             ConfigureSettings();
         }
@@ -108,6 +111,10 @@ namespace AffairList
                 {
                     bgtextColor = Color.FromArgb(255, int.Parse(lineSplitted[1]), int.Parse(lineSplitted[2]),
                         int.Parse(lineSplitted[3]));
+                }
+                if (settingLines[i].Contains("askToDelete:"))
+                {
+                    askToDelete = bool.Parse(lineSplitted[1]);
                 }
                 settingLines[i] = settingLines[i].Substring(0, settingLines[i].IndexOf(":"))
                     + string.Join(" ", lineSplitted);

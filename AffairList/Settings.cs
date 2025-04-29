@@ -19,6 +19,7 @@ namespace AffairList
         bool isConfirmed = true;
         bool musicState = true;
         bool autostartState = true;
+        bool askToDelete = true;
         int currentVolume = 0;
         int x, y;
         public Settings()
@@ -76,6 +77,22 @@ namespace AffairList
                     {
                         autostartStateLab.Text = "OFF";
                         autostartState = false;
+                    }
+                }
+
+                if (settingLine[i].Contains("askToDelete"))
+                {
+                    if (currentSetting[1].Contains("True"))
+                    {
+                        AskToDeleteState.Text = "On";
+                        askToDelete = true;
+                        AffairList.askToDelete = true;
+                    }
+                    else
+                    {
+                        AskToDeleteState.Text = "OFF";
+                        askToDelete = false;
+                        AffairList.askToDelete = false;
                     }
                 }
                 if (settingLine[i].Contains("musicVolume"))
@@ -173,7 +190,9 @@ namespace AffairList
                 File.WriteAllText(settingsFileFullPath, "x,y: \nmusicOn: true" +
                     $"\ntextColor: {Color.MediumSpringGreen.R} {Color.MediumSpringGreen.G} {Color.MediumSpringGreen.B}" +
                     $"\nbackTextColor: {Color.Black.R} {Color.Black.G} {Color.Black.B}\n" +
-                        "musicVolume: 35\nautostarts: true\n");
+                        "musicVolume: 35\n" +
+                        "autostarts: true\n" +
+                        "askToDelete: true\n");
                 if (!File.Exists(settingsFileFullPath))
                 {
                     MessageBox.Show("Error, settings file does not exist");
@@ -223,6 +242,11 @@ namespace AffairList
                 {
                     settingLines[i] = settingLines[i].Substring(0, settingLines[i].IndexOf(":")) +
                         ": " + VolumeBar.Value;
+                }
+                if (settingLines[i].Contains("askToDelete"))
+                {
+                    settingLines[i] = settingLines[i].Substring(0, settingLines[i].IndexOf(":")) +
+                        ": " + askToDelete;
                 }
             }
             File.WriteAllLines(settingsFileFullPath, settingLines);
@@ -352,6 +376,35 @@ namespace AffairList
         private void LocationLab_MouseLeave(object sender, EventArgs e)
         {
             LocationLab.ForeColor = Color.White;
+        }
+
+        private void AskToDeleteState_MouseDown(object sender, MouseEventArgs e)
+        {
+            AskToDeleteState.ForeColor = Color.DarkGray;
+            if (AskToDeleteState.Text == "On")
+            {
+                AskToDeleteState.Text = "OFF";
+                askToDelete = false;
+                return;
+            }
+            AskToDeleteState.Text = "On";
+            askToDelete = true;
+            isConfirmed = false;
+        }
+
+        private void AskToDeleteState_MouseLeave(object sender, EventArgs e)
+        {
+            AskToDeleteState.ForeColor = Color.White;
+        }
+
+        private void AskToDeleteState_MouseEnter(object sender, EventArgs e)
+        {
+            AskToDeleteState.ForeColor = Color.Gray;
+        }
+
+        private void AskToDeleteState_MouseUp(object sender, MouseEventArgs e)
+        {
+            AskToDeleteState.ForeColor = Color.White;
         }
     }
 }
