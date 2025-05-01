@@ -39,7 +39,10 @@ namespace AffairList
                         temp += " \"Приоритное\"";
                     }
                     Affairs.Items.Add(temp);
-                    Affairs.SelectedIndex++;
+                }
+                if (Affairs.Items.Count > 0)
+                {
+                    Affairs.SelectedIndex = 0;
                 }
             }
         }
@@ -116,6 +119,8 @@ namespace AffairList
             }
 
             Affairs.Items.Add(AffairInput.Text);
+            Affairs.SelectedIndex = Affairs.Items.Count - 1;
+
             var temp = lines.ToList();
             temp.Add(AffairInput.Text);
             lines = temp.ToArray();
@@ -146,7 +151,18 @@ namespace AffairList
 
                     File.WriteAllLines(Config.listFileFullPath, lines);
                 }
-                Affairs.Items.RemoveAt(Affairs.SelectedIndex);
+                int selectedIndex = 0;
+                if (Affairs.SelectedIndex == 0 && Affairs.Items.Count > 1)
+                {
+                    Affairs.SelectedIndex++;
+                    selectedIndex = Affairs.SelectedIndex-1;
+                }
+                else if(Affairs.Items.Count > 1)
+                {
+                    Affairs.SelectedIndex--;
+                    selectedIndex = Affairs.SelectedIndex+1;
+                }
+                Affairs.Items.RemoveAt(selectedIndex);
             }
         }
         private void AddAffairButton_Click(object sender, EventArgs e)
