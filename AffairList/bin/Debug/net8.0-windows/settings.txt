@@ -1,7 +1,7 @@
-x,y: 1600 12
-musicOn: False
-textColor: 0 250 154
-backTextColor: 0 0 0
-musicVolume: 35
-autostarts: False
-askToDelete: False
+x,y:1594 30
+musicOn:False
+textColor:0 128 255
+backTextColor:0 0 128
+musicVolume:35
+autostarts:False
+askToDelete:False

@@ -37,27 +37,16 @@ namespace AffairList
             Affairs.AutoSize = false;
             Affairs.Padding = new Padding(0, 0, 180, 0);
             Affairs.Size = new Size(500, Height);
-            Affairs.ForeColor = AffairList.textColor;
-            BackColor = AffairList.bgtextColor;
-            TransparencyKey = AffairList.bgtextColor;
+            Affairs.ForeColor = Config.textColor;
+            BackColor = Config.bgtextColor;
+            TransparencyKey = Config.bgtextColor;
         }
         private void LoadSettings()
         {
             if (File.Exists(Application.StartupPath + "\\settings.txt"))
             {
-                var settingLines = File.ReadAllLines(Application.StartupPath + "\\settings.txt");
-                foreach (var line in settingLines)
-                {
-                    if (line.StartsWith("x,y:"))
-                    {
-                        string[] xy = line.Replace("x,y:", "").Split(" ");
-                        if (xy.Length == 3)
-                        {
-                            Affairs.Left = int.Parse(xy[1]);
-                            Affairs.Top = int.Parse(xy[2]);
-                        }
-                    }
-                }
+                Affairs.Left = Config.x;
+                Affairs.Top = Config.y;
             }
             else
             {

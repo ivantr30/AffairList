@@ -15,91 +15,42 @@ namespace AffairList
     public partial class Settings : Form
     {
         Point lastPoint;
-        string settingsFileFullPath = Application.StartupPath + "\\settings.txt";
-        bool isConfirmed = true;
-        bool musicState = true;
-        bool autostartState = true;
-        bool askToDelete = true;
-        int currentVolume = 0;
-        int x, y;
         public Settings()
         {
             InitializeComponent();
-            currentVolume = VolumeBar.Value;
-            VolumeValueLab.Text = currentVolume.ToString();
+            VolumeValueLab.Text = VolumeBar.Value.ToString();
             LoadSettings();
         }
         private void LoadSettings()
         {
-            string[] settingLine = File.ReadAllLines(settingsFileFullPath);
-            for (int i = 0; i < settingLine.Length; i++)
+            LocationLab.Text = Config.x + ", " + Config.y;
+            ListTextColorLab.ForeColor = Config.textColor;
+            ListBgTextColorLab.ForeColor = Config.bgtextColor;
+            if (Config.musicState)
             {
-                string[] currentSetting = settingLine[i].Substring(settingLine[i].IndexOf(":")
-                    ).Split(" ");
-                if (settingLine[i].Contains("x,y:"))
-                {
-                    x = int.Parse(currentSetting[1]);
-                    y = int.Parse(currentSetting[2]);
-
-                    LocationLab.Text = x + ", " + y;
-                }
-                if (settingLine[i].Contains("textColor"))
-                {
-                    ListTextColorLab.ForeColor = Color.FromArgb(0, int.Parse(currentSetting[1]), int.Parse(currentSetting[2]),
-                        int.Parse(currentSetting[3]));
-                }
-                if (settingLine[i].Contains("backTextColor:"))
-                {
-                    ListBgTextColorLab.ForeColor = Color.FromArgb(0, int.Parse(currentSetting[1]), int.Parse(currentSetting[2]),
-                        int.Parse(currentSetting[3]));
-                }
-                if (settingLine[i].Contains("musicOn"))
-                {
-                    if (currentSetting[1].Contains("True"))
-                    {
-                        StateLab.Text = "On";
-                        musicState = true;
-                    }
-                    else
-                    {
-                        StateLab.Text = "OFF";
-                        musicState = false;
-                    }
-                }
-                if (settingLine[i].Contains("autostarts"))
-                {
-                    if (currentSetting[1].Contains("True"))
-                    {
-                        autostartStateLab.Text = "On";
-                        autostartState = true;
-                    }
-                    else
-                    {
-                        autostartStateLab.Text = "OFF";
-                        autostartState = false;
-                    }
-                }
-
-                if (settingLine[i].Contains("askToDelete"))
-                {
-                    if (currentSetting[1].Contains("True"))
-                    {
-                        AskToDeleteState.Text = "On";
-                        askToDelete = true;
-                        AffairList.askToDelete = true;
-                    }
-                    else
-                    {
-                        AskToDeleteState.Text = "OFF";
-                        askToDelete = false;
-                        AffairList.askToDelete = false;
-                    }
-                }
-                if (settingLine[i].Contains("musicVolume"))
-                {
-                    VolumeValueLab.Text = currentSetting[1];
-                }
+                StateLab.Text = "On";
             }
+            else
+            {
+                StateLab.Text = "OFF";
+            }
+            if (Config.autostartState)
+            {
+                autostartStateLab.Text = "On";
+            }
+            else
+            {
+                autostartStateLab.Text = "OFF";
+            }
+            if (Config.askToDelete)
+            {
+                AskToDeleteState.Text = "On";
+            }
+            else
+            {
+                AskToDeleteState.Text = "OFF";
+            }
+            VolumeValueLab.Text = Config.currentVolume.ToString();
         }
         private void CloseOrExit(Action action)
         {
@@ -163,7 +114,7 @@ namespace AffairList
 
         private void BackButton_Click(object sender, EventArgs e)
         {
-            if (!isConfirmed)
+            if (!Config.isConfirmed)
             {
                 DialogResult result = MessageBox.Show(
                     "Are you sure to leave with unsaved settings?",
@@ -187,13 +138,9 @@ namespace AffairList
                 MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                File.WriteAllText(settingsFileFullPath, "x,y: \nmusicOn: true" +
-                    $"\ntextColor: {Color.MediumSpringGreen.R} {Color.MediumSpringGreen.G} {Color.MediumSpringGreen.B}" +
-                    $"\nbackTextColor: {Color.Black.R} {Color.Black.G} {Color.Black.B}\n" +
-                        "musicVolume: 35\n" +
-                        "autostarts: true\n" +
-                        "askToDelete: true\n");
-                if (!File.Exists(settingsFileFullPath))
+                Config.WriteBaseSettings();
+
+                if (!File.Exists(Config.settingsFileFullPath))
                 {
                     MessageBox.Show("Error, settings file does not exist");
                     return;
@@ -205,51 +152,7 @@ namespace AffairList
 
         private void ConfirmButton_Click(object sender, EventArgs e)
         {
-            isConfirmed = true;
-            string[] settingLines = File.ReadAllLines(settingsFileFullPath);
-            for (int i = 0; i < settingLines.Length; i++)
-            {
-                if (settingLines[i].Contains("x,y:"))
-                {
-                    settingLines[i] = settingLines[i].Substring(0, settingLines[i].IndexOf(":")) +
-                        ": " + x + " " + y;
-
-                    LocationLab.Text = x + ", " + y;
-                }
-                if (settingLines[i].Contains("textColor"))
-                {
-                    settingLines[i] = settingLines[i].Substring(0, settingLines[i].IndexOf(":")) +
-                        ": " + ListTextColorLab.ForeColor.R + " " + ListTextColorLab.ForeColor.G
-                        + " " + ListTextColorLab.ForeColor.B;
-                }
-                if (settingLines[i].Contains("backTextColor"))
-                {
-                    settingLines[i] = settingLines[i].Substring(0, settingLines[i].IndexOf(":")) +
-                        ": " + ListBgTextColorLab.ForeColor.R + " " + ListBgTextColorLab.ForeColor.G
-                        + " " + ListBgTextColorLab.ForeColor.B;
-                }
-                if (settingLines[i].Contains("musicOn"))
-                {
-                    settingLines[i] = settingLines[i].Substring(0, settingLines[i].IndexOf(":")) +
-                        ": " + musicState;
-                }
-                if (settingLines[i].Contains("autostarts"))
-                {
-                    settingLines[i] = settingLines[i].Substring(0, settingLines[i].IndexOf(":")) +
-                        ": " + autostartState;
-                }
-                if (settingLines[i].Contains("musicVolume"))
-                {
-                    settingLines[i] = settingLines[i].Substring(0, settingLines[i].IndexOf(":")) +
-                        ": " + VolumeBar.Value;
-                }
-                if (settingLines[i].Contains("askToDelete"))
-                {
-                    settingLines[i] = settingLines[i].Substring(0, settingLines[i].IndexOf(":")) +
-                        ": " + askToDelete;
-                }
-            }
-            File.WriteAllLines(settingsFileFullPath, settingLines);
+            Config.SaveSettings();
         }
 
         private void StateLab_MouseLeave(object sender, EventArgs e)
@@ -274,12 +177,12 @@ namespace AffairList
             if (StateLab.Text == "On")
             {
                 StateLab.Text = "OFF";
-                musicState = false;
+                Config.musicState = false;
                 return;
             }
             StateLab.Text = "On";
-            musicState = true;
-            isConfirmed = false;
+            Config.musicState = true;
+            Config.isConfirmed = false;
         }
 
         private void autostartStateLab_MouseDown(object sender, MouseEventArgs e)
@@ -288,12 +191,12 @@ namespace AffairList
             if (autostartStateLab.Text == "On")
             {
                 autostartStateLab.Text = "OFF";
-                autostartState = false;
+                Config.autostartState = false;
                 return;
             }
             autostartStateLab.Text = "On";
-            autostartState = true;
-            isConfirmed = false;
+            Config.autostartState = true;
+            Config.isConfirmed = false;
         }
 
         private void autostartStateLab_MouseLeave(object sender, EventArgs e)
@@ -317,6 +220,8 @@ namespace AffairList
             if (res == DialogResult.OK)
             {
                 ListTextColorLab.ForeColor = ColorPicker.Color;
+                Config.textColor = ListTextColorLab.ForeColor;
+                Config.isConfirmed = false;
             }
         }
 
@@ -326,41 +231,43 @@ namespace AffairList
             if (res == DialogResult.OK)
             {
                 ListBgTextColorLab.ForeColor = ColorPicker.Color;
+                Config.bgtextColor = ListBgTextColorLab.ForeColor;
+                Config.isConfirmed = false;
             }
         }
 
         private void VolumeBar_Scroll(object sender, EventArgs e)
         {
-            currentVolume = VolumeBar.Value;
-            VolumeValueLab.Text = currentVolume.ToString();
-            isConfirmed = false;
+            Config.currentVolume = VolumeBar.Value;
+            VolumeValueLab.Text = Config.currentVolume.ToString();
+            Config.isConfirmed = false;
         }
 
         private void LocationLab_DoubleClick(object sender, EventArgs e)
         {
-            int prevX = x, prevY = y;
+            int prevX = Config.x, prevY = Config.y;
             try
             {
-                x = int.Parse(Interaction.InputBox("Enter x coordinate", "InputWindow", ""));
+                Config.x = int.Parse(Interaction.InputBox("Enter x coordinate", "InputWindow", ""));
             }
             catch
             {
                 MessageBox.Show("Error");
-                x = prevX;
+                Config.x = prevX;
                 return;
             }
             try
             {
-                y = int.Parse(Interaction.InputBox("Enter y coordinate", "InputWindow", ""));
+                Config.y = int.Parse(Interaction.InputBox("Enter y coordinate", "InputWindow", ""));
             }
             catch
             {
                 MessageBox.Show("Error");
-                y = prevY;
+                Config.y = prevY;
                 return;
             }
-            isConfirmed = false;
-            LocationLab.Text = x + ", " + y;
+            Config.isConfirmed = false;
+            LocationLab.Text = Config.x + ", " + Config.y;
         }
 
         private void Settings_FormClosing(object sender, FormClosingEventArgs e)
@@ -384,12 +291,12 @@ namespace AffairList
             if (AskToDeleteState.Text == "On")
             {
                 AskToDeleteState.Text = "OFF";
-                askToDelete = false;
+                Config.askToDelete = false;
                 return;
             }
             AskToDeleteState.Text = "On";
-            askToDelete = true;
-            isConfirmed = false;
+            Config.askToDelete = true;
+            Config.isConfirmed = false;
         }
 
         private void AskToDeleteState_MouseLeave(object sender, EventArgs e)

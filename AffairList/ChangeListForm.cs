@@ -136,7 +136,7 @@ namespace AffairList
         {
             if (Affairs.SelectedIndex != -1)
             {
-                if (AffairList.askToDelete)
+                if (Config.askToDelete)
                 {
                     DialogResult dialogres = MessageBox.Show("Do you want to delete the affair?",
                         "Confirm form",
