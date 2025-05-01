@@ -7,7 +7,6 @@ namespace AffairList
         private IKeyboardMouseEvents globalHook;
         public bool canReplace = false;
 
-        Point lastPoint;
         public List()
         {
             InitializeComponent();
@@ -15,15 +14,10 @@ namespace AffairList
             LoadText();
             SetLocation();
         }
-        private void Exit()
-        {
-            AffairList.trayIcon.Visible = false;
-            Application.Exit();
-        }
         private void Return()
         {
             AffairList.trayIcon.Visible = false;
-            this.Close();
+            Close();
             Application.Restart();
             Application.Run();
         }
@@ -32,8 +26,8 @@ namespace AffairList
             TopMost = true;
 
             LoadSettings();
-            Width = Screen.PrimaryScreen.WorkingArea.Width;
-            Height = Screen.PrimaryScreen.WorkingArea.Height + Screen.PrimaryScreen.WorkingArea.Height / 10;
+            Width = Config.width;
+            Height = Config.height + Config.height / 10;
             Affairs.AutoSize = false;
             Affairs.Padding = new Padding(0, 0, 180, 0);
             Affairs.Size = new Size(500, Height);
@@ -43,7 +37,7 @@ namespace AffairList
         }
         private void LoadSettings()
         {
-            if (File.Exists(Application.StartupPath + "\\settings.txt"))
+            if (File.Exists(Config.settingsFileFullPath))
             {
                 Affairs.Left = Config.x;
                 Affairs.Top = Config.y;
@@ -55,9 +49,9 @@ namespace AffairList
         }
         private void LoadText()
         {
-            if (File.Exists(Application.StartupPath + "\\list.txt"))
+            if (File.Exists(Config.listFileFullPath))
             {
-                string[] result = File.ReadAllLines(Application.StartupPath + "\\list.txt");
+                string[] result = File.ReadAllLines(Config.listFileFullPath);
                 for(int i = 0; i < result.Length; i++)
                 {
                     if (result[i].EndsWith("<priority>"))
@@ -82,7 +76,7 @@ namespace AffairList
         {
             if (e.KeyCode == Keys.F7)
             {
-                Exit();
+                Config.Exit();
             }
             if (e.KeyCode == Keys.F6)
             {
@@ -93,15 +87,15 @@ namespace AffairList
         private void List_MouseDown(object sender, MouseEventArgs e)
         {
             if (canReplace)
-                lastPoint = new Point(e.X, e.Y);
+                Config.lastPoint = new Point(e.X, e.Y);
         }
 
         private void List_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left && canReplace)
             {
-                this.Left += e.X - Affairs.Left;
-                this.Top += e.Y - Affairs.Top;
+                Left += e.X - Affairs.Left;
+                Top += e.Y - Affairs.Top;
             }
         }
 

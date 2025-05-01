@@ -14,7 +14,6 @@ namespace AffairList
 {
     public partial class Settings : Form
     {
-        Point lastPoint;
         public Settings()
         {
             InitializeComponent();
@@ -52,25 +51,20 @@ namespace AffairList
             }
             VolumeValueLab.Text = Config.currentVolume.ToString();
         }
-        private void CloseOrExit(Action action)
-        {
-            AffairList.trayIcon.Visible = false;
-            action();
-        }
         private void CloseButton_Click(object sender, EventArgs e)
         {
-            CloseOrExit(Application.Exit);
+            Config.Exit();
         }
 
         private void Settings_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.F7)
             {
-                CloseOrExit(Application.Exit);
+                Config.Exit();
             }
             if (e.KeyCode == Keys.F6)
             {
-                CloseOrExit(Application.Restart);
+                Config.Restart();
             }
         }
 
@@ -86,29 +80,29 @@ namespace AffairList
 
         private void NameBackground_MouseDown(object sender, MouseEventArgs e)
         {
-            lastPoint = new Point(e.X, e.Y);
+            Config.lastPoint = new Point(e.X, e.Y);
         }
 
         private void NameBackground_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                this.Left += e.X - lastPoint.X;
-                this.Top += e.Y - lastPoint.Y;
+                Left += e.X - Config.lastPoint.X;
+                Top += e.Y - Config.lastPoint.Y;
             }
         }
 
         private void SettingsLab_MouseDown(object sender, MouseEventArgs e)
         {
-            lastPoint = new Point(e.X, e.Y);
+            Config.lastPoint = new Point(e.X, e.Y);
         }
 
         private void SettingsLab_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                this.Left += e.X - lastPoint.X;
-                this.Top += e.Y - lastPoint.Y;
+                Left += e.X - Config.lastPoint.X;
+                Top += e.Y - Config.lastPoint.Y;
             }
         }
 
@@ -126,7 +120,7 @@ namespace AffairList
                     return;
                 }
             }
-            CloseOrExit(Application.Restart);
+            Config.Restart();
         }
 
         private void ResetButton_Click(object sender, EventArgs e)
@@ -147,7 +141,7 @@ namespace AffairList
                 }
                 MessageBox.Show("The settings were reseted succesfully");
             }
-            CloseOrExit(Application.Restart);
+            Config.Restart();
         }
 
         private void ConfirmButton_Click(object sender, EventArgs e)
@@ -272,7 +266,7 @@ namespace AffairList
 
         private void Settings_FormClosing(object sender, FormClosingEventArgs e)
         {
-            CloseOrExit(Application.Exit);
+            Config.Exit();
         }
 
         private void LocationLab_MouseEnter(object sender, EventArgs e)

@@ -11,19 +11,27 @@ namespace AffairList
     {
         public static string listFileFullPath = Application.StartupPath + "\\list.txt";
         public static string settingsFileFullPath = Application.StartupPath + "\\settings.txt";
+
         public static Color textColor = Color.MediumSpringGreen;
         public static Color bgtextColor = Color.Black;
         private static Color basetextColor = Color.MediumSpringGreen;
         private static Color basebgtextColor = Color.Black;
+
         public static bool isConfirmed = true;
         public static bool musicState = true;
         public static bool autostartState = true;
         public static bool askToDelete = true;
+
         public static int currentVolume = 0;
         public static int x, y;
+        public static int width = Screen.PrimaryScreen.WorkingArea.Width,
+                          height = Screen.PrimaryScreen.WorkingArea.Height;
+
         public static Point lastPoint;
+
         private static string[] settingLines = File.ReadAllLines(settingsFileFullPath);
         private static string currentParametr = "";
+
         private static void EnableAutoStart(string appName, string exePath)
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
@@ -33,6 +41,15 @@ namespace AffairList
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
             key.DeleteValue(appName, false);
+        }
+        public static void Exit()
+        {
+            Application.Exit();
+        }
+        public static void Restart()
+        {
+            AffairList.trayIcon.Visible = false;
+            Application.Restart();
         }
         public static void CreateFiles()
         {
@@ -77,8 +94,8 @@ namespace AffairList
                     currentParametr = "x,y";
                     if(lineSplitted[0].Length < 2)
                     {
-                        x = Screen.PrimaryScreen.WorkingArea.Width;
-                        y = Screen.PrimaryScreen.WorkingArea.Height + Screen.PrimaryScreen.WorkingArea.Height / 10;
+                        x = width;
+                        y = height + height / 10;
                         lineSplitted[0] = x - x / 6 + " " + y / 90;
                     }
                     else

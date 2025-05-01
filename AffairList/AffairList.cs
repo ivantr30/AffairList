@@ -1,5 +1,6 @@
 
 using Microsoft.Win32;
+using System.Windows.Forms;
 
 namespace AffairList
 {
@@ -16,7 +17,6 @@ namespace AffairList
             trayMenu.Items.Add("Открыть", null, OnOpen);
             trayMenu.Items.Add("Выход", null, OnExit);
 
-            // Создаём иконку
             trayIcon = new NotifyIcon();
             trayIcon.Text = "AffairList";
             trayIcon.Icon = SystemIcons.Application;
@@ -27,27 +27,21 @@ namespace AffairList
             Config.CreateFiles();
             Config.ConfigureSettings();
         }
-        private void CloseOrExit(Action action)
-        {
-            AffairList.trayIcon.Visible = false;
-            action();
-        }
-
         private void OnOpen(object sender, EventArgs e)
         {
-            CloseOrExit(Application.Restart);
-            this.WindowState = FormWindowState.Normal;
-            this.ShowInTaskbar = true;
+            Config.Restart();
+            WindowState = FormWindowState.Normal;
+            ShowInTaskbar = true;
         }
 
         private void OnExit(object sender, EventArgs e)
         {
-            CloseOrExit(Application.Exit);
+            Config.Exit();
         }
 
         private void CloseButton_Click(object sender, EventArgs e)
         {
-            CloseOrExit(Application.Exit);
+            Config.Exit();
         }
 
         private void CloseButton_MouseEnter(object sender, EventArgs e)
@@ -69,8 +63,8 @@ namespace AffairList
         {
             if (e.Button == MouseButtons.Left)
             {
-                this.Left += e.X - Config.lastPoint.X;
-                this.Top += e.Y - Config.lastPoint.Y;
+                Left += e.X - Config.lastPoint.X;
+                Top += e.Y - Config.lastPoint.Y;
             }
         }
 
@@ -78,8 +72,8 @@ namespace AffairList
         {
             if (e.Button == MouseButtons.Left)
             {
-                this.Left += e.X - Config.lastPoint.X;
-                this.Top += e.Y - Config.lastPoint.Y;
+                Left += e.X - Config.lastPoint.X;
+                Top += e.Y - Config.lastPoint.Y;
             }
         }
 
@@ -90,7 +84,7 @@ namespace AffairList
 
         private void OpenListButton_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            Hide();
             List list = new List();
             list.Show();
         }
@@ -118,14 +112,14 @@ namespace AffairList
 
         private void ChangeListButton_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            Hide();
             ChangeListForm listForm = new ChangeListForm();
             listForm.Show();
         }
 
         private void ReplaceAffairListButton_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            Hide();
             List list = new List();
             list.BackColor = Color.White;
             list.canReplace = true;
@@ -134,14 +128,14 @@ namespace AffairList
 
         private void SettingsButton_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            Hide();
             Settings settings = new Settings();
             settings.Show();
         }
 
         private void AffairList_FormClosing(object sender, FormClosingEventArgs e)
         {
-            CloseOrExit(Application.Exit);
+            Config.Exit();
         }
 
         private void MinimizeButton_Click(object sender, EventArgs e)

@@ -1,7 +1,7 @@
 x,y:1567 763
 musicOn:False
-textColor:0 128 255
-backTextColor:0 0 128
+textColor:0 255 128
+backTextColor:0 0 0
 musicVolume:35
 autostarts:False
 askToDelete:False
