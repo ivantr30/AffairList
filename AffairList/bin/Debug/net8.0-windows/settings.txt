@@ -1,4 +1,4 @@
-x,y:1594 30
+x,y:1567 763
 musicOn:False
 textColor:0 128 255
 backTextColor:0 0 128

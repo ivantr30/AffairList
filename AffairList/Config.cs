@@ -177,5 +177,17 @@ namespace AffairList
             }
             File.WriteAllLines(settingsFileFullPath, settingLines);
         }
+        public static void SaveParametr<T>(string parametr, T firstValue, T secondValue)
+        {
+            for (int i = 0; i < settingLines.Length; i++)
+            {
+                if (settingLines[i].StartsWith(parametr))
+                {
+                    settingLines[i] = parametr + ": " + firstValue + " " + secondValue;
+                    break;
+                }
+            }
+            File.WriteAllLines(settingsFileFullPath, settingLines);
+        }
     }
 }

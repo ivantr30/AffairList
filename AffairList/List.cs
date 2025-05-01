@@ -110,18 +110,7 @@ namespace AffairList
             if (e.Button == MouseButtons.Left && canReplace)
             {
                 canReplace = false;
-                if (File.Exists(Application.StartupPath + "\\settings.txt"))
-                {
-                    var settingLines = File.ReadAllLines(Application.StartupPath + "\\settings.txt");
-                    for(int i = 0; i < settingLines.Length; i++)
-                    {
-                        if (settingLines[i].StartsWith("x,y:"))
-                        {
-                            settingLines[i] = "x,y: " + (this.Left + e.X) + " " + (this.Top + e.Y);
-                        }
-                    }
-                    File.WriteAllLines(Application.StartupPath + "\\settings.txt", settingLines);
-                }
+                Config.SaveParametr("x,y", Left + e.X, Top + e.Y);
                 Return();
             }
         }
