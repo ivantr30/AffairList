@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            ChangeProfileButton = new Button();
+            MusicPlayerButton = new Button();
+            HotKeyButton = new Button();
             SettingsButton = new Button();
             OpenListButton = new Button();
             ReplaceAffairListButton = new Button();
@@ -38,9 +41,6 @@
             MinimizeButton = new Label();
             CloseButton = new Label();
             AffairListLab = new Label();
-            ChangeProfileButton = new Button();
-            MusicPlayerButton = new Button();
-            HotKeyButton = new Button();
             panel1.SuspendLayout();
             NameBackground.SuspendLayout();
             SuspendLayout();
@@ -62,6 +62,50 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(450, 482);
             panel1.TabIndex = 0;
+            // 
+            // ChangeProfileButton
+            // 
+            ChangeProfileButton.BackColor = Color.FromArgb(173, 102, 213);
+            ChangeProfileButton.FlatAppearance.BorderSize = 0;
+            ChangeProfileButton.FlatStyle = FlatStyle.Flat;
+            ChangeProfileButton.Font = new Font("Tahoma", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            ChangeProfileButton.ForeColor = SystemColors.ButtonHighlight;
+            ChangeProfileButton.Location = new Point(315, 125);
+            ChangeProfileButton.Name = "ChangeProfileButton";
+            ChangeProfileButton.Size = new Size(100, 100);
+            ChangeProfileButton.TabIndex = 8;
+            ChangeProfileButton.Text = "Change Profile";
+            ChangeProfileButton.UseVisualStyleBackColor = false;
+            ChangeProfileButton.Click += ChangeProfileButton_Click;
+            // 
+            // MusicPlayerButton
+            // 
+            MusicPlayerButton.BackColor = Color.FromArgb(173, 102, 213);
+            MusicPlayerButton.FlatAppearance.BorderSize = 0;
+            MusicPlayerButton.FlatStyle = FlatStyle.Flat;
+            MusicPlayerButton.Font = new Font("Tahoma", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            MusicPlayerButton.ForeColor = SystemColors.ButtonHighlight;
+            MusicPlayerButton.Location = new Point(175, 125);
+            MusicPlayerButton.Name = "MusicPlayerButton";
+            MusicPlayerButton.Size = new Size(100, 100);
+            MusicPlayerButton.TabIndex = 7;
+            MusicPlayerButton.Text = "MusicPlayer";
+            MusicPlayerButton.UseVisualStyleBackColor = false;
+            // 
+            // HotKeyButton
+            // 
+            HotKeyButton.BackColor = Color.FromArgb(173, 102, 213);
+            HotKeyButton.FlatAppearance.BorderSize = 0;
+            HotKeyButton.FlatStyle = FlatStyle.Flat;
+            HotKeyButton.Font = new Font("Tahoma", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            HotKeyButton.ForeColor = SystemColors.ButtonHighlight;
+            HotKeyButton.Location = new Point(35, 125);
+            HotKeyButton.Name = "HotKeyButton";
+            HotKeyButton.Size = new Size(100, 100);
+            HotKeyButton.TabIndex = 6;
+            HotKeyButton.Text = "Hotkey Settings";
+            HotKeyButton.UseVisualStyleBackColor = false;
+            HotKeyButton.Click += HotKeyButton_Click;
             // 
             // SettingsButton
             // 
@@ -192,49 +236,6 @@
             AffairListLab.MouseDown += AffairListLab_MouseDown;
             AffairListLab.MouseMove += AffairListLab_MouseMove;
             // 
-            // ChangeProfileButton
-            // 
-            ChangeProfileButton.BackColor = Color.FromArgb(173, 102, 213);
-            ChangeProfileButton.FlatAppearance.BorderSize = 0;
-            ChangeProfileButton.FlatStyle = FlatStyle.Flat;
-            ChangeProfileButton.Font = new Font("Tahoma", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            ChangeProfileButton.ForeColor = SystemColors.ButtonHighlight;
-            ChangeProfileButton.Location = new Point(315, 125);
-            ChangeProfileButton.Name = "ChangeProfileButton";
-            ChangeProfileButton.Size = new Size(100, 100);
-            ChangeProfileButton.TabIndex = 8;
-            ChangeProfileButton.Text = "Change Profile";
-            ChangeProfileButton.UseVisualStyleBackColor = false;
-            ChangeProfileButton.Click += ChangeProfileButton_Click;
-            // 
-            // MusicPlayerButton
-            // 
-            MusicPlayerButton.BackColor = Color.FromArgb(173, 102, 213);
-            MusicPlayerButton.FlatAppearance.BorderSize = 0;
-            MusicPlayerButton.FlatStyle = FlatStyle.Flat;
-            MusicPlayerButton.Font = new Font("Tahoma", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            MusicPlayerButton.ForeColor = SystemColors.ButtonHighlight;
-            MusicPlayerButton.Location = new Point(175, 125);
-            MusicPlayerButton.Name = "MusicPlayerButton";
-            MusicPlayerButton.Size = new Size(100, 100);
-            MusicPlayerButton.TabIndex = 7;
-            MusicPlayerButton.Text = "MusicPlayer";
-            MusicPlayerButton.UseVisualStyleBackColor = false;
-            // 
-            // HotKeyButton
-            // 
-            HotKeyButton.BackColor = Color.FromArgb(173, 102, 213);
-            HotKeyButton.FlatAppearance.BorderSize = 0;
-            HotKeyButton.FlatStyle = FlatStyle.Flat;
-            HotKeyButton.Font = new Font("Tahoma", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            HotKeyButton.ForeColor = SystemColors.ButtonHighlight;
-            HotKeyButton.Location = new Point(35, 125);
-            HotKeyButton.Name = "HotKeyButton";
-            HotKeyButton.Size = new Size(100, 100);
-            HotKeyButton.TabIndex = 6;
-            HotKeyButton.Text = "Hotkey Settings";
-            HotKeyButton.UseVisualStyleBackColor = false;
-            // 
             // AffairList
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -242,10 +243,12 @@
             ClientSize = new Size(450, 482);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
+            KeyPreview = true;
             Name = "AffairList";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "AffairList";
             FormClosing += AffairList_FormClosing;
+            KeyDown += AffairList_KeyDown;
             panel1.ResumeLayout(false);
             NameBackground.ResumeLayout(false);
             NameBackground.PerformLayout();

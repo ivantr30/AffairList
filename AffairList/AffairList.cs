@@ -84,6 +84,11 @@ namespace AffairList
 
         private void OpenListButton_Click(object sender, EventArgs e)
         {
+            if (Config.currentListFileFullPath == "")
+            {
+                MessageBox.Show("Error, there is no list available");
+                return;
+            }
             Hide();
             List list = new List();
             list.Show();
@@ -118,7 +123,7 @@ namespace AffairList
                     " do you want to add default?",
                     "Confirm Form",
                     MessageBoxButtons.YesNo);
-                if(createDefault == DialogResult.Yes)
+                if (createDefault == DialogResult.Yes)
                 {
                     using (File.Create(Config.defaultListFileFullPath))
                     {
@@ -137,6 +142,11 @@ namespace AffairList
 
         private void ReplaceAffairListButton_Click(object sender, EventArgs e)
         {
+            if (Config.currentListFileFullPath == "")
+            {
+                MessageBox.Show("Error, there is no list available");
+                return;
+            }
             Hide();
             List list = new List();
             list.BackColor = Color.White;
@@ -155,6 +165,12 @@ namespace AffairList
             Hide();
             ChangeProfileForm profileForm = new ChangeProfileForm();
             profileForm.Show();
+        }
+        private void HotKeyButton_Click(object sender, EventArgs e)
+        {
+            Hide();
+            HotKeySettings hotKeySettings = new HotKeySettings();
+            hotKeySettings.Show();
         }
         private void AffairList_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -176,5 +192,12 @@ namespace AffairList
             MinimizeButton.ForeColor = Color.Black;
         }
 
+        private void AffairList_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Config.closeKey)
+            {
+                Config.Exit();
+            }
+        }
     }
 }

@@ -66,11 +66,11 @@ namespace AffairList
         }
         private void GlobalHook_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.F7)
+            if (e.KeyCode == Config.closeKey)
             {
                 Config.Exit();
             }
-            if (e.KeyCode == Keys.F6)
+            if (e.KeyCode == Config.returnKey)
             {
                 Config.Restart();
             }

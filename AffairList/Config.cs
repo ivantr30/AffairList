@@ -20,6 +20,9 @@ namespace AffairList
         private static Color basetextColor = Color.MediumSpringGreen;
         private static Color basebgtextColor = Color.Black;
 
+        public static Keys closeKey = Keys.F7;
+        public static Keys returnKey = Keys.F6;
+
         public static bool isConfirmed = true;
         public static bool musicState = true;
         public static bool autostartState = true;
@@ -87,7 +90,9 @@ namespace AffairList
                         "musicVolume: 35\n" +
                         "autostarts: true\n" +
                         "askToDelete: true\n" +
-                        "currentProfile: \n");
+                        "currentProfile: \n"+
+                        "closeKey: F7\n" +
+                        "returnKey: F6\n");
         }
         public static void ConfigureSettings()
         {
@@ -164,6 +169,16 @@ namespace AffairList
                     {
                         ChooseProfile();
                     }
+                }
+                if (settingLines[i].Contains("closeKey"))
+                {
+                    currentParametr = "closeKey";
+                    closeKey = (Keys)Enum.Parse(typeof(Keys), lineSplitted[0]);
+                }
+                if (settingLines[i].Contains("returnKey"))
+                {
+                    currentParametr = "returnKey";
+                    returnKey = (Keys)Enum.Parse(typeof(Keys), lineSplitted[0]);
                 }
                 settingLines[i] = currentParametr + ":" + string.Join(" ", lineSplitted);
             }

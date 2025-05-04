@@ -195,11 +195,11 @@ namespace AffairList
             {
                 DeleteProfile();
             }
-            if (e.KeyCode == Keys.F6)
+            if (e.KeyCode == Config.returnKey)
             {
                 Config.Restart();
             }
-            if (e.KeyCode == Keys.F7)
+            if (e.KeyCode == Config.closeKey)
             {
                 Config.Exit();
             }

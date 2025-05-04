@@ -6,3 +6,5 @@ musicVolume:35
 autostarts:true
 askToDelete:true
 currentProfile:
+closeKey:F8
+returnKey:F6
