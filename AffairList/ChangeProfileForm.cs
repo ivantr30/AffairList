@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -184,11 +185,6 @@ namespace AffairList
             ProfileInput.Clear();
         }
 
-        private void PriorityButton_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void ChangeProfileForm_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -198,6 +194,14 @@ namespace AffairList
             if (e.KeyCode == Keys.Delete)
             {
                 DeleteProfile();
+            }
+            if (e.KeyCode == Keys.F6)
+            {
+                Config.Restart();
+            }
+            if (e.KeyCode == Keys.F7)
+            {
+                Config.Exit();
             }
         }
     }

@@ -35,7 +35,6 @@
             CloseButton = new Label();
             ProfilesListLab = new Label();
             panel1 = new Panel();
-            PriorityButton = new Button();
             DeleteButton = new Button();
             BackButton = new Button();
             Profiles = new ListBox();
@@ -130,7 +129,6 @@
             // 
             panel1.BackColor = Color.FromArgb(72, 3, 111);
             panel1.Controls.Add(ProfilesListLab);
-            panel1.Controls.Add(PriorityButton);
             panel1.Controls.Add(DeleteButton);
             panel1.Controls.Add(BackButton);
             panel1.Controls.Add(Profiles);
@@ -143,19 +141,6 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(494, 405);
             panel1.TabIndex = 2;
-            // 
-            // PriorityButton
-            // 
-            PriorityButton.BackColor = Color.FromArgb(173, 102, 213);
-            PriorityButton.FlatStyle = FlatStyle.Flat;
-            PriorityButton.Font = new Font("Segoe UI", 9F);
-            PriorityButton.Location = new Point(118, 371);
-            PriorityButton.Name = "PriorityButton";
-            PriorityButton.Size = new Size(102, 27);
-            PriorityButton.TabIndex = 8;
-            PriorityButton.Text = "ChangePriority";
-            PriorityButton.UseVisualStyleBackColor = false;
-            PriorityButton.Click += PriorityButton_Click;
             // 
             // DeleteButton
             // 
@@ -253,7 +238,6 @@
         private Label ProfilesListLab;
         private Panel panel1;
         private Button AddDeadlineButton;
-        private Button PriorityButton;
         private Button DeleteButton;
         private Button BackButton;
         private ListBox Profiles;
