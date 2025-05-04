@@ -21,3 +21,4 @@ C:\Users\Ivan\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\Affa
 C:\Users\Ivan\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\AffairList.ChangeListForm.resources
 C:\Users\Ivan\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\AffairList.Settings.resources
 C:\Users\Ivan\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\AffairList.csproj.Up2Date
+C:\Users\Ivan\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\AffairList.ChangeProfileForm.resources

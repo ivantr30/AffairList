@@ -5,4 +5,4 @@ backTextColor:0 0 0
 musicVolume:35
 autostarts:true
 askToDelete:true
-currentProfile:C:\Users\Ivan\source\repos\AffairList\AffairList\bin\Debug\net8.0-windows\profiles\list.txt
+currentProfile:

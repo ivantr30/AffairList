@@ -13,7 +13,7 @@ namespace AffairList
         public static string listsDirectoryFullPath = Application.StartupPath + "profiles";
         public static string currentListFileFullPath = listsDirectoryFullPath + "\\list.txt";
         public static string defaultListFileFullPath = listsDirectoryFullPath + "\\list.txt";
-        public static string settingsFileFullPath = Application.StartupPath + "\\settings.txt";
+        public static string settingsFileFullPath = Application.StartupPath + "settings.txt";
 
         public static Color textColor = Color.MediumSpringGreen;
         public static Color bgtextColor = Color.Black;
@@ -32,7 +32,7 @@ namespace AffairList
 
         public static Point lastPoint;
 
-        private static string[] settingLines = File.ReadAllLines(settingsFileFullPath);
+        private static string[] settingLines;
         private static string currentParametr = "";
 
         private static void EnableAutoStart(string appName, string exePath)
@@ -57,10 +57,6 @@ namespace AffairList
         }
         public static void CreateFiles()
         {
-            if (!Directory.Exists(listsDirectoryFullPath))
-            {
-                DirectoryInfo di = Directory.CreateDirectory(listsDirectoryFullPath);
-            }
             if (!File.Exists(settingsFileFullPath))
             {
                 using (File.Create(settingsFileFullPath))
@@ -69,6 +65,11 @@ namespace AffairList
                 }
                 WriteBaseSettings();
             }
+            if (!Directory.Exists(listsDirectoryFullPath))
+            {
+                DirectoryInfo di = Directory.CreateDirectory(listsDirectoryFullPath);
+            }
+            settingLines = File.ReadAllLines(settingsFileFullPath);
         }
         public static void ChooseProfile()
         {
@@ -76,13 +77,6 @@ namespace AffairList
             if (profiles.Length > 0)
             {
                 currentListFileFullPath = profiles[0];
-            }
-            else
-            {
-                using (File.Create(defaultListFileFullPath))
-                {
-                    currentListFileFullPath = defaultListFileFullPath;
-                }
             }
         }
         public static void WriteBaseSettings()
