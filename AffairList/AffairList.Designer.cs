@@ -38,6 +38,9 @@
             MinimizeButton = new Label();
             CloseButton = new Label();
             AffairListLab = new Label();
+            ChangeProfileButton = new Button();
+            MusicPlayerButton = new Button();
+            HotKeyButton = new Button();
             panel1.SuspendLayout();
             NameBackground.SuspendLayout();
             SuspendLayout();
@@ -45,6 +48,9 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(72, 3, 111);
+            panel1.Controls.Add(ChangeProfileButton);
+            panel1.Controls.Add(MusicPlayerButton);
+            panel1.Controls.Add(HotKeyButton);
             panel1.Controls.Add(SettingsButton);
             panel1.Controls.Add(OpenListButton);
             panel1.Controls.Add(ReplaceAffairListButton);
@@ -54,7 +60,7 @@
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(450, 432);
+            panel1.Size = new Size(450, 482);
             panel1.TabIndex = 0;
             // 
             // SettingsButton
@@ -64,7 +70,7 @@
             SettingsButton.FlatStyle = FlatStyle.Flat;
             SettingsButton.Font = new Font("Tahoma", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
             SettingsButton.ForeColor = SystemColors.ButtonHighlight;
-            SettingsButton.Location = new Point(135, 157);
+            SettingsButton.Location = new Point(135, 81);
             SettingsButton.Name = "SettingsButton";
             SettingsButton.Size = new Size(180, 28);
             SettingsButton.TabIndex = 5;
@@ -79,7 +85,7 @@
             OpenListButton.FlatStyle = FlatStyle.Flat;
             OpenListButton.Font = new Font("Tahoma", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
             OpenListButton.ForeColor = SystemColors.ButtonHighlight;
-            OpenListButton.Location = new Point(35, 320);
+            OpenListButton.Location = new Point(35, 370);
             OpenListButton.Name = "OpenListButton";
             OpenListButton.Size = new Size(380, 100);
             OpenListButton.TabIndex = 4;
@@ -94,7 +100,7 @@
             ReplaceAffairListButton.FlatStyle = FlatStyle.Flat;
             ReplaceAffairListButton.Font = new Font("Tahoma", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
             ReplaceAffairListButton.ForeColor = SystemColors.ButtonHighlight;
-            ReplaceAffairListButton.Location = new Point(315, 200);
+            ReplaceAffairListButton.Location = new Point(315, 250);
             ReplaceAffairListButton.Name = "ReplaceAffairListButton";
             ReplaceAffairListButton.Size = new Size(100, 100);
             ReplaceAffairListButton.TabIndex = 3;
@@ -109,7 +115,7 @@
             ChangeListButton.FlatStyle = FlatStyle.Flat;
             ChangeListButton.Font = new Font("Tahoma", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
             ChangeListButton.ForeColor = SystemColors.ButtonHighlight;
-            ChangeListButton.Location = new Point(175, 200);
+            ChangeListButton.Location = new Point(175, 250);
             ChangeListButton.Name = "ChangeListButton";
             ChangeListButton.Size = new Size(100, 100);
             ChangeListButton.TabIndex = 2;
@@ -124,7 +130,7 @@
             ClearListButton.FlatStyle = FlatStyle.Flat;
             ClearListButton.Font = new Font("Tahoma", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
             ClearListButton.ForeColor = SystemColors.ButtonHighlight;
-            ClearListButton.Location = new Point(35, 200);
+            ClearListButton.Location = new Point(35, 250);
             ClearListButton.Name = "ClearListButton";
             ClearListButton.Size = new Size(100, 100);
             ClearListButton.TabIndex = 1;
@@ -141,7 +147,7 @@
             NameBackground.Dock = DockStyle.Top;
             NameBackground.Location = new Point(0, 0);
             NameBackground.Name = "NameBackground";
-            NameBackground.Size = new Size(450, 142);
+            NameBackground.Size = new Size(450, 75);
             NameBackground.TabIndex = 0;
             NameBackground.MouseDown += NameBackground_MouseDown;
             NameBackground.MouseMove += NameBackground_MouseMove;
@@ -174,10 +180,10 @@
             // 
             // AffairListLab
             // 
-            AffairListLab.Anchor = AnchorStyles.Top | AnchorStyles.Bottom;
+            AffairListLab.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             AffairListLab.AutoSize = true;
             AffairListLab.Font = new Font("Unispace", 30F);
-            AffairListLab.Location = new Point(94, 51);
+            AffairListLab.Location = new Point(100, 15);
             AffairListLab.Name = "AffairListLab";
             AffairListLab.Size = new Size(260, 48);
             AffairListLab.TabIndex = 1;
@@ -186,11 +192,53 @@
             AffairListLab.MouseDown += AffairListLab_MouseDown;
             AffairListLab.MouseMove += AffairListLab_MouseMove;
             // 
+            // ChangeProfileButton
+            // 
+            ChangeProfileButton.BackColor = Color.FromArgb(173, 102, 213);
+            ChangeProfileButton.FlatAppearance.BorderSize = 0;
+            ChangeProfileButton.FlatStyle = FlatStyle.Flat;
+            ChangeProfileButton.Font = new Font("Tahoma", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            ChangeProfileButton.ForeColor = SystemColors.ButtonHighlight;
+            ChangeProfileButton.Location = new Point(315, 125);
+            ChangeProfileButton.Name = "ChangeProfileButton";
+            ChangeProfileButton.Size = new Size(100, 100);
+            ChangeProfileButton.TabIndex = 8;
+            ChangeProfileButton.Text = "Change Profile";
+            ChangeProfileButton.UseVisualStyleBackColor = false;
+            // 
+            // MusicPlayerButton
+            // 
+            MusicPlayerButton.BackColor = Color.FromArgb(173, 102, 213);
+            MusicPlayerButton.FlatAppearance.BorderSize = 0;
+            MusicPlayerButton.FlatStyle = FlatStyle.Flat;
+            MusicPlayerButton.Font = new Font("Tahoma", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            MusicPlayerButton.ForeColor = SystemColors.ButtonHighlight;
+            MusicPlayerButton.Location = new Point(175, 125);
+            MusicPlayerButton.Name = "MusicPlayerButton";
+            MusicPlayerButton.Size = new Size(100, 100);
+            MusicPlayerButton.TabIndex = 7;
+            MusicPlayerButton.Text = "MusicPlayer";
+            MusicPlayerButton.UseVisualStyleBackColor = false;
+            // 
+            // HotKeyButton
+            // 
+            HotKeyButton.BackColor = Color.FromArgb(173, 102, 213);
+            HotKeyButton.FlatAppearance.BorderSize = 0;
+            HotKeyButton.FlatStyle = FlatStyle.Flat;
+            HotKeyButton.Font = new Font("Tahoma", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            HotKeyButton.ForeColor = SystemColors.ButtonHighlight;
+            HotKeyButton.Location = new Point(35, 125);
+            HotKeyButton.Name = "HotKeyButton";
+            HotKeyButton.Size = new Size(100, 100);
+            HotKeyButton.TabIndex = 6;
+            HotKeyButton.Text = "Hotkey Settings";
+            HotKeyButton.UseVisualStyleBackColor = false;
+            // 
             // AffairList
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(450, 432);
+            ClientSize = new Size(450, 482);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "AffairList";
@@ -215,5 +263,8 @@
         private Button OpenListButton;
         private Button SettingsButton;
         private Label MinimizeButton;
+        private Button ChangeProfileButton;
+        private Button MusicPlayerButton;
+        private Button HotKeyButton;
     }
 }

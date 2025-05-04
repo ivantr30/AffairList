@@ -52,7 +52,7 @@ namespace AffairList
             if (File.Exists(Config.listFileFullPath))
             {
                 string[] result = File.ReadAllLines(Config.listFileFullPath);
-                for(int i = 0; i < result.Length; i++)
+                for (int i = 0; i < result.Length; i++)
                 {
                     if (result[i].EndsWith("<priority>"))
                     {
@@ -107,6 +107,11 @@ namespace AffairList
                 Config.SaveParametr("x,y", Left + e.X, Top + e.Y);
                 Return();
             }
+        }
+
+        private void List_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Config.Exit();
         }
     }
 }

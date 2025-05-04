@@ -63,6 +63,7 @@
             ShowInTaskbar = false;
             Text = "List";
             TransparencyKey = Color.Black;
+            FormClosing += List_FormClosing;
             MouseDown += List_MouseDown;
             MouseMove += List_MouseMove;
             MouseUp += List_MouseUp;

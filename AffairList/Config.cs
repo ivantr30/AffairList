@@ -44,6 +44,7 @@ namespace AffairList
         }
         public static void Exit()
         {
+            AffairList.trayIcon.Visible = false;
             Application.Exit();
         }
         public static void Restart()

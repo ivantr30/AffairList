@@ -36,7 +36,7 @@
             AskToDeleteState = new Label();
             AskToDelete = new Label();
             ThemeBoxCB = new ComboBox();
-            ChooseThemeLab = new Label();
+            CurrentThemeLab = new Label();
             VolumeValueLab = new Label();
             VolumeBar = new TrackBar();
             PickBgColorButton = new Button();
@@ -119,7 +119,7 @@
             panel1.Controls.Add(AskToDeleteState);
             panel1.Controls.Add(AskToDelete);
             panel1.Controls.Add(ThemeBoxCB);
-            panel1.Controls.Add(ChooseThemeLab);
+            panel1.Controls.Add(CurrentThemeLab);
             panel1.Controls.Add(VolumeValueLab);
             panel1.Controls.Add(VolumeBar);
             panel1.Controls.Add(PickBgColorButton);
@@ -181,18 +181,18 @@
             ThemeBoxCB.Size = new Size(121, 25);
             ThemeBoxCB.TabIndex = 22;
             // 
-            // ChooseThemeLab
+            // CurrentThemeLab
             // 
-            ChooseThemeLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            ChooseThemeLab.AutoSize = true;
-            ChooseThemeLab.Font = new Font("Unispace", 13F);
-            ChooseThemeLab.ForeColor = Color.White;
-            ChooseThemeLab.Location = new Point(12, 378);
-            ChooseThemeLab.Name = "ChooseThemeLab";
-            ChooseThemeLab.Size = new Size(142, 21);
-            ChooseThemeLab.TabIndex = 21;
-            ChooseThemeLab.Text = "Choose theme";
-            ChooseThemeLab.TextAlign = ContentAlignment.MiddleCenter;
+            CurrentThemeLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            CurrentThemeLab.AutoSize = true;
+            CurrentThemeLab.Font = new Font("Unispace", 13F);
+            CurrentThemeLab.ForeColor = Color.White;
+            CurrentThemeLab.Location = new Point(12, 378);
+            CurrentThemeLab.Name = "CurrentThemeLab";
+            CurrentThemeLab.Size = new Size(153, 21);
+            CurrentThemeLab.TabIndex = 21;
+            CurrentThemeLab.Text = "Current theme";
+            CurrentThemeLab.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // VolumeValueLab
             // 
@@ -454,7 +454,7 @@
         private TrackBar VolumeBar;
         private Label VolumeValueLab;
         private ComboBox ThemeBoxCB;
-        private Label ChooseThemeLab;
+        private Label CurrentThemeLab;
         private Label AskToDeleteState;
         private Label AskToDelete;
         private Label autostartStateLab;
