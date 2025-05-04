@@ -100,18 +100,36 @@ namespace AffairList
 
             if (result == DialogResult.Yes)
             {
-                if (!File.Exists(Config.listFileFullPath))
+                if (!File.Exists(Config.currentListFileFullPath))
                 {
                     MessageBox.Show("Error, list file does not exist");
                     return;
                 }
-                File.WriteAllText(Config.listFileFullPath, "");
+                File.WriteAllText(Config.currentListFileFullPath, "");
                 MessageBox.Show("The list is cleared");
             }
         }
 
         private void ChangeListButton_Click(object sender, EventArgs e)
         {
+            if (Directory.GetFiles(Config.listsDirectoryFullPath).Length < 1)
+            {
+                DialogResult createDefault = MessageBox.Show("There are no profiles available," +
+                    " do you want to add default?",
+                    "Confirm Form",
+                    MessageBoxButtons.YesNo);
+                if(createDefault == DialogResult.Yes)
+                {
+                    using (File.Create(Config.defaultListFileFullPath))
+                    {
+                        Config.currentListFileFullPath = Config.defaultListFileFullPath;
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
             Hide();
             ChangeListForm listForm = new ChangeListForm();
             listForm.Show();
@@ -132,7 +150,12 @@ namespace AffairList
             Settings settings = new Settings();
             settings.Show();
         }
-
+        private void ChangeProfileButton_Click(object sender, EventArgs e)
+        {
+            Hide();
+            ChangeProfileForm profileForm = new ChangeProfileForm();
+            profileForm.Show();
+        }
         private void AffairList_FormClosing(object sender, FormClosingEventArgs e)
         {
             Config.Exit();
@@ -152,5 +175,6 @@ namespace AffairList
         {
             MinimizeButton.ForeColor = Color.Black;
         }
+
     }
 }

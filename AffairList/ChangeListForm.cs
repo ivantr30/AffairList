@@ -22,14 +22,32 @@ namespace AffairList
         public ChangeListForm()
         {
             InitializeComponent();
-            lines = File.ReadAllLines(Config.listFileFullPath)
-                .OrderByDescending(x => x.EndsWith("<priority>")).ToArray();
+            LoadProfiles();
             LoadText();
+        }
+        private void LoadProfiles()
+        {
+            var profiles = Directory.GetFiles(Config.listsDirectoryFullPath);
+            foreach (var profile in profiles)
+            {
+                FileInfo profileInfo = new FileInfo(profile);
+                ProfileBox.Items.Add(profileInfo.Name);
+            }
+            if (profiles.Length > 0)
+            {
+                FileInfo selectedProfile = new FileInfo(Config.currentListFileFullPath);
+                ProfileBox.SelectedIndex = ProfileBox.Items.IndexOf(selectedProfile.Name);
+                Config.currentListFileFullPath = selectedProfile.FullName;
+            }
         }
         private void LoadText()
         {
-            if (File.Exists(Config.listFileFullPath))
+            if (File.Exists(Config.currentListFileFullPath))
             {
+                lines = File.ReadAllLines(Config.currentListFileFullPath)
+                    .OrderByDescending(x => x.EndsWith("<priority>")).ToArray();
+                Affairs.Items.Clear();
+
                 foreach (string line in lines)
                 {
                     var temp = line.Trim();
@@ -125,9 +143,9 @@ namespace AffairList
             temp.Add(AffairInput.Text);
             lines = temp.ToArray();
 
-            if (File.Exists(Config.listFileFullPath))
+            if (File.Exists(Config.currentListFileFullPath))
             {
-                File.AppendAllText(Config.listFileFullPath, AffairInput.Text + "\n");
+                File.AppendAllText(Config.currentListFileFullPath, AffairInput.Text + "\n");
             }
             AffairInput.Text = "";
         }
@@ -143,24 +161,24 @@ namespace AffairList
                     if (dialogres == DialogResult.No) return;
                 }
 
-                if (File.Exists(Config.listFileFullPath))
+                if (File.Exists(Config.currentListFileFullPath))
                 {
                     var temp = lines.ToList();
                     temp.RemoveAt(Affairs.SelectedIndex);
                     lines = temp.ToArray();
 
-                    File.WriteAllLines(Config.listFileFullPath, lines);
+                    File.WriteAllLines(Config.currentListFileFullPath, lines);
                 }
                 int selectedIndex = 0;
                 if (Affairs.SelectedIndex == 0 && Affairs.Items.Count > 1)
                 {
                     Affairs.SelectedIndex++;
-                    selectedIndex = Affairs.SelectedIndex-1;
+                    selectedIndex = Affairs.SelectedIndex - 1;
                 }
-                else if(Affairs.Items.Count > 1)
+                else if (Affairs.Items.Count > 1)
                 {
                     Affairs.SelectedIndex--;
-                    selectedIndex = Affairs.SelectedIndex+1;
+                    selectedIndex = Affairs.SelectedIndex + 1;
                 }
                 Affairs.Items.RemoveAt(selectedIndex);
             }
@@ -208,7 +226,7 @@ namespace AffairList
 
                     lines[Affairs.SelectedIndex] = lines[Affairs.SelectedIndex].Substring(11);
 
-                    File.WriteAllLines(Config.listFileFullPath, lines);
+                    File.WriteAllLines(Config.currentListFileFullPath, lines);
                     return;
                 }
             }
@@ -228,7 +246,7 @@ namespace AffairList
 
                 lines[Affairs.SelectedIndex] = res + " " + lines[Affairs.SelectedIndex];
 
-                File.WriteAllLines(Config.listFileFullPath, lines);
+                File.WriteAllLines(Config.currentListFileFullPath, lines);
             }
             catch
             {
@@ -254,7 +272,7 @@ namespace AffairList
                     lines[Affairs.SelectedIndex] = lines[Affairs.SelectedIndex]
                         .Substring(0, lines[Affairs.SelectedIndex].Length - " <priority>".Length);
 
-                    File.WriteAllLines(Config.listFileFullPath, lines);
+                    File.WriteAllLines(Config.currentListFileFullPath, lines);
                 }
                 return;
             }
@@ -263,7 +281,7 @@ namespace AffairList
 
             lines = lines.OrderByDescending(x => x.Contains("<priority>")).ToArray();
 
-            File.WriteAllLines(Config.listFileFullPath, lines);
+            File.WriteAllLines(Config.currentListFileFullPath, lines);
 
             Affairs.Items.Clear();
             LoadText();
@@ -301,7 +319,7 @@ namespace AffairList
             lines[currentDragIndex] = lines[Affairs.SelectedIndex];
             lines[Affairs.SelectedIndex] = (string)temp;
 
-            File.WriteAllLines(Config.listFileFullPath, lines);
+            File.WriteAllLines(Config.currentListFileFullPath, lines);
             isDragging = false;
         }
 
@@ -318,6 +336,34 @@ namespace AffairList
         private void MinimizeButton_MouseLeave(object sender, EventArgs e)
         {
             MinimizeButton.ForeColor = Color.Black;
+        }
+        private void ChangeProfile()
+        {
+            var profiles = Directory.GetFiles(Config.listsDirectoryFullPath);
+            foreach (var profile in profiles)
+            {
+                FileInfo profileInfo = new FileInfo(profile);
+                if (profileInfo.Name == ProfileBox.SelectedItem.ToString())
+                {
+                    Config.SaveParametr("currentProfile", profileInfo.FullName, "");
+                    Config.currentListFileFullPath = profileInfo.FullName;
+                }
+            }
+        }
+
+        private void ProfileBox_TextUpdate(object sender, EventArgs e)
+        {
+            if (File.Exists(ProfileBox.Text))
+            {
+                ChangeProfile();
+            }
+            LoadText();
+        }
+
+        private void ProfileBox_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            ChangeProfile();
+            LoadText();
         }
     }
 }

@@ -1,7 +1,8 @@
-x,y:1607 30
-musicOn:False
-textColor:0 255 128
+x,y:1600 12
+musicOn:true
+textColor:0 250 154
 backTextColor:0 0 0
 musicVolume:35
-autostarts:False
-askToDelete:False
+autostarts:true
+askToDelete:true
+currentProfile:C:\Users\Ivan\source\repos\AffairList\AffairList\bin\Debug\net8.0-windows\profiles\list.txt

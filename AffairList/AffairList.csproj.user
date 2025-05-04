@@ -10,6 +10,9 @@
     <Compile Update="ChangeListForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="ChangeProfileForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="List.cs">
       <SubType>Form</SubType>
     </Compile>

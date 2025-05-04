@@ -205,6 +205,7 @@
             ChangeProfileButton.TabIndex = 8;
             ChangeProfileButton.Text = "Change Profile";
             ChangeProfileButton.UseVisualStyleBackColor = false;
+            ChangeProfileButton.Click += ChangeProfileButton_Click;
             // 
             // MusicPlayerButton
             // 

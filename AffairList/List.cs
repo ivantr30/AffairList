@@ -49,9 +49,9 @@ namespace AffairList
         }
         private void LoadText()
         {
-            if (File.Exists(Config.listFileFullPath))
+            if (File.Exists(Config.currentListFileFullPath))
             {
-                string[] result = File.ReadAllLines(Config.listFileFullPath);
+                string[] result = File.ReadAllLines(Config.currentListFileFullPath);
                 for (int i = 0; i < result.Length; i++)
                 {
                     if (result[i].EndsWith("<priority>"))

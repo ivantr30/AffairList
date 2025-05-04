@@ -1,6 +1,7 @@
 ﻿using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,9 @@ namespace AffairList
 {
     public class Config
     {
-        public static string listFileFullPath = Application.StartupPath + "\\list.txt";
+        public static string listsDirectoryFullPath = Application.StartupPath + "profiles";
+        public static string currentListFileFullPath = listsDirectoryFullPath + "\\list.txt";
+        public static string defaultListFileFullPath = listsDirectoryFullPath + "\\list.txt";
         public static string settingsFileFullPath = Application.StartupPath + "\\settings.txt";
 
         public static Color textColor = Color.MediumSpringGreen;
@@ -54,12 +57,9 @@ namespace AffairList
         }
         public static void CreateFiles()
         {
-            if (!File.Exists(listFileFullPath))
+            if (!Directory.Exists(listsDirectoryFullPath))
             {
-                using (File.Create(listFileFullPath))
-                {
-
-                }
+                DirectoryInfo di = Directory.CreateDirectory(listsDirectoryFullPath);
             }
             if (!File.Exists(settingsFileFullPath))
             {
@@ -70,6 +70,21 @@ namespace AffairList
                 WriteBaseSettings();
             }
         }
+        public static void ChooseProfile()
+        {
+            var profiles = Directory.GetFiles(listsDirectoryFullPath);
+            if (profiles.Length > 0)
+            {
+                currentListFileFullPath = profiles[0];
+            }
+            else
+            {
+                using (File.Create(defaultListFileFullPath))
+                {
+                    currentListFileFullPath = defaultListFileFullPath;
+                }
+            }
+        }
         public static void WriteBaseSettings()
         {
             File.WriteAllText(settingsFileFullPath, "x,y: \nmusicOn: true" +
@@ -77,7 +92,8 @@ namespace AffairList
                     $"\nbackTextColor: {basebgtextColor.R} {basebgtextColor.G} {basebgtextColor.B}\n" +
                         "musicVolume: 35\n" +
                         "autostarts: true\n" +
-                        "askToDelete: true\n");
+                        "askToDelete: true\n" +
+                        "currentProfile: \n");
         }
         public static void ConfigureSettings()
         {
@@ -145,6 +161,15 @@ namespace AffairList
                 {
                     currentParametr = "musicVolume";
                     currentVolume = int.Parse(lineSplitted[0]);
+                }
+                if (settingLines[i].Contains("currentProfile:"))
+                {
+                    currentParametr = "currentProfile";
+                    currentListFileFullPath = string.Join(" ", lineSplitted);
+                    if (!File.Exists(currentListFileFullPath))
+                    {
+                        ChooseProfile();
+                    }
                 }
                 settingLines[i] = currentParametr + ":" + string.Join(" ", lineSplitted);
             }
