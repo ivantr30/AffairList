@@ -1,10 +1,10 @@
-x,y:1600 12
+x,y:1596 25
 musicOn:true
 textColor:0 250 154
 backTextColor:0 0 0
 musicVolume:35
 autostarts:true
 askToDelete:true
-currentProfile:
+currentProfile:C:\Users\Ivan\source\repos\AffairList\AffairList\bin\Debug\net8.0-windows\profiles\list3.txt
 closeKey:F8
 returnKey:F6
