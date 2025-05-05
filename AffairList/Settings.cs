@@ -134,11 +134,8 @@ namespace AffairList
             {
                 Config.WriteBaseSettings();
 
-                if (!File.Exists(Config.settingsFileFullPath))
-                {
-                    MessageBox.Show("Error, settings file does not exist");
-                    return;
-                }
+                Config.IfSettingsFileExists();
+
                 MessageBox.Show("The settings were reseted succesfully");
             }
             Config.Restart();

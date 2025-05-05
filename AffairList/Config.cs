@@ -82,6 +82,22 @@ namespace AffairList
                 currentListFileFullPath = profiles[0];
             }
         }
+        public static void IfSettingsFileExists()
+        {
+            if (!File.Exists(settingsFileFullPath))
+            {
+                MessageBox.Show("Error, settings file does not exist");
+                return;
+            }
+        }
+        public static void IfListFileExists()
+        {
+            if (!File.Exists(settingsFileFullPath))
+            {
+                MessageBox.Show("Error, list file does not exist");
+                return;
+            }
+        }
         public static void WriteBaseSettings()
         {
             File.WriteAllText(settingsFileFullPath, "x,y: \nmusicOn: true" +
