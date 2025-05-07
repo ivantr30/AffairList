@@ -100,7 +100,9 @@ namespace AffairList
         }
         public static void WriteBaseSettings()
         {
-            File.WriteAllText(settingsFileFullPath, "x,y: \nmusicOn: true" +
+            File.WriteAllText(settingsFileFullPath,
+                $"x,y: {width - width / 6} {(height + height / 10) / 90}" +
+                    "\nmusicOn: true" +
                     $"\ntextColor: {basetextColor.R} {basetextColor.G} {basetextColor.B}" +
                     $"\nbackTextColor: {basebgtextColor.R} {basebgtextColor.G} {basebgtextColor.B}\n" +
                         "musicVolume: 35\n" +
@@ -119,27 +121,18 @@ namespace AffairList
             }
             for (int i = 0; i < settingLines.Length; i++)
             {
-                string[] lineSplitted = settingLines[i].Substring((settingLines[i] + " ").IndexOf(":") + 1)
+                string[] parametrs = settingLines[i].Substring((settingLines[i] + " ").IndexOf(":") + 1)
                     .Trim().Split(" ");
                 if (settingLines[i].Contains("x,y"))
                 {
                     currentParametr = "x,y";
-                    if(lineSplitted[0].Length < 2)
-                    {
-                        x = width;
-                        y = height + height / 10;
-                        lineSplitted[0] = x - x / 6 + " " + y / 90;
-                    }
-                    else
-                    {
-                        x = int.Parse(lineSplitted[0]);
-                        y = int.Parse(lineSplitted[1]);
-                    }
+                    x = int.Parse(parametrs[0]);
+                    y = int.Parse(parametrs[1]);
                 }
                 if (settingLines[i].Contains("autostarts"))
                 {
                     currentParametr = "autostarts";
-                    if (lineSplitted[0].Contains("True"))
+                    if (parametrs[0].Contains("True"))
                     {
                         autostartState = true;
                         EnableAutoStart("AffairList", Application.ExecutablePath);
@@ -153,34 +146,34 @@ namespace AffairList
                 if (settingLines[i].Contains("textColor"))
                 {
                     currentParametr = "textColor";
-                    textColor = Color.FromArgb(255, int.Parse(lineSplitted[0]), int.Parse(lineSplitted[1]),
-                        int.Parse(lineSplitted[2]));
+                    textColor = Color.FromArgb(255, int.Parse(parametrs[0]), int.Parse(parametrs[1]),
+                        int.Parse(parametrs[2]));
                 }
                 if (settingLines[i].Contains("backTextColor:"))
                 {
                     currentParametr = "backTextColor";
-                    bgtextColor = Color.FromArgb(255, int.Parse(lineSplitted[0]), int.Parse(lineSplitted[1]),
-                        int.Parse(lineSplitted[2]));
+                    bgtextColor = Color.FromArgb(255, int.Parse(parametrs[0]), int.Parse(parametrs[1]),
+                        int.Parse(parametrs[2]));
                 }
                 if (settingLines[i].Contains("askToDelete:"))
                 {
                     currentParametr = "askToDelete";
-                    askToDelete = bool.Parse(lineSplitted[0]);
+                    askToDelete = bool.Parse(parametrs[0]);
                 }
                 if (settingLines[i].Contains("musicOn:"))
                 {
                     currentParametr = "musicOn";
-                    musicState = bool.Parse(lineSplitted[0]);
+                    musicState = bool.Parse(parametrs[0]);
                 }
                 if (settingLines[i].Contains("musicVolume:"))
                 {
                     currentParametr = "musicVolume";
-                    currentVolume = int.Parse(lineSplitted[0]);
+                    currentVolume = int.Parse(parametrs[0]);
                 }
                 if (settingLines[i].Contains("currentProfile:"))
                 {
                     currentParametr = "currentProfile";
-                    currentListFileFullPath = string.Join(" ", lineSplitted);
+                    currentListFileFullPath = string.Join(" ", parametrs);
                     if (!File.Exists(currentListFileFullPath))
                     {
                         ChooseProfile();
@@ -189,14 +182,14 @@ namespace AffairList
                 if (settingLines[i].Contains("closeKey"))
                 {
                     currentParametr = "closeKey";
-                    closeKey = (Keys)Enum.Parse(typeof(Keys), lineSplitted[0]);
+                    closeKey = (Keys)Enum.Parse(typeof(Keys), parametrs[0]);
                 }
                 if (settingLines[i].Contains("returnKey"))
                 {
                     currentParametr = "returnKey";
-                    returnKey = (Keys)Enum.Parse(typeof(Keys), lineSplitted[0]);
+                    returnKey = (Keys)Enum.Parse(typeof(Keys), parametrs[0]);
                 }
-                settingLines[i] = currentParametr + ":" + string.Join(" ", lineSplitted);
+                settingLines[i] = currentParametr + ":" + string.Join(" ", parametrs);
             }
             File.WriteAllLines(settingsFileFullPath, settingLines);
         }

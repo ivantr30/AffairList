@@ -481,3 +481,4 @@ C:\Users\Ivan\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\win-
 C:\Users\Ivan\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\win-x64\AffairList.pdb
 C:\Users\Ivan\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\win-x64\AffairList.genruntimeconfig.cache
 C:\Users\Ivan\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\win-x64\ref\AffairList.dll
+C:\Users\Ivan\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\win-x64\AffairList.HotKeySettings.resources

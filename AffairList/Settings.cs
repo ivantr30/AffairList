@@ -132,9 +132,9 @@ namespace AffairList
                 MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                Config.WriteBaseSettings();
-
                 Config.IfSettingsFileExists();
+
+                Config.WriteBaseSettings();
 
                 MessageBox.Show("The settings were reseted succesfully");
             }
@@ -239,7 +239,10 @@ namespace AffairList
             int prevX = Config.x, prevY = Config.y;
             try
             {
-                Config.x = int.Parse(Interaction.InputBox("Enter x coordinate", "InputWindow", ""));
+                Config.x = int.Parse(Interaction.InputBox("Enter x coordinate," +
+                    $" max width is {Config.width}",
+                    "InputWindow", ""));
+                if(Config.x > Config.width) throw new Exception();
             }
             catch
             {
@@ -249,7 +252,9 @@ namespace AffairList
             }
             try
             {
-                Config.y = int.Parse(Interaction.InputBox("Enter y coordinate", "InputWindow", ""));
+                Config.y = int.Parse(Interaction.InputBox("Enter y coordinate" +
+                    $" max height is {Config.height}", "InputWindow", ""));
+                if (Config.y > Config.height) throw new Exception();
             }
             catch
             {
