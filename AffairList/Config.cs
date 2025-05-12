@@ -107,128 +107,172 @@ namespace AffairList
         }
         public static void ConfigureSettings()
         {
-            if(settingLines.Length == 0)
+            if (settingLines.Length == 0)
             {
                 WriteBaseSettings();
                 return;
             }
+
             for (int i = 0; i < settingLines.Length; i++)
             {
-                string[] parametrs = settingLines[i].Substring((settingLines[i] + " ").IndexOf(":") + 1)
-                    .Trim().Split(" ");
-                if (settingLines[i].Contains("x,y"))
+                string line = settingLines[i].Trim();
+                if (string.IsNullOrEmpty(line)) continue;
+
+                int colonIndex = line.IndexOf(':');
+                if (colonIndex < 0) continue;
+
+                string key = line.Substring(0, colonIndex).Trim();
+                string value = line.Substring(colonIndex + 1).Trim();
+                string[] parameters = value.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+
+                switch (key)
                 {
-                    currentParametr = "x,y";
-                    x = int.Parse(parametrs[0]);
-                    y = int.Parse(parametrs[1]);
+                    case "x,y":
+                        currentParametr = key;
+                        x = int.Parse(parameters[0]);
+                        y = int.Parse(parameters[1]);
+                        break;
+
+                    case "autostarts":
+                        currentParametr = key;
+                        autostartState = parameters[0].Contains("True");
+                        if (autostartState)
+                            EnableAutoStart("AffairList", Application.ExecutablePath);
+                        else
+                            DisableAutoStart("AffairList");
+                        break;
+
+                    case "textColor":
+                        currentParametr = key;
+                        textColor = Color.FromArgb(255,
+                            int.Parse(parameters[0]),
+                            int.Parse(parameters[1]),
+                            int.Parse(parameters[2]));
+                        break;
+
+                    case "backTextColor":
+                        currentParametr = key;
+                        bgtextColor = Color.FromArgb(255,
+                            int.Parse(parameters[0]),
+                            int.Parse(parameters[1]),
+                            int.Parse(parameters[2]));
+                        break;
+
+                    case "askToDelete":
+                        currentParametr = key;
+                        askToDelete = bool.Parse(parameters[0]);
+                        break;
+
+                    case "musicOn":
+                        currentParametr = key;
+                        musicState = bool.Parse(parameters[0]);
+                        break;
+
+                    case "musicVolume":
+                        currentParametr = key;
+                        currentVolume = int.Parse(parameters[0]);
+                        break;
+
+                    case "currentProfile":
+                        currentParametr = key;
+                        currentListFileFullPath = value;
+                        if (!File.Exists(currentListFileFullPath))
+                        {
+                            ChooseProfile();
+                        }
+                        break;
+
+                    case "closeKey":
+                        currentParametr = key;
+                        closeKey = (Keys)Enum.Parse(typeof(Keys), parameters[0]);
+                        break;
+
+                    case "returnKey":
+                        currentParametr = key;
+                        returnKey = (Keys)Enum.Parse(typeof(Keys), parameters[0]);
+                        break;
+
+                    default:
+                        continue;
                 }
-                if (settingLines[i].Contains("autostarts"))
-                {
-                    currentParametr = "autostarts";
-                    if (parametrs[0].Contains("True"))
-                    {
-                        autostartState = true;
-                        EnableAutoStart("AffairList", Application.ExecutablePath);
-                    }
-                    else
-                    {
-                        autostartState = false;
-                        DisableAutoStart("AffairList");
-                    }
-                }
-                if (settingLines[i].Contains("textColor"))
-                {
-                    currentParametr = "textColor";
-                    textColor = Color.FromArgb(255, int.Parse(parametrs[0]), int.Parse(parametrs[1]),
-                        int.Parse(parametrs[2]));
-                }
-                if (settingLines[i].Contains("backTextColor:"))
-                {
-                    currentParametr = "backTextColor";
-                    bgtextColor = Color.FromArgb(255, int.Parse(parametrs[0]), int.Parse(parametrs[1]),
-                        int.Parse(parametrs[2]));
-                }
-                if (settingLines[i].Contains("askToDelete:"))
-                {
-                    currentParametr = "askToDelete";
-                    askToDelete = bool.Parse(parametrs[0]);
-                }
-                if (settingLines[i].Contains("musicOn:"))
-                {
-                    currentParametr = "musicOn";
-                    musicState = bool.Parse(parametrs[0]);
-                }
-                if (settingLines[i].Contains("musicVolume:"))
-                {
-                    currentParametr = "musicVolume";
-                    currentVolume = int.Parse(parametrs[0]);
-                }
-                if (settingLines[i].Contains("currentProfile:"))
-                {
-                    currentParametr = "currentProfile";
-                    currentListFileFullPath = string.Join(" ", parametrs);
-                    if (!File.Exists(currentListFileFullPath))
-                    {
-                        ChooseProfile();
-                    }
-                }
-                if (settingLines[i].Contains("closeKey"))
-                {
-                    currentParametr = "closeKey";
-                    closeKey = (Keys)Enum.Parse(typeof(Keys), parametrs[0]);
-                }
-                if (settingLines[i].Contains("returnKey"))
-                {
-                    currentParametr = "returnKey";
-                    returnKey = (Keys)Enum.Parse(typeof(Keys), parametrs[0]);
-                }
-                settingLines[i] = currentParametr + ":" + string.Join(" ", parametrs);
+
+                settingLines[i] = $"{currentParametr}:{value}";
             }
+
             File.WriteAllLines(settingsFileFullPath, settingLines);
         }
         public static void SaveSettings()
         {
             Config.isConfirmed = true;
+
             for (int i = 0; i < settingLines.Length; i++)
             {
-                if (settingLines[i].Contains("x,y:"))
+                string line = settingLines[i].Trim();
+                if (string.IsNullOrEmpty(line)) continue;
+
+                // Определяем ключ параметра (часть до ':')
+                string key = line.Contains(":")
+                    ? line.Substring(0, line.IndexOf(':')).Trim()
+                    : string.Empty;
+
+                switch (key)
                 {
-                    currentParametr = "x,y";
-                    settingLines[i] =  currentParametr + ": " + x + " " + y;
-                }
-                if (settingLines[i].Contains("textColor"))
-                {
-                    currentParametr = "textColor";
-                    settingLines[i] = currentParametr + ": " + textColor.R + " " + textColor.G
-                        + " " + textColor.B;
-                }
-                if (settingLines[i].Contains("backTextColor"))
-                {
-                    currentParametr = "backTextColor";
-                    settingLines[i] = currentParametr + ": " + bgtextColor.R + " " + bgtextColor.G
-                        + " " + bgtextColor.B;
-                }
-                if (settingLines[i].Contains("musicOn"))
-                {
-                    currentParametr = "musicOn";
-                    settingLines[i] = currentParametr + ": " + musicState;
-                }
-                if (settingLines[i].Contains("autostarts"))
-                {
-                    currentParametr = "autostarts";
-                    settingLines[i] = currentParametr + ": " + autostartState;
-                }
-                if (settingLines[i].Contains("musicVolume"))
-                {
-                    currentParametr = "musicVolume";
-                    settingLines[i] = currentParametr + ": " + currentVolume;
-                }
-                if (settingLines[i].Contains("askToDelete"))
-                {
-                    currentParametr = "askToDelete";
-                    settingLines[i] = currentParametr + ": " + askToDelete;
+                    case "x,y":
+                        currentParametr = key;
+                        settingLines[i] = $"{currentParametr}: {x} {y}";
+                        break;
+
+                    case "textColor":
+                        currentParametr = key;
+                        settingLines[i] = $"{currentParametr}: {textColor.R} {textColor.G} {textColor.B}";
+                        break;
+
+                    case "backTextColor":
+                        currentParametr = key;
+                        settingLines[i] = $"{currentParametr}: {bgtextColor.R} {bgtextColor.G} {bgtextColor.B}";
+                        break;
+
+                    case "musicOn":
+                        currentParametr = key;
+                        settingLines[i] = $"{currentParametr}: {musicState}";
+                        break;
+
+                    case "autostarts":
+                        currentParametr = key;
+                        settingLines[i] = $"{currentParametr}: {autostartState}";
+                        break;
+
+                    case "musicVolume":
+                        currentParametr = key;
+                        settingLines[i] = $"{currentParametr}: {currentVolume}";
+                        break;
+
+                    case "askToDelete":
+                        currentParametr = key;
+                        settingLines[i] = $"{currentParametr}: {askToDelete}";
+                        break;
+
+                    // Для параметров без значения (например, currentProfile)
+                    default:
+                        if (line.StartsWith("currentProfile:"))
+                        {
+                            currentParametr = "currentProfile";
+                            // Сохраняем без изменений или добавляем логику при необходимости
+                        }
+                        else if (line.StartsWith("closeKey:"))
+                        {
+                            currentParametr = "closeKey";
+                            // Сохраняем без изменений
+                        }
+                        else if (line.StartsWith("returnKey:"))
+                        {
+                            currentParametr = "returnKey";
+                            // Сохраняем без изменений
+                        }
+                        break;
                 }
             }
+
             File.WriteAllLines(settingsFileFullPath, settingLines);
         }
         public static void SaveParametr<T>(string parametr, T firstValue, T secondValue)
