@@ -260,18 +260,16 @@ namespace AffairList
                 {
                     lines[Affairs.SelectedIndex] = lines[Affairs.SelectedIndex]
                         .Substring(0, lines[Affairs.SelectedIndex].Length - " <priority>".Length);
-
-                    File.WriteAllLines(Config.currentListFileFullPath, lines);
                 }
-                return;
             }
-            Affairs.Items[Affairs.SelectedIndex] += " \"Приоритное\"";
-            lines[Affairs.SelectedIndex] += " <priority>";
+            else
+            {
+                Affairs.Items[Affairs.SelectedIndex] += " \"Приоритное\"";
+                lines[Affairs.SelectedIndex] += " <priority>";
+            }
 
             lines = lines.OrderByDescending(x => x.Contains("<priority>")).ToArray();
-
             File.WriteAllLines(Config.currentListFileFullPath, lines);
-
             Affairs.Items.Clear();
             LoadText();
         }

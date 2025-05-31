@@ -195,5 +195,10 @@ namespace AffairList
                 Config.Exit();
             }
         }
+
+        private void MusicPlayerButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

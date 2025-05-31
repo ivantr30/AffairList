@@ -91,6 +91,7 @@
             MusicPlayerButton.TabIndex = 7;
             MusicPlayerButton.Text = "MusicPlayer";
             MusicPlayerButton.UseVisualStyleBackColor = false;
+            MusicPlayerButton.Click += MusicPlayerButton_Click;
             // 
             // HotKeyButton
             // 
