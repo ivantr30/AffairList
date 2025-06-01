@@ -206,9 +206,10 @@ namespace AffairList
                 DateTime.ParseExact(temp.Substring(0, 10), "dd.MM.yyyy", null, DateTimeStyles.None);
                 temp = temp.Substring(10).Trim();
 
-                DialogResult dialogres = MessageBox.Show("Do you want to delete the deadline?",
+                DialogResult dialogres = MessageBox.Show(
+                    "Do you want to delete the deadline or just change it. yes - delete, no - change?",
                     "Confirm form",
-                    MessageBoxButtons.YesNo);
+                    MessageBoxButtons.YesNoCancel);
                 if (dialogres == DialogResult.Yes)
                 {
                     Affairs.Items[Affairs.SelectedIndex] = temp;
@@ -218,6 +219,7 @@ namespace AffairList
                     File.WriteAllLines(Config.currentListFileFullPath, lines);
                     return;
                 }
+                if (dialogres == DialogResult.Cancel) return;
             }
             catch
             {

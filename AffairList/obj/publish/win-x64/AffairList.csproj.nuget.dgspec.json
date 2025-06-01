@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Ivan\\source\\repos\\AffairList\\AffairList\\AffairList.csproj": {}
+    "F:\\source\\repos\\AffairList\\AffairList\\AffairList.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Ivan\\source\\repos\\AffairList\\AffairList\\AffairList.csproj": {
+    "F:\\source\\repos\\AffairList\\AffairList\\AffairList.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ivan\\source\\repos\\AffairList\\AffairList\\AffairList.csproj",
+        "projectUniqueName": "F:\\source\\repos\\AffairList\\AffairList\\AffairList.csproj",
         "projectName": "AffairList",
-        "projectPath": "C:\\Users\\Ivan\\source\\repos\\AffairList\\AffairList\\AffairList.csproj",
+        "projectPath": "F:\\source\\repos\\AffairList\\AffairList\\AffairList.csproj",
         "packagesPath": "C:\\Users\\Ivan\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ivan\\source\\repos\\AffairList\\AffairList\\obj\\publish\\win-x64\\",
+        "outputPath": "F:\\source\\repos\\AffairList\\AffairList\\obj\\publish\\win-x64\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -43,7 +43,8 @@
           "enableAudit": "true",
           "auditLevel": "low",
           "auditMode": "direct"
-        }
+        },
+        "SdkAnalysisLevel": "9.0.300"
       },
       "frameworks": {
         "net8.0-windows7.0": {
@@ -52,7 +53,7 @@
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
               "target": "Package",
-              "version": "[8.0.5, )",
+              "version": "[8.0.16, )",
               "autoReferenced": true
             },
             "MouseKeyHook": {
@@ -74,15 +75,15 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
-              "version": "[8.0.5, 8.0.5]"
+              "version": "[8.0.16, 8.0.16]"
             },
             {
               "name": "Microsoft.NETCore.App.Runtime.win-x64",
-              "version": "[8.0.5, 8.0.5]"
+              "version": "[8.0.16, 8.0.16]"
             },
             {
               "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
-              "version": "[8.0.5, 8.0.5]"
+              "version": "[8.0.16, 8.0.16]"
             }
           ],
           "frameworkReferences": {
@@ -93,7 +94,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
         }
       },
       "runtimes": {
