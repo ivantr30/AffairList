@@ -219,6 +219,10 @@ namespace AffairList
                     File.WriteAllLines(Config.currentListFileFullPath, lines);
                     return;
                 }
+                else if (dialogres == DialogResult.No)
+                {
+                    lines[Affairs.SelectedIndex] = lines[Affairs.SelectedIndex].Substring(11);
+                }
                 if (dialogres == DialogResult.Cancel) return;
             }
             catch
