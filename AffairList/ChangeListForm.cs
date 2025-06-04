@@ -6,6 +6,8 @@ namespace AffairList
     public partial class ChangeListForm : Form
     {
         int currentDragIndex = 0;
+        private string priorityTag = "<priority>";
+        private string priorityWord= "\"Приоритетное\"";
         bool isDragging = false;
         string[] lines;
         public ChangeListForm()
@@ -34,16 +36,16 @@ namespace AffairList
             if (File.Exists(Config.currentListFileFullPath))
             {
                 lines = File.ReadAllLines(Config.currentListFileFullPath)
-                    .OrderByDescending(x => x.EndsWith("<priority>")).ToArray();
+                    .OrderByDescending(x => x.EndsWith(priorityTag)).ToArray();
                 Affairs.Items.Clear();
 
                 foreach (string line in lines)
                 {
                     var temp = line.Trim();
-                    if (temp.EndsWith("<priority>"))
+                    if (temp.EndsWith(priorityTag))
                     {
-                        temp = temp.Substring(0, temp.Length - "<priority>".Length);
-                        temp += " \"Приоритное\"";
+                        temp = temp.Substring(0, temp.Length - priorityTag.Length);
+                        temp += " " + priorityWord;
                     }
                     Affairs.Items.Add(temp);
                 }
@@ -250,31 +252,66 @@ namespace AffairList
             }
         }
 
+        private void RenameAffairButton_Click(object sender, EventArgs e)
+        {
+            if (Affairs.SelectedIndex == -1)
+                return;
+            string selectedWord = (string)Affairs.Items[Affairs.SelectedIndex];
+            string deadline = "";
+            string priority = priorityWord;
+            string renamedWord = "";
+            if(selectedWord.Length > 10)
+            {
+                deadline = selectedWord.Substring(0, 10);
+                if (!DateTime.TryParseExact(
+                    deadline, "dd.MM.yyyy", null, DateTimeStyles.None
+                    ,out DateTime dateTimeParseResult))
+                {
+                    deadline = "";
+                }
+            }
+            if (!lines[Affairs.SelectedIndex].EndsWith(priorityTag))
+            {
+                priority = "";
+            }
+            string newWord = Interaction.InputBox("Enter renaming", "Input box");
+
+            renamedWord = deadline + " " + newWord;
+
+            Affairs.Items[Affairs.SelectedIndex] = (renamedWord + " " + priority).Trim();
+            lines[Affairs.SelectedIndex] = (renamedWord + " " 
+                + priority.Replace(priorityWord, priorityTag)).Trim();
+
+            File.WriteAllLines(Config.currentListFileFullPath, lines);
+            Affairs.Items.Clear();
+            LoadText();
+        }
+
         private void PriorityButton_Click(object sender, EventArgs e)
         {
             if (Affairs.SelectedIndex == -1) return;
 
-            if (lines[Affairs.SelectedIndex].EndsWith("<priority>"))
+            if (lines[Affairs.SelectedIndex].EndsWith(priorityTag))
             {
                 string currentLine = (string)Affairs.Items[Affairs.SelectedIndex];
 
-                Affairs.Items[Affairs.SelectedIndex] = currentLine.Replace(" \"Приоритное\"", "");
+                Affairs.Items[Affairs.SelectedIndex] = currentLine.Replace(" "+ priorityWord, "");
 
                 var temp = ((string)(lines[Affairs.SelectedIndex])).Split(" ").Reverse().ToArray()[0];
-
-                if (temp == "<priority>")
+                
+                if (temp == priorityTag)
                 {
                     lines[Affairs.SelectedIndex] = lines[Affairs.SelectedIndex]
-                        .Substring(0, lines[Affairs.SelectedIndex].Length - " <priority>".Length);
+                        .Substring(0, lines[Affairs.SelectedIndex].Length - (" " + priorityTag).Length);
                 }
             }
             else
             {
-                Affairs.Items[Affairs.SelectedIndex] += " \"Приоритное\"";
-                lines[Affairs.SelectedIndex] += " <priority>";
+                Affairs.Items[Affairs.SelectedIndex] += " " + priorityWord;
+                lines[Affairs.SelectedIndex] += " " + priorityTag;
             }
 
-            lines = lines.OrderByDescending(x => x.Contains("<priority>")).ToArray();
+            lines = lines.OrderByDescending(x => x.Contains(priorityTag)).ToArray();
             File.WriteAllLines(Config.currentListFileFullPath, lines);
             Affairs.Items.Clear();
             LoadText();
@@ -296,8 +333,8 @@ namespace AffairList
             {
                 return;
             }
-            bool newPlacePriority = lines[Affairs.SelectedIndex].EndsWith("<priority>");
-            bool oldPlacePriority = lines[currentDragIndex].EndsWith("<priority>");
+            bool newPlacePriority = lines[Affairs.SelectedIndex].EndsWith(priorityTag);
+            bool oldPlacePriority = lines[currentDragIndex].EndsWith(priorityTag);
             if (
                 (newPlacePriority && !oldPlacePriority) ||
                 (!newPlacePriority && oldPlacePriority))

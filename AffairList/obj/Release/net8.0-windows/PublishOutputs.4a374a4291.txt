@@ -1,0 +1,6 @@
+C:\Users\Ivan\Desktop\AffairListReleases\AffairList\AffairList.exe
+C:\Users\Ivan\Desktop\AffairListReleases\AffairList\AffairList.dll
+C:\Users\Ivan\Desktop\AffairListReleases\AffairList\AffairList.deps.json
+C:\Users\Ivan\Desktop\AffairListReleases\AffairList\AffairList.runtimeconfig.json
+C:\Users\Ivan\Desktop\AffairListReleases\AffairList\AffairList.pdb
+C:\Users\Ivan\Desktop\AffairListReleases\AffairList\Gma.System.MouseKeyHook.dll

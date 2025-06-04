@@ -33,6 +33,7 @@
             CloseButton = new Label();
             AffairsLab = new Label();
             panel1 = new Panel();
+            RenameAffairButton = new Button();
             ProfileBox = new ComboBox();
             AddDeadlineButton = new Button();
             DeadlineLab = new Label();
@@ -56,7 +57,7 @@
             NameBackground.Dock = DockStyle.Top;
             NameBackground.Location = new Point(0, 0);
             NameBackground.Name = "NameBackground";
-            NameBackground.Size = new Size(494, 86);
+            NameBackground.Size = new Size(563, 86);
             NameBackground.TabIndex = 0;
             NameBackground.MouseDown += NameBackground_MouseDown_1;
             NameBackground.MouseMove += NameBackground_MouseMove_1;
@@ -65,7 +66,7 @@
             // 
             MinimizeButton.AutoSize = true;
             MinimizeButton.Font = new Font("Unispace", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            MinimizeButton.Location = new Point(426, 0);
+            MinimizeButton.Location = new Point(495, 0);
             MinimizeButton.Name = "MinimizeButton";
             MinimizeButton.Size = new Size(31, 33);
             MinimizeButton.TabIndex = 4;
@@ -79,7 +80,7 @@
             CloseButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             CloseButton.AutoSize = true;
             CloseButton.Font = new Font("Unispace", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            CloseButton.Location = new Point(463, 0);
+            CloseButton.Location = new Point(532, 0);
             CloseButton.Name = "CloseButton";
             CloseButton.Size = new Size(31, 33);
             CloseButton.TabIndex = 2;
@@ -93,7 +94,7 @@
             AffairsLab.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             AffairsLab.AutoSize = true;
             AffairsLab.Font = new Font("Unispace", 30F);
-            AffairsLab.Location = new Point(170, 22);
+            AffairsLab.Location = new Point(200, 26);
             AffairsLab.Name = "AffairsLab";
             AffairsLab.Size = new Size(188, 48);
             AffairsLab.TabIndex = 1;
@@ -105,6 +106,7 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(72, 3, 111);
+            panel1.Controls.Add(RenameAffairButton);
             panel1.Controls.Add(ProfileBox);
             panel1.Controls.Add(AddDeadlineButton);
             panel1.Controls.Add(DeadlineLab);
@@ -119,13 +121,25 @@
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(494, 405);
+            panel1.Size = new Size(563, 405);
             panel1.TabIndex = 1;
+            // 
+            // RenameAffairButton
+            // 
+            RenameAffairButton.BackColor = Color.FromArgb(173, 102, 213);
+            RenameAffairButton.FlatStyle = FlatStyle.Flat;
+            RenameAffairButton.Location = new Point(358, 371);
+            RenameAffairButton.Name = "RenameAffairButton";
+            RenameAffairButton.Size = new Size(65, 27);
+            RenameAffairButton.TabIndex = 12;
+            RenameAffairButton.Text = "Rename";
+            RenameAffairButton.UseVisualStyleBackColor = false;
+            RenameAffairButton.Click += RenameAffairButton_Click;
             // 
             // ProfileBox
             // 
             ProfileBox.FormattingEnabled = true;
-            ProfileBox.Location = new Point(303, 88);
+            ProfileBox.Location = new Point(372, 88);
             ProfileBox.Name = "ProfileBox";
             ProfileBox.Size = new Size(179, 25);
             ProfileBox.TabIndex = 11;
@@ -186,9 +200,9 @@
             // 
             BackButton.BackColor = Color.FromArgb(173, 102, 213);
             BackButton.FlatStyle = FlatStyle.Flat;
-            BackButton.Location = new Point(422, 371);
+            BackButton.Location = new Point(495, 371);
             BackButton.Name = "BackButton";
-            BackButton.Size = new Size(60, 27);
+            BackButton.Size = new Size(56, 27);
             BackButton.TabIndex = 5;
             BackButton.Text = "Back";
             BackButton.UseVisualStyleBackColor = false;
@@ -202,7 +216,7 @@
             Affairs.ItemHeight = 21;
             Affairs.Location = new Point(12, 114);
             Affairs.Name = "Affairs";
-            Affairs.Size = new Size(470, 214);
+            Affairs.Size = new Size(539, 214);
             Affairs.TabIndex = 4;
             Affairs.MouseDown += Affairs_MouseDown;
             Affairs.MouseUp += Affairs_MouseUp;
@@ -211,7 +225,7 @@
             // 
             ClearButton.BackColor = Color.FromArgb(173, 102, 213);
             ClearButton.FlatStyle = FlatStyle.Flat;
-            ClearButton.Location = new Point(358, 371);
+            ClearButton.Location = new Point(429, 371);
             ClearButton.Name = "ClearButton";
             ClearButton.Size = new Size(60, 27);
             ClearButton.TabIndex = 3;
@@ -237,14 +251,14 @@
             AffairInput.Location = new Point(12, 334);
             AffairInput.Name = "AffairInput";
             AffairInput.PlaceholderText = "Введите название нового дела";
-            AffairInput.Size = new Size(470, 31);
+            AffairInput.Size = new Size(539, 31);
             AffairInput.TabIndex = 1;
             // 
             // ChangeListForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(494, 405);
+            ClientSize = new Size(563, 405);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
             KeyPreview = true;
@@ -277,5 +291,6 @@
         private Label DeadlineLab;
         private Label MinimizeButton;
         private ComboBox ProfileBox;
+        private Button RenameAffairButton;
     }
 }
