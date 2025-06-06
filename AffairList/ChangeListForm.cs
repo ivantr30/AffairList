@@ -126,17 +126,17 @@ namespace AffairList
                 MessageBox.Show("Error, textbox is null");
                 return;
             }
-
-            Affairs.Items.Add(AffairInput.Text);
+            string inputText = AffairInput.Text + ".";
+            Affairs.Items.Add(inputText);
             Affairs.SelectedIndex = Affairs.Items.Count - 1;
 
             var temp = lines.ToList();
-            temp.Add(AffairInput.Text);
+            temp.Add(inputText);
             lines = temp.ToArray();
 
             if (File.Exists(Config.currentListFileFullPath))
             {
-                File.AppendAllText(Config.currentListFileFullPath, AffairInput.Text + "\n");
+                File.AppendAllText(Config.currentListFileFullPath, inputText + "\n");
             }
             AffairInput.Text = "";
         }
@@ -274,7 +274,7 @@ namespace AffairList
             {
                 priority = "";
             }
-            string newWord = Interaction.InputBox("Enter renaming", "Input box");
+            string newWord = Interaction.InputBox("Enter renaming", "Input box") + ".";
 
             renamedWord = deadline + " " + newWord;
 
