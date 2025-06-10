@@ -31,12 +31,12 @@ namespace AffairList
         private static string[] settingLines;
         private static string currentParametr = "";
 
-        private static void EnableAutoStart(string appName, string exePath)
+        public static void EnableAutoStart(string appName, string exePath)
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
             key.SetValue(appName, $"\"{exePath}\"");
         }
-        private static void DisableAutoStart(string appName)
+        public static void DisableAutoStart(string appName)
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
             key.DeleteValue(appName, false);
@@ -203,14 +203,15 @@ namespace AffairList
         }
         public static void SaveSettings()
         {
-            Config.isConfirmed = true;
+            isConfirmed = true;
+            if (autostartState) EnableAutoStart("AffairList", Application.ExecutablePath);
+            else DisableAutoStart("AffairList");
 
             for (int i = 0; i < settingLines.Length; i++)
             {
                 string line = settingLines[i].Trim();
                 if (string.IsNullOrEmpty(line)) continue;
 
-                // Определяем ключ параметра (часть до ':')
                 string key = line.Contains(":")
                     ? line.Substring(0, line.IndexOf(':')).Trim()
                     : string.Empty;
