@@ -56,7 +56,8 @@ namespace AffairList
                 {
                     if (result[i].EndsWith("<priority>"))
                     {
-                        result[i] = result[i].Substring(0, result[i].Length - "<priority>".Length);
+                        result[i] = result[i].Substring(0, result[i].Length - "<priority>".Length)
+                            .Trim();
                     }
                 }
                 Affairs.Text = string.Join("\n", result);
