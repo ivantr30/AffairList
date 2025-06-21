@@ -279,6 +279,7 @@ namespace AffairList
             if (selectedWord.EndsWith(".")) selectedWord = selectedWord[0..(selectedWord.Length - 1)];
             string newWord = Interaction
                 .InputBox("Enter renaming", "Input box",  selectedWord)+ ".";
+            if (newWord.Length == 1) return;
 
             renamedWord = deadline + " " + newWord;
 
