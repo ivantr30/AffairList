@@ -274,7 +274,11 @@ namespace AffairList
             {
                 priority = "";
             }
-            string newWord = Interaction.InputBox("Enter renaming", "Input box") + ".";
+            if (deadline.Length > 0) selectedWord = selectedWord[11..];
+            if (priority.Length > 0) selectedWord = selectedWord.Replace(priorityWord, "").Trim();
+            if (selectedWord.EndsWith(".")) selectedWord = selectedWord[0..(selectedWord.Length - 1)];
+            string newWord = Interaction
+                .InputBox("Enter renaming", "Input box",  selectedWord)+ ".";
 
             renamedWord = deadline + " " + newWord;
 
