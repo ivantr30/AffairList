@@ -249,6 +249,8 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "AffairList";
             FormClosing += AffairList_FormClosing;
+            Load += AffairList_Load;
+            Shown += AffairList_Shown;
             KeyDown += AffairList_KeyDown;
             panel1.ResumeLayout(false);
             NameBackground.ResumeLayout(false);

@@ -19,7 +19,6 @@ namespace AffairList
             AffairList.trayIcon.Visible = false;
             Close();
             Application.Restart();
-            Application.Run();
         }
         private void SetLocation()
         {

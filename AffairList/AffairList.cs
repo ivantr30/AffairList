@@ -200,5 +200,15 @@ namespace AffairList
         {
 
         }
+
+        private void AffairList_Load(object sender, EventArgs e)
+        {
+            TopMost = true;
+        }
+
+        private void AffairList_Shown(object sender, EventArgs e)
+        {
+            TopMost = false;
+        }
     }
 }
