@@ -3,22 +3,30 @@ using System.Data;
 using System.Globalization;
 namespace AffairList
 {
-    public partial class ChangeListForm : Form
+    public partial class ChangeListForm : BaseForm
     {
-        int currentDragIndex = 0;
+        private int currentDragIndex = 0;
+
         private string priorityTag = "<priority>";
         private string priorityWord= "\"Приоритетное\"";
-        bool isDragging = false;
-        string[] lines;
-        public ChangeListForm()
+
+        private string[] lines;
+
+        private bool isDragging = false;
+
+        private Keys addAffairKey = Keys.Enter;
+        private Keys deleteAffairKey = Keys.Delete;
+
+        public ChangeListForm(SettingsModel settings)
         {
             InitializeComponent();
+            this.settings = settings;
             LoadProfiles();
             LoadText();
         }
         private void LoadProfiles()
         {
-            var profiles = Directory.GetFiles(Config.listsDirectoryFullPath);
+            var profiles = Directory.GetFiles(SettingsModel.listsDirectoryFullPath);
             foreach (var profile in profiles)
             {
                 FileInfo profileInfo = new FileInfo(profile);
@@ -26,16 +34,16 @@ namespace AffairList
             }
             if (profiles.Length > 0)
             {
-                FileInfo selectedProfile = new FileInfo(Config.currentListFileFullPath);
+                FileInfo selectedProfile = new FileInfo(settings.currentListFileFullPath);
                 ProfileBox.SelectedIndex = ProfileBox.Items.IndexOf(selectedProfile.Name);
-                Config.currentListFileFullPath = selectedProfile.FullName;
+                settings.currentListFileFullPath = selectedProfile.FullName;
             }
         }
         private void LoadText()
         {
-            if (File.Exists(Config.currentListFileFullPath))
+            if (settings.CurrentListNotNull())
             {
-                lines = File.ReadAllLines(Config.currentListFileFullPath)
+                lines = File.ReadAllLines(settings.currentListFileFullPath)
                     .OrderByDescending(x => x.EndsWith(priorityTag)).ToArray();
                 Affairs.Items.Clear();
 
@@ -57,19 +65,19 @@ namespace AffairList
         }
         private void GlobalHook_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Config.closeKey)
+            if (e.KeyCode == settings.closeKey)
             {
-                Config.Exit();
+                Exit();
             }
-            if (e.KeyCode == Config.returnKey)
+            if (e.KeyCode == settings.returnKey)
             {
-                Config.Restart();
+                Restart();
             }
-            if (e.KeyCode == Keys.Enter)
+            if (e.KeyCode == addAffairKey)
             {
                 AddAffair();
             }
-            if (e.KeyCode == Keys.Delete)
+            if (e.KeyCode == deleteAffairKey)
             {
                 DeleteAffair();
             }
@@ -77,12 +85,12 @@ namespace AffairList
 
         private void CloseButton_Click(object sender, EventArgs e)
         {
-            Config.Exit();
+            Exit();
         }
 
         private void AffairsLab_MouseDown(object sender, MouseEventArgs e)
         {
-            Config.lastPoint = new Point(e.X, e.Y);
+            lastPoint = new Point(e.X, e.Y);
         }
 
         private void AffairsLab_MouseMove(object sender, MouseEventArgs e)
@@ -90,22 +98,22 @@ namespace AffairList
 
             if (e.Button == MouseButtons.Left)
             {
-                Left += e.X - Config.lastPoint.X;
-                Top += e.Y - Config.lastPoint.Y;
+                Left += e.X - lastPoint.X;
+                Top += e.Y - lastPoint.Y;
             }
         }
 
         private void NameBackground_MouseDown_1(object sender, MouseEventArgs e)
         {
-            Config.lastPoint = new Point(e.X, e.Y);
+            lastPoint = new Point(e.X, e.Y);
         }
 
         private void NameBackground_MouseMove_1(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                Left += e.X - Config.lastPoint.X;
-                Top += e.Y - Config.lastPoint.Y;
+                Left += e.X - lastPoint.X;
+                Top += e.Y - lastPoint.Y;
             }
         }
 
@@ -134,9 +142,9 @@ namespace AffairList
             temp.Add(inputText);
             lines = temp.ToArray();
 
-            if (File.Exists(Config.currentListFileFullPath))
+            if (settings.CurrentListNotNull())
             {
-                File.AppendAllText(Config.currentListFileFullPath, inputText + "\n");
+                File.AppendAllText(settings.currentListFileFullPath, inputText + "\n");
             }
             AffairInput.Text = "";
         }
@@ -144,7 +152,7 @@ namespace AffairList
         {
             if (Affairs.SelectedIndex != -1)
             {
-                if (Config.askToDelete)
+                if (settings.askToDelete)
                 {
                     DialogResult dialogres = MessageBox.Show("Do you want to delete the affair?",
                         "Confirm form",
@@ -152,13 +160,13 @@ namespace AffairList
                     if (dialogres == DialogResult.No) return;
                 }
 
-                if (File.Exists(Config.currentListFileFullPath))
+                if (settings.CurrentListNotNull())
                 {
                     var temp = lines.ToList();
                     temp.RemoveAt(Affairs.SelectedIndex);
                     lines = temp.ToArray();
 
-                    File.WriteAllLines(Config.currentListFileFullPath, lines);
+                    File.WriteAllLines(settings.currentListFileFullPath, lines);
                 }
                 int selectedIndex = 0;
                 if (Affairs.SelectedIndex == 0 && Affairs.Items.Count > 1)
@@ -189,12 +197,12 @@ namespace AffairList
 
         private void BackButton_Click(object sender, EventArgs e)
         {
-            Config.Restart();
+            Restart();
         }
 
         private void ChangeListForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Config.Exit();
+            Exit();
         }
 
         private void AddDeadlineButton_Click(object sender, EventArgs e)
@@ -218,7 +226,7 @@ namespace AffairList
 
                     lines[Affairs.SelectedIndex] = lines[Affairs.SelectedIndex].Substring(11);
 
-                    File.WriteAllLines(Config.currentListFileFullPath, lines);
+                    File.WriteAllLines(settings.currentListFileFullPath, lines);
                     return;
                 }
                 else if (dialogres == DialogResult.No)
@@ -243,7 +251,7 @@ namespace AffairList
 
                 lines[Affairs.SelectedIndex] = res + " " + lines[Affairs.SelectedIndex];
 
-                File.WriteAllLines(Config.currentListFileFullPath, lines);
+                File.WriteAllLines(settings.currentListFileFullPath, lines);
             }
             catch
             {
@@ -287,7 +295,7 @@ namespace AffairList
             lines[Affairs.SelectedIndex] = (renamedWord + " " 
                 + priority.Replace(priorityWord, priorityTag)).Trim();
 
-            File.WriteAllLines(Config.currentListFileFullPath, lines);
+            File.WriteAllLines(settings.currentListFileFullPath, lines);
             Affairs.Items.Clear();
             LoadText();
         }
@@ -317,7 +325,7 @@ namespace AffairList
             }
 
             lines = lines.OrderByDescending(x => x.Contains(priorityTag)).ToArray();
-            File.WriteAllLines(Config.currentListFileFullPath, lines);
+            File.WriteAllLines(settings.currentListFileFullPath, lines);
             Affairs.Items.Clear();
             LoadText();
         }
@@ -354,7 +362,7 @@ namespace AffairList
             lines[currentDragIndex] = lines[Affairs.SelectedIndex];
             lines[Affairs.SelectedIndex] = (string)temp;
 
-            File.WriteAllLines(Config.currentListFileFullPath, lines);
+            File.WriteAllLines(settings.currentListFileFullPath, lines);
             isDragging = false;
         }
 
@@ -374,14 +382,14 @@ namespace AffairList
         }
         private void ChangeProfile()
         {
-            var profiles = Directory.GetFiles(Config.listsDirectoryFullPath);
+            var profiles = Directory.GetFiles(SettingsModel.listsDirectoryFullPath);
             foreach (var profile in profiles)
             {
                 FileInfo profileInfo = new FileInfo(profile);
                 if (profileInfo.Name == ProfileBox.SelectedItem.ToString())
                 {
-                    Config.SaveParametr("currentProfile", profileInfo.FullName, "");
-                    Config.currentListFileFullPath = profileInfo.FullName;
+                    settings.SaveParametr("currentProfile", profileInfo.FullName, "");
+                    settings.currentListFileFullPath = profileInfo.FullName;
                 }
             }
         }

@@ -1,112 +1,44 @@
-﻿using Microsoft.Win32;
+﻿
+using Microsoft.Win32;
+
 namespace AffairList
 {
-    public class Config
+    public class SettingsModel
     {
-        public static string listsDirectoryFullPath = Application.StartupPath + "profiles";
-        public static string currentListFileFullPath = listsDirectoryFullPath + "\\list.txt";
-        public static string defaultListFileFullPath = listsDirectoryFullPath + "\\list.txt";
-        public static string settingsFileFullPath = Application.StartupPath + "settings.txt";
+        public static readonly string listsDirectoryFullPath = Application.StartupPath + "profiles";
+        private readonly string defaultListFileFullPath = listsDirectoryFullPath + "\\list.txt";
 
-        public static Color textColor = Color.MediumSpringGreen;
-        public static Color bgtextColor = Color.Black;
-        private static Color basetextColor = Color.MediumSpringGreen;
-        private static Color basebgtextColor = Color.Black;
+        public string currentListFileFullPath = listsDirectoryFullPath + "\\list.txt";
+        public string settingsFileFullPath = Application.StartupPath + "settings.txt";
 
-        public static Keys closeKey = Keys.F7;
-        public static Keys returnKey = Keys.F6;
+        public Color textColor = Color.MediumSpringGreen;
+        public Color bgtextColor = Color.Black;
 
-        public static bool isConfirmed = true;
-        public static bool musicState = true;
-        public static bool autostartState = true;
-        public static bool askToDelete = true;
+        private readonly Color basetextColor = Color.MediumSpringGreen;
+        private readonly Color basebgtextColor = Color.Black;
 
-        public static int currentVolume = 0;
-        public static int x, y;
-        public static int width = Screen.PrimaryScreen.WorkingArea.Width,
-                          height = Screen.PrimaryScreen.WorkingArea.Height;
+        public Keys closeKey = Keys.F7;
+        public Keys returnKey = Keys.F6;
 
-        public static Point lastPoint;
+        public bool musicState = true;
+        public bool autostartState = true;
+        public bool askToDelete = true;
 
-        private static string[] settingLines;
-        private static string currentParametr = "";
+        public int currentVolume = 0;
+        public int x, y;
+        public int width = Screen.PrimaryScreen.WorkingArea.Width,
+                   height = Screen.PrimaryScreen.WorkingArea.Height;
 
-        public static void EnableAutoStart(string appName, string exePath)
+        private string[] settingLines;
+        private string currentParametr = "";
+
+        public SettingsModel()
         {
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
-            key.SetValue(appName, $"\"{exePath}\"");
+            Initialize();
         }
-        public static void DisableAutoStart(string appName)
+        private void Initialize()
         {
-            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
-            key.DeleteValue(appName, false);
-        }
-        public static void Exit()
-        {
-            AffairList.trayIcon.Visible = false;
-            Application.Exit();
-        }
-        public static void Restart()
-        {
-            AffairList.trayIcon.Visible = false;
-            Application.Restart();
-        }
-        public static void CreateFiles()
-        {
-            if (!File.Exists(settingsFileFullPath))
-            {
-                using (File.Create(settingsFileFullPath))
-                {
-
-                }
-                WriteBaseSettings();
-            }
-            if (!Directory.Exists(listsDirectoryFullPath))
-            {
-                DirectoryInfo di = Directory.CreateDirectory(listsDirectoryFullPath);
-            }
             settingLines = File.ReadAllLines(settingsFileFullPath);
-        }
-        public static void ChooseProfile()
-        {
-            var profiles = Directory.GetFiles(listsDirectoryFullPath);
-            if (profiles.Length > 0)
-            {
-                currentListFileFullPath = profiles[0];
-            }
-        }
-        public static void IfSettingsFileExists()
-        {
-            if (!File.Exists(settingsFileFullPath))
-            {
-                MessageBox.Show("Error, settings file does not exist");
-                return;
-            }
-        }
-        public static void IfListFileExists()
-        {
-            if (!File.Exists(settingsFileFullPath))
-            {
-                MessageBox.Show("Error, list file does not exist");
-                return;
-            }
-        }
-        public static void WriteBaseSettings()
-        {
-            File.WriteAllText(settingsFileFullPath,
-                $"x,y: {width - width / 6} {(height + height / 10) / 90}" +
-                    "\nmusicOn: true" +
-                    $"\ntextColor: {basetextColor.R} {basetextColor.G} {basetextColor.B}" +
-                    $"\nbackTextColor: {basebgtextColor.R} {basebgtextColor.G} {basebgtextColor.B}\n" +
-                        "musicVolume: 35\n" +
-                        "autostarts: true\n" +
-                        "askToDelete: true\n" +
-                        "currentProfile: \n"+
-                        "closeKey: F7\n" +
-                        "returnKey: F6\n");
-        }
-        public static void ConfigureSettings()
-        {
             if (settingLines.Length == 0)
             {
                 WriteBaseSettings();
@@ -201,9 +133,85 @@ namespace AffairList
 
             File.WriteAllLines(settingsFileFullPath, settingLines);
         }
-        public static void SaveSettings()
+        public void WriteBaseSettings()
         {
-            isConfirmed = true;
+            File.WriteAllText(settingsFileFullPath,
+                $"x,y: {width - width / 6} {(height + height / 10) / 90}" +
+                    "\nmusicOn: true" +
+                    $"\ntextColor: {basetextColor.R} {basetextColor.G} {basetextColor.B}" +
+                    $"\nbackTextColor: {basebgtextColor.R} {basebgtextColor.G} {basebgtextColor.B}\n" +
+                        "musicVolume: 35\n" +
+                        "autostarts: true\n" +
+                        "askToDelete: true\n" +
+                        "currentProfile: \n" +
+                        "closeKey: F7\n" +
+                        "returnKey: F6\n");
+        }
+        public void ChooseProfile()
+        {
+            var profiles = Directory.GetFiles(listsDirectoryFullPath);
+            if (profiles.Length > 0)
+            {
+                currentListFileFullPath = profiles[0];
+            }
+        }
+        public void EnableAutoStart(string appName, string exePath)
+        {
+            RegistryKey key = Registry.CurrentUser
+                .OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true)!;
+
+            key.SetValue(appName, $"\"{exePath}\"");
+        }
+        public void DisableAutoStart(string appName)
+        {
+            RegistryKey key = Registry.CurrentUser
+                .OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true)!;
+
+            key.DeleteValue(appName, false);
+        }
+        public bool ListFilesAvailable()
+        {
+            return Directory.GetFiles(listsDirectoryFullPath).Length > 0;
+        }
+        public bool SettingsFileExists()
+        {
+            return File.Exists(settingsFileFullPath);
+        }
+        public bool ListsDirectoryExists()
+        {
+            return Directory.Exists(listsDirectoryFullPath);
+        }
+        public bool CurrentListNotNull()
+        {
+            return File.Exists(currentListFileFullPath);
+        }
+        public void CreateFiles()
+        {
+            CreateSettingsFile();
+            CreateListsDirectory();
+        }
+        public void CreateSettingsFile()
+        {
+            if (!SettingsFileExists())
+            {
+                using (File.Create(settingsFileFullPath)) { }
+                WriteBaseSettings();
+            }
+        }
+        public void CreateListsDirectory()
+        {
+            if (!ListsDirectoryExists())
+            {
+                DirectoryInfo di = Directory.CreateDirectory(listsDirectoryFullPath);
+            }
+        }
+        public void CreateDefaultList()
+        {
+            using (File.Create(defaultListFileFullPath)) { }
+            currentListFileFullPath = defaultListFileFullPath;
+        }
+        public void SaveSettings()
+        {
             if (autostartState) EnableAutoStart("AffairList", Application.ExecutablePath);
             else DisableAutoStart("AffairList");
 
@@ -253,22 +261,18 @@ namespace AffairList
                         settingLines[i] = $"{currentParametr}: {askToDelete}";
                         break;
 
-                    // Для параметров без значения (например, currentProfile)
                     default:
                         if (line.StartsWith("currentProfile:"))
                         {
                             currentParametr = "currentProfile";
-                            // Сохраняем без изменений или добавляем логику при необходимости
                         }
                         else if (line.StartsWith("closeKey:"))
                         {
                             currentParametr = "closeKey";
-                            // Сохраняем без изменений
                         }
                         else if (line.StartsWith("returnKey:"))
                         {
                             currentParametr = "returnKey";
-                            // Сохраняем без изменений
                         }
                         break;
                 }
@@ -276,7 +280,7 @@ namespace AffairList
 
             File.WriteAllLines(settingsFileFullPath, settingLines);
         }
-        public static void SaveParametr<T>(string parametr, T firstValue, T secondValue)
+        public void SaveParametr<T>(string parametr, T firstValue, T secondValue)
         {
             for (int i = 0; i < settingLines.Length; i++)
             {

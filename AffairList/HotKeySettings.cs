@@ -1,18 +1,19 @@
 ﻿using Microsoft.VisualBasic;
 namespace AffairList
 {
-    public partial class HotKeySettings : Form
+    public partial class HotKeySettings : BaseForm
     {
-        bool isConfirmed = true;
-        public HotKeySettings()
+        private bool isConfirmed = true;
+        public HotKeySettings(SettingsModel settings)
         {
             InitializeComponent();
+            this.settings = settings;
             LoadSettings();
         }
         private void LoadSettings()
         {
-            CloseKeyType.Text = Config.closeKey.ToString();
-            BackKeyType.Text = Config.returnKey.ToString();
+            CloseKeyType.Text = settings.closeKey.ToString();
+            BackKeyType.Text = settings.returnKey.ToString();
         }
         private void BackButton_Click(object sender, EventArgs e)
         {
@@ -23,12 +24,12 @@ namespace AffairList
                 MessageBoxButtons.YesNo);
                 if (resetOrNot == DialogResult.No) return;
             }
-            Config.Restart();
+            Restart();
         }
 
         private void CloseButton_Click(object sender, EventArgs e)
         {
-            Config.Exit();
+            Exit();
         }
 
         private void MinimizeButton_Click(object sender, EventArgs e)
@@ -43,8 +44,8 @@ namespace AffairList
                 MessageBoxButtons.YesNo);
             if (resetOrNot == DialogResult.No) return;
 
-            Config.SaveParametr("closeKey", Keys.F7.ToString(), "");
-            Config.SaveParametr("returnKey", Keys.F6.ToString(), "");
+            settings.SaveParametr("closeKey", Keys.F7.ToString(), "");
+            settings.SaveParametr("returnKey", Keys.F6.ToString(), "");
 
             CloseKeyType.Text = "F7";
             BackKeyType.Text = "F6";
@@ -54,8 +55,8 @@ namespace AffairList
 
         private void ConfirmButton_Click(object sender, EventArgs e)
         {
-            Config.SaveParametr("closeKey", Config.closeKey.ToString(), "");
-            Config.SaveParametr("returnKey", Config.returnKey.ToString(), "");
+            settings.SaveParametr("closeKey", settings.closeKey.ToString(), "");
+            settings.SaveParametr("returnKey", settings.returnKey.ToString(), "");
             isConfirmed = true;
         }
 
@@ -63,10 +64,10 @@ namespace AffairList
         {
             try
             {
-                Config.closeKey = (Keys)Enum.Parse(typeof(Keys),
+                settings.closeKey = (Keys)Enum.Parse(typeof(Keys),
                     Interaction.InputBox("Enter close key", "KeyInputBox"), true);
 
-                CloseKeyType.Text = Config.closeKey.ToString();
+                CloseKeyType.Text = settings.closeKey.ToString();
                 isConfirmed = false;
             }
             catch
@@ -79,10 +80,10 @@ namespace AffairList
         {
             try
             {
-                Config.returnKey = (Keys)Enum.Parse(typeof(Keys),
+                settings.returnKey = (Keys)Enum.Parse(typeof(Keys),
                     Interaction.InputBox("Enter return key", "KeyInputBox"), true);
 
-                BackKeyType.Text = Config.returnKey.ToString();
+                BackKeyType.Text = settings.returnKey.ToString();
                 isConfirmed = false;
             }
             catch

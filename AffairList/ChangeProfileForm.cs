@@ -1,16 +1,17 @@
 ﻿namespace AffairList
 {
-    public partial class ChangeProfileForm : Form
+    public partial class ChangeProfileForm : BaseForm
     {
         string[] profileLines;
-        public ChangeProfileForm()
+        public ChangeProfileForm(SettingsModel settings)
         {
             InitializeComponent();
+            this.settings = settings;
             LoadProfiles();
         }
         private void LoadProfiles()
         {
-            profileLines = Directory.GetFiles(Config.listsDirectoryFullPath)
+            profileLines = Directory.GetFiles(SettingsModel.listsDirectoryFullPath)
                     .OrderByDescending(x => x.EndsWith("\"Приритетное\"")).ToArray();
             foreach (var profile in profileLines)
             {
@@ -29,12 +30,12 @@
 
         private void BackButton_Click(object sender, EventArgs e)
         {
-            Config.Restart();
+            Restart();
         }
 
         private void CloseButtonLab_Click(object sender, EventArgs e)
         {
-            Config.Exit();
+            Exit();
         }
 
         private void CloseButtonLab_MouseEnter(object sender, EventArgs e)
@@ -61,31 +62,27 @@
         {
             if (e.Button == MouseButtons.Left)
             {
-                Left += e.X - Config.lastPoint.X;
-                Top += e.Y - Config.lastPoint.Y;
+                Left += e.X - lastPoint.X;
+                Top += e.Y - lastPoint.Y;
             }
         }
 
         private void NameBackground_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-                Config.lastPoint = e.Location;
+            if (e.Button == MouseButtons.Left) lastPoint = e.Location;
         }
 
         private void ProfilesLab_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-            {
-                Config.lastPoint = e.Location;
-            }
+            if (e.Button == MouseButtons.Left) lastPoint = e.Location;
         }
 
         private void ProfilesLab_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                Left += e.X - Config.lastPoint.X;
-                Top += e.Y - Config.lastPoint.Y;
+                Left += e.X - lastPoint.X;
+                Top += e.Y - lastPoint.Y;
             }
         }
         private void AddProfile()
@@ -108,10 +105,10 @@
             Profiles.SelectedIndex = Profiles.Items.Count - 1;
 
             var temp = profileLines.ToList();
-            temp.Add(Config.listsDirectoryFullPath + "\\" + ProfileInput.Text + ".txt");
+            temp.Add(SettingsModel.listsDirectoryFullPath + "\\" + ProfileInput.Text + ".txt");
             profileLines = temp.ToArray();
 
-            using (File.Create(Config.listsDirectoryFullPath + "\\" + ProfileInput.Text + ".txt"))
+            using (File.Create(SettingsModel.listsDirectoryFullPath + "\\" + ProfileInput.Text + ".txt"))
             {
 
             }
@@ -180,13 +177,13 @@
             {
                 DeleteProfile();
             }
-            if (e.KeyCode == Config.returnKey)
+            if (e.KeyCode == settings.returnKey)
             {
-                Config.Restart();
+                Restart();
             }
-            if (e.KeyCode == Config.closeKey)
+            if (e.KeyCode == settings.closeKey)
             {
-                Config.Exit();
+                Exit();
             }
         }
     }

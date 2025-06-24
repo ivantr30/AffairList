@@ -1,6 +1,6 @@
 namespace AffairList
 {
-    public partial class AffairList : Form
+    public partial class AffairList : BaseForm
     {
         public static NotifyIcon trayIcon;
         private ContextMenuStrip trayMenu;
@@ -20,24 +20,23 @@ namespace AffairList
             trayIcon.ContextMenuStrip = trayMenu;
             trayIcon.Visible = true;
 
-            Config.CreateFiles();
-            Config.ConfigureSettings();
+            settings = new SettingsModel();
         }
         private void OnOpen(object sender, EventArgs e)
         {
-            Config.Restart();
+            Restart();
             WindowState = FormWindowState.Normal;
             ShowInTaskbar = true;
         }
 
         private void OnExit(object sender, EventArgs e)
         {
-            Config.Exit();
+            Exit();
         }
 
         private void CloseButton_Click(object sender, EventArgs e)
         {
-            Config.Exit();
+            Exit();
         }
 
         private void CloseButton_MouseEnter(object sender, EventArgs e)
@@ -52,15 +51,15 @@ namespace AffairList
 
         private void NameBackground_MouseDown(object sender, MouseEventArgs e)
         {
-            Config.lastPoint = new Point(e.X, e.Y);
+            lastPoint = new Point(e.X, e.Y);
         }
 
         private void NameBackground_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                Left += e.X - Config.lastPoint.X;
-                Top += e.Y - Config.lastPoint.Y;
+                Left += e.X - lastPoint.X;
+                Top += e.Y - lastPoint.Y;
             }
         }
 
@@ -68,25 +67,25 @@ namespace AffairList
         {
             if (e.Button == MouseButtons.Left)
             {
-                Left += e.X - Config.lastPoint.X;
-                Top += e.Y - Config.lastPoint.Y;
+                Left += e.X - lastPoint.X;
+                Top += e.Y - lastPoint.Y;
             }
         }
 
         private void AffairListLab_MouseDown(object sender, MouseEventArgs e)
         {
-            Config.lastPoint = new Point(e.X, e.Y);
+            lastPoint = new Point(e.X, e.Y);
         }
 
         private void OpenListButton_Click(object sender, EventArgs e)
         {
-            if (Config.currentListFileFullPath == "")
+            if (!settings.CurrentListNotNull())
             {
                 MessageBox.Show("Error, there is no list available");
                 return;
             }
             Hide();
-            List list = new List();
+            List list = new List(settings);
             list.Show();
         }
 
@@ -101,19 +100,19 @@ namespace AffairList
 
             if (result == DialogResult.Yes)
             {
-                if (!File.Exists(Config.currentListFileFullPath))
+                if (!settings.CurrentListNotNull())
                 {
                     MessageBox.Show("Error, list file does not exist");
                     return;
                 }
-                File.WriteAllText(Config.currentListFileFullPath, "");
+                File.WriteAllText(settings.currentListFileFullPath, "");
                 MessageBox.Show("The list is cleared");
             }
         }
 
         private void ChangeListButton_Click(object sender, EventArgs e)
         {
-            if (Directory.GetFiles(Config.listsDirectoryFullPath).Length < 1)
+            if (!settings.ListFilesAvailable())
             {
                 DialogResult createDefault = MessageBox.Show("There are no profiles available," +
                     " do you want to add default?",
@@ -121,10 +120,7 @@ namespace AffairList
                     MessageBoxButtons.YesNo);
                 if (createDefault == DialogResult.Yes)
                 {
-                    using (File.Create(Config.defaultListFileFullPath))
-                    {
-                        Config.currentListFileFullPath = Config.defaultListFileFullPath;
-                    }
+                    settings.CreateDefaultList();
                 }
                 else
                 {
@@ -132,19 +128,19 @@ namespace AffairList
                 }
             }
             Hide();
-            ChangeListForm listForm = new ChangeListForm();
+            ChangeListForm listForm = new ChangeListForm(settings);
             listForm.Show();
         }
 
         private void ReplaceAffairListButton_Click(object sender, EventArgs e)
         {
-            if (Config.currentListFileFullPath == "")
+            if (!settings.CurrentListNotNull())
             {
                 MessageBox.Show("Error, there is no list available");
                 return;
             }
             Hide();
-            List list = new List();
+            List list = new List(settings);
             list.BackColor = Color.White;
             list.canReplace = true;
             list.Show();
@@ -153,24 +149,24 @@ namespace AffairList
         private void SettingsButton_Click(object sender, EventArgs e)
         {
             Hide();
-            Settings settings = new Settings();
-            settings.Show();
+            Settings settingsForm = new Settings(settings);
+            settingsForm.Show();
         }
         private void ChangeProfileButton_Click(object sender, EventArgs e)
         {
             Hide();
-            ChangeProfileForm profileForm = new ChangeProfileForm();
+            ChangeProfileForm profileForm = new ChangeProfileForm(settings);
             profileForm.Show();
         }
         private void HotKeyButton_Click(object sender, EventArgs e)
         {
             Hide();
-            HotKeySettings hotKeySettings = new HotKeySettings();
+            HotKeySettings hotKeySettings = new HotKeySettings(settings);
             hotKeySettings.Show();
         }
         private void AffairList_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Config.Exit();
+            Exit();
         }
 
         private void MinimizeButton_Click(object sender, EventArgs e)
@@ -190,9 +186,9 @@ namespace AffairList
 
         private void AffairList_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Config.closeKey)
+            if (e.KeyCode == settings.closeKey)
             {
-                Config.Exit();
+                Exit();
             }
         }
 

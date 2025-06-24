@@ -2,44 +2,46 @@
 
 namespace AffairList
 {
-    public partial class List : Form
+    public partial class List : BaseForm
     {
         private IKeyboardMouseEvents globalHook;
         public bool canReplace = false;
 
-        public List()
+        public List(SettingsModel settings)
         {
             InitializeComponent();
             SubscribeGlobalHook();
+            this.settings = settings;
+
             LoadText();
             SetLocation();
         }
-        private void Return()
+        protected override void Restart()
         {
-            AffairList.trayIcon.Visible = false;
             Close();
-            Application.Restart();
+            base.Restart();
         }
         private void SetLocation()
         {
             TopMost = true;
 
             LoadSettings();
-            Width = Config.width;
-            Height = Config.height + Config.height / 10;
+
+            Width = settings.width;
+            Height = settings.height + settings.height / 10;
             Affairs.AutoSize = false;
             Affairs.Padding = new Padding(0, 0, 180, 0);
             Affairs.Size = new Size(500, Height);
-            Affairs.ForeColor = Config.textColor;
-            BackColor = Config.bgtextColor;
-            TransparencyKey = Config.bgtextColor;
+            Affairs.ForeColor = settings.textColor;
+            BackColor = settings.bgtextColor;
+            TransparencyKey = settings.bgtextColor;
         }
         private void LoadSettings()
         {
-            if (File.Exists(Config.settingsFileFullPath))
+            if (settings.SettingsFileExists())
             {
-                Affairs.Left = Config.x;
-                Affairs.Top = Config.y;
+                Affairs.Left = settings.x;
+                Affairs.Top = settings.y;
             }
             else
             {
@@ -48,9 +50,9 @@ namespace AffairList
         }
         private void LoadText()
         {
-            if (File.Exists(Config.currentListFileFullPath))
+            if (settings.CurrentListNotNull())
             {
-                string[] result = File.ReadAllLines(Config.currentListFileFullPath);
+                string[] result = File.ReadAllLines(settings.currentListFileFullPath);
                 for (int i = 0; i < result.Length; i++)
                 {
                     if (result[i].EndsWith("<priority>"))
@@ -74,20 +76,19 @@ namespace AffairList
         }
         private void GlobalHook_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Config.closeKey)
+            if (e.KeyCode == settings.closeKey)
             {
-                Config.Exit();
+                Exit();
             }
-            if (e.KeyCode == Config.returnKey)
+            if (e.KeyCode == settings.returnKey)
             {
-                Return();
+                Restart();
             }
         }
 
         private void List_MouseDown(object sender, MouseEventArgs e)
         {
-            if (canReplace)
-                Config.lastPoint = new Point(e.X, e.Y);
+            if (canReplace) lastPoint = new Point(e.X, e.Y);
         }
 
         private void List_MouseMove(object sender, MouseEventArgs e)
@@ -104,14 +105,14 @@ namespace AffairList
             if (e.Button == MouseButtons.Left && canReplace)
             {
                 canReplace = false;
-                Config.SaveParametr("x,y", Left + e.X, Top + e.Y);
-                Return();
+                settings.SaveParametr("x,y", Left + e.X, Top + e.Y);
+                Restart();
             }
         }
 
         private void List_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Config.Exit();
+            Exit();
         }
     }
 }

@@ -1,20 +1,22 @@
 ﻿using Microsoft.VisualBasic;
 namespace AffairList
 {
-    public partial class Settings : Form
+    public partial class Settings : BaseForm
     {
-        public Settings()
+        private bool isConfirmed = true;
+        public Settings(SettingsModel settings)
         {
             InitializeComponent();
+            this.settings = settings;
             VolumeValueLab.Text = VolumeBar.Value.ToString();
             LoadSettings();
         }
         private void LoadSettings()
         {
-            LocationLab.Text = Config.x + ", " + Config.y;
-            ListTextColorLab.ForeColor = Config.textColor;
-            ListBgTextColorLab.ForeColor = Config.bgtextColor;
-            if (Config.musicState)
+            LocationLab.Text = settings.x + ", " + settings.y;
+            ListTextColorLab.ForeColor = settings.textColor;
+            ListBgTextColorLab.ForeColor = settings.bgtextColor;
+            if (settings.musicState)
             {
                 StateLab.Text = "On";
             }
@@ -22,7 +24,7 @@ namespace AffairList
             {
                 StateLab.Text = "OFF";
             }
-            if (Config.autostartState)
+            if (settings.autostartState)
             {
                 autostartStateLab.Text = "On";
             }
@@ -30,7 +32,7 @@ namespace AffairList
             {
                 autostartStateLab.Text = "OFF";
             }
-            if (Config.askToDelete)
+            if (settings.askToDelete)
             {
                 AskToDeleteState.Text = "On";
             }
@@ -38,22 +40,22 @@ namespace AffairList
             {
                 AskToDeleteState.Text = "OFF";
             }
-            VolumeValueLab.Text = Config.currentVolume.ToString();
+            VolumeValueLab.Text = settings.currentVolume.ToString();
         }
         private void CloseButton_Click(object sender, EventArgs e)
         {
-            Config.Exit();
+            Exit();
         }
 
         private void Settings_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Config.closeKey)
+            if (e.KeyCode == settings.closeKey)
             {
-                Config.Exit();
+                Exit();
             }
-            if (e.KeyCode == Config.returnKey)
+            if (e.KeyCode == settings.returnKey)
             {
-                Config.Restart();
+                Restart();
             }
         }
 
@@ -69,35 +71,35 @@ namespace AffairList
 
         private void NameBackground_MouseDown(object sender, MouseEventArgs e)
         {
-            Config.lastPoint = new Point(e.X, e.Y);
+            lastPoint = new Point(e.X, e.Y);
         }
 
         private void NameBackground_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                Left += e.X - Config.lastPoint.X;
-                Top += e.Y - Config.lastPoint.Y;
+                Left += e.X - lastPoint.X;
+                Top += e.Y - lastPoint.Y;
             }
         }
 
         private void SettingsLab_MouseDown(object sender, MouseEventArgs e)
         {
-            Config.lastPoint = new Point(e.X, e.Y);
+            lastPoint = new Point(e.X, e.Y);
         }
 
         private void SettingsLab_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
-                Left += e.X - Config.lastPoint.X;
-                Top += e.Y - Config.lastPoint.Y;
+                Left += e.X - lastPoint.X;
+                Top += e.Y - lastPoint.Y;
             }
         }
 
         private void BackButton_Click(object sender, EventArgs e)
         {
-            if (!Config.isConfirmed)
+            if (!isConfirmed)
             {
                 DialogResult result = MessageBox.Show(
                     "Are you sure to leave with unsaved settings?",
@@ -109,7 +111,7 @@ namespace AffairList
                     return;
                 }
             }
-            Config.Restart();
+            Restart();
         }
 
         private void ResetButton_Click(object sender, EventArgs e)
@@ -121,18 +123,19 @@ namespace AffairList
                 MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                Config.IfSettingsFileExists();
+                if (!settings.SettingsFileExists()) settings.CreateSettingsFile();
 
-                Config.WriteBaseSettings();
+                settings.WriteBaseSettings();
 
                 MessageBox.Show("The settings were reseted succesfully");
             }
-            Config.Restart();
+            Restart();
         }
 
         private void ConfirmButton_Click(object sender, EventArgs e)
         {
-            Config.SaveSettings();
+            isConfirmed = true;
+            settings.SaveSettings();
         }
 
         private void StateLab_MouseLeave(object sender, EventArgs e)
@@ -157,12 +160,12 @@ namespace AffairList
             if (StateLab.Text == "On")
             {
                 StateLab.Text = "OFF";
-                Config.musicState = false;
+                settings.musicState = false;
                 return;
             }
             StateLab.Text = "On";
-            Config.musicState = true;
-            Config.isConfirmed = false;
+            settings.musicState = true;
+            isConfirmed = false;
         }
 
         private void autostartStateLab_MouseDown(object sender, MouseEventArgs e)
@@ -171,12 +174,12 @@ namespace AffairList
             if (autostartStateLab.Text == "On")
             {
                 autostartStateLab.Text = "OFF";
-                Config.autostartState = false;
+                settings.autostartState = false;
                 return;
             }
             autostartStateLab.Text = "On";
-            Config.autostartState = true;
-            Config.isConfirmed = false;
+            settings.autostartState = true;
+            isConfirmed = false;
         }
 
         private void autostartStateLab_MouseLeave(object sender, EventArgs e)
@@ -200,8 +203,8 @@ namespace AffairList
             if (res == DialogResult.OK)
             {
                 ListTextColorLab.ForeColor = ColorPicker.Color;
-                Config.textColor = ListTextColorLab.ForeColor;
-                Config.isConfirmed = false;
+                settings.textColor = ListTextColorLab.ForeColor;
+                isConfirmed = false;
             }
         }
 
@@ -211,53 +214,53 @@ namespace AffairList
             if (res == DialogResult.OK)
             {
                 ListBgTextColorLab.ForeColor = ColorPicker.Color;
-                Config.bgtextColor = ListBgTextColorLab.ForeColor;
-                Config.isConfirmed = false;
+                settings.bgtextColor = ListBgTextColorLab.ForeColor;
+                isConfirmed = false;
             }
         }
 
         private void VolumeBar_Scroll(object sender, EventArgs e)
         {
-            Config.currentVolume = VolumeBar.Value;
-            VolumeValueLab.Text = Config.currentVolume.ToString();
-            Config.isConfirmed = false;
+            settings.currentVolume = VolumeBar.Value;
+            VolumeValueLab.Text = settings.currentVolume.ToString();
+            isConfirmed = false;
         }
 
         private void LocationLab_DoubleClick(object sender, EventArgs e)
         {
-            int prevX = Config.x, prevY = Config.y;
+            int prevX = settings.x, prevY = settings.y;
             try
             {
-                Config.x = int.Parse(Interaction.InputBox("Enter x coordinate," +
-                    $" max width is {Config.width}",
+                settings.x = int.Parse(Interaction.InputBox("Enter x coordinate," +
+                    $" max width is {settings.width}",
                     "InputWindow", ""));
-                if(Config.x > Config.width) throw new Exception();
+                if(settings.x > settings.width) throw new Exception();
             }
             catch
             {
                 MessageBox.Show("Error");
-                Config.x = prevX;
+                settings.x = prevX;
                 return;
             }
             try
             {
-                Config.y = int.Parse(Interaction.InputBox("Enter y coordinate" +
-                    $" max height is {Config.height}", "InputWindow", ""));
-                if (Config.y > Config.height) throw new Exception();
+                settings.y = int.Parse(Interaction.InputBox("Enter y coordinate" +
+                    $" max height is {settings.height}", "InputWindow", ""));
+                if (settings.y > settings.height) throw new Exception();
             }
             catch
             {
                 MessageBox.Show("Error");
-                Config.y = prevY;
+                settings.y = prevY;
                 return;
             }
-            Config.isConfirmed = false;
-            LocationLab.Text = Config.x + ", " + Config.y;
+            isConfirmed = false;
+            LocationLab.Text = settings.x + ", " + settings.y;
         }
 
         private void Settings_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Config.Exit();
+            Exit();
         }
 
         private void LocationLab_MouseEnter(object sender, EventArgs e)
@@ -276,12 +279,12 @@ namespace AffairList
             if (AskToDeleteState.Text == "On")
             {
                 AskToDeleteState.Text = "OFF";
-                Config.askToDelete = false;
+                settings.askToDelete = false;
                 return;
             }
             AskToDeleteState.Text = "On";
-            Config.askToDelete = true;
-            Config.isConfirmed = false;
+            settings.askToDelete = true;
+            isConfirmed = false;
         }
 
         private void AskToDeleteState_MouseLeave(object sender, EventArgs e)
