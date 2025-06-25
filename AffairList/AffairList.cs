@@ -192,11 +192,6 @@ namespace AffairList
             }
         }
 
-        private void MusicPlayerButton_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void AffairList_Load(object sender, EventArgs e)
         {
             TopMost = true;

@@ -13,8 +13,7 @@ namespace AffairList
     public partial class InputKeyForm : BaseForm
     {
         public Keys Key { get; private set; }
-        public delegate void KeyPressed();
-        public event KeyPressed OnKeyPressed;
+        public event Action OnKeyPressed;
         public InputKeyForm()
         {
             InitializeComponent();

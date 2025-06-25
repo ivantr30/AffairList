@@ -30,7 +30,6 @@
         {
             panel1 = new Panel();
             ChangeProfileButton = new Button();
-            MusicPlayerButton = new Button();
             HotKeyButton = new Button();
             SettingsButton = new Button();
             OpenListButton = new Button();
@@ -49,7 +48,6 @@
             // 
             panel1.BackColor = Color.FromArgb(72, 3, 111);
             panel1.Controls.Add(ChangeProfileButton);
-            panel1.Controls.Add(MusicPlayerButton);
             panel1.Controls.Add(HotKeyButton);
             panel1.Controls.Add(SettingsButton);
             panel1.Controls.Add(OpenListButton);
@@ -78,21 +76,6 @@
             ChangeProfileButton.UseVisualStyleBackColor = false;
             ChangeProfileButton.Click += ChangeProfileButton_Click;
             // 
-            // MusicPlayerButton
-            // 
-            MusicPlayerButton.BackColor = Color.FromArgb(173, 102, 213);
-            MusicPlayerButton.FlatAppearance.BorderSize = 0;
-            MusicPlayerButton.FlatStyle = FlatStyle.Flat;
-            MusicPlayerButton.Font = new Font("Tahoma", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            MusicPlayerButton.ForeColor = SystemColors.ButtonHighlight;
-            MusicPlayerButton.Location = new Point(175, 125);
-            MusicPlayerButton.Name = "MusicPlayerButton";
-            MusicPlayerButton.Size = new Size(100, 100);
-            MusicPlayerButton.TabIndex = 7;
-            MusicPlayerButton.Text = "MusicPlayer";
-            MusicPlayerButton.UseVisualStyleBackColor = false;
-            MusicPlayerButton.Click += MusicPlayerButton_Click;
-            // 
             // HotKeyButton
             // 
             HotKeyButton.BackColor = Color.FromArgb(173, 102, 213);
@@ -115,9 +98,9 @@
             SettingsButton.FlatStyle = FlatStyle.Flat;
             SettingsButton.Font = new Font("Tahoma", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 204);
             SettingsButton.ForeColor = SystemColors.ButtonHighlight;
-            SettingsButton.Location = new Point(135, 81);
+            SettingsButton.Location = new Point(175, 125);
             SettingsButton.Name = "SettingsButton";
-            SettingsButton.Size = new Size(180, 28);
+            SettingsButton.Size = new Size(100, 100);
             SettingsButton.TabIndex = 5;
             SettingsButton.Text = "Settings-Customize";
             SettingsButton.UseVisualStyleBackColor = false;
@@ -243,7 +226,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(450, 482);
             Controls.Add(panel1);
-            FormBorderStyle = FormBorderStyle.None;
             KeyPreview = true;
             Name = "AffairList";
             StartPosition = FormStartPosition.CenterScreen;
@@ -271,7 +253,6 @@
         private Button SettingsButton;
         private Label MinimizeButton;
         private Button ChangeProfileButton;
-        private Button MusicPlayerButton;
         private Button HotKeyButton;
     }
 }

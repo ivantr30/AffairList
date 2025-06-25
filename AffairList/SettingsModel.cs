@@ -20,11 +20,9 @@ namespace AffairList
         public Keys closeKey = Keys.F7;
         public Keys returnKey = Keys.F6;
 
-        public bool musicState = true;
         public bool autostartState = true;
         public bool askToDelete = true;
 
-        public int currentVolume = 0;
         public int x, y;
         public int width = Screen.PrimaryScreen.WorkingArea.Width,
                    height = Screen.PrimaryScreen.WorkingArea.Height;
@@ -99,16 +97,6 @@ namespace AffairList
                         askToDelete = bool.Parse(parameters[0]);
                         break;
 
-                    case "musicOn":
-                        currentParametr = key;
-                        musicState = bool.Parse(parameters[0]);
-                        break;
-
-                    case "musicVolume":
-                        currentParametr = key;
-                        currentVolume = int.Parse(parameters[0]);
-                        break;
-
                     case "currentProfile":
                         currentParametr = key;
                         currentListFileFullPath = value;
@@ -141,10 +129,8 @@ namespace AffairList
         {
             File.WriteAllText(settingsFileFullPath,
                 $"x,y: {width - width / 6} {(height + height / 10) / 90}\n" +
-                "musicOn: true\n" +
                 $"textColor: {basetextColor.R} {basetextColor.G} {basetextColor.B}\n" +
                 $"backTextColor: {basebgtextColor.R} {basebgtextColor.G} {basebgtextColor.B}\n" +
-                "musicVolume: 35\n" +
                 "autostarts: true\n" +
                 "askToDelete: true\n" +
                 "currentProfile: \n" +
@@ -245,19 +231,9 @@ namespace AffairList
                         settingLines[i] = $"{currentParametr}: {bgtextColor.R} {bgtextColor.G} {bgtextColor.B}";
                         break;
 
-                    case "musicOn":
-                        currentParametr = key;
-                        settingLines[i] = $"{currentParametr}: {musicState}";
-                        break;
-
                     case "autostarts":
                         currentParametr = key;
                         settingLines[i] = $"{currentParametr}: {autostartState}";
-                        break;
-
-                    case "musicVolume":
-                        currentParametr = key;
-                        settingLines[i] = $"{currentParametr}: {currentVolume}";
                         break;
 
                     case "askToDelete":

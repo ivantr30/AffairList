@@ -37,15 +37,10 @@
             AskToDelete = new Label();
             ThemeBoxCB = new ComboBox();
             CurrentThemeLab = new Label();
-            VolumeValueLab = new Label();
-            VolumeBar = new TrackBar();
             PickBgColorButton = new Button();
             PickTextColorButton = new Button();
             autostartStateLab = new Label();
-            MusicVolumeLab = new Label();
             AutostartLab = new Label();
-            StateLab = new Label();
-            MusicStateLab = new Label();
             ListBgTextColorLab = new Label();
             ListTextColorLab = new Label();
             LocationLab = new Label();
@@ -56,7 +51,6 @@
             ColorPicker = new ColorDialog();
             NameBackground.SuspendLayout();
             panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)VolumeBar).BeginInit();
             SuspendLayout();
             // 
             // NameBackground
@@ -120,15 +114,10 @@
             panel1.Controls.Add(AskToDelete);
             panel1.Controls.Add(ThemeBoxCB);
             panel1.Controls.Add(CurrentThemeLab);
-            panel1.Controls.Add(VolumeValueLab);
-            panel1.Controls.Add(VolumeBar);
             panel1.Controls.Add(PickBgColorButton);
             panel1.Controls.Add(PickTextColorButton);
             panel1.Controls.Add(autostartStateLab);
-            panel1.Controls.Add(MusicVolumeLab);
             panel1.Controls.Add(AutostartLab);
-            panel1.Controls.Add(StateLab);
-            panel1.Controls.Add(MusicStateLab);
             panel1.Controls.Add(ListBgTextColorLab);
             panel1.Controls.Add(ListTextColorLab);
             panel1.Controls.Add(LocationLab);
@@ -149,7 +138,7 @@
             AskToDeleteState.AutoSize = true;
             AskToDeleteState.Font = new Font("Unispace", 13F);
             AskToDeleteState.ForeColor = Color.White;
-            AskToDeleteState.Location = new Point(364, 410);
+            AskToDeleteState.Location = new Point(375, 294);
             AskToDeleteState.Name = "AskToDeleteState";
             AskToDeleteState.Size = new Size(32, 21);
             AskToDeleteState.TabIndex = 24;
@@ -166,7 +155,7 @@
             AskToDelete.AutoSize = true;
             AskToDelete.Font = new Font("Unispace", 13F);
             AskToDelete.ForeColor = Color.White;
-            AskToDelete.Location = new Point(12, 410);
+            AskToDelete.Location = new Point(12, 294);
             AskToDelete.Name = "AskToDelete";
             AskToDelete.Size = new Size(153, 21);
             AskToDelete.TabIndex = 23;
@@ -176,7 +165,7 @@
             // ThemeBoxCB
             // 
             ThemeBoxCB.FormattingEnabled = true;
-            ThemeBoxCB.Location = new Point(286, 378);
+            ThemeBoxCB.Location = new Point(286, 325);
             ThemeBoxCB.Name = "ThemeBoxCB";
             ThemeBoxCB.Size = new Size(121, 25);
             ThemeBoxCB.TabIndex = 22;
@@ -187,35 +176,12 @@
             CurrentThemeLab.AutoSize = true;
             CurrentThemeLab.Font = new Font("Unispace", 13F);
             CurrentThemeLab.ForeColor = Color.White;
-            CurrentThemeLab.Location = new Point(12, 378);
+            CurrentThemeLab.Location = new Point(12, 325);
             CurrentThemeLab.Name = "CurrentThemeLab";
             CurrentThemeLab.Size = new Size(153, 21);
             CurrentThemeLab.TabIndex = 21;
             CurrentThemeLab.Text = "Current theme";
             CurrentThemeLab.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // VolumeValueLab
-            // 
-            VolumeValueLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            VolumeValueLab.AutoSize = true;
-            VolumeValueLab.Font = new Font("Unispace", 13F);
-            VolumeValueLab.ForeColor = Color.White;
-            VolumeValueLab.Location = new Point(209, 295);
-            VolumeValueLab.Name = "VolumeValueLab";
-            VolumeValueLab.Size = new Size(21, 21);
-            VolumeValueLab.TabIndex = 20;
-            VolumeValueLab.Text = "0";
-            VolumeValueLab.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // VolumeBar
-            // 
-            VolumeBar.Location = new Point(247, 295);
-            VolumeBar.Maximum = 100;
-            VolumeBar.Name = "VolumeBar";
-            VolumeBar.Size = new Size(160, 45);
-            VolumeBar.TabIndex = 19;
-            VolumeBar.Value = 35;
-            VolumeBar.Scroll += VolumeBar_Scroll;
             // 
             // PickBgColorButton
             // 
@@ -253,7 +219,7 @@
             autostartStateLab.AutoSize = true;
             autostartStateLab.Font = new Font("Unispace", 13F);
             autostartStateLab.ForeColor = Color.White;
-            autostartStateLab.Location = new Point(364, 343);
+            autostartStateLab.Location = new Point(375, 263);
             autostartStateLab.Name = "autostartStateLab";
             autostartStateLab.Size = new Size(32, 21);
             autostartStateLab.TabIndex = 16;
@@ -264,61 +230,18 @@
             autostartStateLab.MouseLeave += autostartStateLab_MouseLeave;
             autostartStateLab.MouseUp += autostartStateLab_MouseUp;
             // 
-            // MusicVolumeLab
-            // 
-            MusicVolumeLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            MusicVolumeLab.AutoSize = true;
-            MusicVolumeLab.Font = new Font("Unispace", 13F);
-            MusicVolumeLab.ForeColor = Color.White;
-            MusicVolumeLab.Location = new Point(12, 295);
-            MusicVolumeLab.Name = "MusicVolumeLab";
-            MusicVolumeLab.Size = new Size(142, 21);
-            MusicVolumeLab.TabIndex = 15;
-            MusicVolumeLab.Text = "Music volume";
-            MusicVolumeLab.TextAlign = ContentAlignment.MiddleCenter;
-            // 
             // AutostartLab
             // 
             AutostartLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             AutostartLab.AutoSize = true;
             AutostartLab.Font = new Font("Unispace", 13F);
             AutostartLab.ForeColor = Color.White;
-            AutostartLab.Location = new Point(12, 343);
+            AutostartLab.Location = new Point(12, 263);
             AutostartLab.Name = "AutostartLab";
             AutostartLab.Size = new Size(175, 21);
             AutostartLab.TabIndex = 14;
             AutostartLab.Text = "Autostart state";
             AutostartLab.TextAlign = ContentAlignment.MiddleCenter;
-            // 
-            // StateLab
-            // 
-            StateLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            StateLab.AutoSize = true;
-            StateLab.Font = new Font("Unispace", 13F);
-            StateLab.ForeColor = Color.White;
-            StateLab.Location = new Point(364, 260);
-            StateLab.Name = "StateLab";
-            StateLab.Size = new Size(32, 21);
-            StateLab.TabIndex = 13;
-            StateLab.Text = "On";
-            StateLab.TextAlign = ContentAlignment.MiddleCenter;
-            StateLab.MouseDown += StateLab_MouseDown;
-            StateLab.MouseEnter += StateLab_MouseEnter;
-            StateLab.MouseLeave += StateLab_MouseLeave;
-            StateLab.MouseUp += StateLab_MouseUp;
-            // 
-            // MusicStateLab
-            // 
-            MusicStateLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            MusicStateLab.AutoSize = true;
-            MusicStateLab.Font = new Font("Unispace", 13F);
-            MusicStateLab.ForeColor = Color.White;
-            MusicStateLab.Location = new Point(12, 260);
-            MusicStateLab.Name = "MusicStateLab";
-            MusicStateLab.Size = new Size(131, 21);
-            MusicStateLab.TabIndex = 12;
-            MusicStateLab.Text = "Music state";
-            MusicStateLab.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // ListBgTextColorLab
             // 
@@ -417,7 +340,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(440, 511);
             Controls.Add(panel1);
-            FormBorderStyle = FormBorderStyle.None;
             KeyPreview = true;
             Name = "Settings";
             StartPosition = FormStartPosition.CenterScreen;
@@ -428,7 +350,6 @@
             NameBackground.PerformLayout();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)VolumeBar).EndInit();
             ResumeLayout(false);
         }
 
@@ -445,14 +366,9 @@
         private Label ListBgTextColorLab;
         private Label ListTextColorLab;
         private Label LocationLab;
-        private Label MusicStateLab;
-        private Label StateLab;
-        private Label MusicVolumeLab;
         private ColorDialog ColorPicker;
         private Button PickTextColorButton;
         private Button PickBgColorButton;
-        private TrackBar VolumeBar;
-        private Label VolumeValueLab;
         private ComboBox ThemeBoxCB;
         private Label CurrentThemeLab;
         private Label AskToDeleteState;

@@ -69,6 +69,8 @@ namespace AffairList
                 keyForm.ShowDialog();
 
                 CloseKeyType.Text = settings.closeKey.ToString();
+
+                keyForm.OnKeyPressed -= delegate { settings.closeKey = keyForm.Key; };
                 isConfirmed = false;
             }
             catch
@@ -86,6 +88,8 @@ namespace AffairList
                 keyForm.ShowDialog();
 
                 BackKeyType.Text = settings.returnKey.ToString();
+
+                keyForm.OnKeyPressed -= delegate { settings.returnKey = keyForm.Key; };
                 isConfirmed = false;
             }
             catch

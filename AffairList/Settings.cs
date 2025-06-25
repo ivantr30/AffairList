@@ -8,7 +8,6 @@ namespace AffairList
         {
             InitializeComponent();
             this.settings = settings;
-            VolumeValueLab.Text = VolumeBar.Value.ToString();
             LoadSettings();
         }
         private void LoadSettings()
@@ -16,14 +15,6 @@ namespace AffairList
             LocationLab.Text = settings.x + ", " + settings.y;
             ListTextColorLab.ForeColor = settings.textColor;
             ListBgTextColorLab.ForeColor = settings.bgtextColor;
-            if (settings.musicState)
-            {
-                StateLab.Text = "On";
-            }
-            else
-            {
-                StateLab.Text = "OFF";
-            }
             if (settings.autostartState)
             {
                 autostartStateLab.Text = "On";
@@ -40,7 +31,6 @@ namespace AffairList
             {
                 AskToDeleteState.Text = "OFF";
             }
-            VolumeValueLab.Text = settings.currentVolume.ToString();
         }
         private void CloseButton_Click(object sender, EventArgs e)
         {
@@ -138,36 +128,6 @@ namespace AffairList
             settings.SaveSettings();
         }
 
-        private void StateLab_MouseLeave(object sender, EventArgs e)
-        {
-            StateLab.ForeColor = Color.White;
-        }
-
-
-        private void StateLab_MouseUp(object sender, MouseEventArgs e)
-        {
-            StateLab.ForeColor = Color.White;
-        }
-
-        private void StateLab_MouseEnter(object sender, EventArgs e)
-        {
-            StateLab.ForeColor = Color.Gray;
-        }
-
-        private void StateLab_MouseDown(object sender, MouseEventArgs e)
-        {
-            StateLab.ForeColor = Color.DarkGray;
-            if (StateLab.Text == "On")
-            {
-                StateLab.Text = "OFF";
-                settings.musicState = false;
-                return;
-            }
-            StateLab.Text = "On";
-            settings.musicState = true;
-            isConfirmed = false;
-        }
-
         private void autostartStateLab_MouseDown(object sender, MouseEventArgs e)
         {
             autostartStateLab.ForeColor = Color.DarkGray;
@@ -217,13 +177,6 @@ namespace AffairList
                 settings.bgtextColor = ListBgTextColorLab.ForeColor;
                 isConfirmed = false;
             }
-        }
-
-        private void VolumeBar_Scroll(object sender, EventArgs e)
-        {
-            settings.currentVolume = VolumeBar.Value;
-            VolumeValueLab.Text = settings.currentVolume.ToString();
-            isConfirmed = false;
         }
 
         private void LocationLab_DoubleClick(object sender, EventArgs e)
