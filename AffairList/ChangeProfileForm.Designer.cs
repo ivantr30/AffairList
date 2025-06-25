@@ -41,6 +41,7 @@
             ClearButton = new Button();
             AddButton = new Button();
             ProfileInput = new TextBox();
+            SelectProfileButton = new Button();
             NameBackground.SuspendLayout();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -128,6 +129,7 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(72, 3, 111);
+            panel1.Controls.Add(SelectProfileButton);
             panel1.Controls.Add(ProfilesListLab);
             panel1.Controls.Add(DeleteButton);
             panel1.Controls.Add(BackButton);
@@ -210,13 +212,24 @@
             ProfileInput.Size = new Size(470, 31);
             ProfileInput.TabIndex = 1;
             // 
+            // SelectProfileButton
+            // 
+            SelectProfileButton.BackColor = Color.FromArgb(173, 102, 213);
+            SelectProfileButton.FlatStyle = FlatStyle.Flat;
+            SelectProfileButton.Location = new Point(160, 371);
+            SelectProfileButton.Name = "SelectProfileButton";
+            SelectProfileButton.Size = new Size(60, 27);
+            SelectProfileButton.TabIndex = 7;
+            SelectProfileButton.Text = "Select";
+            SelectProfileButton.UseVisualStyleBackColor = false;
+            SelectProfileButton.Click += SelectProfileButton_Click;
+            // 
             // ChangeProfileForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(494, 405);
             Controls.Add(panel1);
-            FormBorderStyle = FormBorderStyle.None;
             KeyPreview = true;
             Name = "ChangeProfileForm";
             StartPosition = FormStartPosition.CenterScreen;
@@ -245,5 +258,6 @@
         private Button AddButton;
         private TextBox ProfileInput;
         private Label CloseButtonLab;
+        private Button SelectProfileButton;
     }
 }

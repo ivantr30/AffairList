@@ -19,6 +19,9 @@
     <Compile Update="HotKeySettings.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="InputKeyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="List.cs">
       <SubType>Form</SubType>
     </Compile>

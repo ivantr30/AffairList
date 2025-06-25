@@ -5,11 +5,11 @@ namespace AffairList
 {
     public class SettingsModel
     {
-        public static readonly string listsDirectoryFullPath = Application.StartupPath + "profiles";
-        private readonly string defaultListFileFullPath = listsDirectoryFullPath + "\\list.txt";
+        public readonly string listsDirectoryFullPath;
+        private readonly string defaultListFileFullPath;
 
-        public string currentListFileFullPath = listsDirectoryFullPath + "\\list.txt";
-        public string settingsFileFullPath = Application.StartupPath + "settings.txt";
+        public string currentListFileFullPath;
+        public readonly string settingsFileFullPath;
 
         public Color textColor = Color.MediumSpringGreen;
         public Color bgtextColor = Color.Black;
@@ -34,6 +34,10 @@ namespace AffairList
 
         public SettingsModel()
         {
+            listsDirectoryFullPath = Application.StartupPath + "profiles";
+            defaultListFileFullPath = listsDirectoryFullPath + "\\list.txt";
+            currentListFileFullPath = listsDirectoryFullPath + "\\list.txt";
+            settingsFileFullPath = Application.StartupPath + "settings.txt";
             Initialize();
         }
         private void Initialize()
@@ -136,18 +140,18 @@ namespace AffairList
         public void WriteBaseSettings()
         {
             File.WriteAllText(settingsFileFullPath,
-                $"x,y: {width - width / 6} {(height + height / 10) / 90}" +
-                    "\nmusicOn: true" +
-                    $"\ntextColor: {basetextColor.R} {basetextColor.G} {basetextColor.B}" +
-                    $"\nbackTextColor: {basebgtextColor.R} {basebgtextColor.G} {basebgtextColor.B}\n" +
-                        "musicVolume: 35\n" +
-                        "autostarts: true\n" +
-                        "askToDelete: true\n" +
-                        "currentProfile: \n" +
-                        "closeKey: F7\n" +
-                        "returnKey: F6\n");
+                $"x,y: {width - width / 6} {(height + height / 10) / 90}\n" +
+                "musicOn: true\n" +
+                $"textColor: {basetextColor.R} {basetextColor.G} {basetextColor.B}\n" +
+                $"backTextColor: {basebgtextColor.R} {basebgtextColor.G} {basebgtextColor.B}\n" +
+                "musicVolume: 35\n" +
+                "autostarts: true\n" +
+                "askToDelete: true\n" +
+                "currentProfile: \n" +
+                "closeKey: F7\n" +
+                "returnKey: F6\n");
         }
-        public void ChooseProfile()
+        private void ChooseProfile()
         {
             var profiles = Directory.GetFiles(listsDirectoryFullPath);
             if (profiles.Length > 0)
@@ -155,14 +159,14 @@ namespace AffairList
                 currentListFileFullPath = profiles[0];
             }
         }
-        public void EnableAutoStart(string appName, string exePath)
+        private void EnableAutoStart(string appName, string exePath)
         {
             RegistryKey key = Registry.CurrentUser
                 .OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true)!;
 
             key.SetValue(appName, $"\"{exePath}\"");
         }
-        public void DisableAutoStart(string appName)
+        private void DisableAutoStart(string appName)
         {
             RegistryKey key = Registry.CurrentUser
                 .OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true)!;
@@ -260,13 +264,13 @@ namespace AffairList
                         currentParametr = key;
                         settingLines[i] = $"{currentParametr}: {askToDelete}";
                         break;
+                    case "currentProfile":
+                        currentParametr = key;
+                        settingLines[i] = $"{currentParametr}: {currentListFileFullPath}";
+                        break;
 
                     default:
-                        if (line.StartsWith("currentProfile:"))
-                        {
-                            currentParametr = "currentProfile";
-                        }
-                        else if (line.StartsWith("closeKey:"))
+                        if (line.StartsWith("closeKey:"))
                         {
                             currentParametr = "closeKey";
                         }
@@ -282,11 +286,15 @@ namespace AffairList
         }
         public void SaveParametr<T>(string parametr, T firstValue, T secondValue)
         {
+            SaveParametr(parametr, firstValue + " " + secondValue);
+        }
+        public void SaveParametr<T>(string parametr, T value)
+        {
             for (int i = 0; i < settingLines.Length; i++)
             {
                 if (settingLines[i].StartsWith(parametr))
                 {
-                    settingLines[i] = parametr + ": " + firstValue + " " + secondValue;
+                    settingLines[i] = parametr + ": " + value;
                     break;
                 }
             }

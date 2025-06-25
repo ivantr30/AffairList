@@ -11,7 +11,7 @@
         }
         private void LoadProfiles()
         {
-            profileLines = Directory.GetFiles(SettingsModel.listsDirectoryFullPath)
+            profileLines = Directory.GetFiles(settings.listsDirectoryFullPath)
                     .OrderByDescending(x => x.EndsWith("\"Приритетное\"")).ToArray();
             foreach (var profile in profileLines)
             {
@@ -20,7 +20,8 @@
             }
             if (Profiles.Items.Count > 0)
             {
-                Profiles.SelectedIndex = 0;
+                Profiles.SelectedIndex = Profiles.Items
+                    .IndexOf(settings.currentListFileFullPath.Split("\\")[^1]);
             }
         }
         private void MinimizeButton_Click(object sender, EventArgs e)
@@ -105,10 +106,10 @@
             Profiles.SelectedIndex = Profiles.Items.Count - 1;
 
             var temp = profileLines.ToList();
-            temp.Add(SettingsModel.listsDirectoryFullPath + "\\" + ProfileInput.Text + ".txt");
+            temp.Add(settings.listsDirectoryFullPath + "\\" + ProfileInput.Text + ".txt");
             profileLines = temp.ToArray();
 
-            using (File.Create(SettingsModel.listsDirectoryFullPath + "\\" + ProfileInput.Text + ".txt"))
+            using (File.Create(settings.listsDirectoryFullPath + "\\" + ProfileInput.Text + ".txt"))
             {
 
             }
@@ -185,6 +186,11 @@
             {
                 Exit();
             }
+        }
+
+        private void SelectProfileButton_Click(object sender, EventArgs e)
+        {
+            settings.SaveParametr("currentProfile", profileLines[Profiles.SelectedIndex]);
         }
     }
 }

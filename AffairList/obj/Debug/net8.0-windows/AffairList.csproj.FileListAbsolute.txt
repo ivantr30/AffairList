@@ -49,3 +49,4 @@ F:\source\repos\AffairList\AffairList\obj\Debug\net8.0-windows\AffairList.pdb
 F:\source\repos\AffairList\AffairList\obj\Debug\net8.0-windows\AffairList.genruntimeconfig.cache
 F:\source\repos\AffairList\AffairList\obj\Debug\net8.0-windows\ref\AffairList.dll
 F:\source\repos\AffairList\AffairList\obj\Debug\net8.0-windows\AffairList.BaseForm.resources
+F:\source\repos\AffairList\AffairList\obj\Debug\net8.0-windows\AffairList.InputKeyForm.resources

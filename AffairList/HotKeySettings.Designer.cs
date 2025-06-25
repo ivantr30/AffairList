@@ -55,6 +55,8 @@
             HotKeySettingsLab.TabIndex = 1;
             HotKeySettingsLab.Text = "HotKeys";
             HotKeySettingsLab.TextAlign = ContentAlignment.MiddleCenter;
+            HotKeySettingsLab.MouseDown += HotKeySettingsLab_MouseDown;
+            HotKeySettingsLab.MouseMove += HotKeySettingsLab_MouseMove;
             // 
             // NameBackground
             // 
@@ -67,6 +69,8 @@
             NameBackground.Name = "NameBackground";
             NameBackground.Size = new Size(440, 142);
             NameBackground.TabIndex = 0;
+            NameBackground.MouseDown += NameBackground_MouseDown;
+            NameBackground.MouseMove += NameBackground_MouseMove;
             // 
             // MinimizeButton
             // 
@@ -78,6 +82,9 @@
             MinimizeButton.TabIndex = 3;
             MinimizeButton.Text = "-";
             MinimizeButton.Click += MinimizeButton_Click;
+            MinimizeButton.MouseEnter += MinimizeButton_MouseEnter;
+            MinimizeButton.MouseLeave += MinimizeButton_MouseLeave;
+            MinimizeButton.MouseUp += MinimizeButton_MouseUp;
             // 
             // CloseButton
             // 
@@ -89,6 +96,8 @@
             CloseButton.TabIndex = 2;
             CloseButton.Text = "X";
             CloseButton.Click += CloseButton_Click;
+            CloseButton.MouseEnter += CloseButton_MouseEnter;
+            CloseButton.MouseLeave += CloseButton_MouseLeave;
             // 
             // panel1
             // 
@@ -209,7 +218,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(440, 511);
             Controls.Add(panel1);
-            FormBorderStyle = FormBorderStyle.None;
             Name = "HotKeySettings";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "HotKeySettings";

@@ -26,7 +26,7 @@ namespace AffairList
         }
         private void LoadProfiles()
         {
-            var profiles = Directory.GetFiles(SettingsModel.listsDirectoryFullPath);
+            var profiles = Directory.GetFiles(settings.listsDirectoryFullPath);
             foreach (var profile in profiles)
             {
                 FileInfo profileInfo = new FileInfo(profile);
@@ -382,13 +382,13 @@ namespace AffairList
         }
         private void ChangeProfile()
         {
-            var profiles = Directory.GetFiles(SettingsModel.listsDirectoryFullPath);
+            var profiles = Directory.GetFiles(settings.listsDirectoryFullPath);
             foreach (var profile in profiles)
             {
                 FileInfo profileInfo = new FileInfo(profile);
                 if (profileInfo.Name == ProfileBox.SelectedItem.ToString())
                 {
-                    settings.SaveParametr("currentProfile", profileInfo.FullName, "");
+                    settings.SaveParametr("currentProfile", profileInfo.FullName);
                     settings.currentListFileFullPath = profileInfo.FullName;
                 }
             }
