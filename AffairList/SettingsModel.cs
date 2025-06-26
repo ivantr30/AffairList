@@ -32,7 +32,7 @@ namespace AffairList
 
         public SettingsModel()
         {
-            listsDirectoryFullPath = Application.StartupPath + "profiles";
+            listsDirectoryFullPath = Application.StartupPath + "profiles\\";
             defaultListFileFullPath = listsDirectoryFullPath + "\\list.txt";
             currentListFileFullPath = listsDirectoryFullPath + "\\list.txt";
             settingsFileFullPath = Application.StartupPath + "settings.txt";

@@ -1,8 +1,10 @@
-﻿namespace AffairList
+﻿using Microsoft.VisualBasic;
+namespace AffairList
 {
     public partial class ChangeProfileForm : BaseForm
     {
         string[] profileLines;
+        private string priorityWord = " Приоритетное";
         public ChangeProfileForm(SettingsModel settings)
         {
             InitializeComponent();
@@ -12,7 +14,7 @@
         private void LoadProfiles()
         {
             profileLines = Directory.GetFiles(settings.listsDirectoryFullPath)
-                    .OrderByDescending(x => x.EndsWith("\"Приритетное\"")).ToArray();
+                    .OrderByDescending(x => x.EndsWith(priorityWord + ".txt")).ToArray();
             foreach (var profile in profileLines)
             {
                 FileInfo profileFile = new FileInfo(profile);
@@ -191,6 +193,65 @@
         private void SelectProfileButton_Click(object sender, EventArgs e)
         {
             settings.SaveParametr("currentProfile", profileLines[Profiles.SelectedIndex]);
+        }
+
+        private void RenameButton_Click(object sender, EventArgs e)
+        {
+            if (Profiles.SelectedIndex == -1) return;
+
+            try
+            {
+                string previousProfileFullName = profileLines[Profiles.SelectedIndex];
+                FileInfo fileInfo = new FileInfo(previousProfileFullName);
+                string currentProfileName = fileInfo.Name.Replace(".txt", "");
+                string newProfileName = Interaction
+                    .InputBox("Enter renaming", "Renaming form", currentProfileName);
+
+                if (newProfileName.Trim() == "") throw new Exception();
+
+                profileLines[Profiles.SelectedIndex] = previousProfileFullName
+                    .Replace(currentProfileName, newProfileName);
+
+                File.Move(previousProfileFullName, profileLines[Profiles.SelectedIndex]);
+                Profiles.Items.Clear();
+                LoadProfiles();
+            }
+            catch
+            {
+                MessageBox.Show("Error, wrong input format");
+            }
+        }
+
+        private void ChangePriorityButton_Click(object sender, EventArgs e)
+        {
+            int selectedProfileIndex = Profiles.SelectedIndex;
+            if (selectedProfileIndex == -1) return;
+
+            FileInfo selectedProfileInfo = new FileInfo(profileLines[Profiles.SelectedIndex]);
+            if (selectedProfileInfo.FullName.EndsWith(priorityWord + ".txt"))
+            {
+                Profiles.Items[selectedProfileIndex] =
+                    selectedProfileInfo.Name.Replace(" " + priorityWord, "");
+
+                if (selectedProfileInfo.Name.EndsWith(priorityWord + ".txt"))
+                {
+                    profileLines[selectedProfileIndex] = settings.listsDirectoryFullPath + 
+                        selectedProfileInfo.Name.Replace(priorityWord, "");
+                }
+            }
+            else
+            {
+                Profiles.Items[selectedProfileIndex] = settings.listsDirectoryFullPath + 
+                    selectedProfileInfo.Name.Replace(".txt", priorityWord + ".txt");
+                profileLines[selectedProfileIndex] = settings.listsDirectoryFullPath + 
+                    selectedProfileInfo.Name.Replace(".txt", priorityWord + ".txt");
+            }
+
+            File.Move(selectedProfileInfo.FullName, profileLines[selectedProfileIndex]);
+            profileLines = profileLines
+                .OrderByDescending(x => x.EndsWith(priorityWord + ".txt")).ToArray();
+            Profiles.Items.Clear();
+            LoadProfiles();
         }
     }
 }

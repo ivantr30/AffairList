@@ -62,40 +62,28 @@ namespace AffairList
         }
         private void CloseKeyType_DoubleClick(object sender, EventArgs e)
         {
-            try
-            {
-                InputKeyForm keyForm = new InputKeyForm();
-                keyForm.OnKeyPressed += delegate { settings.closeKey = keyForm.Key; };
-                keyForm.ShowDialog();
+            InputKeyForm keyForm = new InputKeyForm();
+            keyForm.OnKeyPressed += delegate {
+                settings.closeKey = keyForm.Key;
+            };
+            keyForm.ShowDialog();
 
-                CloseKeyType.Text = settings.closeKey.ToString();
-
-                keyForm.OnKeyPressed -= delegate { settings.closeKey = keyForm.Key; };
-                isConfirmed = false;
-            }
-            catch
-            {
-                MessageBox.Show("Error, wrong input format");
-            }
+            if (keyForm.Key == Keys.None) return;
+            CloseKeyType.Text = settings.closeKey.ToString();
+            isConfirmed = false;
         }
 
         private void BackKeyType_DoubleClick(object sender, EventArgs e)
         {
-            try
-            {
-                InputKeyForm keyForm = new InputKeyForm();
-                keyForm.OnKeyPressed += delegate { settings.returnKey = keyForm.Key; };
-                keyForm.ShowDialog();
+            InputKeyForm keyForm = new InputKeyForm();
+            keyForm.OnKeyPressed += delegate {
+                settings.returnKey = keyForm.Key;
+            };
+            keyForm.ShowDialog();
 
-                BackKeyType.Text = settings.returnKey.ToString();
-
-                keyForm.OnKeyPressed -= delegate { settings.returnKey = keyForm.Key; };
-                isConfirmed = false;
-            }
-            catch
-            {
-                MessageBox.Show("Error, wrong input format");
-            }
+            if (keyForm.Key == Keys.None) return;
+            BackKeyType.Text = settings.returnKey.ToString();
+            isConfirmed = false;
         }
 
         private void CloseKeyType_MouseEnter(object sender, EventArgs e)

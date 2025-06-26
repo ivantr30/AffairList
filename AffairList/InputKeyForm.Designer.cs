@@ -36,11 +36,11 @@
             ClickKeyLabel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             ClickKeyLabel.AutoSize = true;
             ClickKeyLabel.Font = new Font("Berlin Sans FB Demi", 16F, FontStyle.Bold);
-            ClickKeyLabel.Location = new Point(138, 119);
+            ClickKeyLabel.Location = new Point(57, 121);
             ClickKeyLabel.Name = "ClickKeyLabel";
-            ClickKeyLabel.Size = new Size(103, 25);
+            ClickKeyLabel.Size = new Size(297, 25);
             ClickKeyLabel.TabIndex = 0;
-            ClickKeyLabel.Text = "Click key";
+            ClickKeyLabel.Text = "Click key or escape to return";
             // 
             // InputKeyForm
             // 
