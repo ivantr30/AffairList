@@ -6,9 +6,12 @@ namespace AffairList
     public partial class ChangeListForm : BaseForm
     {
         private int currentDragIndex = 0;
+        private int deadlineDateNTagLength = 21;
+        private int selectedAffairIndex = -1;
 
         private string priorityTag = "<priority>";
-        private string priorityWord= "\"Приоритетное\"";
+        private string priorityWord = "\"Приоритетное\"";
+        private string deadlineTag = "<deadline>";
 
         private string[] lines;
 
@@ -36,7 +39,6 @@ namespace AffairList
             {
                 FileInfo selectedProfile = new FileInfo(settings.currentListFileFullPath);
                 ProfileBox.SelectedIndex = ProfileBox.Items.IndexOf(selectedProfile.Name);
-                settings.currentListFileFullPath = selectedProfile.FullName;
             }
         }
         private void LoadText()
@@ -49,18 +51,21 @@ namespace AffairList
 
                 foreach (string line in lines)
                 {
-                    var temp = line.Trim();
-                    if (temp.EndsWith(priorityTag))
+                    var currentLine = line.Trim();
+                    if (currentLine.EndsWith(priorityTag))
                     {
-                        temp = temp.Substring(0, temp.Length - priorityTag.Length);
-                        temp += " " + priorityWord;
+                        currentLine = currentLine
+                            .Substring(0, currentLine.Length - priorityTag.Length);
+                        currentLine += " " + priorityWord;
                     }
-                    Affairs.Items.Add(temp);
+                    if (currentLine.StartsWith(deadlineTag))
+                    {
+                        currentLine = currentLine.Substring(deadlineTag.Length);
+                    }
+                    Affairs.Items.Add(currentLine);
                 }
-                if (Affairs.Items.Count > 0)
-                {
-                    Affairs.SelectedIndex = 0;
-                }
+                if (selectedAffairIndex != -1) Affairs.SelectedIndex = selectedAffairIndex;
+                else if (Affairs.Items.Count > 0) Affairs.SelectedIndex = 0;
             }
         }
         private void GlobalHook_KeyDown(object sender, KeyEventArgs e)
@@ -134,13 +139,14 @@ namespace AffairList
                 MessageBox.Show("Error, textbox is null");
                 return;
             }
+            if(ContainKeyWords(AffairInput.Text)) return;
             string inputText = AffairInput.Text + ".";
             Affairs.Items.Add(inputText);
             Affairs.SelectedIndex = Affairs.Items.Count - 1;
 
-            var temp = lines.ToList();
-            temp.Add(inputText);
-            lines = temp.ToArray();
+            var linesListed = lines.ToList();
+            linesListed.Add(inputText);
+            lines = linesListed.ToArray();
 
             if (settings.CurrentListNotNull())
             {
@@ -162,9 +168,9 @@ namespace AffairList
 
                 if (settings.CurrentListNotNull())
                 {
-                    var temp = lines.ToList();
-                    temp.RemoveAt(Affairs.SelectedIndex);
-                    lines = temp.ToArray();
+                    var linesListed = lines.ToList();
+                    linesListed.RemoveAt(Affairs.SelectedIndex);
+                    lines = linesListed.ToArray();
 
                     File.WriteAllLines(settings.currentListFileFullPath, lines);
                 }
@@ -207,97 +213,94 @@ namespace AffairList
 
         private void AddDeadlineButton_Click(object sender, EventArgs e)
         {
-            if (Affairs.SelectedIndex == -1)
-                return;
-            string res;
-            string temp = (string)Affairs.Items[Affairs.SelectedIndex];
-            try
-            {
-                DateTime.ParseExact(temp.Substring(0, 10), "dd.MM.yyyy", null, DateTimeStyles.None);
-                temp = temp.Substring(10).Trim();
+            if (Affairs.SelectedIndex == -1) return;
 
+            if (lines[Affairs.SelectedIndex].StartsWith(deadlineTag))
+            {
                 DialogResult dialogres = MessageBox.Show(
                     "Do you want to delete the deadline or just change it. yes - delete, no - change?",
                     "Confirm form",
                     MessageBoxButtons.YesNoCancel);
-                if (dialogres == DialogResult.Yes)
-                {
-                    Affairs.Items[Affairs.SelectedIndex] = temp;
 
-                    lines[Affairs.SelectedIndex] = lines[Affairs.SelectedIndex].Substring(11);
-
-                    File.WriteAllLines(settings.currentListFileFullPath, lines);
-                    return;
-                }
-                else if (dialogres == DialogResult.No)
-                {
-                    lines[Affairs.SelectedIndex] = lines[Affairs.SelectedIndex].Substring(11);
-                }
                 if (dialogres == DialogResult.Cancel) return;
+
+                if (dialogres == DialogResult.No) AddDeadline(hasDeadline: true);
+                else if (dialogres == DialogResult.Yes) DeleteDeadline();
             }
-            catch
+            else
             {
-                temp = temp.Trim();
+                AddDeadline(hasDeadline: false);
             }
-            try
-            {
-                res = DateTime.ParseExact(
-                            Interaction.InputBox(
-                            "Enter Deadline in format dd-MM-yyyy",
-                            "DateTime input box"), "dd-MM-yyyy", null, DateTimeStyles.None).ToString();
-                res = res.Substring(0, 10).Trim();
-
-                Affairs.Items[Affairs.SelectedIndex] = res + " " + temp;
-
-                lines[Affairs.SelectedIndex] = res + " " + lines[Affairs.SelectedIndex];
-
-                File.WriteAllLines(settings.currentListFileFullPath, lines);
-            }
-            catch
-            {
-                MessageBox.Show("Error, wrong input format");
-                return;
-            }
-        }
-
-        private void RenameAffairButton_Click(object sender, EventArgs e)
-        {
-            if (Affairs.SelectedIndex == -1)
-                return;
-            string selectedWord = (string)Affairs.Items[Affairs.SelectedIndex];
-            string deadline = "";
-            string priority = priorityWord;
-            string renamedWord = "";
-            if(selectedWord.Length > 10)
-            {
-                deadline = selectedWord.Substring(0, 10);
-                if (!DateTime.TryParseExact(
-                    deadline, "dd.MM.yyyy", null, DateTimeStyles.None
-                    ,out DateTime dateTimeParseResult))
-                {
-                    deadline = "";
-                }
-            }
-            if (!lines[Affairs.SelectedIndex].EndsWith(priorityTag))
-            {
-                priority = "";
-            }
-            if (deadline.Length > 0) selectedWord = selectedWord[11..];
-            if (priority.Length > 0) selectedWord = selectedWord.Replace(priorityWord, "").Trim();
-            if (selectedWord.EndsWith(".")) selectedWord = selectedWord[0..(selectedWord.Length - 1)];
-            string newWord = Interaction
-                .InputBox("Enter renaming", "Input box",  selectedWord)+ ".";
-            if (newWord.Length == 1) return;
-
-            renamedWord = deadline + " " + newWord;
-
-            Affairs.Items[Affairs.SelectedIndex] = (renamedWord + " " + priority).Trim();
-            lines[Affairs.SelectedIndex] = (renamedWord + " " 
-                + priority.Replace(priorityWord, priorityTag)).Trim();
 
             File.WriteAllLines(settings.currentListFileFullPath, lines);
-            Affairs.Items.Clear();
-            LoadText();
+        }
+        private void DeleteDeadline()
+        {
+            lines[Affairs.SelectedIndex] = lines[Affairs.SelectedIndex]
+                    .Substring(deadlineDateNTagLength);
+
+            Affairs.Items[Affairs.SelectedIndex] = Affairs.Items[Affairs.SelectedIndex]
+                .ToString()!
+                .Substring(deadlineTag.Length + 1);
+        }
+        private void AddDeadline(bool hasDeadline)
+        {
+            string deadline = "";
+            InputDeadlineForm inputDeadline = new InputDeadlineForm();
+            inputDeadline.OnConfirm += delegate
+            {
+                deadline = inputDeadline.deadline.Date.ToShortDateString();
+            };
+            inputDeadline.ShowDialog();
+            if (deadline == "") return;
+
+            if (hasDeadline) DeleteDeadline();
+
+            Affairs.Items[Affairs.SelectedIndex] = deadline + " " + Affairs.Items[Affairs.SelectedIndex];
+
+            lines[Affairs.SelectedIndex] = deadlineTag + deadline + " " + lines[Affairs.SelectedIndex];
+        }
+        private void RenameAffairButton_Click(object sender, EventArgs e)
+        {
+            if (Affairs.SelectedIndex == -1) return;
+
+            string selectedWord = lines[Affairs.SelectedIndex];
+            string affair = selectedWord;
+
+            if (selectedWord.StartsWith(deadlineTag))
+            {
+                affair = selectedWord.Substring(deadlineDateNTagLength);
+            }
+            if (selectedWord.EndsWith(priorityTag))
+            {
+                affair = affair.Substring(0, affair.Length - priorityTag.Length - 1);
+            }
+            affair = affair.Substring(0, affair.Length-1);
+
+            string renaming = Interaction
+                .InputBox("Enter renaming", "Input box", affair);
+
+            if (ContainKeyWords(renaming)) return;
+            if (renaming.Length == 1) return;
+
+            selectedWord = selectedWord.Replace(affair, renaming);
+
+            lines[Affairs.SelectedIndex] = selectedWord;
+            Affairs.Items[Affairs.SelectedIndex] = selectedWord.Replace(priorityTag, priorityWord)
+                .Replace(deadlineTag, "");
+
+            File.WriteAllLines(settings.currentListFileFullPath, lines);
+        }
+        private bool ContainKeyWords(string word)
+        {
+            if (word.Contains(deadlineTag) || word.Contains(priorityTag)
+                || word.Contains(priorityWord))
+            {
+                MessageBox.Show("Error, you word is perhibited to contain - " +
+                    $"{deadlineTag}, {priorityTag}, {priorityWord}");
+                return true;
+            }
+            return false;
         }
 
         private void PriorityButton_Click(object sender, EventArgs e)
@@ -306,27 +309,16 @@ namespace AffairList
 
             if (lines[Affairs.SelectedIndex].EndsWith(priorityTag))
             {
-                string currentLine = (string)Affairs.Items[Affairs.SelectedIndex];
 
-                Affairs.Items[Affairs.SelectedIndex] = currentLine.Replace(" "+ priorityWord, "");
-
-                var temp = ((string)(lines[Affairs.SelectedIndex])).Split(" ").Reverse().ToArray()[0];
-                
-                if (temp == priorityTag)
-                {
-                    lines[Affairs.SelectedIndex] = lines[Affairs.SelectedIndex]
-                        .Substring(0, lines[Affairs.SelectedIndex].Length - (" " + priorityTag).Length);
-                }
+                lines[Affairs.SelectedIndex] = lines[Affairs.SelectedIndex]
+                    .Substring(0, lines[Affairs.SelectedIndex].Length - (" " + priorityTag).Length);
             }
             else
             {
-                Affairs.Items[Affairs.SelectedIndex] += " " + priorityWord;
                 lines[Affairs.SelectedIndex] += " " + priorityTag;
             }
 
-            lines = lines.OrderByDescending(x => x.Contains(priorityTag)).ToArray();
             File.WriteAllLines(settings.currentListFileFullPath, lines);
-            Affairs.Items.Clear();
             LoadText();
         }
         private void Affairs_MouseDown(object sender, MouseEventArgs e)
@@ -335,35 +327,28 @@ namespace AffairList
             {
                 isDragging = true;
                 currentDragIndex = Affairs.SelectedIndex;
-                if (currentDragIndex == Affairs.SelectedIndex)
-                    isDragging = false;
+                if (currentDragIndex == Affairs.SelectedIndex) isDragging = false;
             }
         }
 
         private void Affairs_MouseUp(object sender, MouseEventArgs e)
         {
-            if (currentDragIndex == -1 || lines.Length <= Affairs.SelectedIndex)
-            {
-                return;
-            }
             bool newPlacePriority = lines[Affairs.SelectedIndex].EndsWith(priorityTag);
             bool oldPlacePriority = lines[currentDragIndex].EndsWith(priorityTag);
-            if (
-                (newPlacePriority && !oldPlacePriority) ||
-                (!newPlacePriority && oldPlacePriority))
-            {
-                return;
-            }
-            var temp = Affairs.Items[currentDragIndex];
+
+            if (newPlacePriority != oldPlacePriority) return;
+
+            // не менять, уже нечего
+            var switcher = Affairs.Items[currentDragIndex];
             Affairs.Items[currentDragIndex] = Affairs.Items[Affairs.SelectedIndex];
-            Affairs.Items[Affairs.SelectedIndex] = temp;
+            Affairs.Items[Affairs.SelectedIndex] = switcher;
 
-            temp = lines[currentDragIndex];
+            switcher = lines[currentDragIndex];
             lines[currentDragIndex] = lines[Affairs.SelectedIndex];
-            lines[Affairs.SelectedIndex] = (string)temp;
+            lines[Affairs.SelectedIndex] = (string)switcher;
 
-            File.WriteAllLines(settings.currentListFileFullPath, lines);
             isDragging = false;
+            File.WriteAllLines(settings.currentListFileFullPath, lines);
         }
 
         private void MinimizeButton_Click(object sender, EventArgs e)
@@ -407,6 +392,11 @@ namespace AffairList
         {
             ChangeProfile();
             LoadText();
+        }
+
+        private void Affairs_SelectedValueChanged(object sender, EventArgs e)
+        {
+            selectedAffairIndex = Affairs.SelectedIndex;
         }
     }
 }

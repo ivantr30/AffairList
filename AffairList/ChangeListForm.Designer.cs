@@ -218,6 +218,7 @@
             Affairs.Name = "Affairs";
             Affairs.Size = new Size(539, 214);
             Affairs.TabIndex = 4;
+            Affairs.SelectedValueChanged += Affairs_SelectedValueChanged;
             Affairs.MouseDown += Affairs_MouseDown;
             Affairs.MouseUp += Affairs_MouseUp;
             // 
@@ -260,7 +261,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(563, 405);
             Controls.Add(panel1);
-            FormBorderStyle = FormBorderStyle.None;
             KeyPreview = true;
             Name = "ChangeListForm";
             StartPosition = FormStartPosition.CenterScreen;

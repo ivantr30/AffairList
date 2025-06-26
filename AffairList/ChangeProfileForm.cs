@@ -4,7 +4,8 @@ namespace AffairList
     public partial class ChangeProfileForm : BaseForm
     {
         string[] profileLines;
-        private string priorityWord = " Приоритетное";
+        private string priorityWord = " Приоритетное.txt";
+        private string priorityTag = " Приоритетное";
         public ChangeProfileForm(SettingsModel settings)
         {
             InitializeComponent();
@@ -14,7 +15,7 @@ namespace AffairList
         private void LoadProfiles()
         {
             profileLines = Directory.GetFiles(settings.listsDirectoryFullPath)
-                    .OrderByDescending(x => x.EndsWith(priorityWord + ".txt")).ToArray();
+                    .OrderByDescending(x => x.EndsWith(priorityWord)).ToArray();
             foreach (var profile in profileLines)
             {
                 FileInfo profileFile = new FileInfo(profile);
@@ -25,6 +26,15 @@ namespace AffairList
                 Profiles.SelectedIndex = Profiles.Items
                     .IndexOf(settings.currentListFileFullPath.Split("\\")[^1]);
             }
+        }
+        private bool ContainKeyWords(string fileName)
+        {
+            if (fileName.Contains(priorityTag))
+            {
+                MessageBox.Show($"Error, you list name is perhibited to contain - {priorityTag}");
+                return true;
+            }
+            return false;
         }
         private void MinimizeButton_Click(object sender, EventArgs e)
         {
@@ -104,6 +114,7 @@ namespace AffairList
                     return;
                 }
             }
+            if (ContainKeyWords(ProfileInput.Text)) return;
             Profiles.Items.Add(ProfileInput.Text + ".txt");
             Profiles.SelectedIndex = Profiles.Items.Count - 1;
 
@@ -207,6 +218,7 @@ namespace AffairList
                 string newProfileName = Interaction
                     .InputBox("Enter renaming", "Renaming form", currentProfileName);
 
+                if (ContainKeyWords(newProfileName)) return;
                 if (newProfileName.Trim() == "") throw new Exception();
 
                 profileLines[Profiles.SelectedIndex] = previousProfileFullName
@@ -224,32 +236,25 @@ namespace AffairList
 
         private void ChangePriorityButton_Click(object sender, EventArgs e)
         {
-            int selectedProfileIndex = Profiles.SelectedIndex;
-            if (selectedProfileIndex == -1) return;
+            if (Profiles.SelectedIndex == -1) return;
 
             FileInfo selectedProfileInfo = new FileInfo(profileLines[Profiles.SelectedIndex]);
-            if (selectedProfileInfo.FullName.EndsWith(priorityWord + ".txt"))
+            string newProfileName = settings.listsDirectoryFullPath;
+            if (selectedProfileInfo.Name.EndsWith(priorityWord))
             {
-                Profiles.Items[selectedProfileIndex] =
-                    selectedProfileInfo.Name.Replace(" " + priorityWord, "");
-
-                if (selectedProfileInfo.Name.EndsWith(priorityWord + ".txt"))
-                {
-                    profileLines[selectedProfileIndex] = settings.listsDirectoryFullPath + 
-                        selectedProfileInfo.Name.Replace(priorityWord, "");
-                }
+                newProfileName += selectedProfileInfo.Name.Replace(priorityWord, ".txt");
             }
             else
             {
-                Profiles.Items[selectedProfileIndex] = settings.listsDirectoryFullPath + 
-                    selectedProfileInfo.Name.Replace(".txt", priorityWord + ".txt");
-                profileLines[selectedProfileIndex] = settings.listsDirectoryFullPath + 
-                    selectedProfileInfo.Name.Replace(".txt", priorityWord + ".txt");
+                newProfileName += selectedProfileInfo.Name.Replace(".txt", priorityWord);
+            }
+            if (selectedProfileInfo.FullName == settings.currentListFileFullPath)
+            {
+                settings.currentListFileFullPath = newProfileName;
+                settings.SaveParametr("currentProfile", newProfileName);
             }
 
-            File.Move(selectedProfileInfo.FullName, profileLines[selectedProfileIndex]);
-            profileLines = profileLines
-                .OrderByDescending(x => x.EndsWith(priorityWord + ".txt")).ToArray();
+            File.Move(selectedProfileInfo.FullName, newProfileName);
             Profiles.Items.Clear();
             LoadProfiles();
         }
