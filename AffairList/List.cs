@@ -5,7 +5,11 @@ namespace AffairList
     public partial class List : BaseForm
     {
         private IKeyboardMouseEvents globalHook;
+
         public bool canReplace = false;
+
+        private string priorityTag = "<priority>";
+        private string deadlineTag = "<deadline>";
 
         public List(SettingsModel settings)
         {
@@ -55,10 +59,14 @@ namespace AffairList
                 string[] result = File.ReadAllLines(settings.currentListFileFullPath);
                 for (int i = 0; i < result.Length; i++)
                 {
-                    if (result[i].EndsWith("<priority>"))
+                    if (result[i].EndsWith(priorityTag))
                     {
-                        result[i] = result[i].Substring(0, result[i].Length - "<priority>".Length)
+                        result[i] = result[i].Substring(0, result[i].Length - priorityTag.Length)
                             .Trim();
+                    }
+                    if (result[i].StartsWith(deadlineTag))
+                    {
+                        result[i] = result[i].Substring(deadlineTag.Length);
                     }
                 }
                 Affairs.Text = string.Join("\n", result);

@@ -1,6 +1,4 @@
-﻿
-using Microsoft.Win32;
-
+﻿using Microsoft.Win32;
 namespace AffairList
 {
     public class SettingsModel

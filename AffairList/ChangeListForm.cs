@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualBasic;
 using System.Data;
-using System.Globalization;
 namespace AffairList
 {
     public partial class ChangeListForm : BaseForm

@@ -968,3 +968,4 @@ F:\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\win-x64\AffairL
 F:\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\win-x64\ref\AffairList.dll
 F:\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\win-x64\AffairList.BaseForm.resources
 F:\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\win-x64\AffairList.InputKeyForm.resources
+F:\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\win-x64\AffairList.InputDeadlineForm.resources

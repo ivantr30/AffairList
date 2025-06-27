@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualBasic;
-using System.Runtime;
+﻿
 namespace AffairList
 {
     public partial class HotKeySettings : BaseForm
@@ -13,8 +12,8 @@ namespace AffairList
         }
         private void LoadSettings()
         {
-            CloseKeyType.Text = Enum.Parse(typeof(Keys), settings.closeKey.ToString()).ToString();
-            BackKeyType.Text = Enum.Parse(typeof(Keys), settings.returnKey.ToString()).ToString();
+            CloseKeyType.Text = settings.closeKey.ToString();
+            BackKeyType.Text = settings.returnKey.ToString();
         }
         private void BackButton_Click(object sender, EventArgs e)
         {
