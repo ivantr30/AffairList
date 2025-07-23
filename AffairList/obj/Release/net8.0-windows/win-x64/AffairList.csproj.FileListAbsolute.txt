@@ -717,7 +717,6 @@ F:\source\repos\AffairList\AffairList\bin\Release\net8.0-windows\win-x64\created
 F:\source\repos\AffairList\AffairList\bin\Release\net8.0-windows\win-x64\hostfxr.dll
 F:\source\repos\AffairList\AffairList\bin\Release\net8.0-windows\win-x64\hostpolicy.dll
 F:\source\repos\AffairList\AffairList\bin\Release\net8.0-windows\win-x64\mscordaccore.dll
-F:\source\repos\AffairList\AffairList\bin\Release\net8.0-windows\win-x64\mscordaccore_amd64_amd64_8.0.1625.21506.dll
 F:\source\repos\AffairList\AffairList\bin\Release\net8.0-windows\win-x64\mscordbi.dll
 F:\source\repos\AffairList\AffairList\bin\Release\net8.0-windows\win-x64\mscorrc.dll
 F:\source\repos\AffairList\AffairList\bin\Release\net8.0-windows\win-x64\msquic.dll
@@ -969,3 +968,4 @@ F:\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\win-x64\ref\Aff
 F:\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\win-x64\AffairList.BaseForm.resources
 F:\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\win-x64\AffairList.InputKeyForm.resources
 F:\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\win-x64\AffairList.InputDeadlineForm.resources
+F:\source\repos\AffairList\AffairList\bin\Release\net8.0-windows\win-x64\mscordaccore_amd64_amd64_8.0.1825.31117.dll

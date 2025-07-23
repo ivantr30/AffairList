@@ -34,8 +34,8 @@ namespace AffairList
             Width = settings.width;
             Height = settings.height + settings.height / 10;
             Affairs.AutoSize = false;
-            Affairs.Padding = new Padding(0, 0, 180, 0);
             Affairs.Size = new Size(500, Height);
+            Affairs.Padding = new Padding(0, 0, 180, 0);
             Affairs.ForeColor = settings.textColor;
             BackColor = settings.bgtextColor;
             TransparencyKey = settings.bgtextColor;
@@ -94,26 +94,53 @@ namespace AffairList
             }
         }
 
+        private void Affairs_MouseDown(object sender, MouseEventArgs e)
+        {
+            OnListMouseDown(e);
+        }
+
+        private void Affairs_MouseMove(object sender, MouseEventArgs e)
+        {
+            OnListMouseMove(e);
+        }
+
+        private void Affairs_MouseUp(object sender, MouseEventArgs e)
+        {
+            OnListMouseUp(e);
+        }
+
         private void List_MouseDown(object sender, MouseEventArgs e)
         {
-            if (canReplace) lastPoint = new Point(e.X, e.Y);
+            OnListMouseDown(e);
         }
 
         private void List_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left && canReplace)
-            {
-                Left += e.X - Affairs.Left;
-                Top += e.Y - Affairs.Top;
-            }
+            OnListMouseMove(e);
         }
 
         private void List_MouseUp(object sender, MouseEventArgs e)
         {
+            OnListMouseUp(e);
+        }
+        private void OnListMouseDown(MouseEventArgs e)
+        {
+            if (canReplace) lastPoint = new Point(e.X, e.Y);
+        }
+        private void OnListMouseMove(MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left && canReplace)
+            {
+                Left += e.X - lastPoint.X;
+                Top += e.Y - lastPoint.Y;
+            }
+        }
+        private void OnListMouseUp(MouseEventArgs e)
+        {
             if (e.Button == MouseButtons.Left && canReplace)
             {
                 canReplace = false;
-                settings.SaveParametr("x,y", Left + e.X, Top + e.Y);
+                settings.SaveParametr("x,y", Left + Affairs.Left, Top + Affairs.Top);
                 Restart();
             }
         }

@@ -63,7 +63,7 @@ namespace AffairList
                     }
                     Affairs.Items.Add(currentLine);
                 }
-                if (selectedAffairIndex != -1) Affairs.SelectedIndex = selectedAffairIndex;
+                if (selectedAffairIndex != -1 && Affairs.Items.Count > 0) Affairs.SelectedIndex = selectedAffairIndex;
                 else if (Affairs.Items.Count > 0) Affairs.SelectedIndex = 0;
             }
         }
@@ -317,6 +317,7 @@ namespace AffairList
                 lines[Affairs.SelectedIndex] += " " + priorityTag;
             }
 
+            lines = lines.OrderByDescending(x => x.EndsWith(priorityTag)).ToArray();
             File.WriteAllLines(settings.currentListFileFullPath, lines);
             LoadText();
         }
@@ -332,12 +333,13 @@ namespace AffairList
 
         private void Affairs_MouseUp(object sender, MouseEventArgs e)
         {
+            if(Affairs.SelectedIndex == -1) return;
             bool newPlacePriority = lines[Affairs.SelectedIndex].EndsWith(priorityTag);
             bool oldPlacePriority = lines[currentDragIndex].EndsWith(priorityTag);
 
             if (newPlacePriority != oldPlacePriority) return;
 
-            // не менять, уже нечего
+            // Не менять, уже нечего
             var switcher = Affairs.Items[currentDragIndex];
             Affairs.Items[currentDragIndex] = Affairs.Items[Affairs.SelectedIndex];
             Affairs.Items[Affairs.SelectedIndex] = switcher;

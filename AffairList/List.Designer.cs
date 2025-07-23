@@ -42,6 +42,9 @@
             Affairs.Size = new Size(45, 25);
             Affairs.TabIndex = 0;
             Affairs.Text = "хуй";
+            Affairs.MouseDown += Affairs_MouseDown;
+            Affairs.MouseMove += Affairs_MouseMove;
+            Affairs.MouseUp += Affairs_MouseUp;
             // 
             // OuterLine
             // 
@@ -58,7 +61,6 @@
             ClientSize = new Size(1061, 640);
             Controls.Add(OuterLine);
             Controls.Add(Affairs);
-            FormBorderStyle = FormBorderStyle.None;
             Name = "List";
             ShowInTaskbar = false;
             Text = "List";
