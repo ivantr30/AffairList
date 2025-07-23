@@ -376,6 +376,7 @@ namespace AffairList
                 {
                     settings.SaveParametr("currentProfile", profileInfo.FullName);
                     settings.currentListFileFullPath = profileInfo.FullName;
+                    selectedAffairIndex = 0;
                 }
             }
         }
