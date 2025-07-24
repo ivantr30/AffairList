@@ -11,7 +11,7 @@ namespace AffairList
         public string currentListFileFullPath;
 
         public Color textColor = Color.MediumSpringGreen;
-        public Color bgtextColor = Color.Black;
+        public Color bgColor = Color.Black;
 
         public Keys closeKey = Keys.F7;
         public Keys returnKey = Keys.F6;

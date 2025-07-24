@@ -36,7 +36,7 @@ namespace AffairList
             }
             if (profiles.Length > 0)
             {
-                FileInfo selectedProfile = new FileInfo(settings.currentListFileFullPath);
+                FileInfo selectedProfile = new FileInfo(settings.GetCurrentProfile());
                 ProfileBox.SelectedIndex = ProfileBox.Items.IndexOf(selectedProfile.Name);
             }
         }
@@ -45,7 +45,7 @@ namespace AffairList
             Affairs.Items.Clear();
             if (settings.CurrentListNotNull())
             {
-                lines = File.ReadAllLines(settings.currentListFileFullPath)
+                lines = File.ReadAllLines(settings.GetCurrentProfile())
                     .OrderByDescending(x => x.EndsWith(priorityTag)).ToList();
 
                 foreach (string line in lines)
@@ -69,11 +69,11 @@ namespace AffairList
         }
         private void GlobalHook_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == settings.closeKey)
+            if (e.KeyCode == settings.GetCloseKey())
             {
                 Exit();
             }
-            if (e.KeyCode == settings.returnKey)
+            if (e.KeyCode == settings.GetReturnKey())
             {
                 Restart();
             }
@@ -139,7 +139,7 @@ namespace AffairList
 
             if (settings.CurrentListNotNull())
             {
-                File.AppendAllText(settings.currentListFileFullPath, inputText + "\n");
+                AppendText(inputText + "\n");
             }
             AffairInput.Text = "";
         }
@@ -147,7 +147,7 @@ namespace AffairList
         {
             if (Affairs.SelectedIndex == -1) return;
 
-            if (settings.askToDelete)
+            if (settings.DoesAskToDelete())
             {
                 DialogResult dialogres = MessageBox.Show("Do you want to delete the affair?",
                     "Confirm form",
@@ -159,7 +159,7 @@ namespace AffairList
             {
                 lines.RemoveAt(Affairs.SelectedIndex);
 
-                File.WriteAllLines(settings.currentListFileFullPath, lines);
+                SaveText(lines);
             }
 
             int selectedIndex = 0;
@@ -220,7 +220,7 @@ namespace AffairList
                 AddDeadline(hasDeadline: false);
             }
 
-            File.WriteAllLines(settings.currentListFileFullPath, lines);
+            SaveText(lines);
         }
         private void DeleteDeadline()
         {
@@ -277,7 +277,7 @@ namespace AffairList
             Affairs.Items[Affairs.SelectedIndex] = Affairs.Items[Affairs.SelectedIndex]
                 .ToString()!.Replace(affair, renaming);
 
-            File.WriteAllLines(settings.currentListFileFullPath, lines);
+            SaveText(lines);
         }
         private bool ContainKeyWords(string word)
         {
@@ -307,7 +307,7 @@ namespace AffairList
             }
 
             lines = lines.OrderByDescending(x => x.EndsWith(priorityTag)).ToList();
-            File.WriteAllLines(settings.currentListFileFullPath, lines);
+            SaveText(lines);
             LoadText();
         }
         private void Affairs_MouseDown(object sender, MouseEventArgs e)
@@ -337,7 +337,7 @@ namespace AffairList
             lines[Affairs.SelectedIndex] = (string)switcher;
 
             isDragging = false;
-            File.WriteAllLines(settings.currentListFileFullPath, lines);
+            SaveText(lines);
         }
 
         private void MinimizeButton_Click(object sender, EventArgs e)
@@ -362,8 +362,8 @@ namespace AffairList
                 FileInfo profileInfo = new FileInfo(profile);
                 if (profileInfo.Name == ProfileBox.SelectedItem!.ToString())
                 {
-                    settings.SaveParametr("currentProfile", profileInfo.FullName);
-                    settings.currentListFileFullPath = profileInfo.FullName;
+                    settings.SetCurrentProfile(profileInfo.FullName);
+                    settings.SaveSettings();
                     selectedAffairIndex = 0;
                 }
             }
@@ -387,6 +387,14 @@ namespace AffairList
         private void Affairs_SelectedValueChanged(object sender, EventArgs e)
         {
             selectedAffairIndex = Affairs.SelectedIndex;
+        }
+        private async Task SaveText(List<string> lines)
+        {
+            await File.WriteAllLinesAsync(settings.GetCurrentProfile(), lines);
+        }
+        private async Task AppendText(string line)
+        {
+            await File.AppendAllTextAsync(settings.GetCurrentProfile(), line);
         }
     }
 }

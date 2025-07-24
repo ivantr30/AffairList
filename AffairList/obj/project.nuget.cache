@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "VN9w0zL+uPw=",
+  "dgSpecHash": "Z4jx9R30XaE=",
   "success": true,
   "projectFilePath": "F:\\source\\repos\\AffairList\\AffairList\\AffairList.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Ivan\\.nuget\\packages\\mousekeyhook\\5.7.1\\mousekeyhook.5.7.1.nupkg.sha512"
+    "C:\\Users\\Ivan\\.nuget\\packages\\mousekeyhook\\5.7.1\\mousekeyhook.5.7.1.nupkg.sha512",
+    "C:\\Users\\Ivan\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
   ],
   "logs": []
 }

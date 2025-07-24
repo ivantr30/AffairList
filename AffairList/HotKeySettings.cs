@@ -13,8 +13,8 @@ namespace AffairList
         }
         private void LoadSettings()
         {
-            CloseKeyType.Text = settings.closeKey.ToString();
-            BackKeyType.Text = settings.returnKey.ToString();
+            CloseKeyType.Text = settings.GetCloseKey().ToString();
+            BackKeyType.Text = settings.GetReturnKey().ToString();
         }
         private void BackButton_Click(object sender, EventArgs e)
         {
@@ -45,8 +45,9 @@ namespace AffairList
                 MessageBoxButtons.YesNo);
             if (resetOrNot == DialogResult.No) return;
 
-            settings.SaveParametr("closeKey", Keys.F7);
-            settings.SaveParametr("returnKey", Keys.F6);
+            settings.SetCloseKey(Keys.F7);
+            settings.SetReturnKey(Keys.F6);
+            settings.SaveSettings();
 
             CloseKeyType.Text = "F7";
             BackKeyType.Text = "F6";
@@ -56,27 +57,26 @@ namespace AffairList
 
         private void ConfirmButton_Click(object sender, EventArgs e)
         {
-            settings.SaveParametr("closeKey", settings.closeKey);
-            settings.SaveParametr("returnKey", settings.returnKey);
+            settings.SaveSettings();
             isConfirmed = true;
         }
         private void CloseKeyType_DoubleClick(object sender, EventArgs e)
         {
             key = SetKey();
-            if (key == Keys.None) return;
+            if (key == Keys.Escape) return;
 
-            settings.closeKey = key;
-            CloseKeyType.Text = settings.closeKey.ToString();
+            settings.SetCloseKey(key);
+            CloseKeyType.Text = settings.GetCloseKey().ToString();
             isConfirmed = false;
         }
 
         private void BackKeyType_DoubleClick(object sender, EventArgs e)
         {
             key = SetKey();
-            if (key == Keys.None) return;
+            if (key == Keys.Escape) return;
 
-            settings.returnKey = key;
-            BackKeyType.Text = settings.returnKey.ToString();
+            settings.SetReturnKey(key);
+            BackKeyType.Text = settings.GetReturnKey().ToString();
             isConfirmed = false;
         }
         private Keys SetKey()

@@ -4,8 +4,8 @@ namespace AffairList
     public partial class BaseForm : Form
     {
         protected Point lastPoint;
-        protected SettingsModel settings;
-        public BaseForm(SettingsModel settings)
+        protected Settings settings;
+        public BaseForm(Settings settings)
         {
             InitializeComponent();
         }

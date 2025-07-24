@@ -1,17 +1,19 @@
 ﻿using Microsoft.Win32;
+using Newtonsoft.Json;
 namespace AffairList
 {
     public class Settings
     {
         public readonly string listsDirectoryFullPath;
         private readonly string defaultListFileFullPath;
-
         public readonly string settingsFileFullPath;
+
+        private readonly string appName = "AffairList";
+        private readonly string exePath = Application.ExecutablePath;
 
         public readonly int width = Screen.PrimaryScreen.WorkingArea.Width,
                    height = Screen.PrimaryScreen.WorkingArea.Height;
 
-        private string[] settingLines;
         private string currentParametr = "";
 
         private SettingsModel settings;
@@ -23,115 +25,44 @@ namespace AffairList
             listsDirectoryFullPath = Application.StartupPath + "profiles\\";
             defaultListFileFullPath = listsDirectoryFullPath + "\\list.txt";
             settings.currentListFileFullPath = listsDirectoryFullPath + "\\list.txt";
-            settingsFileFullPath = Application.StartupPath + "settings.txt";
+            settingsFileFullPath = Application.StartupPath + "settings.json";
             Initialize();
         }
         private void Initialize()
         {
             if(!SettingsFileExists()) CreateSettingsFile();
-            settingLines = File.ReadAllLines(settingsFileFullPath);
-            if (settingLines.Length == 0)
+            if(!ListsDirectoryExists()) CreateListsDirectory();
+            try
+            {
+                settings = JsonConvert.DeserializeObject<SettingsModel>(File.ReadAllText(settingsFileFullPath));
+                if (!File.Exists(GetCurrentProfile()))
+                {
+                    ChooseProfile();
+                }
+                if (DoesAutostart())
+                {
+                    EnableAutoStart(appName, exePath);
+                }
+                else
+                {
+                    DisableAutoStart(appName);
+                }
+            }
+            catch
             {
                 WriteBaseSettings();
-                return;
             }
-
-            for (int i = 0; i < settingLines.Length; i++)
-            {
-                string line = settingLines[i].Trim();
-                if (string.IsNullOrEmpty(line)) continue;
-
-                int colonIndex = line.IndexOf(':');
-                if (colonIndex < 0) continue;
-
-                string key = line.Substring(0, colonIndex).Trim();
-                string value = line.Substring(colonIndex + 1).Trim();
-                string[] parameters = value.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-
-                switch (key)
-                {
-                    case "x,y":
-                        currentParametr = key;
-                        x = int.Parse(parameters[0]);
-                        y = int.Parse(parameters[1]);
-                        break;
-
-                    case "autostarts":
-                        currentParametr = key;
-                        autostartState = parameters[0].Contains("True");
-                        if (autostartState)
-                            EnableAutoStart("AffairList", Application.ExecutablePath);
-                        else
-                            DisableAutoStart("AffairList");
-                        break;
-
-                    case "textColor":
-                        currentParametr = key;
-                        textColor = Color.FromArgb(255,
-                            int.Parse(parameters[0]),
-                            int.Parse(parameters[1]),
-                            int.Parse(parameters[2]));
-                        break;
-
-                    case "backTextColor":
-                        currentParametr = key;
-                        bgtextColor = Color.FromArgb(255,
-                            int.Parse(parameters[0]),
-                            int.Parse(parameters[1]),
-                            int.Parse(parameters[2]));
-                        break;
-
-                    case "askToDelete":
-                        currentParametr = key;
-                        askToDelete = bool.Parse(parameters[0]);
-                        break;
-
-                    case "currentProfile":
-                        currentParametr = key;
-                        currentListFileFullPath = value;
-                        if (!File.Exists(currentListFileFullPath))
-                        {
-                            ChooseProfile();
-                        }
-                        break;
-
-                    case "closeKey":
-                        currentParametr = key;
-                        closeKey = (Keys)Enum.Parse(typeof(Keys), parameters[0]);
-                        break;
-
-                    case "returnKey":
-                        currentParametr = key;
-                        returnKey = (Keys)Enum.Parse(typeof(Keys), parameters[0]);
-                        break;
-
-                    default:
-                        continue;
-                }
-
-                settingLines[i] = $"{currentParametr}:{value}";
-            }
-
-            File.WriteAllLines(settingsFileFullPath, settingLines);
         }
         public void WriteBaseSettings()
         {
-            File.WriteAllText(settingsFileFullPath,
-                $"x,y: {width - width / 6} {(height + height / 10) / 90}\n" +
-                $"textColor: {basetextColor.R} {basetextColor.G} {basetextColor.B}\n" +
-                $"backTextColor: {basebgtextColor.R} {basebgtextColor.G} {basebgtextColor.B}\n" +
-                "autostarts: true\n" +
-                "askToDelete: true\n" +
-                "currentProfile: \n" +
-                "closeKey: F7\n" +
-                "returnKey: F6\n");
+            File.WriteAllText(settingsFileFullPath, JsonConvert.SerializeObject(new BaseSettings()));
         }
         private void ChooseProfile()
         {
             var profiles = Directory.GetFiles(listsDirectoryFullPath);
             if (profiles.Length > 0)
             {
-                currentListFileFullPath = profiles[0];
+                SetCurrentProfile(profiles[0]);
             }
         }
         private void EnableAutoStart(string appName, string exePath)
@@ -162,7 +93,7 @@ namespace AffairList
         }
         public bool CurrentListNotNull()
         {
-            return File.Exists(currentListFileFullPath);
+            return File.Exists(GetCurrentProfile());
         }
         public void CreateFiles()
         {
@@ -181,83 +112,83 @@ namespace AffairList
         public void CreateDefaultList()
         {
             using (File.Create(defaultListFileFullPath)) { }
-            currentListFileFullPath = defaultListFileFullPath;
+            SetCurrentProfile(defaultListFileFullPath);
         }
         public void SaveSettings()
         {
-            if (autostartState) EnableAutoStart("AffairList", Application.ExecutablePath);
-            else DisableAutoStart("AffairList");
-
-            for (int i = 0; i < settingLines.Length; i++)
-            {
-                string line = settingLines[i].Trim();
-                if (string.IsNullOrEmpty(line)) continue;
-
-                string key = line.Contains(":")
-                    ? line.Substring(0, line.IndexOf(':')).Trim()
-                    : string.Empty;
-
-                switch (key)
-                {
-                    case "x,y":
-                        currentParametr = key;
-                        settingLines[i] = $"{currentParametr}: {x} {y}";
-                        break;
-
-                    case "textColor":
-                        currentParametr = key;
-                        settingLines[i] = $"{currentParametr}: {textColor.R} {textColor.G} {textColor.B}";
-                        break;
-
-                    case "backTextColor":
-                        currentParametr = key;
-                        settingLines[i] = $"{currentParametr}: {bgtextColor.R} {bgtextColor.G} {bgtextColor.B}";
-                        break;
-
-                    case "autostarts":
-                        currentParametr = key;
-                        settingLines[i] = $"{currentParametr}: {autostartState}";
-                        break;
-
-                    case "askToDelete":
-                        currentParametr = key;
-                        settingLines[i] = $"{currentParametr}: {askToDelete}";
-                        break;
-                    case "currentProfile":
-                        currentParametr = key;
-                        settingLines[i] = $"{currentParametr}: {currentListFileFullPath}";
-                        break;
-
-                    default:
-                        if (line.StartsWith("closeKey:"))
-                        {
-                            currentParametr = "closeKey";
-                        }
-                        else if (line.StartsWith("returnKey:"))
-                        {
-                            currentParametr = "returnKey";
-                        }
-                        break;
-                }
-            }
-
-            File.WriteAllLines(settingsFileFullPath, settingLines);
+            File.WriteAllText(settingsFileFullPath, JsonConvert.SerializeObject(settings));
         }
-        public void SaveParametr<T>(string parametr, T firstValue, T secondValue)
+        public void SetCurrentProfile(string fullPath)
         {
-            SaveParametr(parametr, firstValue + " " + secondValue);
+            settings.currentListFileFullPath = fullPath;
         }
-        public void SaveParametr<T>(string parametr, T value)
+        public string GetCurrentProfile()
         {
-            for (int i = 0; i < settingLines.Length; i++)
-            {
-                if (settingLines[i].StartsWith(parametr))
-                {
-                    settingLines[i] = parametr + ": " + value;
-                    break;
-                }
-            }
-            File.WriteAllLines(settingsFileFullPath, settingLines);
+            return settings.currentListFileFullPath;
+        }
+        public void SetAutostart(bool autostart)
+        {
+            settings.autostartState = autostart;
+        }
+        public bool DoesAutostart()
+        {
+            return settings.autostartState;
+        }
+        public void SetAskToDelete(bool askToDelete)
+        {
+            settings.askToDelete = askToDelete;
+        }
+        public bool DoesAskToDelete()
+        {
+            return settings.askToDelete;
+        }
+        public void SetCloseKey(Keys key)
+        {
+            settings.closeKey = key;
+        }
+        public Keys GetCloseKey()
+        {
+            return settings.closeKey;
+        }
+        public void SetReturnKey(Keys key)
+        {
+            settings.returnKey = key;
+        }
+        public Keys GetReturnKey()
+        {
+            return settings.returnKey;
+        }
+        public void SetTextColor(Color color)
+        {
+            settings.textColor = color;
+        }
+        public Color GetTextColor()
+        {
+            return settings.textColor;
+        }
+        public void SetBgColor(Color color)
+        {
+            settings.bgColor = color;
+        }
+        public Color GetBgColor()
+        {
+            return settings.bgColor;
+        }
+        public void SetProfileX(int x)
+        {
+            settings.x = x;
+        }
+        public int GetProfileX()
+        {
+            return settings.x;
+        }
+        public void SetProfileY(int y)
+        {
+            settings.y = y;
+        }
+        public int GetProfileY()
+        {
+            return settings.y;
         }
     }
 }

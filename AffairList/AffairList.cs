@@ -92,7 +92,7 @@ namespace AffairList
                     MessageBox.Show("Error, list file does not exist");
                     return;
                 }
-                File.WriteAllText(settings.currentListFileFullPath, "");
+                File.WriteAllText(settings.GetCurrentProfile(), "");
                 MessageBox.Show("The list is cleared");
             }
         }
@@ -159,7 +159,7 @@ namespace AffairList
 
         private void AffairList_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == settings.closeKey)
+            if (e.KeyCode == settings.GetCloseKey())
             {
                 Exit();
             }

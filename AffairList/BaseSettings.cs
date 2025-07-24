@@ -8,6 +8,8 @@ namespace AffairList
 {
     public class BaseSettings
     {
+        public string currentListFileFullPath = "";
+
         public readonly Color textColor = Color.MediumSpringGreen;
         public readonly Color bgtextColor = Color.Black;
 

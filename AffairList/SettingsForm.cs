@@ -12,10 +12,10 @@ namespace AffairList
         }
         private void LoadSettings()
         {
-            LocationLab.Text = settings.x + ", " + settings.y;
-            ListTextColorLab.ForeColor = settings.textColor;
-            ListBgTextColorLab.ForeColor = settings.bgtextColor;
-            if (settings.autostartState)
+            LocationLab.Text = settings.GetProfileX() + ", " + settings.GetProfileY();
+            ListTextColorLab.ForeColor = settings.GetTextColor();
+            ListBgTextColorLab.ForeColor = settings.GetBgColor();
+            if (settings.DoesAutostart())
             {
                 autostartStateLab.Text = "On";
             }
@@ -23,7 +23,7 @@ namespace AffairList
             {
                 autostartStateLab.Text = "OFF";
             }
-            if (settings.askToDelete)
+            if (settings.DoesAskToDelete())
             {
                 AskToDeleteState.Text = "On";
             }
@@ -39,11 +39,11 @@ namespace AffairList
 
         private void Settings_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == settings.closeKey)
+            if (e.KeyCode == settings.GetCloseKey())
             {
                 Exit();
             }
-            if (e.KeyCode == settings.returnKey)
+            if (e.KeyCode == settings.GetReturnKey())
             {
                 Restart();
             }
@@ -126,14 +126,14 @@ namespace AffairList
             if (autostartStateLab.Text == "On")
             {
                 autostartStateLab.Text = "OFF";
-                settings.autostartState = false;
+                settings.SetAutostart(false);
             }
             else
             {
                 autostartStateLab.Text = "On";
-                settings.autostartState = true;
-                isConfirmed = false;
+                settings.SetAutostart(true);
             }
+            isConfirmed = false;
         }
 
         private void autostartStateLab_MouseLeave(object sender, EventArgs e)
@@ -154,15 +154,17 @@ namespace AffairList
         private void PickTextColorButton_Click(object sender, EventArgs e)
         {
             Color newColor = ListColorChanger();
+            if (newColor == Color.Empty) return;
             ListTextColorLab.ForeColor = newColor;
-            settings.textColor = newColor;
+            settings.SetTextColor(newColor);
         }
 
         private void PickBgColorButton_Click(object sender, EventArgs e)
         {
             Color newColor = ListColorChanger();
+            if (newColor == Color.Empty) return;
             ListBgTextColorLab.ForeColor = newColor;
-            settings.bgtextColor = newColor;
+            settings.SetBgColor(newColor);
         }
         private Color ListColorChanger()
         {
@@ -171,39 +173,44 @@ namespace AffairList
             {
                 isConfirmed = false;
             }
+            else
+            {
+                return Color.Empty;
+            }
             return ColorPicker.Color;
         }
 
         private void LocationLab_DoubleClick(object sender, EventArgs e)
         {
-            int prevX = settings.x, prevY = settings.y;
+            int prevX = settings.GetProfileX(), prevY = settings.GetProfileY();
             try
             {
-                settings.x = int.Parse(Interaction.InputBox("Enter x coordinate," +
+                settings.SetProfileX(int.Parse(Interaction.InputBox("Enter x coordinate," +
                     $" max width is {settings.width}",
-                    "InputWindow", ""));
-                if(settings.x > settings.width) throw new Exception();
+                    "InputWindow", "")));
+                if(settings.GetProfileX() > settings.width) throw new Exception();
             }
             catch
             {
                 MessageBox.Show("Error");
-                settings.x = prevX;
+                settings.SetProfileX(prevX);
                 return;
             }
             try
             {
-                settings.y = int.Parse(Interaction.InputBox("Enter y coordinate" +
-                    $" max height is {settings.height}", "InputWindow", ""));
-                if (settings.y > settings.height) throw new Exception();
+                settings.SetProfileY(int.Parse(Interaction.InputBox("Enter y coordinate" +
+                    $" max height is {settings.height}",
+                    "InputWindow", "")));
+                if (settings.GetProfileY() > settings.height) throw new Exception();
             }
             catch
             {
                 MessageBox.Show("Error");
-                settings.y = prevY;
+                settings.SetProfileY(prevY);
                 return;
             }
             isConfirmed = false;
-            LocationLab.Text = settings.x + ", " + settings.y;
+            LocationLab.Text = settings.GetProfileX() + ", " + settings.GetProfileY();
         }
 
         private void Settings_FormClosing(object sender, FormClosingEventArgs e)
@@ -227,11 +234,13 @@ namespace AffairList
             if (AskToDeleteState.Text == "On")
             {
                 AskToDeleteState.Text = "OFF";
-                settings.askToDelete = false;
-                return;
+                settings.SetAskToDelete(false);
             }
-            AskToDeleteState.Text = "On";
-            settings.askToDelete = true;
+            else
+            {
+                AskToDeleteState.Text = "On";
+                settings.SetAskToDelete(true);
+            }
             isConfirmed = false;
         }
 

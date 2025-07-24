@@ -31,7 +31,7 @@ namespace AffairList
             if (Profiles.Items.Count > 0)
             {
                 Profiles.SelectedIndex = Profiles.Items
-                    .IndexOf(settings.currentListFileFullPath.Split("\\")[^1]);
+                    .IndexOf(settings.GetCurrentProfile().Split("\\")[^1]);
             }
         }
         private bool ContainKeyWords(string fileName)
@@ -186,11 +186,11 @@ namespace AffairList
             {
                 DeleteProfile();
             }
-            if (e.KeyCode == settings.returnKey)
+            if (e.KeyCode == settings.GetReturnKey())
             {
                 Restart();
             }
-            if (e.KeyCode == settings.closeKey)
+            if (e.KeyCode == settings.GetCloseKey())
             {
                 Exit();
             }
@@ -198,7 +198,8 @@ namespace AffairList
 
         private void SelectProfileButton_Click(object sender, EventArgs e)
         {
-            settings.SaveParametr("currentProfile", profileLines[Profiles.SelectedIndex]);
+            settings.SetCurrentProfile(profileLines[Profiles.SelectedIndex]);
+            settings.SaveSettings();
         }
 
         private void RenameButton_Click(object sender, EventArgs e)
@@ -222,10 +223,10 @@ namespace AffairList
             if (newProfileName.Contains(priorityTag)) newProfileName += priorityTag;
             newProfileName = settings.listsDirectoryFullPath + newProfileName + ".txt";
 
-            if (settings.currentListFileFullPath == selectedProfile.FullName)
+            if (settings.GetCurrentProfile() == selectedProfile.FullName)
             {
-                settings.currentListFileFullPath = newProfileName;
-                settings.SaveParametr("currentProfile", settings.currentListFileFullPath);
+                settings.SetCurrentProfile(newProfileName);
+                settings.SaveSettings();
             }
 
             File.Move(selectedProfile.FullName, newProfileName);
@@ -246,10 +247,10 @@ namespace AffairList
             {
                 newProfileName += selectedProfileInfo.Name.Replace(".txt", priorityWord);
             }
-            if (selectedProfileInfo.FullName == settings.currentListFileFullPath)
+            if (selectedProfileInfo.FullName == settings.GetCurrentProfile())
             {
-                settings.currentListFileFullPath = newProfileName;
-                settings.SaveParametr("currentProfile", newProfileName);
+                settings.SetCurrentProfile(newProfileName);
+                settings.SaveSettings();
             }
 
             File.Move(selectedProfileInfo.FullName, newProfileName);

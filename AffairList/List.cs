@@ -12,7 +12,7 @@ namespace AffairList
         private string priorityTag = "<priority>";
         private string deadlineTag = "<deadline>";
 
-        public List(SettingsModel settings)
+        public List(Settings settings)
         {
             InitializeComponent();
             SubscribeGlobalHook();
@@ -34,17 +34,17 @@ namespace AffairList
             Affairs.Size = new Size(500, Height);
             Affairs.Padding = new Padding(0, 0, 180, 0);
 
-            Affairs.ForeColor = settings.textColor;
+            Affairs.ForeColor = settings.GetTextColor();
 
-            BackColor = settings.bgtextColor;
-            TransparencyKey = settings.bgtextColor;
+            BackColor = settings.GetBgColor();
+            TransparencyKey = settings.GetBgColor();
         }
         private void LoadSettings()
         {
             if (settings.SettingsFileExists())
             {
-                Affairs.Left = settings.x;
-                Affairs.Top = settings.y;
+                Affairs.Left = settings.GetProfileX();
+                Affairs.Top = settings.GetProfileY();
             }
             else
             {
@@ -56,7 +56,7 @@ namespace AffairList
         {
             if (settings.CurrentListNotNull())
             {
-                string[] result = File.ReadAllLines(settings.currentListFileFullPath);
+                string[] result = File.ReadAllLines(settings.GetCurrentProfile());
                 for (int i = 0; i < result.Length; i++)
                 {
                     if (result[i].EndsWith(priorityTag))
@@ -85,11 +85,11 @@ namespace AffairList
         }
         private void GlobalHook_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == settings.closeKey)
+            if (e.KeyCode == settings.GetCloseKey())
             {
                 Exit();
             }
-            if (e.KeyCode == settings.returnKey)
+            if (e.KeyCode == settings.GetReturnKey())
             {
                 Restart();
             }
@@ -137,7 +137,9 @@ namespace AffairList
             if (e.Button == MouseButtons.Left && canReplace)
             {
                 canReplace = false;
-                settings.SaveParametr("x,y", Left + Affairs.Left, Top + Affairs.Top);
+                settings.SetProfileX(Left + Affairs.Left);
+                settings.SetProfileY(Top + Affairs.Top);
+                settings.SaveSettings();
                 Restart();
             }
         }
