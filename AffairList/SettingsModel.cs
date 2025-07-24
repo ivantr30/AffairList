@@ -8,17 +8,18 @@ namespace AffairList
 {
     public class SettingsModel
     {
-        public string currentListFileFullPath;
+        public string currentListFileFullPath { get; set; }
 
-        public Color textColor = Color.MediumSpringGreen;
-        public Color bgColor = Color.Black;
+        public Color textColor { get; set; }
+        public Color bgColor { get; set; }
 
-        public Keys closeKey = Keys.F7;
-        public Keys returnKey = Keys.F6;
+        public Keys closeKey { get; set; }
+        public Keys returnKey { get; set; }
 
-        public bool autostartState = true;
-        public bool askToDelete = true;
+        public bool autostartState { get; set; }
+        public bool askToDelete { get; set; }
 
-        public int x, y;
+        public int x { get; set; }
+        public int y { get; set; }
     }
 }

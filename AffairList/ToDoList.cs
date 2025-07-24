@@ -1,9 +1,8 @@
 ﻿using Gma.System.MouseKeyHook;
-using System.Threading.Tasks;
 
 namespace AffairList
 {
-    public partial class List : BaseForm
+    public partial class ToDoList : BaseForm
     {
         private IKeyboardMouseEvents globalHook;
 
@@ -12,7 +11,7 @@ namespace AffairList
         private string priorityTag = "<priority>";
         private string deadlineTag = "<deadline>";
 
-        public List(Settings settings)
+        public ToDoList(Settings settings)
         {
             InitializeComponent();
             SubscribeGlobalHook();

@@ -1,6 +1,6 @@
 ﻿namespace AffairList
 {
-    partial class List
+    partial class ToDoList
     {
         /// <summary>
         /// Required designer variable.

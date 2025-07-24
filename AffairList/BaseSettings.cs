@@ -11,7 +11,7 @@ namespace AffairList
         public string currentListFileFullPath = "";
 
         public readonly Color textColor = Color.MediumSpringGreen;
-        public readonly Color bgtextColor = Color.Black;
+        public readonly Color bgColor = Color.Black;
 
         public readonly Keys closeKey = Keys.F7;
         public readonly Keys returnKey = Keys.F6;
