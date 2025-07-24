@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             Affairs = new Label();
-            OuterLine = new Label();
             SuspendLayout();
             // 
             // Affairs
@@ -46,20 +45,12 @@
             Affairs.MouseMove += Affairs_MouseMove;
             Affairs.MouseUp += Affairs_MouseUp;
             // 
-            // OuterLine
-            // 
-            OuterLine.Location = new Point(0, 0);
-            OuterLine.Name = "OuterLine";
-            OuterLine.Size = new Size(100, 23);
-            OuterLine.TabIndex = 0;
-            // 
             // List
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
-            ClientSize = new Size(1061, 640);
-            Controls.Add(OuterLine);
+            ClientSize = new Size(1202, 666);
             Controls.Add(Affairs);
             Name = "List";
             ShowInTaskbar = false;
@@ -76,6 +67,5 @@
         #endregion
 
         private Label Affairs;
-        private Label OuterLine;
     }
 }

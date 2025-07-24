@@ -4,3 +4,4 @@ C:\Users\Ivan\Desktop\AffairListWithDotNet\AffairList.deps.json
 C:\Users\Ivan\Desktop\AffairListWithDotNet\AffairList.runtimeconfig.json
 C:\Users\Ivan\Desktop\AffairListWithDotNet\AffairList.pdb
 C:\Users\Ivan\Desktop\AffairListWithDotNet\Gma.System.MouseKeyHook.dll
+C:\Users\Ivan\Desktop\AffairListWithDotNet\Newtonsoft.Json.dll

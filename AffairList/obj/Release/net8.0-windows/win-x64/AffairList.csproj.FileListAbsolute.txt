@@ -952,7 +952,6 @@ F:\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\win-x64\AffairL
 F:\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\win-x64\AffairList.ChangeProfileForm.resources
 F:\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\win-x64\AffairList.HotKeySettings.resources
 F:\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\win-x64\AffairList.List.resources
-F:\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\win-x64\AffairList.Settings.resources
 F:\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\win-x64\AffairList.csproj.GenerateResource.cache
 F:\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\win-x64\AffairList.GeneratedMSBuildEditorConfig.editorconfig
 F:\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\win-x64\AffairList.AssemblyInfoInputs.cache
@@ -969,3 +968,5 @@ F:\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\win-x64\AffairL
 F:\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\win-x64\AffairList.InputKeyForm.resources
 F:\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\win-x64\AffairList.InputDeadlineForm.resources
 F:\source\repos\AffairList\AffairList\bin\Release\net8.0-windows\win-x64\mscordaccore_amd64_amd64_8.0.1825.31117.dll
+F:\source\repos\AffairList\AffairList\bin\Release\net8.0-windows\win-x64\Newtonsoft.Json.dll
+F:\source\repos\AffairList\AffairList\obj\Release\net8.0-windows\win-x64\AffairList.SettingsForm.resources
