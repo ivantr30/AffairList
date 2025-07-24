@@ -40,6 +40,7 @@
             MinimizeButton = new Label();
             CloseButton = new Label();
             AffairListLab = new Label();
+            ErrorHelpLab = new Label();
             panel1.SuspendLayout();
             NameBackground.SuspendLayout();
             SuspendLayout();
@@ -47,6 +48,7 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(72, 3, 111);
+            panel1.Controls.Add(ErrorHelpLab);
             panel1.Controls.Add(ChangeProfileButton);
             panel1.Controls.Add(HotKeyButton);
             panel1.Controls.Add(SettingsButton);
@@ -220,6 +222,19 @@
             AffairListLab.MouseDown += AffairListLab_MouseDown;
             AffairListLab.MouseMove += AffairListLab_MouseMove;
             // 
+            // ErrorHelpLab
+            // 
+            ErrorHelpLab.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            ErrorHelpLab.AutoSize = true;
+            ErrorHelpLab.Font = new Font("Unispace", 10F);
+            ErrorHelpLab.ForeColor = SystemColors.ButtonHighlight;
+            ErrorHelpLab.Location = new Point(25, 88);
+            ErrorHelpLab.Name = "ErrorHelpLab";
+            ErrorHelpLab.Size = new Size(403, 16);
+            ErrorHelpLab.TabIndex = 4;
+            ErrorHelpLab.Text = "Found an error? - ivanchikinator30 @ivantr30";
+            ErrorHelpLab.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // AffairList
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -235,6 +250,7 @@
             Shown += AffairList_Shown;
             KeyDown += AffairList_KeyDown;
             panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             NameBackground.ResumeLayout(false);
             NameBackground.PerformLayout();
             ResumeLayout(false);
@@ -254,5 +270,6 @@
         private Label MinimizeButton;
         private Button ChangeProfileButton;
         private Button HotKeyButton;
+        private Label ErrorHelpLab;
     }
 }
