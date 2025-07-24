@@ -1,273 +1,263 @@
-﻿using Microsoft.VisualBasic;
+﻿using Microsoft.Win32;
 namespace AffairList
 {
-    public partial class Settings : BaseForm
+    public class Settings
     {
-        private bool isConfirmed = true;
-        public Settings(SettingsModel settings)
-        {
-            InitializeComponent();
-            this.settings = settings;
-            LoadSettings();
-        }
-        private void LoadSettings()
-        {
-            LocationLab.Text = settings.x + ", " + settings.y;
-            ListTextColorLab.ForeColor = settings.textColor;
-            ListBgTextColorLab.ForeColor = settings.bgtextColor;
-            if (settings.autostartState)
-            {
-                autostartStateLab.Text = "On";
-            }
-            else
-            {
-                autostartStateLab.Text = "OFF";
-            }
-            if (settings.askToDelete)
-            {
-                AskToDeleteState.Text = "On";
-            }
-            else
-            {
-                AskToDeleteState.Text = "OFF";
-            }
-        }
-        private void CloseButton_Click(object sender, EventArgs e)
-        {
-            Exit();
-        }
+        public readonly string listsDirectoryFullPath;
+        private readonly string defaultListFileFullPath;
 
-        private void Settings_KeyDown(object sender, KeyEventArgs e)
+        public readonly string settingsFileFullPath;
+
+        public readonly int width = Screen.PrimaryScreen.WorkingArea.Width,
+                   height = Screen.PrimaryScreen.WorkingArea.Height;
+
+        private string[] settingLines;
+        private string currentParametr = "";
+
+        private SettingsModel settings;
+
+        public Settings()
         {
-            if (e.KeyCode == settings.closeKey)
+            settings = new SettingsModel();
+
+            listsDirectoryFullPath = Application.StartupPath + "profiles\\";
+            defaultListFileFullPath = listsDirectoryFullPath + "\\list.txt";
+            settings.currentListFileFullPath = listsDirectoryFullPath + "\\list.txt";
+            settingsFileFullPath = Application.StartupPath + "settings.txt";
+            Initialize();
+        }
+        private void Initialize()
+        {
+            if(!SettingsFileExists()) CreateSettingsFile();
+            settingLines = File.ReadAllLines(settingsFileFullPath);
+            if (settingLines.Length == 0)
             {
-                Exit();
+                WriteBaseSettings();
+                return;
             }
-            if (e.KeyCode == settings.returnKey)
+
+            for (int i = 0; i < settingLines.Length; i++)
             {
-                Restart();
-            }
-        }
+                string line = settingLines[i].Trim();
+                if (string.IsNullOrEmpty(line)) continue;
 
-        private void CloseButton_MouseEnter(object sender, EventArgs e)
-        {
-            CloseButton.ForeColor = Color.Gray;
-        }
+                int colonIndex = line.IndexOf(':');
+                if (colonIndex < 0) continue;
 
-        private void CloseButton_MouseLeave(object sender, EventArgs e)
-        {
-            CloseButton.ForeColor = Color.Black;
-        }
+                string key = line.Substring(0, colonIndex).Trim();
+                string value = line.Substring(colonIndex + 1).Trim();
+                string[] parameters = value.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
-        private void NameBackground_MouseDown(object sender, MouseEventArgs e)
-        {
-            lastPoint = new Point(e.X, e.Y);
-        }
-
-        private void NameBackground_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                Left += e.X - lastPoint.X;
-                Top += e.Y - lastPoint.Y;
-            }
-        }
-
-        private void SettingsLab_MouseDown(object sender, MouseEventArgs e)
-        {
-            lastPoint = new Point(e.X, e.Y);
-        }
-
-        private void SettingsLab_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                Left += e.X - lastPoint.X;
-                Top += e.Y - lastPoint.Y;
-            }
-        }
-
-        private void BackButton_Click(object sender, EventArgs e)
-        {
-            if (!isConfirmed)
-            {
-                DialogResult result = MessageBox.Show(
-                    "Are you sure to leave with unsaved settings?",
-                    "Confirm window",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
-                if (result == DialogResult.No)
+                switch (key)
                 {
-                    return;
+                    case "x,y":
+                        currentParametr = key;
+                        x = int.Parse(parameters[0]);
+                        y = int.Parse(parameters[1]);
+                        break;
+
+                    case "autostarts":
+                        currentParametr = key;
+                        autostartState = parameters[0].Contains("True");
+                        if (autostartState)
+                            EnableAutoStart("AffairList", Application.ExecutablePath);
+                        else
+                            DisableAutoStart("AffairList");
+                        break;
+
+                    case "textColor":
+                        currentParametr = key;
+                        textColor = Color.FromArgb(255,
+                            int.Parse(parameters[0]),
+                            int.Parse(parameters[1]),
+                            int.Parse(parameters[2]));
+                        break;
+
+                    case "backTextColor":
+                        currentParametr = key;
+                        bgtextColor = Color.FromArgb(255,
+                            int.Parse(parameters[0]),
+                            int.Parse(parameters[1]),
+                            int.Parse(parameters[2]));
+                        break;
+
+                    case "askToDelete":
+                        currentParametr = key;
+                        askToDelete = bool.Parse(parameters[0]);
+                        break;
+
+                    case "currentProfile":
+                        currentParametr = key;
+                        currentListFileFullPath = value;
+                        if (!File.Exists(currentListFileFullPath))
+                        {
+                            ChooseProfile();
+                        }
+                        break;
+
+                    case "closeKey":
+                        currentParametr = key;
+                        closeKey = (Keys)Enum.Parse(typeof(Keys), parameters[0]);
+                        break;
+
+                    case "returnKey":
+                        currentParametr = key;
+                        returnKey = (Keys)Enum.Parse(typeof(Keys), parameters[0]);
+                        break;
+
+                    default:
+                        continue;
+                }
+
+                settingLines[i] = $"{currentParametr}:{value}";
+            }
+
+            File.WriteAllLines(settingsFileFullPath, settingLines);
+        }
+        public void WriteBaseSettings()
+        {
+            File.WriteAllText(settingsFileFullPath,
+                $"x,y: {width - width / 6} {(height + height / 10) / 90}\n" +
+                $"textColor: {basetextColor.R} {basetextColor.G} {basetextColor.B}\n" +
+                $"backTextColor: {basebgtextColor.R} {basebgtextColor.G} {basebgtextColor.B}\n" +
+                "autostarts: true\n" +
+                "askToDelete: true\n" +
+                "currentProfile: \n" +
+                "closeKey: F7\n" +
+                "returnKey: F6\n");
+        }
+        private void ChooseProfile()
+        {
+            var profiles = Directory.GetFiles(listsDirectoryFullPath);
+            if (profiles.Length > 0)
+            {
+                currentListFileFullPath = profiles[0];
+            }
+        }
+        private void EnableAutoStart(string appName, string exePath)
+        {
+            RegistryKey key = Registry.CurrentUser
+                .OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true)!;
+
+            key.SetValue(appName, $"\"{exePath}\"");
+        }
+        private void DisableAutoStart(string appName)
+        {
+            RegistryKey key = Registry.CurrentUser
+                .OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true)!;
+
+            key.DeleteValue(appName, false);
+        }
+        public bool ListFilesAvailable()
+        {
+            return Directory.GetFiles(listsDirectoryFullPath).Length > 0;
+        }
+        public bool SettingsFileExists()
+        {
+            return File.Exists(settingsFileFullPath);
+        }
+        public bool ListsDirectoryExists()
+        {
+            return Directory.Exists(listsDirectoryFullPath);
+        }
+        public bool CurrentListNotNull()
+        {
+            return File.Exists(currentListFileFullPath);
+        }
+        public void CreateFiles()
+        {
+            CreateSettingsFile();
+            CreateListsDirectory();
+        }
+        public void CreateSettingsFile()
+        {
+            using (File.Create(settingsFileFullPath)) { }
+            WriteBaseSettings();
+        }
+        public void CreateListsDirectory()
+        {
+            DirectoryInfo di = Directory.CreateDirectory(listsDirectoryFullPath);
+        }
+        public void CreateDefaultList()
+        {
+            using (File.Create(defaultListFileFullPath)) { }
+            currentListFileFullPath = defaultListFileFullPath;
+        }
+        public void SaveSettings()
+        {
+            if (autostartState) EnableAutoStart("AffairList", Application.ExecutablePath);
+            else DisableAutoStart("AffairList");
+
+            for (int i = 0; i < settingLines.Length; i++)
+            {
+                string line = settingLines[i].Trim();
+                if (string.IsNullOrEmpty(line)) continue;
+
+                string key = line.Contains(":")
+                    ? line.Substring(0, line.IndexOf(':')).Trim()
+                    : string.Empty;
+
+                switch (key)
+                {
+                    case "x,y":
+                        currentParametr = key;
+                        settingLines[i] = $"{currentParametr}: {x} {y}";
+                        break;
+
+                    case "textColor":
+                        currentParametr = key;
+                        settingLines[i] = $"{currentParametr}: {textColor.R} {textColor.G} {textColor.B}";
+                        break;
+
+                    case "backTextColor":
+                        currentParametr = key;
+                        settingLines[i] = $"{currentParametr}: {bgtextColor.R} {bgtextColor.G} {bgtextColor.B}";
+                        break;
+
+                    case "autostarts":
+                        currentParametr = key;
+                        settingLines[i] = $"{currentParametr}: {autostartState}";
+                        break;
+
+                    case "askToDelete":
+                        currentParametr = key;
+                        settingLines[i] = $"{currentParametr}: {askToDelete}";
+                        break;
+                    case "currentProfile":
+                        currentParametr = key;
+                        settingLines[i] = $"{currentParametr}: {currentListFileFullPath}";
+                        break;
+
+                    default:
+                        if (line.StartsWith("closeKey:"))
+                        {
+                            currentParametr = "closeKey";
+                        }
+                        else if (line.StartsWith("returnKey:"))
+                        {
+                            currentParametr = "returnKey";
+                        }
+                        break;
                 }
             }
-            Restart();
-        }
 
-        private void ResetButton_Click(object sender, EventArgs e)
+            File.WriteAllLines(settingsFileFullPath, settingLines);
+        }
+        public void SaveParametr<T>(string parametr, T firstValue, T secondValue)
         {
-            DialogResult result = MessageBox.Show(
-                "Do you really want to reset the settings?",
-                "Confirm window",
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
+            SaveParametr(parametr, firstValue + " " + secondValue);
+        }
+        public void SaveParametr<T>(string parametr, T value)
+        {
+            for (int i = 0; i < settingLines.Length; i++)
             {
-                if (!settings.SettingsFileExists()) settings.CreateSettingsFile();
-
-                settings.WriteBaseSettings();
-
-                MessageBox.Show("The settings were reseted succesfully");
+                if (settingLines[i].StartsWith(parametr))
+                {
+                    settingLines[i] = parametr + ": " + value;
+                    break;
+                }
             }
-            Restart();
-        }
-
-        private void ConfirmButton_Click(object sender, EventArgs e)
-        {
-            isConfirmed = true;
-            settings.SaveSettings();
-        }
-
-        private void autostartStateLab_MouseDown(object sender, MouseEventArgs e)
-        {
-            autostartStateLab.ForeColor = Color.DarkGray;
-            if (autostartStateLab.Text == "On")
-            {
-                autostartStateLab.Text = "OFF";
-                settings.autostartState = false;
-                return;
-            }
-            autostartStateLab.Text = "On";
-            settings.autostartState = true;
-            isConfirmed = false;
-        }
-
-        private void autostartStateLab_MouseLeave(object sender, EventArgs e)
-        {
-            autostartStateLab.ForeColor = Color.White;
-        }
-
-        private void autostartStateLab_MouseUp(object sender, MouseEventArgs e)
-        {
-            autostartStateLab.ForeColor = Color.White;
-        }
-
-        private void autostartStateLab_MouseEnter(object sender, EventArgs e)
-        {
-            autostartStateLab.ForeColor = Color.Gray;
-        }
-
-        private void PickTextColorButton_Click(object sender, EventArgs e)
-        {
-            var res = ColorPicker.ShowDialog();
-            if (res == DialogResult.OK)
-            {
-                ListTextColorLab.ForeColor = ColorPicker.Color;
-                settings.textColor = ListTextColorLab.ForeColor;
-                isConfirmed = false;
-            }
-        }
-
-        private void PickBgColorButton_Click(object sender, EventArgs e)
-        {
-            var res = ColorPicker.ShowDialog();
-            if (res == DialogResult.OK)
-            {
-                ListBgTextColorLab.ForeColor = ColorPicker.Color;
-                settings.bgtextColor = ListBgTextColorLab.ForeColor;
-                isConfirmed = false;
-            }
-        }
-
-        private void LocationLab_DoubleClick(object sender, EventArgs e)
-        {
-            int prevX = settings.x, prevY = settings.y;
-            try
-            {
-                settings.x = int.Parse(Interaction.InputBox("Enter x coordinate," +
-                    $" max width is {settings.width}",
-                    "InputWindow", ""));
-                if(settings.x > settings.width) throw new Exception();
-            }
-            catch
-            {
-                MessageBox.Show("Error");
-                settings.x = prevX;
-                return;
-            }
-            try
-            {
-                settings.y = int.Parse(Interaction.InputBox("Enter y coordinate" +
-                    $" max height is {settings.height}", "InputWindow", ""));
-                if (settings.y > settings.height) throw new Exception();
-            }
-            catch
-            {
-                MessageBox.Show("Error");
-                settings.y = prevY;
-                return;
-            }
-            isConfirmed = false;
-            LocationLab.Text = settings.x + ", " + settings.y;
-        }
-
-        private void Settings_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Exit();
-        }
-
-        private void LocationLab_MouseEnter(object sender, EventArgs e)
-        {
-            LocationLab.ForeColor = Color.Gray;
-        }
-
-        private void LocationLab_MouseLeave(object sender, EventArgs e)
-        {
-            LocationLab.ForeColor = Color.White;
-        }
-
-        private void AskToDeleteState_MouseDown(object sender, MouseEventArgs e)
-        {
-            AskToDeleteState.ForeColor = Color.DarkGray;
-            if (AskToDeleteState.Text == "On")
-            {
-                AskToDeleteState.Text = "OFF";
-                settings.askToDelete = false;
-                return;
-            }
-            AskToDeleteState.Text = "On";
-            settings.askToDelete = true;
-            isConfirmed = false;
-        }
-
-        private void AskToDeleteState_MouseLeave(object sender, EventArgs e)
-        {
-            AskToDeleteState.ForeColor = Color.White;
-        }
-
-        private void AskToDeleteState_MouseEnter(object sender, EventArgs e)
-        {
-            AskToDeleteState.ForeColor = Color.Gray;
-        }
-
-        private void AskToDeleteState_MouseUp(object sender, MouseEventArgs e)
-        {
-            AskToDeleteState.ForeColor = Color.White;
-        }
-
-        private void MinimizeButton_Click(object sender, EventArgs e)
-        {
-            WindowState = FormWindowState.Minimized;
-        }
-
-        private void MinimizeButton_MouseEnter(object sender, EventArgs e)
-        {
-            MinimizeButton.ForeColor = Color.Gray;
-        }
-
-        private void MinimizeButton_MouseLeave(object sender, EventArgs e)
-        {
-            MinimizeButton.ForeColor = Color.Black;
+            File.WriteAllLines(settingsFileFullPath, settingLines);
         }
     }
 }

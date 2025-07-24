@@ -35,6 +35,7 @@
             CloseButton = new Label();
             ProfilesListLab = new Label();
             panel1 = new Panel();
+            ChangePriorityButton = new Button();
             RenameButton = new Button();
             SelectProfileButton = new Button();
             DeleteButton = new Button();
@@ -43,7 +44,6 @@
             ClearButton = new Button();
             AddButton = new Button();
             ProfileInput = new TextBox();
-            ChangePriorityButton = new Button();
             NameBackground.SuspendLayout();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -148,6 +148,19 @@
             panel1.Size = new Size(532, 405);
             panel1.TabIndex = 2;
             // 
+            // ChangePriorityButton
+            // 
+            ChangePriorityButton.BackColor = Color.FromArgb(173, 102, 213);
+            ChangePriorityButton.FlatStyle = FlatStyle.Flat;
+            ChangePriorityButton.Font = new Font("Segoe UI", 9.75F);
+            ChangePriorityButton.Location = new Point(12, 371);
+            ChangePriorityButton.Name = "ChangePriorityButton";
+            ChangePriorityButton.Size = new Size(104, 27);
+            ChangePriorityButton.TabIndex = 9;
+            ChangePriorityButton.Text = "ChangePriority";
+            ChangePriorityButton.UseVisualStyleBackColor = false;
+            ChangePriorityButton.Click += ChangePriorityButton_Click;
+            // 
             // RenameButton
             // 
             RenameButton.BackColor = Color.FromArgb(173, 102, 213);
@@ -236,22 +249,9 @@
             ProfileInput.Font = new Font("Unispace", 15F);
             ProfileInput.Location = new Point(12, 334);
             ProfileInput.Name = "ProfileInput";
-            ProfileInput.PlaceholderText = "Введите название нового профиля";
+            ProfileInput.PlaceholderText = "Enter the name of a new profile";
             ProfileInput.Size = new Size(508, 31);
             ProfileInput.TabIndex = 1;
-            // 
-            // ChangePriorityButton
-            // 
-            ChangePriorityButton.BackColor = Color.FromArgb(173, 102, 213);
-            ChangePriorityButton.FlatStyle = FlatStyle.Flat;
-            ChangePriorityButton.Font = new Font("Segoe UI", 9.75F);
-            ChangePriorityButton.Location = new Point(12, 371);
-            ChangePriorityButton.Name = "ChangePriorityButton";
-            ChangePriorityButton.Size = new Size(104, 27);
-            ChangePriorityButton.TabIndex = 9;
-            ChangePriorityButton.Text = "ChangePriority";
-            ChangePriorityButton.UseVisualStyleBackColor = false;
-            ChangePriorityButton.Click += ChangePriorityButton_Click;
             // 
             // ChangeProfileForm
             // 

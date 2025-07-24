@@ -4,7 +4,8 @@ namespace AffairList
     public partial class HotKeySettings : BaseForm
     {
         private bool isConfirmed = true;
-        public HotKeySettings(SettingsModel settings)
+        private Keys key;
+        public HotKeySettings(Settings settings)
         {
             InitializeComponent();
             this.settings = settings;
@@ -19,10 +20,10 @@ namespace AffairList
         {
             if (!isConfirmed)
             {
-                DialogResult resetOrNot = MessageBox.Show("Are you sure to leave with unsaved settings?",
+                DialogResult saveOrNot = MessageBox.Show("Are you sure to leave with unsaved settings?",
                 "Confirm form",
                 MessageBoxButtons.YesNo);
-                if (resetOrNot == DialogResult.No) return;
+                if (saveOrNot == DialogResult.No) return;
             }
             Restart();
         }
@@ -34,7 +35,7 @@ namespace AffairList
 
         private void MinimizeButton_Click(object sender, EventArgs e)
         {
-            WindowState = FormWindowState.Minimized;
+            MinimizeForm();
         }
 
         private void ResetButton_Click(object sender, EventArgs e)
@@ -61,28 +62,32 @@ namespace AffairList
         }
         private void CloseKeyType_DoubleClick(object sender, EventArgs e)
         {
-            InputKeyForm keyForm = new InputKeyForm();
-            keyForm.OnKeyPressed += delegate {
-                settings.closeKey = keyForm.Key;
-            };
-            keyForm.ShowDialog();
+            key = SetKey();
+            if (key == Keys.None) return;
 
-            if (keyForm.Key == Keys.None) return;
+            settings.closeKey = key;
             CloseKeyType.Text = settings.closeKey.ToString();
             isConfirmed = false;
         }
 
         private void BackKeyType_DoubleClick(object sender, EventArgs e)
         {
-            InputKeyForm keyForm = new InputKeyForm();
-            keyForm.OnKeyPressed += delegate {
-                settings.returnKey = keyForm.Key;
-            };
-            keyForm.ShowDialog();
+            key = SetKey();
+            if (key == Keys.None) return;
 
-            if (keyForm.Key == Keys.None) return;
+            settings.returnKey = key;
             BackKeyType.Text = settings.returnKey.ToString();
             isConfirmed = false;
+        }
+        private Keys SetKey()
+        {
+            Keys key = Keys.None;
+            InputKeyForm keyForm = new InputKeyForm();
+            keyForm.OnKeyPressed += delegate {
+                key = keyForm.Key;
+            };
+            keyForm.ShowDialog();
+            return key;
         }
 
         private void CloseKeyType_MouseEnter(object sender, EventArgs e)
@@ -141,28 +146,20 @@ namespace AffairList
 
         private void NameBackground_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-            {
-                Top += e.Y - lastPoint.Y;
-                Left += e.X - lastPoint.X;
-            }
+            MoveForm(e);
         }
         private void NameBackground_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left) lastPoint = e.Location;
+            SetLastPoint(e);
         }
         private void HotKeySettingsLab_MouseMove(object sender, MouseEventArgs e)
         {
-            if(e.Button == MouseButtons.Left)
-            {
-                Top += e.Y - lastPoint.Y;
-                Left += e.X - lastPoint.X;
-            }
+            MoveForm(e);
         }
 
         private void HotKeySettingsLab_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left) lastPoint = e.Location;
+            SetLastPoint(e);
         }
     }
 }

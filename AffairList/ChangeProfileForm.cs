@@ -1,12 +1,15 @@
 ﻿using Microsoft.VisualBasic;
+using System.Runtime;
 namespace AffairList
 {
     public partial class ChangeProfileForm : BaseForm
     {
-        string[] profileLines;
-        private string priorityWord = " Приоритетное.txt";
-        private string priorityTag = " Приоритетное";
-        public ChangeProfileForm(SettingsModel settings)
+        List<string> profileLines;
+
+        private string priorityWord = " Priority.txt";
+        private string priorityTag = " Priority";
+
+        public ChangeProfileForm(Settings settings)
         {
             InitializeComponent();
             this.settings = settings;
@@ -14,8 +17,12 @@ namespace AffairList
         }
         private void LoadProfiles()
         {
+            if (!settings.ListsDirectoryExists()) return;
+
+            Profiles.Items.Clear();
             profileLines = Directory.GetFiles(settings.listsDirectoryFullPath)
-                    .OrderByDescending(x => x.EndsWith(priorityWord)).ToArray();
+                    .OrderByDescending(x => x.EndsWith(priorityWord)).ToList();
+
             foreach (var profile in profileLines)
             {
                 FileInfo profileFile = new FileInfo(profile);
@@ -38,7 +45,7 @@ namespace AffairList
         }
         private void MinimizeButton_Click(object sender, EventArgs e)
         {
-            WindowState = FormWindowState.Minimized;
+            MinimizeForm();
         }
 
         private void BackButton_Click(object sender, EventArgs e)
@@ -73,30 +80,22 @@ namespace AffairList
 
         private void NameBackground_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-            {
-                Left += e.X - lastPoint.X;
-                Top += e.Y - lastPoint.Y;
-            }
+            MoveForm(e);
         }
 
         private void NameBackground_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left) lastPoint = e.Location;
+            SetLastPoint(e);
         }
 
         private void ProfilesLab_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left) lastPoint = e.Location;
+            SetLastPoint(e);
         }
 
         private void ProfilesLab_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-            {
-                Left += e.X - lastPoint.X;
-                Top += e.Y - lastPoint.Y;
-            }
+            MoveForm(e);
         }
         private void AddProfile()
         {
@@ -118,9 +117,7 @@ namespace AffairList
             Profiles.Items.Add(ProfileInput.Text + ".txt");
             Profiles.SelectedIndex = Profiles.Items.Count - 1;
 
-            var temp = profileLines.ToList();
-            temp.Add(settings.listsDirectoryFullPath + "\\" + ProfileInput.Text + ".txt");
-            profileLines = temp.ToArray();
+            profileLines.Add(settings.listsDirectoryFullPath + "\\" + ProfileInput.Text + ".txt");
 
             using (File.Create(settings.listsDirectoryFullPath + "\\" + ProfileInput.Text + ".txt"))
             {
@@ -141,15 +138,13 @@ namespace AffairList
                 foreach (var file in profileLines)
                 {
                     FileInfo fileInfo = new FileInfo(file);
-                    if (Profiles.SelectedItem.ToString() == fileInfo.Name)
+                    if (Profiles.SelectedItem!.ToString() == fileInfo.Name)
                     {
                         File.Delete(file);
                     }
                 }
 
-                var temp = profileLines.ToList();
-                temp.RemoveAt(Profiles.SelectedIndex);
-                profileLines = temp.ToArray();
+                profileLines.RemoveAt(Profiles.SelectedIndex);
 
                 int selectedIndex = 0;
                 if (Profiles.SelectedIndex == 0 && Profiles.Items.Count > 1)
@@ -210,28 +205,31 @@ namespace AffairList
         {
             if (Profiles.SelectedIndex == -1) return;
 
-            try
-            {
-                string previousProfileFullName = profileLines[Profiles.SelectedIndex];
-                FileInfo fileInfo = new FileInfo(previousProfileFullName);
-                string currentProfileName = fileInfo.Name.Replace(".txt", "");
-                string newProfileName = Interaction
-                    .InputBox("Enter renaming", "Renaming form", currentProfileName);
+            FileInfo selectedProfile = new FileInfo(profileLines[Profiles.SelectedIndex]);
 
-                if (ContainKeyWords(newProfileName)) return;
-                if (newProfileName.Trim() == "") throw new Exception();
+            string newProfileName = Interaction
+                .InputBox("Enter renaming", "Renaming form",
+                selectedProfile.Name.Replace(".txt", "").Replace(priorityTag, "")
+                );
 
-                profileLines[Profiles.SelectedIndex] = previousProfileFullName
-                    .Replace(currentProfileName, newProfileName);
-
-                File.Move(previousProfileFullName, profileLines[Profiles.SelectedIndex]);
-                Profiles.Items.Clear();
-                LoadProfiles();
-            }
-            catch
+            if (ContainKeyWords(newProfileName)) return;
+            if (newProfileName.Trim() == "")
             {
                 MessageBox.Show("Error, wrong input format");
+                return;
             }
+
+            if (newProfileName.Contains(priorityTag)) newProfileName += priorityTag;
+            newProfileName = settings.listsDirectoryFullPath + newProfileName + ".txt";
+
+            if (settings.currentListFileFullPath == selectedProfile.FullName)
+            {
+                settings.currentListFileFullPath = newProfileName;
+                settings.SaveParametr("currentProfile", settings.currentListFileFullPath);
+            }
+
+            File.Move(selectedProfile.FullName, newProfileName);
+            LoadProfiles();
         }
 
         private void ChangePriorityButton_Click(object sender, EventArgs e)
@@ -255,7 +253,6 @@ namespace AffairList
             }
 
             File.Move(selectedProfileInfo.FullName, newProfileName);
-            Profiles.Items.Clear();
             LoadProfiles();
         }
     }

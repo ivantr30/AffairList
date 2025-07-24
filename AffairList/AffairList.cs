@@ -2,30 +2,27 @@ namespace AffairList
 {
     public partial class AffairList : BaseForm
     {
-        public static NotifyIcon trayIcon;
-        private ContextMenuStrip trayMenu;
+        public static readonly NotifyIcon trayIcon = new NotifyIcon();
+        private ContextMenuStrip trayMenu = new ContextMenuStrip();
 
         public AffairList()
         {
             InitializeComponent();
 
-            trayMenu = new ContextMenuStrip();
             trayMenu.Items.Add("Открыть", null, OnOpen);
             trayMenu.Items.Add("Выход", null, OnExit);
 
-            trayIcon = new NotifyIcon();
             trayIcon.Text = "AffairList";
             trayIcon.Icon = SystemIcons.Application;
 
             trayIcon.ContextMenuStrip = trayMenu;
             trayIcon.Visible = true;
 
-            settings = new SettingsModel();
+            settings = new Settings();
         }
         private void OnOpen(object sender, EventArgs e)
         {
             Restart();
-            WindowState = FormWindowState.Normal;
             ShowInTaskbar = true;
         }
 
@@ -51,30 +48,22 @@ namespace AffairList
 
         private void NameBackground_MouseDown(object sender, MouseEventArgs e)
         {
-            lastPoint = new Point(e.X, e.Y);
+            SetLastPoint(e);
         }
 
         private void NameBackground_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-            {
-                Left += e.X - lastPoint.X;
-                Top += e.Y - lastPoint.Y;
-            }
+            MoveForm(e);
         }
 
         private void AffairListLab_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-            {
-                Left += e.X - lastPoint.X;
-                Top += e.Y - lastPoint.Y;
-            }
+            MoveForm(e);
         }
 
         private void AffairListLab_MouseDown(object sender, MouseEventArgs e)
         {
-            lastPoint = new Point(e.X, e.Y);
+            SetLastPoint(e);
         }
 
         private void OpenListButton_Click(object sender, EventArgs e)
@@ -84,9 +73,7 @@ namespace AffairList
                 MessageBox.Show("Error, there is no list available");
                 return;
             }
-            Hide();
-            List list = new List(settings);
-            list.Show();
+            CreateForm(new List(settings));
         }
 
         private void ClearListButton_Click(object sender, EventArgs e)
@@ -118,18 +105,11 @@ namespace AffairList
                     " do you want to add default?",
                     "Confirm Form",
                     MessageBoxButtons.YesNo);
-                if (createDefault == DialogResult.Yes)
-                {
-                    settings.CreateDefaultList();
-                }
-                else
-                {
-                    return;
-                }
+                if (createDefault == DialogResult.No) return;
+
+                settings.CreateDefaultList();
             }
-            Hide();
-            ChangeListForm listForm = new ChangeListForm(settings);
-            listForm.Show();
+            CreateForm(new ChangeListForm(settings));
         }
 
         private void ReplaceAffairListButton_Click(object sender, EventArgs e)
@@ -139,30 +119,23 @@ namespace AffairList
                 MessageBox.Show("Error, there is no list available");
                 return;
             }
-            Hide();
             List list = new List(settings);
             list.BackColor = Color.White;
             list.canReplace = true;
-            list.Show();
+            CreateForm(list);
         }
 
         private void SettingsButton_Click(object sender, EventArgs e)
         {
-            Hide();
-            Settings settingsForm = new Settings(settings);
-            settingsForm.Show();
+            CreateForm(new SettingsForm(settings));
         }
         private void ChangeProfileButton_Click(object sender, EventArgs e)
         {
-            Hide();
-            ChangeProfileForm profileForm = new ChangeProfileForm(settings);
-            profileForm.Show();
+            CreateForm(new ChangeProfileForm(settings));
         }
         private void HotKeyButton_Click(object sender, EventArgs e)
         {
-            Hide();
-            HotKeySettings hotKeySettings = new HotKeySettings(settings);
-            hotKeySettings.Show();
+            CreateForm(new HotKeySettings(settings));
         }
         private void AffairList_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -171,7 +144,7 @@ namespace AffairList
 
         private void MinimizeButton_Click(object sender, EventArgs e)
         {
-            WindowState = FormWindowState.Minimized;
+            MinimizeForm();
         }
 
         private void MinimizeButton_MouseEnter(object sender, EventArgs e)

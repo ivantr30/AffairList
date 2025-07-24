@@ -23,5 +23,26 @@ namespace AffairList
             AffairList.trayIcon.Visible = false;
             Application.Restart();
         }
+        protected void SetLastPoint(MouseEventArgs e)
+        {
+            lastPoint = new Point(e.X, e.Y);
+        }
+        protected void MoveForm(MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                Left += e.X - lastPoint.X;
+                Top += e.Y - lastPoint.Y;
+            }
+        }
+        protected void CreateForm(BaseForm form)
+        {
+            Hide();
+            form.Show();
+        }
+        protected void MinimizeForm()
+        {
+            WindowState = FormWindowState.Minimized;
+        }
     }
 }

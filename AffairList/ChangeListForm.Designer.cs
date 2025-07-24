@@ -251,7 +251,7 @@
             AffairInput.Font = new Font("Unispace", 15F);
             AffairInput.Location = new Point(12, 334);
             AffairInput.Name = "AffairInput";
-            AffairInput.PlaceholderText = "Введите название нового дела";
+            AffairInput.PlaceholderText = "Enter the name of a new affair";
             AffairInput.Size = new Size(539, 31);
             AffairInput.TabIndex = 1;
             // 

@@ -9,17 +9,17 @@ namespace AffairList
         private int selectedAffairIndex = -1;
 
         private string priorityTag = "<priority>";
-        private string priorityWord = "\"Приоритетное\"";
+        private string priorityWord = "\"Priority\"";
         private string deadlineTag = "<deadline>";
 
-        private string[] lines;
+        private List<string> lines;
 
         private bool isDragging = false;
 
         private Keys addAffairKey = Keys.Enter;
         private Keys deleteAffairKey = Keys.Delete;
 
-        public ChangeListForm(SettingsModel settings)
+        public ChangeListForm(Settings settings)
         {
             InitializeComponent();
             this.settings = settings;
@@ -42,15 +42,15 @@ namespace AffairList
         }
         private void LoadText()
         {
+            Affairs.Items.Clear();
             if (settings.CurrentListNotNull())
             {
                 lines = File.ReadAllLines(settings.currentListFileFullPath)
-                    .OrderByDescending(x => x.EndsWith(priorityTag)).ToArray();
-                Affairs.Items.Clear();
+                    .OrderByDescending(x => x.EndsWith(priorityTag)).ToList();
 
                 foreach (string line in lines)
                 {
-                    var currentLine = line.Trim();
+                    string currentLine = line;
                     if (currentLine.EndsWith(priorityTag))
                     {
                         currentLine = currentLine
@@ -94,31 +94,22 @@ namespace AffairList
 
         private void AffairsLab_MouseDown(object sender, MouseEventArgs e)
         {
-            lastPoint = new Point(e.X, e.Y);
+            SetLastPoint(e);
         }
 
         private void AffairsLab_MouseMove(object sender, MouseEventArgs e)
         {
-
-            if (e.Button == MouseButtons.Left)
-            {
-                Left += e.X - lastPoint.X;
-                Top += e.Y - lastPoint.Y;
-            }
+            MoveForm(e);
         }
 
         private void NameBackground_MouseDown_1(object sender, MouseEventArgs e)
         {
-            lastPoint = new Point(e.X, e.Y);
+            SetLastPoint(e);
         }
 
         private void NameBackground_MouseMove_1(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-            {
-                Left += e.X - lastPoint.X;
-                Top += e.Y - lastPoint.Y;
-            }
+            MoveForm(e);
         }
 
         private void CloseButton_MouseEnter(object sender, EventArgs e)
@@ -139,13 +130,12 @@ namespace AffairList
                 return;
             }
             if(ContainKeyWords(AffairInput.Text)) return;
+
             string inputText = AffairInput.Text + ".";
             Affairs.Items.Add(inputText);
             Affairs.SelectedIndex = Affairs.Items.Count - 1;
 
-            var linesListed = lines.ToList();
-            linesListed.Add(inputText);
-            lines = linesListed.ToArray();
+            lines.Add(inputText);
 
             if (settings.CurrentListNotNull())
             {
@@ -155,37 +145,36 @@ namespace AffairList
         }
         private void DeleteAffair()
         {
-            if (Affairs.SelectedIndex != -1)
+            if (Affairs.SelectedIndex == -1) return;
+
+            if (settings.askToDelete)
             {
-                if (settings.askToDelete)
-                {
-                    DialogResult dialogres = MessageBox.Show("Do you want to delete the affair?",
-                        "Confirm form",
-                        MessageBoxButtons.YesNo);
-                    if (dialogres == DialogResult.No) return;
-                }
-
-                if (settings.CurrentListNotNull())
-                {
-                    var linesListed = lines.ToList();
-                    linesListed.RemoveAt(Affairs.SelectedIndex);
-                    lines = linesListed.ToArray();
-
-                    File.WriteAllLines(settings.currentListFileFullPath, lines);
-                }
-                int selectedIndex = 0;
-                if (Affairs.SelectedIndex == 0 && Affairs.Items.Count > 1)
-                {
-                    Affairs.SelectedIndex++;
-                    selectedIndex = Affairs.SelectedIndex - 1;
-                }
-                else if (Affairs.Items.Count > 1)
-                {
-                    Affairs.SelectedIndex--;
-                    selectedIndex = Affairs.SelectedIndex + 1;
-                }
-                Affairs.Items.RemoveAt(selectedIndex);
+                DialogResult dialogres = MessageBox.Show("Do you want to delete the affair?",
+                    "Confirm form",
+                    MessageBoxButtons.YesNo);
+                if (dialogres == DialogResult.No) return;
             }
+
+            if (settings.CurrentListNotNull())
+            {
+                lines.RemoveAt(Affairs.SelectedIndex);
+
+                File.WriteAllLines(settings.currentListFileFullPath, lines);
+            }
+
+            int selectedIndex = 0;
+            if (Affairs.SelectedIndex == 0 && Affairs.Items.Count > 1)
+            {
+                Affairs.SelectedIndex++;
+                selectedIndex = Affairs.SelectedIndex - 1;
+            }
+            else if (Affairs.Items.Count > 1)
+            {
+                Affairs.SelectedIndex--;
+                selectedIndex = Affairs.SelectedIndex + 1;
+            }
+
+            Affairs.Items.RemoveAt(selectedIndex);
         }
         private void AddAffairButton_Click(object sender, EventArgs e)
         {
@@ -274,19 +263,19 @@ namespace AffairList
             {
                 affair = affair.Substring(0, affair.Length - priorityTag.Length - 1);
             }
-            affair = affair.Substring(0, affair.Length-1);
+            affair = affair.Substring(0, affair.Length-1); // Убираем точку в конце
 
             string renaming = Interaction
                 .InputBox("Enter renaming", "Input box", affair);
 
             if (ContainKeyWords(renaming)) return;
-            if (renaming.Length == 1) return;
+            if (string.IsNullOrEmpty(renaming)) return;
 
             selectedWord = selectedWord.Replace(affair, renaming);
 
             lines[Affairs.SelectedIndex] = selectedWord;
-            Affairs.Items[Affairs.SelectedIndex] = selectedWord.Replace(priorityTag, priorityWord)
-                .Replace(deadlineTag, "");
+            Affairs.Items[Affairs.SelectedIndex] = Affairs.Items[Affairs.SelectedIndex]
+                .ToString()!.Replace(affair, renaming);
 
             File.WriteAllLines(settings.currentListFileFullPath, lines);
         }
@@ -317,7 +306,7 @@ namespace AffairList
                 lines[Affairs.SelectedIndex] += " " + priorityTag;
             }
 
-            lines = lines.OrderByDescending(x => x.EndsWith(priorityTag)).ToArray();
+            lines = lines.OrderByDescending(x => x.EndsWith(priorityTag)).ToList();
             File.WriteAllLines(settings.currentListFileFullPath, lines);
             LoadText();
         }
@@ -327,7 +316,6 @@ namespace AffairList
             {
                 isDragging = true;
                 currentDragIndex = Affairs.SelectedIndex;
-                if (currentDragIndex == Affairs.SelectedIndex) isDragging = false;
             }
         }
 
@@ -354,7 +342,7 @@ namespace AffairList
 
         private void MinimizeButton_Click(object sender, EventArgs e)
         {
-            WindowState = FormWindowState.Minimized;
+            MinimizeForm();
         }
 
         private void MinimizeButton_MouseEnter(object sender, EventArgs e)
@@ -372,7 +360,7 @@ namespace AffairList
             foreach (var profile in profiles)
             {
                 FileInfo profileInfo = new FileInfo(profile);
-                if (profileInfo.Name == ProfileBox.SelectedItem.ToString())
+                if (profileInfo.Name == ProfileBox.SelectedItem!.ToString())
                 {
                     settings.SaveParametr("currentProfile", profileInfo.FullName);
                     settings.currentListFileFullPath = profileInfo.FullName;

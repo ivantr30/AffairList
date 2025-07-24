@@ -1,4 +1,5 @@
 ﻿using Gma.System.MouseKeyHook;
+using System.Threading.Tasks;
 
 namespace AffairList
 {
@@ -20,11 +21,6 @@ namespace AffairList
             LoadText();
             SetLocation();
         }
-        protected override void Restart()
-        {
-            Close();
-            base.Restart();
-        }
         private void SetLocation()
         {
             TopMost = true;
@@ -33,10 +29,13 @@ namespace AffairList
 
             Width = settings.width;
             Height = settings.height + settings.height / 10;
+
             Affairs.AutoSize = false;
             Affairs.Size = new Size(500, Height);
             Affairs.Padding = new Padding(0, 0, 180, 0);
+
             Affairs.ForeColor = settings.textColor;
+
             BackColor = settings.bgtextColor;
             TransparencyKey = settings.bgtextColor;
         }
@@ -50,6 +49,7 @@ namespace AffairList
             else
             {
                 MessageBox.Show("Нет настроек");
+                Restart();
             }
         }
         private void LoadText()
@@ -73,7 +73,8 @@ namespace AffairList
             }
             else
             {
-                Affairs.Text = "Нет дел";
+                MessageBox.Show("Ошибка, не найден текущий список дел");
+                Restart();
             }
             Affairs.Text += "\nЭто весь список ваших дел";
         }
@@ -125,15 +126,11 @@ namespace AffairList
         }
         private void OnListMouseDown(MouseEventArgs e)
         {
-            if (canReplace) lastPoint = new Point(e.X, e.Y);
+            SetLastPoint(e);
         }
         private void OnListMouseMove(MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left && canReplace)
-            {
-                Left += e.X - lastPoint.X;
-                Top += e.Y - lastPoint.Y;
-            }
+            MoveForm(e);
         }
         private void OnListMouseUp(MouseEventArgs e)
         {

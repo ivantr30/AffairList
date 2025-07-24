@@ -35,7 +35,6 @@ F:\source\repos\AffairList\AffairList\obj\Debug\net8.0-windows\AffairList.Change
 F:\source\repos\AffairList\AffairList\obj\Debug\net8.0-windows\AffairList.ChangeProfileForm.resources
 F:\source\repos\AffairList\AffairList\obj\Debug\net8.0-windows\AffairList.HotKeySettings.resources
 F:\source\repos\AffairList\AffairList\obj\Debug\net8.0-windows\AffairList.List.resources
-F:\source\repos\AffairList\AffairList\obj\Debug\net8.0-windows\AffairList.Settings.resources
 F:\source\repos\AffairList\AffairList\obj\Debug\net8.0-windows\AffairList.csproj.GenerateResource.cache
 F:\source\repos\AffairList\AffairList\obj\Debug\net8.0-windows\AffairList.GeneratedMSBuildEditorConfig.editorconfig
 F:\source\repos\AffairList\AffairList\obj\Debug\net8.0-windows\AffairList.AssemblyInfoInputs.cache
@@ -51,3 +50,4 @@ F:\source\repos\AffairList\AffairList\obj\Debug\net8.0-windows\ref\AffairList.dl
 F:\source\repos\AffairList\AffairList\obj\Debug\net8.0-windows\AffairList.BaseForm.resources
 F:\source\repos\AffairList\AffairList\obj\Debug\net8.0-windows\AffairList.InputKeyForm.resources
 F:\source\repos\AffairList\AffairList\obj\Debug\net8.0-windows\AffairList.InputDeadlineForm.resources
+F:\source\repos\AffairList\AffairList\obj\Debug\net8.0-windows\AffairList.SettingsForm.resources

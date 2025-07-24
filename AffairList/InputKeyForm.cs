@@ -16,12 +16,9 @@ namespace AffairList
             {
                 Close();
             }
-            else
-            {
-                Key = e.KeyCode;
-                OnKeyPressed?.Invoke();
-                Close();
-            }
+            Key = e.KeyCode;
+            OnKeyPressed?.Invoke();
+            Close();
         }
     }
 }
