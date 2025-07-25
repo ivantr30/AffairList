@@ -19,6 +19,7 @@ namespace AffairList
             trayIcon.Visible = true;
 
             settings = new Settings();
+            loadTimeManager = new LoadTimeManager(settings);
         }
         private void OnOpen(object sender, EventArgs e)
         {
@@ -29,6 +30,11 @@ namespace AffairList
         private void OnExit(object sender, EventArgs e)
         {
             Exit();
+        }
+        protected override void Exit()
+        {
+            loadTimeManager.SaveTime();
+            base.Exit();
         }
 
         private void CloseButton_Click(object sender, EventArgs e)

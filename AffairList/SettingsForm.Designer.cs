@@ -33,6 +33,10 @@
             CloseButton = new Label();
             SettingsLab = new Label();
             panel1 = new Panel();
+            DistanceToNotificate = new Label();
+            DistanceToNotificateLab = new Label();
+            NotificationState = new Label();
+            NotificationStateLab = new Label();
             AskToDeleteState = new Label();
             AskToDelete = new Label();
             ThemeBoxCB = new ComboBox();
@@ -110,6 +114,10 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(72, 3, 111);
+            panel1.Controls.Add(DistanceToNotificate);
+            panel1.Controls.Add(DistanceToNotificateLab);
+            panel1.Controls.Add(NotificationState);
+            panel1.Controls.Add(NotificationStateLab);
             panel1.Controls.Add(AskToDeleteState);
             panel1.Controls.Add(AskToDelete);
             panel1.Controls.Add(ThemeBoxCB);
@@ -131,6 +139,65 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(440, 511);
             panel1.TabIndex = 1;
+            // 
+            // DistanceToNotificate
+            // 
+            DistanceToNotificate.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            DistanceToNotificate.AutoSize = true;
+            DistanceToNotificate.Font = new Font("Unispace", 13F);
+            DistanceToNotificate.ForeColor = Color.White;
+            DistanceToNotificate.Location = new Point(386, 356);
+            DistanceToNotificate.Name = "DistanceToNotificate";
+            DistanceToNotificate.Size = new Size(21, 21);
+            DistanceToNotificate.TabIndex = 28;
+            DistanceToNotificate.Text = "0";
+            DistanceToNotificate.TextAlign = ContentAlignment.MiddleRight;
+            DistanceToNotificate.DoubleClick += DistanceToNotificate_DoubleClick;
+            DistanceToNotificate.MouseEnter += DistanceToNotificate_MouseEnter;
+            DistanceToNotificate.MouseLeave += DistanceToNotificate_MouseLeave;
+            // 
+            // DistanceToNotificateLab
+            // 
+            DistanceToNotificateLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            DistanceToNotificateLab.AutoSize = true;
+            DistanceToNotificateLab.Font = new Font("Unispace", 13F);
+            DistanceToNotificateLab.ForeColor = Color.White;
+            DistanceToNotificateLab.Location = new Point(12, 356);
+            DistanceToNotificateLab.Name = "DistanceToNotificateLab";
+            DistanceToNotificateLab.Size = new Size(252, 21);
+            DistanceToNotificateLab.TabIndex = 27;
+            DistanceToNotificateLab.Text = "Distance to notificate";
+            DistanceToNotificateLab.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // NotificationState
+            // 
+            NotificationState.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            NotificationState.AutoSize = true;
+            NotificationState.Font = new Font("Unispace", 13F);
+            NotificationState.ForeColor = Color.White;
+            NotificationState.Location = new Point(375, 325);
+            NotificationState.Name = "NotificationState";
+            NotificationState.Size = new Size(32, 21);
+            NotificationState.TabIndex = 26;
+            NotificationState.Text = "On";
+            NotificationState.TextAlign = ContentAlignment.MiddleCenter;
+            NotificationState.MouseDown += NotificationState_MouseDown;
+            NotificationState.MouseEnter += NotificationState_MouseEnter;
+            NotificationState.MouseLeave += NotificationState_MouseLeave;
+            NotificationState.MouseUp += NotificationState_MouseUp;
+            // 
+            // NotificationStateLab
+            // 
+            NotificationStateLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            NotificationStateLab.AutoSize = true;
+            NotificationStateLab.Font = new Font("Unispace", 13F);
+            NotificationStateLab.ForeColor = Color.White;
+            NotificationStateLab.Location = new Point(12, 325);
+            NotificationStateLab.Name = "NotificationStateLab";
+            NotificationStateLab.Size = new Size(153, 21);
+            NotificationStateLab.TabIndex = 25;
+            NotificationStateLab.Text = "Notificate me";
+            NotificationStateLab.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // AskToDeleteState
             // 
@@ -165,10 +232,11 @@
             // ThemeBoxCB
             // 
             ThemeBoxCB.FormattingEnabled = true;
-            ThemeBoxCB.Location = new Point(286, 325);
+            ThemeBoxCB.Location = new Point(286, 387);
             ThemeBoxCB.Name = "ThemeBoxCB";
             ThemeBoxCB.Size = new Size(121, 25);
             ThemeBoxCB.TabIndex = 22;
+            ThemeBoxCB.SelectedIndexChanged += ThemeBoxCB_SelectedIndexChanged;
             // 
             // CurrentThemeLab
             // 
@@ -176,7 +244,7 @@
             CurrentThemeLab.AutoSize = true;
             CurrentThemeLab.Font = new Font("Unispace", 13F);
             CurrentThemeLab.ForeColor = Color.White;
-            CurrentThemeLab.Location = new Point(12, 325);
+            CurrentThemeLab.Location = new Point(12, 387);
             CurrentThemeLab.Name = "CurrentThemeLab";
             CurrentThemeLab.Size = new Size(153, 21);
             CurrentThemeLab.TabIndex = 21;
@@ -334,14 +402,14 @@
             BackButton.UseVisualStyleBackColor = false;
             BackButton.Click += BackButton_Click;
             // 
-            // Settings
+            // SettingsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(440, 511);
             Controls.Add(panel1);
             KeyPreview = true;
-            Name = "Settings";
+            Name = "SettingsForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Settings";
             FormClosing += Settings_FormClosing;
@@ -376,5 +444,9 @@
         private Label autostartStateLab;
         private Label AutostartLab;
         private Label MinimizeButton;
+        private Label NotificationState;
+        private Label NotificationStateLab;
+        private Label DistanceToNotificate;
+        private Label DistanceToNotificateLab;
     }
 }

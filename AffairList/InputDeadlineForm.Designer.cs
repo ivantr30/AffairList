@@ -40,7 +40,7 @@
             DeadlinePicker.Name = "DeadlinePicker";
             DeadlinePicker.Size = new Size(200, 25);
             DeadlinePicker.TabIndex = 0;
-            DeadlinePicker.Value = new DateTime(2025, 6, 27, 0, 51, 50, 0);
+            DeadlinePicker.Value = new DateTime(2025, 7, 25, 0, 0, 0, 0);
             // 
             // ConfirmButton
             // 

@@ -31,6 +31,15 @@ namespace AffairList
             {
                 AskToDeleteState.Text = "OFF";
             }
+            if (settings.DoesNotificate())
+            {
+                NotificationState.Text = "On";
+            }
+            else
+            {
+                NotificationState.Text = "OFF";
+            }
+            DistanceToNotificate.Text = settings.GetNotificationDayDistance().ToString();
         }
         private void CloseButton_Click(object sender, EventArgs e)
         {
@@ -185,10 +194,12 @@ namespace AffairList
             int prevX = settings.GetProfileX(), prevY = settings.GetProfileY();
             try
             {
-                settings.SetProfileX(int.Parse(Interaction.InputBox("Enter x coordinate," +
+                string newX = Interaction.InputBox("Enter x coordinate," +
                     $" max width is {settings.width}",
-                    "InputWindow", "")));
-                if(settings.GetProfileX() > settings.width) throw new Exception();
+                    "InputWindow", "");
+                if(string.IsNullOrEmpty(newX)) return;
+                settings.SetProfileX(int.Parse(newX));
+                if (settings.GetProfileX() > settings.width) throw new Exception();
             }
             catch
             {
@@ -198,9 +209,11 @@ namespace AffairList
             }
             try
             {
-                settings.SetProfileY(int.Parse(Interaction.InputBox("Enter y coordinate" +
+                string newY = Interaction.InputBox("Enter y coordinate" +
                     $" max height is {settings.height}",
-                    "InputWindow", "")));
+                    "InputWindow", "");
+                if (string.IsNullOrEmpty(newY)) return;
+                settings.SetProfileY(int.Parse(newY));
                 if (settings.GetProfileY() > settings.height) throw new Exception();
             }
             catch
@@ -272,6 +285,63 @@ namespace AffairList
         private void MinimizeButton_MouseLeave(object sender, EventArgs e)
         {
             MinimizeButton.ForeColor = Color.Black;
+        }
+
+        private void ThemeBoxCB_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void NotificationState_MouseDown(object sender, MouseEventArgs e)
+        {
+            NotificationState.ForeColor = Color.DarkGray;
+            settings.SetDoesNotificate(!settings.DoesNotificate());
+            NotificationState.Text = settings.DoesNotificate() ? "On" : "OFF";
+            isConfirmed = false;
+        }
+
+        private void NotificationState_MouseEnter(object sender, EventArgs e)
+        {
+            NotificationState.ForeColor = Color.Gray;
+        }
+
+        private void NotificationState_MouseLeave(object sender, EventArgs e)
+        {
+            NotificationState.ForeColor = Color.White;
+        }
+
+        private void NotificationState_MouseUp(object sender, MouseEventArgs e)
+        {
+            NotificationState.ForeColor = Color.Gray;
+        }
+
+        private void DistanceToNotificate_MouseEnter(object sender, EventArgs e)
+        {
+            DistanceToNotificate.ForeColor = Color.Gray;
+        }
+
+        private void DistanceToNotificate_MouseLeave(object sender, EventArgs e)
+        {
+            DistanceToNotificate.ForeColor = Color.White;
+        }
+
+        private void DistanceToNotificate_DoubleClick(object sender, EventArgs e)
+        {
+            try
+            {
+                string distance = Interaction.InputBox(
+                    "Enter how many days far from the deadline you want to be notified",
+                    "Day distance to notificate input box",
+                    settings.GetNotificationDayDistance().ToString());
+                if (string.IsNullOrEmpty(distance)) return;
+                int distanceToNotificate = int.Parse(distance);
+                settings.SetNotificationDayDistance(distanceToNotificate);
+                DistanceToNotificate.Text = distanceToNotificate.ToString();
+                isConfirmed = false;
+            }
+            catch{
+                MessageBox.Show("Error, wrong input type");
+            }
         }
     }
 }

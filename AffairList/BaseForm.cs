@@ -5,6 +5,7 @@ namespace AffairList
     {
         protected Point lastPoint;
         protected Settings settings;
+        protected LoadTimeManager loadTimeManager;
         public BaseForm(Settings settings)
         {
             InitializeComponent();

@@ -14,18 +14,14 @@ namespace AffairList
         public readonly int width = Screen.PrimaryScreen.WorkingArea.Width,
                    height = Screen.PrimaryScreen.WorkingArea.Height;
 
-        private string currentParametr = "";
-
         private SettingsModel settings;
 
         public Settings()
         {
-            settings = new SettingsModel();
-
             listsDirectoryFullPath = Application.StartupPath + "profiles\\";
             defaultListFileFullPath = listsDirectoryFullPath + "\\list.txt";
-            settings.currentListFileFullPath = listsDirectoryFullPath + "\\list.txt";
             settingsFileFullPath = Application.StartupPath + "settings.json";
+
             Initialize();
         }
         private void Initialize()
@@ -55,7 +51,7 @@ namespace AffairList
         }
         public void WriteBaseSettings()
         {
-            File.WriteAllText(settingsFileFullPath, JsonConvert.SerializeObject(new BaseSettings()));
+            File.WriteAllText(settingsFileFullPath, JsonConvert.SerializeObject(new SettingsModel()));
         }
         private void ChooseProfile()
         {
@@ -189,6 +185,22 @@ namespace AffairList
         public int GetProfileY()
         {
             return settings.y;
+        }
+        public bool DoesNotificate()
+        {
+            return settings.DoesNotificate;
+        }
+        public void SetDoesNotificate(bool doesNotificate)
+        {
+            settings.DoesNotificate = doesNotificate;
+        }
+        public int GetNotificationDayDistance()
+        {
+            return settings.notificationDayDistance;
+        }
+        public void SetNotificationDayDistance(int notificationDistance)
+        {
+            settings.notificationDayDistance = notificationDistance;
         }
     }
 }

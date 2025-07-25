@@ -8,6 +8,7 @@ namespace AffairList
         public InputDeadlineForm()
         {
             InitializeComponent();
+            DeadlinePicker.Value = DateTime.Now.ToLocalTime();
         }
 
         private void BackButton_Click(object sender, EventArgs e)
