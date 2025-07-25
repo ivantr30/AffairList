@@ -18,9 +18,25 @@ namespace AffairList
 
         private void ConfirmButton_Click(object sender, EventArgs e)
         {
+            Confirm();
+        }
+        private void Confirm()
+        {
             deadline = DeadlinePicker.Value;
             OnConfirm?.Invoke();
             Close();
+        }
+
+        private void DeadlinePicker_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                Confirm();
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                Close();
+            }
         }
     }
 }

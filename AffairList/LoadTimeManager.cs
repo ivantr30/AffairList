@@ -27,7 +27,7 @@ namespace AffairList
             {
                 loadTime = JsonConvert
                     .DeserializeObject<LoadTimeModel>(File.ReadAllText(LoadTimeFileFullPath))!;
-                if (loadTime == null) throw new Exception();
+                if (loadTime == null) throw new Exception("loadfile is null");
                 if (GetPreviousLoadTime().Day != DateTime.Now.Day && settings.DoesNotificate())
                 {
                     string[] affairs = File.ReadAllLines(settings.GetCurrentProfile());
@@ -38,7 +38,7 @@ namespace AffairList
                             DateTime deadline = DateTime.Parse(affair.Substring(10, 11));
                             int daysLeft = 0;
                             daysLeft = deadline.Day - DateTime.Now.Day;
-                            if (daysLeft <= 1)
+                            if (daysLeft <= settings.GetNotificationDayDistance())
                             {
                                 NotifyIcon notification = new NotifyIcon();
                                 notification.Icon = SystemIcons.Exclamation;
@@ -48,6 +48,8 @@ namespace AffairList
                                     notification.BalloonTipText = affair.Substring(10) + $" - осталось {24 - DateTime.Now.Hour} часов";
                                 else if(daysLeft == 1)
                                     notification.BalloonTipText = affair.Substring(10) + " - остался 1 день";
+                                else if(daysLeft > 1)
+                                    notification.BalloonTipText = affair.Substring(10) + $" - осталось {daysLeft} дней";
                                 else
                                     notification.BalloonTipText = affair.Substring(10) + " - просрочено";
 

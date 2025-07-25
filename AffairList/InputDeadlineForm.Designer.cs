@@ -41,6 +41,7 @@
             DeadlinePicker.Size = new Size(200, 25);
             DeadlinePicker.TabIndex = 0;
             DeadlinePicker.Value = new DateTime(2025, 7, 25, 0, 0, 0, 0);
+            DeadlinePicker.KeyDown += DeadlinePicker_KeyDown;
             // 
             // ConfirmButton
             // 
