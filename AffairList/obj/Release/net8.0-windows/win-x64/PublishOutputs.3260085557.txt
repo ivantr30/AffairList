@@ -1,7 +1,0 @@
-C:\Users\Ivan\Desktop\AffairList\AffairList.pdb
-C:\Users\Ivan\Desktop\AffairList\D3DCompiler_47_cor3.dll
-C:\Users\Ivan\Desktop\AffairList\PenImc_cor3.dll
-C:\Users\Ivan\Desktop\AffairList\PresentationNative_cor3.dll
-C:\Users\Ivan\Desktop\AffairList\vcruntime140_cor3.dll
-C:\Users\Ivan\Desktop\AffairList\wpfgfx_cor3.dll
-C:\Users\Ivan\Desktop\AffairList\AffairList.exe

@@ -1,6 +1,0 @@
-C:\Users\Ivan\Desktop\AffairList\AffairList.exe
-C:\Users\Ivan\Desktop\AffairList\AffairList.dll
-C:\Users\Ivan\Desktop\AffairList\AffairList.deps.json
-C:\Users\Ivan\Desktop\AffairList\AffairList.runtimeconfig.json
-C:\Users\Ivan\Desktop\AffairList\AffairList.pdb
-C:\Users\Ivan\Desktop\AffairList\Gma.System.MouseKeyHook.dll
