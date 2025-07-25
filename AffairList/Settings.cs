@@ -30,7 +30,7 @@ namespace AffairList
             if(!ListsDirectoryExists()) CreateListsDirectory();
             try
             {
-                settings = JsonConvert.DeserializeObject<SettingsModel>(File.ReadAllText(settingsFileFullPath));
+                settings = JsonConvert.DeserializeObject<SettingsModel>(File.ReadAllText(settingsFileFullPath))!;
                 if (!File.Exists(GetCurrentProfile()))
                 {
                     ChooseProfile();

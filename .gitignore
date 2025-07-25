@@ -1,6 +1,6 @@
 .vs/
 profiles
 **/settings.txt
-bin/
-obj/
-Properties/
+**/bin/
+**/obj/
+**/Properties/
