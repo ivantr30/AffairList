@@ -5,9 +5,9 @@ namespace AffairList
     {
         protected Point lastPoint;
         protected Settings settings;
-        protected LoadTimeManager loadTimeManager;
         public BaseForm(Settings settings)
         {
+            this.settings = settings;
             InitializeComponent();
         }
         public BaseForm()
@@ -38,8 +38,8 @@ namespace AffairList
         }
         protected void CreateForm(BaseForm form)
         {
-            Hide();
             form.Show();
+            Hide();
         }
         protected void MinimizeForm()
         {

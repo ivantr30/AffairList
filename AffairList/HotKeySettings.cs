@@ -5,10 +5,10 @@ namespace AffairList
     {
         private bool isConfirmed = true;
         private Keys key;
-        public HotKeySettings(Settings settings)
+        public HotKeySettings(Settings settings) 
+            : base(settings) 
         {
             InitializeComponent();
-            this.settings = settings;
             LoadSettings();
         }
         private void LoadSettings()

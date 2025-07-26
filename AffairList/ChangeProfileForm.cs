@@ -9,10 +9,10 @@ namespace AffairList
         private string priorityWord = " Priority.txt";
         private string priorityTag = " Priority";
 
-        public ChangeProfileForm(Settings settings)
+        public ChangeProfileForm(Settings settings) : 
+            base(settings)
         {
             InitializeComponent();
-            this.settings = settings;
             LoadProfiles();
         }
         private void LoadProfiles()

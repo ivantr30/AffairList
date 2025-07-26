@@ -12,10 +12,10 @@ namespace AffairList
         private string deadlineTag = "<deadline>";
 
         public ToDoList(Settings settings)
+            : base(settings)
         {
             InitializeComponent();
             SubscribeGlobalHook();
-            this.settings = settings;
 
             LoadText();
             SetLocation();

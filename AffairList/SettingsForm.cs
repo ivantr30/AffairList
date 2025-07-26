@@ -5,9 +5,9 @@ namespace AffairList
     {
         private bool isConfirmed = true;
         public SettingsForm(Settings settings)
+            : base(settings)
         {
             InitializeComponent();
-            this.settings = settings;
             LoadSettings();
         }
         private void LoadSettings()

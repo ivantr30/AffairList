@@ -20,9 +20,9 @@ namespace AffairList
         private Keys deleteAffairKey = Keys.Delete;
 
         public ChangeListForm(Settings settings)
+            : base(settings)
         {
             InitializeComponent();
-            this.settings = settings;
             LoadProfiles();
             LoadText();
         }
