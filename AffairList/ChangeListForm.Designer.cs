@@ -261,6 +261,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(563, 405);
             Controls.Add(panel1);
+            FormBorderStyle = FormBorderStyle.None;
             KeyPreview = true;
             Name = "ChangeListForm";
             StartPosition = FormStartPosition.CenterScreen;

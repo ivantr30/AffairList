@@ -45,14 +45,14 @@
             Affairs.MouseMove += Affairs_MouseMove;
             Affairs.MouseUp += Affairs_MouseUp;
             // 
-            // List
+            // ToDoList
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
             ClientSize = new Size(1202, 666);
             Controls.Add(Affairs);
-            Name = "List";
+            Name = "ToDoList";
             ShowInTaskbar = false;
             Text = "List";
             TransparencyKey = Color.Black;

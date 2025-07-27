@@ -408,6 +408,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(440, 511);
             Controls.Add(panel1);
+            FormBorderStyle = FormBorderStyle.None;
             KeyPreview = true;
             Name = "SettingsForm";
             StartPosition = FormStartPosition.CenterScreen;

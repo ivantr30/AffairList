@@ -122,7 +122,7 @@ namespace AffairList
                 return;
             }
             ToDoList list = new ToDoList(settings);
-            list.BackColor = Color.White;
+            list.GetAffairs().BackColor = Color.White;
             list.canReplace = true;
             CreateForm(list);
         }

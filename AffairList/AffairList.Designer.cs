@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            ErrorHelpLab = new Label();
             ChangeProfileButton = new Button();
             HotKeyButton = new Button();
             SettingsButton = new Button();
@@ -40,7 +41,6 @@
             MinimizeButton = new Label();
             CloseButton = new Label();
             AffairListLab = new Label();
-            ErrorHelpLab = new Label();
             panel1.SuspendLayout();
             NameBackground.SuspendLayout();
             SuspendLayout();
@@ -62,6 +62,19 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(450, 482);
             panel1.TabIndex = 0;
+            // 
+            // ErrorHelpLab
+            // 
+            ErrorHelpLab.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            ErrorHelpLab.AutoSize = true;
+            ErrorHelpLab.Font = new Font("Unispace", 10F);
+            ErrorHelpLab.ForeColor = SystemColors.ButtonHighlight;
+            ErrorHelpLab.Location = new Point(25, 88);
+            ErrorHelpLab.Name = "ErrorHelpLab";
+            ErrorHelpLab.Size = new Size(403, 16);
+            ErrorHelpLab.TabIndex = 4;
+            ErrorHelpLab.Text = "Found an error? - ivanchikinator30 @ivantr30";
+            ErrorHelpLab.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // ChangeProfileButton
             // 
@@ -222,25 +235,13 @@
             AffairListLab.MouseDown += AffairListLab_MouseDown;
             AffairListLab.MouseMove += AffairListLab_MouseMove;
             // 
-            // ErrorHelpLab
-            // 
-            ErrorHelpLab.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ErrorHelpLab.AutoSize = true;
-            ErrorHelpLab.Font = new Font("Unispace", 10F);
-            ErrorHelpLab.ForeColor = SystemColors.ButtonHighlight;
-            ErrorHelpLab.Location = new Point(25, 88);
-            ErrorHelpLab.Name = "ErrorHelpLab";
-            ErrorHelpLab.Size = new Size(403, 16);
-            ErrorHelpLab.TabIndex = 4;
-            ErrorHelpLab.Text = "Found an error? - ivanchikinator30 @ivantr30";
-            ErrorHelpLab.TextAlign = ContentAlignment.MiddleCenter;
-            // 
             // AffairList
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(450, 482);
             Controls.Add(panel1);
+            FormBorderStyle = FormBorderStyle.None;
             KeyPreview = true;
             Name = "AffairList";
             StartPosition = FormStartPosition.CenterScreen;

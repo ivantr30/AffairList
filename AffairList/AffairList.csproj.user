@@ -25,10 +25,10 @@
     <Compile Update="InputKeyForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="ToDoList.cs">
+    <Compile Update="SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="SettingsForm.cs">
+    <Compile Update="ToDoList.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

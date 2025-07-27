@@ -48,6 +48,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(399, 277);
             Controls.Add(ClickKeyLabel);
+            FormBorderStyle = FormBorderStyle.None;
             KeyPreview = true;
             Name = "InputKeyForm";
             StartPosition = FormStartPosition.CenterScreen;

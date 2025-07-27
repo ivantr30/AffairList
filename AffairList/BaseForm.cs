@@ -1,7 +1,7 @@
 ﻿
 namespace AffairList
 {
-    public abstract partial class BaseForm : Form
+    public partial class BaseForm : Form
     {
         protected Point lastPoint;
         protected Settings settings;

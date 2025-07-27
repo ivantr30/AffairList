@@ -1,7 +1,7 @@
 ﻿
 namespace AffairList
 {
-    public partial class InputDeadlineForm : Form
+    public partial class InputDeadlineForm : BaseForm
     {
         public DateTime deadline;
         public event Action OnConfirm;

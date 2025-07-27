@@ -218,6 +218,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(440, 511);
             Controls.Add(panel1);
+            FormBorderStyle = FormBorderStyle.None;
             Name = "HotKeySettings";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "HotKeySettings";

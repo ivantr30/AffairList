@@ -125,11 +125,11 @@ namespace AffairList
         }
         private void OnListMouseDown(MouseEventArgs e)
         {
-            SetLastPoint(e);
+            if(canReplace) SetLastPoint(e);
         }
         private void OnListMouseMove(MouseEventArgs e)
         {
-            MoveForm(e);
+            if (canReplace) MoveForm(e);
         }
         private void OnListMouseUp(MouseEventArgs e)
         {
@@ -141,6 +141,10 @@ namespace AffairList
                 settings.SaveSettings();
                 Restart();
             }
+        }
+        public Label GetAffairs()
+        {
+            return Affairs;
         }
 
         private void List_FormClosing(object sender, FormClosingEventArgs e)
