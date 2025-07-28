@@ -3,7 +3,7 @@ namespace AffairList
 {
     public partial class SettingsForm : BaseForm
     {
-        private bool isConfirmed = true;
+        private bool _isConfirmed = true;
         public SettingsForm(Settings settings)
             : base(settings)
         {
@@ -90,7 +90,7 @@ namespace AffairList
 
         private void BackButton_Click(object sender, EventArgs e)
         {
-            if (!isConfirmed)
+            if (!_isConfirmed)
             {
                 DialogResult result = MessageBox.Show(
                     "Are you sure to leave with unsaved settings?",
@@ -125,7 +125,7 @@ namespace AffairList
 
         private void ConfirmButton_Click(object sender, EventArgs e)
         {
-            isConfirmed = true;
+            _isConfirmed = true;
             settings.SaveSettings();
         }
 
@@ -142,7 +142,7 @@ namespace AffairList
                 autostartStateLab.Text = "On";
                 settings.SetAutostart(true);
             }
-            isConfirmed = false;
+            _isConfirmed = false;
         }
 
         private void autostartStateLab_MouseLeave(object sender, EventArgs e)
@@ -180,7 +180,7 @@ namespace AffairList
             var dialogResult = ColorPicker.ShowDialog();
             if (dialogResult == DialogResult.OK)
             {
-                isConfirmed = false;
+                _isConfirmed = false;
             }
             else
             {
@@ -222,7 +222,7 @@ namespace AffairList
                 settings.SetProfileY(prevY);
                 return;
             }
-            isConfirmed = false;
+            _isConfirmed = false;
             LocationLab.Text = settings.GetProfileX() + ", " + settings.GetProfileY();
         }
 
@@ -254,7 +254,7 @@ namespace AffairList
                 AskToDeleteState.Text = "On";
                 settings.SetAskToDelete(true);
             }
-            isConfirmed = false;
+            _isConfirmed = false;
         }
 
         private void AskToDeleteState_MouseLeave(object sender, EventArgs e)
@@ -297,7 +297,7 @@ namespace AffairList
             NotificationState.ForeColor = Color.DarkGray;
             settings.SetDoesNotificate(!settings.DoesNotificate());
             NotificationState.Text = settings.DoesNotificate() ? "On" : "OFF";
-            isConfirmed = false;
+            _isConfirmed = false;
         }
 
         private void NotificationState_MouseEnter(object sender, EventArgs e)
@@ -337,7 +337,7 @@ namespace AffairList
                 int distanceToNotificate = int.Parse(distance);
                 settings.SetNotificationDayDistance(distanceToNotificate);
                 DistanceToNotificate.Text = distanceToNotificate.ToString();
-                isConfirmed = false;
+                _isConfirmed = false;
             }
             catch{
                 MessageBox.Show("Error, wrong input type");

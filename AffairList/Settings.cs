@@ -4,22 +4,23 @@ namespace AffairList
 {
     public class Settings
     {
+        private readonly string _defaultListFileFullPath;
+
         public readonly string listsDirectoryFullPath;
-        private readonly string defaultListFileFullPath;
         public readonly string settingsFileFullPath;
 
-        private readonly string appName = "AffairList";
-        private readonly string exePath = Application.ExecutablePath;
+        private const string _appName = "AffairList";
+        private readonly string _exePath = Application.ExecutablePath;
 
-        public readonly int width = Screen.PrimaryScreen.WorkingArea.Width,
-                   height = Screen.PrimaryScreen.WorkingArea.Height;
+        public readonly int width = Screen.PrimaryScreen.WorkingArea.Width;
+        public readonly int height = Screen.PrimaryScreen.WorkingArea.Height;
 
-        private SettingsModel settings;
+        private SettingsModel _settings;
 
         public Settings()
         {
             listsDirectoryFullPath = Application.StartupPath + "profiles\\";
-            defaultListFileFullPath = listsDirectoryFullPath + "\\list.txt";
+            _defaultListFileFullPath = listsDirectoryFullPath + "\\list.txt";
             settingsFileFullPath = Application.StartupPath + "settings.json";
 
             Initialize();
@@ -30,18 +31,18 @@ namespace AffairList
             if(!ListsDirectoryExists()) CreateListsDirectory();
             try
             {
-                settings = JsonConvert.DeserializeObject<SettingsModel>(File.ReadAllText(settingsFileFullPath))!;
+                _settings = JsonConvert.DeserializeObject<SettingsModel>(File.ReadAllText(settingsFileFullPath))!;
                 if (!File.Exists(GetCurrentProfile()))
                 {
                     ChooseProfile();
                 }
                 if (DoesAutostart())
                 {
-                    EnableAutoStart(appName, exePath);
+                    EnableAutoStart(_appName, _exePath);
                 }
                 else
                 {
-                    DisableAutoStart(appName);
+                    DisableAutoStart(_appName);
                 }
             }
             catch
@@ -107,100 +108,100 @@ namespace AffairList
         }
         public void CreateDefaultList()
         {
-            using (File.Create(defaultListFileFullPath)) { }
-            SetCurrentProfile(defaultListFileFullPath);
+            using (File.Create(_defaultListFileFullPath)) { }
+            SetCurrentProfile(_defaultListFileFullPath);
         }
         public void SaveSettings()
         {
-            File.WriteAllText(settingsFileFullPath, JsonConvert.SerializeObject(settings));
+            File.WriteAllText(settingsFileFullPath, JsonConvert.SerializeObject(_settings));
         }
         public void SetCurrentProfile(string fullPath)
         {
-            settings.currentListFileFullPath = fullPath;
+            _settings.currentListFileFullPath = fullPath;
         }
         public string GetCurrentProfile()
         {
-            return settings.currentListFileFullPath;
+            return _settings.currentListFileFullPath;
         }
         public void SetAutostart(bool autostart)
         {
-            settings.autostartState = autostart;
+            _settings.autostartState = autostart;
         }
         public bool DoesAutostart()
         {
-            return settings.autostartState;
+            return _settings.autostartState;
         }
         public void SetAskToDelete(bool askToDelete)
         {
-            settings.askToDelete = askToDelete;
+            _settings.askToDelete = askToDelete;
         }
         public bool DoesAskToDelete()
         {
-            return settings.askToDelete;
+            return _settings.askToDelete;
         }
         public void SetCloseKey(Keys key)
         {
-            settings.closeKey = key;
+            _settings.closeKey = key;
         }
         public Keys GetCloseKey()
         {
-            return settings.closeKey;
+            return _settings.closeKey;
         }
         public void SetReturnKey(Keys key)
         {
-            settings.returnKey = key;
+            _settings.returnKey = key;
         }
         public Keys GetReturnKey()
         {
-            return settings.returnKey;
+            return _settings.returnKey;
         }
         public void SetTextColor(Color color)
         {
-            settings.textColor = color;
+            _settings.textColor = color;
         }
         public Color GetTextColor()
         {
-            return settings.textColor;
+            return _settings.textColor;
         }
         public void SetBgColor(Color color)
         {
-            settings.bgColor = color;
+            _settings.bgColor = color;
         }
         public Color GetBgColor()
         {
-            return settings.bgColor;
+            return _settings.bgColor;
         }
         public void SetProfileX(int x)
         {
-            settings.x = x;
+            _settings.x = x;
         }
         public int GetProfileX()
         {
-            return settings.x;
+            return _settings.x;
         }
         public void SetProfileY(int y)
         {
-            settings.y = y;
+            _settings.y = y;
         }
         public int GetProfileY()
         {
-            return settings.y;
+            return _settings.y;
         }
         public bool DoesNotificate()
         {
-            return settings.DoesNotificate;
+            return _settings.DoesNotificate;
         }
         public void SetDoesNotificate(bool doesNotificate)
         {
-            settings.DoesNotificate = doesNotificate;
+            _settings.DoesNotificate = doesNotificate;
         }
         public int GetNotificationDayDistance()
         {
-            return settings.notificationDayDistance;
+            return _settings.notificationDayDistance;
         }
         public void SetNotificationDayDistance(int notificationDistance)
         {
-            settings.notificationDayDistance = notificationDistance;
+            _settings.notificationDayDistance = notificationDistance;
         }
     }
 }

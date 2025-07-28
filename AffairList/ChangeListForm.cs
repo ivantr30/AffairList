@@ -4,20 +4,20 @@ namespace AffairList
 {
     public partial class ChangeListForm : BaseForm
     {
-        private int currentDragIndex = 0;
-        private int deadlineDateNTagLength = 21;
-        private int selectedAffairIndex = -1;
+        private int _currentDragIndex = 0;
+        private int _deadlineDateNTagLength = 21;
+        private int _selectedAffairIndex = -1;
 
-        private string priorityTag = "<priority>";
-        private string priorityWord = "\"Priority\"";
-        private string deadlineTag = "<deadline>";
+        private string _priorityTag = "<priority>";
+        private string _priorityWord = "\"Priority\"";
+        private string _deadlineTag = "<deadline>";
 
-        private List<string> lines;
+        private List<string> _lines;
 
-        private bool isDragging = false;
+        private bool _isDragging = false;
 
-        private Keys addAffairKey = Keys.Enter;
-        private Keys deleteAffairKey = Keys.Delete;
+        private Keys _addAffairKey = Keys.Enter;
+        private Keys _deleteAffairKey = Keys.Delete;
 
         public ChangeListForm(Settings settings)
             : base(settings)
@@ -45,25 +45,25 @@ namespace AffairList
             Affairs.Items.Clear();
             if (settings.CurrentListNotNull())
             {
-                lines = File.ReadAllLines(settings.GetCurrentProfile())
-                    .OrderByDescending(x => x.EndsWith(priorityTag)).ToList();
+                _lines = File.ReadAllLines(settings.GetCurrentProfile())
+                    .OrderByDescending(x => x.EndsWith(_priorityTag)).ToList();
 
-                foreach (string line in lines)
+                foreach (string line in _lines)
                 {
                     string currentLine = line;
-                    if (currentLine.EndsWith(priorityTag))
+                    if (currentLine.EndsWith(_priorityTag))
                     {
                         currentLine = currentLine
-                            .Substring(0, currentLine.Length - priorityTag.Length);
-                        currentLine += " " + priorityWord;
+                            .Substring(0, currentLine.Length - _priorityTag.Length);
+                        currentLine += " " + _priorityWord;
                     }
-                    if (currentLine.StartsWith(deadlineTag))
+                    if (currentLine.StartsWith(_deadlineTag))
                     {
-                        currentLine = currentLine.Substring(deadlineTag.Length);
+                        currentLine = currentLine.Substring(_deadlineTag.Length);
                     }
                     Affairs.Items.Add(currentLine);
                 }
-                if (selectedAffairIndex != -1 && Affairs.Items.Count > 0) Affairs.SelectedIndex = selectedAffairIndex;
+                if (_selectedAffairIndex != -1 && Affairs.Items.Count > 0) Affairs.SelectedIndex = _selectedAffairIndex;
                 else if (Affairs.Items.Count > 0) Affairs.SelectedIndex = 0;
             }
         }
@@ -77,11 +77,11 @@ namespace AffairList
             {
                 Restart();
             }
-            if (e.KeyCode == addAffairKey)
+            if (e.KeyCode == _addAffairKey)
             {
                 AddAffair();
             }
-            if (e.KeyCode == deleteAffairKey)
+            if (e.KeyCode == _deleteAffairKey)
             {
                 DeleteAffair();
             }
@@ -135,7 +135,7 @@ namespace AffairList
             Affairs.Items.Add(inputText);
             Affairs.SelectedIndex = Affairs.Items.Count - 1;
 
-            lines.Add(inputText);
+            _lines.Add(inputText);
 
             if (settings.CurrentListNotNull())
             {
@@ -157,9 +157,9 @@ namespace AffairList
 
             if (settings.CurrentListNotNull())
             {
-                lines.RemoveAt(Affairs.SelectedIndex);
+                _lines.RemoveAt(Affairs.SelectedIndex);
 
-                SaveText(lines);
+                SaveText(_lines);
             }
 
             int selectedIndex = 0;
@@ -203,7 +203,7 @@ namespace AffairList
         {
             if (Affairs.SelectedIndex == -1) return;
 
-            if (lines[Affairs.SelectedIndex].StartsWith(deadlineTag))
+            if (_lines[Affairs.SelectedIndex].StartsWith(_deadlineTag))
             {
                 DialogResult dialogres = MessageBox.Show(
                     "Do you want to delete the deadline or just change it. yes - delete, no - change?",
@@ -220,16 +220,16 @@ namespace AffairList
                 AddDeadline(hasDeadline: false);
             }
 
-            SaveText(lines);
+            SaveText(_lines);
         }
         private void DeleteDeadline()
         {
-            lines[Affairs.SelectedIndex] = lines[Affairs.SelectedIndex]
-                    .Substring(deadlineDateNTagLength);
+            _lines[Affairs.SelectedIndex] = _lines[Affairs.SelectedIndex]
+                    .Substring(_deadlineDateNTagLength);
 
             Affairs.Items[Affairs.SelectedIndex] = Affairs.Items[Affairs.SelectedIndex]
                 .ToString()!
-                .Substring(deadlineTag.Length + 1);
+                .Substring(_deadlineTag.Length + 1);
         }
         private void AddDeadline(bool hasDeadline)
         {
@@ -246,22 +246,22 @@ namespace AffairList
 
             Affairs.Items[Affairs.SelectedIndex] = deadline + " " + Affairs.Items[Affairs.SelectedIndex];
 
-            lines[Affairs.SelectedIndex] = deadlineTag + deadline + " " + lines[Affairs.SelectedIndex];
+            _lines[Affairs.SelectedIndex] = _deadlineTag + deadline + " " + _lines[Affairs.SelectedIndex];
         }
         private void RenameAffairButton_Click(object sender, EventArgs e)
         {
             if (Affairs.SelectedIndex == -1) return;
 
-            string selectedWord = lines[Affairs.SelectedIndex];
+            string selectedWord = _lines[Affairs.SelectedIndex];
             string affair = selectedWord;
 
-            if (selectedWord.StartsWith(deadlineTag))
+            if (selectedWord.StartsWith(_deadlineTag))
             {
-                affair = selectedWord.Substring(deadlineDateNTagLength);
+                affair = selectedWord.Substring(_deadlineDateNTagLength);
             }
-            if (selectedWord.EndsWith(priorityTag))
+            if (selectedWord.EndsWith(_priorityTag))
             {
-                affair = affair.Substring(0, affair.Length - priorityTag.Length - 1);
+                affair = affair.Substring(0, affair.Length - _priorityTag.Length - 1);
             }
             affair = affair.Substring(0, affair.Length-1); // Убираем точку в конце
 
@@ -273,19 +273,19 @@ namespace AffairList
 
             selectedWord = selectedWord.Replace(affair, renaming);
 
-            lines[Affairs.SelectedIndex] = selectedWord;
+            _lines[Affairs.SelectedIndex] = selectedWord;
             Affairs.Items[Affairs.SelectedIndex] = Affairs.Items[Affairs.SelectedIndex]
                 .ToString()!.Replace(affair, renaming);
 
-            SaveText(lines);
+            SaveText(_lines);
         }
         private bool ContainKeyWords(string word)
         {
-            if (word.Contains(deadlineTag) || word.Contains(priorityTag)
-                || word.Contains(priorityWord))
+            if (word.Contains(_deadlineTag) || word.Contains(_priorityTag)
+                || word.Contains(_priorityWord))
             {
                 MessageBox.Show("Error, you word is perhibited to contain - " +
-                    $"{deadlineTag}, {priorityTag}, {priorityWord}");
+                    $"{_deadlineTag}, {_priorityTag}, {_priorityWord}");
                 return true;
             }
             return false;
@@ -295,49 +295,49 @@ namespace AffairList
         {
             if (Affairs.SelectedIndex == -1) return;
 
-            if (lines[Affairs.SelectedIndex].EndsWith(priorityTag))
+            if (_lines[Affairs.SelectedIndex].EndsWith(_priorityTag))
             {
 
-                lines[Affairs.SelectedIndex] = lines[Affairs.SelectedIndex]
-                    .Substring(0, lines[Affairs.SelectedIndex].Length - (" " + priorityTag).Length);
+                _lines[Affairs.SelectedIndex] = _lines[Affairs.SelectedIndex]
+                    .Substring(0, _lines[Affairs.SelectedIndex].Length - (" " + _priorityTag).Length);
             }
             else
             {
-                lines[Affairs.SelectedIndex] += " " + priorityTag;
+                _lines[Affairs.SelectedIndex] += " " + _priorityTag;
             }
 
-            lines = lines.OrderByDescending(x => x.EndsWith(priorityTag)).ToList();
-            SaveText(lines);
+            _lines = _lines.OrderByDescending(x => x.EndsWith(_priorityTag)).ToList();
+            SaveText(_lines);
             LoadText();
         }
         private void Affairs_MouseDown(object sender, MouseEventArgs e)
         {
-            if (!isDragging)
+            if (!_isDragging)
             {
-                isDragging = true;
-                currentDragIndex = Affairs.SelectedIndex;
+                _isDragging = true;
+                _currentDragIndex = Affairs.SelectedIndex;
             }
         }
 
         private void Affairs_MouseUp(object sender, MouseEventArgs e)
         {
             if(Affairs.SelectedIndex == -1) return;
-            bool newPlacePriority = lines[Affairs.SelectedIndex].EndsWith(priorityTag);
-            bool oldPlacePriority = lines[currentDragIndex].EndsWith(priorityTag);
+            bool newPlacePriority = _lines[Affairs.SelectedIndex].EndsWith(_priorityTag);
+            bool oldPlacePriority = _lines[_currentDragIndex].EndsWith(_priorityTag);
 
             if (newPlacePriority != oldPlacePriority) return;
 
             // Не менять, уже нечего
-            var switcher = Affairs.Items[currentDragIndex];
-            Affairs.Items[currentDragIndex] = Affairs.Items[Affairs.SelectedIndex];
+            var switcher = Affairs.Items[_currentDragIndex];
+            Affairs.Items[_currentDragIndex] = Affairs.Items[Affairs.SelectedIndex];
             Affairs.Items[Affairs.SelectedIndex] = switcher;
 
-            switcher = lines[currentDragIndex];
-            lines[currentDragIndex] = lines[Affairs.SelectedIndex];
-            lines[Affairs.SelectedIndex] = (string)switcher;
+            switcher = _lines[_currentDragIndex];
+            _lines[_currentDragIndex] = _lines[Affairs.SelectedIndex];
+            _lines[Affairs.SelectedIndex] = (string)switcher;
 
-            isDragging = false;
-            SaveText(lines);
+            _isDragging = false;
+            SaveText(_lines);
         }
 
         private void MinimizeButton_Click(object sender, EventArgs e)
@@ -364,7 +364,7 @@ namespace AffairList
                 {
                     settings.SetCurrentProfile(profileInfo.FullName);
                     settings.SaveSettings();
-                    selectedAffairIndex = 0;
+                    _selectedAffairIndex = 0;
                 }
             }
         }
@@ -386,7 +386,7 @@ namespace AffairList
 
         private void Affairs_SelectedValueChanged(object sender, EventArgs e)
         {
-            selectedAffairIndex = Affairs.SelectedIndex;
+            _selectedAffairIndex = Affairs.SelectedIndex;
         }
         private async Task SaveText(List<string> lines)
         {

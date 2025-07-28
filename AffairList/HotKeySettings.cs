@@ -3,8 +3,8 @@ namespace AffairList
 {
     public partial class HotKeySettings : BaseForm
     {
-        private bool isConfirmed = true;
-        private Keys key;
+        private bool _isConfirmed = true;
+        private Keys _inputKey;
         public HotKeySettings(Settings settings) 
             : base(settings) 
         {
@@ -18,7 +18,7 @@ namespace AffairList
         }
         private void BackButton_Click(object sender, EventArgs e)
         {
-            if (!isConfirmed)
+            if (!_isConfirmed)
             {
                 DialogResult saveOrNot = MessageBox.Show("Are you sure to leave with unsaved settings?",
                 "Confirm form",
@@ -52,32 +52,32 @@ namespace AffairList
             CloseKeyType.Text = "F7";
             BackKeyType.Text = "F6";
 
-            isConfirmed = false;
+            _isConfirmed = false;
         }
 
         private void ConfirmButton_Click(object sender, EventArgs e)
         {
             settings.SaveSettings();
-            isConfirmed = true;
+            _isConfirmed = true;
         }
         private void CloseKeyType_DoubleClick(object sender, EventArgs e)
         {
-            key = SetKey();
-            if (key == Keys.Escape) return;
+            _inputKey = SetKey();
+            if (_inputKey == Keys.Escape) return;
 
-            settings.SetCloseKey(key);
+            settings.SetCloseKey(_inputKey);
             CloseKeyType.Text = settings.GetCloseKey().ToString();
-            isConfirmed = false;
+            _isConfirmed = false;
         }
 
         private void BackKeyType_DoubleClick(object sender, EventArgs e)
         {
-            key = SetKey();
-            if (key == Keys.Escape) return;
+            _inputKey = SetKey();
+            if (_inputKey == Keys.Escape) return;
 
-            settings.SetReturnKey(key);
+            settings.SetReturnKey(_inputKey);
             BackKeyType.Text = settings.GetReturnKey().ToString();
-            isConfirmed = false;
+            _isConfirmed = false;
         }
         private Keys SetKey()
         {

@@ -3,24 +3,24 @@ namespace AffairList
     public partial class AffairList : BaseForm
     {
         public static readonly NotifyIcon trayIcon = new NotifyIcon();
-        private ContextMenuStrip trayMenu = new ContextMenuStrip();
-        private LoadTimeManager loadTimeManager;
+        private ContextMenuStrip _trayMenu = new ContextMenuStrip();
+        private LoadTimeManager _loadTimeManager;
 
         public AffairList()
         {
             InitializeComponent();
 
-            trayMenu.Items.Add("Открыть", null, OnOpen);
-            trayMenu.Items.Add("Выход", null, OnExit);
+            _trayMenu.Items.Add("Открыть", null, OnOpen);
+            _trayMenu.Items.Add("Выход", null, OnExit);
 
             trayIcon.Text = "AffairList";
             trayIcon.Icon = SystemIcons.Application;
 
-            trayIcon.ContextMenuStrip = trayMenu;
+            trayIcon.ContextMenuStrip = _trayMenu;
             trayIcon.Visible = true;
 
             settings = new Settings();
-            loadTimeManager = new LoadTimeManager(settings);
+            _loadTimeManager = new LoadTimeManager(settings);
         }
         private void OnOpen(object sender, EventArgs e)
         {
@@ -169,7 +169,7 @@ namespace AffairList
 
         private void AffairList_Load(object sender, EventArgs e)
         {
-            loadTimeManager.SaveTime();
+            _loadTimeManager.SaveTime();
             TopMost = true;
         }
 

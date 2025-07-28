@@ -1,9 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AffairList
 {
@@ -11,12 +6,12 @@ namespace AffairList
     {
         public readonly string LoadTimeFileFullPath;
 
-        private LoadTimeModel loadTime;
+        private LoadTimeModel _loadTime;
 
         public LoadTimeManager(Settings settings)
         { 
             LoadTimeFileFullPath = Application.StartupPath + "loadtime.json";
-            loadTime = new LoadTimeModel();
+            _loadTime = new LoadTimeModel();
 
             Initialize(settings);
         }
@@ -25,9 +20,9 @@ namespace AffairList
             if (!LoadTimeFileExist()) CreateLoadTimeFile();
             try
             {
-                loadTime = JsonConvert
+                _loadTime = JsonConvert
                     .DeserializeObject<LoadTimeModel>(File.ReadAllText(LoadTimeFileFullPath))!;
-                if (loadTime == null) throw new Exception("loadfile is null");
+                if (_loadTime == null) throw new Exception("loadfile is null");
                 if (GetPreviousLoadTime().Day != DateTime.Now.Day && settings.DoesNotificate())
                 {
                     string[] affairs = File.ReadAllLines(settings.GetCurrentProfile());
@@ -77,7 +72,7 @@ namespace AffairList
         public void SaveTime()
         {
             SetPreviousLoadTime(DateTime.Now);
-            File.WriteAllText(LoadTimeFileFullPath, JsonConvert.SerializeObject(loadTime));
+            File.WriteAllText(LoadTimeFileFullPath, JsonConvert.SerializeObject(_loadTime));
         }
 
         public bool LoadTimeFileExist()
@@ -90,11 +85,11 @@ namespace AffairList
         }
         public DateTime GetPreviousLoadTime()
         {
-            return loadTime.previousLoadTime;
+            return _loadTime.previousLoadTime;
         }
         public void SetPreviousLoadTime(DateTime time)
         {
-            loadTime.previousLoadTime = time;
+            _loadTime.previousLoadTime = time;
         }
     }
 }

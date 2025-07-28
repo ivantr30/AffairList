@@ -4,12 +4,12 @@ namespace AffairList
 {
     public partial class ToDoList : BaseForm
     {
-        private IKeyboardMouseEvents globalHook;
+        private IKeyboardMouseEvents _globalHook;
 
-        public bool canReplace = false;
+        public bool canReplace { get; set; } = false;
 
-        private string priorityTag = "<priority>";
-        private string deadlineTag = "<deadline>";
+        private string _priorityTag = "<priority>";
+        private string _deadlineTag = "<deadline>";
 
         public ToDoList(Settings settings)
             : base(settings)
@@ -58,14 +58,14 @@ namespace AffairList
                 string[] result = File.ReadAllLines(settings.GetCurrentProfile());
                 for (int i = 0; i < result.Length; i++)
                 {
-                    if (result[i].EndsWith(priorityTag))
+                    if (result[i].EndsWith(_priorityTag))
                     {
-                        result[i] = result[i].Substring(0, result[i].Length - priorityTag.Length)
+                        result[i] = result[i].Substring(0, result[i].Length - _priorityTag.Length)
                             .Trim();
                     }
-                    if (result[i].StartsWith(deadlineTag))
+                    if (result[i].StartsWith(_deadlineTag))
                     {
-                        result[i] = result[i].Substring(deadlineTag.Length);
+                        result[i] = result[i].Substring(_deadlineTag.Length);
                     }
                 }
                 Affairs.Text = string.Join("\n", result);
@@ -79,8 +79,8 @@ namespace AffairList
         }
         private void SubscribeGlobalHook()
         {
-            globalHook = Hook.GlobalEvents();
-            globalHook.KeyDown += GlobalHook_KeyDown;
+            _globalHook = Hook.GlobalEvents();
+            _globalHook.KeyDown += GlobalHook_KeyDown;
         }
         private void GlobalHook_KeyDown(object sender, KeyEventArgs e)
         {

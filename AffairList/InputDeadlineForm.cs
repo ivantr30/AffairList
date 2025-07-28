@@ -3,7 +3,7 @@ namespace AffairList
 {
     public partial class InputDeadlineForm : BaseForm
     {
-        public DateTime deadline;
+        public DateTime deadline { get; set; }
         public event Action OnConfirm;
         public InputDeadlineForm()
         {

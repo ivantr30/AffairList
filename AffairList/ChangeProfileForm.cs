@@ -4,10 +4,10 @@ namespace AffairList
 {
     public partial class ChangeProfileForm : BaseForm
     {
-        List<string> profileLines;
+        private List<string> _profileLines;
 
-        private string priorityWord = " Priority.txt";
-        private string priorityTag = " Priority";
+        private string _priorityWord = " Priority.txt";
+        private string _priorityTag = " Priority";
 
         public ChangeProfileForm(Settings settings) : 
             base(settings)
@@ -20,10 +20,10 @@ namespace AffairList
             if (!settings.ListsDirectoryExists()) return;
 
             Profiles.Items.Clear();
-            profileLines = Directory.GetFiles(settings.listsDirectoryFullPath)
-                    .OrderByDescending(x => x.EndsWith(priorityWord)).ToList();
+            _profileLines = Directory.GetFiles(settings.listsDirectoryFullPath)
+                    .OrderByDescending(x => x.EndsWith(_priorityWord)).ToList();
 
-            foreach (var profile in profileLines)
+            foreach (var profile in _profileLines)
             {
                 FileInfo profileFile = new FileInfo(profile);
                 Profiles.Items.Add(profileFile.Name);
@@ -36,9 +36,9 @@ namespace AffairList
         }
         private bool ContainKeyWords(string fileName)
         {
-            if (fileName.Contains(priorityTag))
+            if (fileName.Contains(_priorityTag))
             {
-                MessageBox.Show($"Error, you list name is perhibited to contain - {priorityTag}");
+                MessageBox.Show($"Error, you list name is perhibited to contain - {_priorityTag}");
                 return true;
             }
             return false;
@@ -104,7 +104,7 @@ namespace AffairList
                 MessageBox.Show("Error, textbox is null");
                 return;
             }
-            foreach (var file in profileLines)
+            foreach (var file in _profileLines)
             {
                 FileInfo fileInfo = new FileInfo(file);
                 if (ProfileInput.Text + ".txt" == fileInfo.Name)
@@ -117,7 +117,7 @@ namespace AffairList
             Profiles.Items.Add(ProfileInput.Text + ".txt");
             Profiles.SelectedIndex = Profiles.Items.Count - 1;
 
-            profileLines.Add(settings.listsDirectoryFullPath + "\\" + ProfileInput.Text + ".txt");
+            _profileLines.Add(settings.listsDirectoryFullPath + "\\" + ProfileInput.Text + ".txt");
 
             using (File.Create(settings.listsDirectoryFullPath + "\\" + ProfileInput.Text + ".txt"))
             {
@@ -135,7 +135,7 @@ namespace AffairList
                     MessageBoxButtons.YesNo);
                 if (dialogres == DialogResult.No) return;
 
-                foreach (var file in profileLines)
+                foreach (var file in _profileLines)
                 {
                     FileInfo fileInfo = new FileInfo(file);
                     if (Profiles.SelectedItem!.ToString() == fileInfo.Name)
@@ -144,7 +144,7 @@ namespace AffairList
                     }
                 }
 
-                profileLines.RemoveAt(Profiles.SelectedIndex);
+                _profileLines.RemoveAt(Profiles.SelectedIndex);
 
                 int selectedIndex = 0;
                 if (Profiles.SelectedIndex == 0 && Profiles.Items.Count > 1)
@@ -198,7 +198,7 @@ namespace AffairList
 
         private void SelectProfileButton_Click(object sender, EventArgs e)
         {
-            settings.SetCurrentProfile(profileLines[Profiles.SelectedIndex]);
+            settings.SetCurrentProfile(_profileLines[Profiles.SelectedIndex]);
             settings.SaveSettings();
         }
 
@@ -206,11 +206,11 @@ namespace AffairList
         {
             if (Profiles.SelectedIndex == -1) return;
 
-            FileInfo selectedProfile = new FileInfo(profileLines[Profiles.SelectedIndex]);
+            FileInfo selectedProfile = new FileInfo(_profileLines[Profiles.SelectedIndex]);
 
             string newProfileName = Interaction
                 .InputBox("Enter renaming", "Renaming form",
-                selectedProfile.Name.Replace(".txt", "").Replace(priorityTag, "")
+                selectedProfile.Name.Replace(".txt", "").Replace(_priorityTag, "")
                 );
 
             if (ContainKeyWords(newProfileName)) return;
@@ -220,7 +220,7 @@ namespace AffairList
                 return;
             }
 
-            if (newProfileName.Contains(priorityTag)) newProfileName += priorityTag;
+            if (newProfileName.Contains(_priorityTag)) newProfileName += _priorityTag;
             newProfileName = settings.listsDirectoryFullPath + newProfileName + ".txt";
 
             if (settings.GetCurrentProfile() == selectedProfile.FullName)
@@ -237,15 +237,15 @@ namespace AffairList
         {
             if (Profiles.SelectedIndex == -1) return;
 
-            FileInfo selectedProfileInfo = new FileInfo(profileLines[Profiles.SelectedIndex]);
+            FileInfo selectedProfileInfo = new FileInfo(_profileLines[Profiles.SelectedIndex]);
             string newProfileName = settings.listsDirectoryFullPath;
-            if (selectedProfileInfo.Name.EndsWith(priorityWord))
+            if (selectedProfileInfo.Name.EndsWith(_priorityWord))
             {
-                newProfileName += selectedProfileInfo.Name.Replace(priorityWord, ".txt");
+                newProfileName += selectedProfileInfo.Name.Replace(_priorityWord, ".txt");
             }
             else
             {
-                newProfileName += selectedProfileInfo.Name.Replace(".txt", priorityWord);
+                newProfileName += selectedProfileInfo.Name.Replace(".txt", _priorityWord);
             }
             if (selectedProfileInfo.FullName == settings.GetCurrentProfile())
             {
