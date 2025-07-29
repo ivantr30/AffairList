@@ -195,11 +195,11 @@ namespace AffairList
         {
             _settings.DoesNotificate = doesNotificate;
         }
-        public int GetNotificationDayDistance()
+        public uint GetNotificationDayDistance()
         {
             return _settings.notificationDayDistance;
         }
-        public void SetNotificationDayDistance(int notificationDistance)
+        public void SetNotificationDayDistance(uint notificationDistance)
         {
             _settings.notificationDayDistance = notificationDistance;
         }

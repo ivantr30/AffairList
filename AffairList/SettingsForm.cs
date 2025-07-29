@@ -333,8 +333,10 @@ namespace AffairList
                     "Enter how many days far from the deadline you want to be notified",
                     "Day distance to notificate input box",
                     settings.GetNotificationDayDistance().ToString());
+
                 if (string.IsNullOrEmpty(distance)) return;
-                int distanceToNotificate = int.Parse(distance);
+
+                uint distanceToNotificate = uint.Parse(distance);
                 settings.SetNotificationDayDistance(distanceToNotificate);
                 DistanceToNotificate.Text = distanceToNotificate.ToString();
                 _isConfirmed = false;
