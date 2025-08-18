@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AffairList));
             panel1 = new Panel();
             ErrorHelpLab = new Label();
             ChangeProfileButton = new Button();
@@ -241,7 +242,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(450, 482);
             Controls.Add(panel1);
-            FormBorderStyle = FormBorderStyle.None;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
             Name = "AffairList";
             StartPosition = FormStartPosition.CenterScreen;

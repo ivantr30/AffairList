@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChangeProfileForm));
             ProfilesLab = new Label();
             NameBackground = new Panel();
             CloseButtonLab = new Label();
@@ -259,6 +260,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(532, 405);
             Controls.Add(panel1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
             Name = "ChangeProfileForm";
             StartPosition = FormStartPosition.CenterScreen;

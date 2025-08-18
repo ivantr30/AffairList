@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HotKeySettings));
             HotKeySettingsLab = new Label();
             NameBackground = new Panel();
             MinimizeButton = new Label();
@@ -218,7 +219,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(440, 511);
             Controls.Add(panel1);
-            FormBorderStyle = FormBorderStyle.None;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "HotKeySettings";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "HotKeySettings";

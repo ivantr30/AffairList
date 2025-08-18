@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChangeListForm));
             NameBackground = new Panel();
             MinimizeButton = new Label();
             CloseButton = new Label();
@@ -261,7 +262,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(563, 405);
             Controls.Add(panel1);
-            FormBorderStyle = FormBorderStyle.None;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
             Name = "ChangeListForm";
             StartPosition = FormStartPosition.CenterScreen;

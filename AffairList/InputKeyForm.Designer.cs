@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InputKeyForm));
             ClickKeyLabel = new Label();
             SuspendLayout();
             // 
@@ -48,7 +49,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(399, 277);
             Controls.Add(ClickKeyLabel);
-            FormBorderStyle = FormBorderStyle.None;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
             Name = "InputKeyForm";
             StartPosition = FormStartPosition.CenterScreen;

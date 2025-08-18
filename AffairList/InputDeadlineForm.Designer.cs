@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InputDeadlineForm));
             DeadlinePicker = new DateTimePicker();
             ConfirmButton = new Button();
             BackButton = new Button();
@@ -79,7 +80,7 @@
             Controls.Add(ConfirmButton);
             Controls.Add(DeadlinePicker);
             ForeColor = SystemColors.WindowFrame;
-            FormBorderStyle = FormBorderStyle.None;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "InputDeadlineForm";
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterScreen;

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             NameBackground = new Panel();
             MinimizeButton = new Label();
             CloseButton = new Label();
@@ -408,7 +409,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(440, 511);
             Controls.Add(panel1);
-            FormBorderStyle = FormBorderStyle.None;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
             Name = "SettingsForm";
             StartPosition = FormStartPosition.CenterScreen;
