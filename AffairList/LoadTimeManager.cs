@@ -6,6 +6,10 @@ namespace AffairList
     {
         public readonly string LoadTimeFileFullPath;
 
+        private string _priorityTag = "<priority>";
+        private string _priorityWord = "\"Priority\"";
+        private string _dealineTag = "<deadline>";
+
         private LoadTimeModel _loadTime;
 
         public LoadTimeManager(Settings settings)
@@ -27,10 +31,10 @@ namespace AffairList
 
                 if (_loadTime == null) throw new Exception("loadfile is null");
 
-                //if ((GetPreviousLoadTime().Date != DateTime.Now.Date ||
-                //    DateTime.Now.Hour - GetPreviousLoadTime().Hour >= 8)
-                //    && settings.DoesNotificate())
-                //{
+                if ((GetPreviousLoadTime().Date != DateTime.Now.Date ||
+                    DateTime.Now.Hour - GetPreviousLoadTime().Hour >= 8)
+                    && settings.DoesNotificate())
+                {
                     string[] profiles = Directory.GetFiles(settings.listsDirectoryFullPath);
                     foreach (var profile in profiles)
                     {
@@ -39,7 +43,7 @@ namespace AffairList
                         string[] affairs = readingFileResult.Result;
                         foreach (string affair in affairs)
                         {
-                            if (affair.StartsWith("<deadline>"))
+                            if (affair.StartsWith(_dealineTag))
                             {
                                 DateTime deadline = DateTime.Parse(affair.Substring(10, 11));
 
@@ -54,12 +58,12 @@ namespace AffairList
                                     {
                                         TimeSpan day = new TimeSpan(24, 0, 0);
                                         TimeSpan now = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
-                                        notification.BalloonTipText = affair.Substring(10) + $" - осталось {day - now}";
+                                        notification.BalloonTipText = AffairWithoutTags(affair) + $" - осталось {day - now}";
                                     }
                                     else if (daysLeft > 0)
-                                        notification.BalloonTipText = affair.Substring(10) + $" - осталось {daysLeft} дней";
+                                        notification.BalloonTipText = AffairWithoutTags(affair) + $" - осталось {daysLeft} дней";
                                     else
-                                        notification.BalloonTipText = affair.Substring(10) + " - просрочено";
+                                        notification.BalloonTipText = AffairWithoutTags(affair) + " - просрочено";
 
                                     notification.Visible = true;
                                     notification.ShowBalloonTip(1);
@@ -67,7 +71,7 @@ namespace AffairList
                             }
                         }
                     }
-                //}
+                }
             }
             catch
             {
@@ -76,6 +80,10 @@ namespace AffairList
             }
         }
 
+        private string AffairWithoutTags(string affair)
+        {
+            return affair.Substring(10).Replace(_priorityTag, _priorityWord);
+        }
         private void WriteBaseTime()
         {
             File.WriteAllText(LoadTimeFileFullPath, JsonConvert.SerializeObject(new LoadTimeModel()));
