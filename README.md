@@ -1,4 +1,4 @@
-![Logo](https://i.postimg.cc/W3F1nRj5/Affair-List-Logo.png)
+<img src="https://i.postimg.cc/W3F1nRj5/Affair-List-Logo.png" width="300" height="300">
 
 # AffairList
 
