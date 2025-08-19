@@ -7,7 +7,7 @@ namespace AffairList
         private List<string> _profileLines;
 
         private string _priorityWord = " Priority.txt";
-        private string _priorityTag = " Priority";
+        private string _priorityTag = " \"Priority\"";
 
         public ChangeProfileForm(Settings settings) : 
             base(settings)

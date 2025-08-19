@@ -320,9 +320,9 @@
             ListBgTextColorLab.ForeColor = Color.White;
             ListBgTextColorLab.Location = new Point(12, 225);
             ListBgTextColorLab.Name = "ListBgTextColorLab";
-            ListBgTextColorLab.Size = new Size(296, 21);
+            ListBgTextColorLab.Size = new Size(241, 21);
             ListBgTextColorLab.TabIndex = 11;
-            ListBgTextColorLab.Text = "List background text color";
+            ListBgTextColorLab.Text = "List background color";
             ListBgTextColorLab.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // ListTextColorLab
