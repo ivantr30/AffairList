@@ -54,6 +54,8 @@
             ResetButton = new Button();
             BackButton = new Button();
             ColorPicker = new ColorDialog();
+            ExportButton = new Button();
+            ExportSettingsFileDialog = new FolderBrowserDialog();
             NameBackground.SuspendLayout();
             panel1.SuspendLayout();
             SuspendLayout();
@@ -115,6 +117,7 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(72, 3, 111);
+            panel1.Controls.Add(ExportButton);
             panel1.Controls.Add(DistanceToNotificate);
             panel1.Controls.Add(DistanceToNotificateLab);
             panel1.Controls.Add(NotificationState);
@@ -403,6 +406,18 @@
             BackButton.UseVisualStyleBackColor = false;
             BackButton.Click += BackButton_Click;
             // 
+            // ExportButton
+            // 
+            ExportButton.BackColor = Color.FromArgb(173, 102, 213);
+            ExportButton.FlatStyle = FlatStyle.Flat;
+            ExportButton.Location = new Point(12, 472);
+            ExportButton.Name = "ExportButton";
+            ExportButton.Size = new Size(75, 27);
+            ExportButton.TabIndex = 29;
+            ExportButton.Text = "Export";
+            ExportButton.UseVisualStyleBackColor = false;
+            ExportButton.Click += ExportButton_Click;
+            // 
             // SettingsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -450,5 +465,7 @@
         private Label NotificationStateLab;
         private Label DistanceToNotificate;
         private Label DistanceToNotificateLab;
+        private Button ExportButton;
+        private FolderBrowserDialog ExportSettingsFileDialog;
     }
 }

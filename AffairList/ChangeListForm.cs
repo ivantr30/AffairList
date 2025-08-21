@@ -28,13 +28,14 @@ namespace AffairList
         }
         private void LoadProfiles()
         {
-            var profiles = Directory.GetFiles(settings.listsDirectoryFullPath);
-            foreach (var profile in profiles)
+            int profilesCount = 0;
+            foreach (string profile in Directory.EnumerateFiles(settings.listsDirectoryFullPath))
             {
+                profilesCount++;
                 FileInfo profileInfo = new FileInfo(profile);
                 ProfileBox.Items.Add(profileInfo.Name);
             }
-            if (profiles.Length > 0)
+            if (profilesCount > 0)
             {
                 FileInfo selectedProfile = new FileInfo(settings.GetCurrentProfile());
                 ProfileBox.SelectedIndex = ProfileBox.Items.IndexOf(selectedProfile.Name);
@@ -124,7 +125,7 @@ namespace AffairList
 
             if (settings.CurrentListNotNull())
             {
-                AppendText(inputText + "\n");
+                Task.Run(() => AppendText(inputText + "\n"));
             }
             AffairInput.Text = "";
         }
@@ -144,7 +145,7 @@ namespace AffairList
             {
                 _lines.RemoveAt(Affairs.SelectedIndex);
 
-                SaveText(_lines);
+                Task.Run(() => SaveText(_lines));
             }
 
             int selectedIndex = 0;
@@ -190,7 +191,7 @@ namespace AffairList
                 AddDeadline(hasDeadline: false);
             }
 
-            SaveText(_lines);
+            Task.Run(() => SaveText(_lines));
         }
         private void DeleteDeadline()
         {
@@ -247,7 +248,7 @@ namespace AffairList
             Affairs.Items[Affairs.SelectedIndex] = Affairs.Items[Affairs.SelectedIndex]
                 .ToString()!.Replace(affair, renaming);
 
-            SaveText(_lines);
+            Task.Run(() => SaveText(_lines));
         }
         private bool ContainKeyWords(string word)
         {
@@ -277,7 +278,7 @@ namespace AffairList
             }
 
             _lines = _lines.OrderByDescending(x => x.EndsWith(_priorityTag)).ToList();
-            SaveText(_lines);
+            Task.Run(() => SaveText(_lines));
             LoadText();
         }
         private void Affairs_MouseDown(object sender, MouseEventArgs e)
@@ -307,7 +308,7 @@ namespace AffairList
             _lines[Affairs.SelectedIndex] = (string)switcher;
 
             _isDragging = false;
-            SaveText(_lines);
+            Task.Run(() => SaveText(_lines));
         }
 
         private void MinimizeButton_Click(object sender, EventArgs e) => MinimizeForm();

@@ -80,7 +80,7 @@ namespace AffairList
         private void SubscribeGlobalHook()
         {
             _globalHook = Hook.GlobalEvents();
-            _globalHook.KeyDown += GlobalHook_KeyDown;
+            _globalHook.KeyDown += GlobalHook_KeyDown!;
         }
         private void GlobalHook_KeyDown(object sender, KeyEventArgs e)
         {

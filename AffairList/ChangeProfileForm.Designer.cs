@@ -36,6 +36,7 @@
             CloseButton = new Label();
             ProfilesListLab = new Label();
             panel1 = new Panel();
+            ExportButton = new Button();
             ChangePriorityButton = new Button();
             RenameButton = new Button();
             SelectProfileButton = new Button();
@@ -54,7 +55,7 @@
             ProfilesLab.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             ProfilesLab.AutoSize = true;
             ProfilesLab.Font = new Font("Unispace", 30F);
-            ProfilesLab.Location = new Point(160, 22);
+            ProfilesLab.Location = new Point(203, 24);
             ProfilesLab.Name = "ProfilesLab";
             ProfilesLab.Size = new Size(212, 48);
             ProfilesLab.TabIndex = 1;
@@ -73,7 +74,7 @@
             NameBackground.Dock = DockStyle.Top;
             NameBackground.Location = new Point(0, 0);
             NameBackground.Name = "NameBackground";
-            NameBackground.Size = new Size(532, 86);
+            NameBackground.Size = new Size(600, 86);
             NameBackground.TabIndex = 0;
             NameBackground.MouseDown += NameBackground_MouseDown;
             NameBackground.MouseMove += NameBackground_MouseMove;
@@ -83,7 +84,7 @@
             CloseButtonLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             CloseButtonLab.AutoSize = true;
             CloseButtonLab.Font = new Font("Unispace", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            CloseButtonLab.Location = new Point(501, 0);
+            CloseButtonLab.Location = new Point(569, 0);
             CloseButtonLab.Name = "CloseButtonLab";
             CloseButtonLab.Size = new Size(31, 33);
             CloseButtonLab.TabIndex = 11;
@@ -96,7 +97,7 @@
             // 
             MinimizeButton.AutoSize = true;
             MinimizeButton.Font = new Font("Unispace", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            MinimizeButton.Location = new Point(464, 0);
+            MinimizeButton.Location = new Point(532, 0);
             MinimizeButton.Name = "MinimizeButton";
             MinimizeButton.Size = new Size(31, 33);
             MinimizeButton.TabIndex = 4;
@@ -110,7 +111,7 @@
             CloseButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             CloseButton.AutoSize = true;
             CloseButton.Font = new Font("Unispace", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            CloseButton.Location = new Point(795, 0);
+            CloseButton.Location = new Point(863, 0);
             CloseButton.Name = "CloseButton";
             CloseButton.Size = new Size(31, 33);
             CloseButton.TabIndex = 2;
@@ -132,6 +133,7 @@
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(72, 3, 111);
+            panel1.Controls.Add(ExportButton);
             panel1.Controls.Add(ChangePriorityButton);
             panel1.Controls.Add(RenameButton);
             panel1.Controls.Add(SelectProfileButton);
@@ -146,15 +148,27 @@
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(532, 405);
+            panel1.Size = new Size(600, 405);
             panel1.TabIndex = 2;
+            // 
+            // ExportButton
+            // 
+            ExportButton.BackColor = Color.FromArgb(173, 102, 213);
+            ExportButton.FlatStyle = FlatStyle.Flat;
+            ExportButton.Location = new Point(12, 371);
+            ExportButton.Name = "ExportButton";
+            ExportButton.Size = new Size(62, 27);
+            ExportButton.TabIndex = 30;
+            ExportButton.Text = "Export";
+            ExportButton.UseVisualStyleBackColor = false;
+            ExportButton.Click += ExportButton_Click;
             // 
             // ChangePriorityButton
             // 
             ChangePriorityButton.BackColor = Color.FromArgb(173, 102, 213);
             ChangePriorityButton.FlatStyle = FlatStyle.Flat;
             ChangePriorityButton.Font = new Font("Segoe UI", 9.75F);
-            ChangePriorityButton.Location = new Point(12, 371);
+            ChangePriorityButton.Location = new Point(80, 371);
             ChangePriorityButton.Name = "ChangePriorityButton";
             ChangePriorityButton.Size = new Size(104, 27);
             ChangePriorityButton.TabIndex = 9;
@@ -166,7 +180,7 @@
             // 
             RenameButton.BackColor = Color.FromArgb(173, 102, 213);
             RenameButton.FlatStyle = FlatStyle.Flat;
-            RenameButton.Location = new Point(254, 371);
+            RenameButton.Location = new Point(322, 371);
             RenameButton.Name = "RenameButton";
             RenameButton.Size = new Size(70, 27);
             RenameButton.TabIndex = 8;
@@ -178,7 +192,7 @@
             // 
             SelectProfileButton.BackColor = Color.FromArgb(173, 102, 213);
             SelectProfileButton.FlatStyle = FlatStyle.Flat;
-            SelectProfileButton.Location = new Point(122, 371);
+            SelectProfileButton.Location = new Point(190, 371);
             SelectProfileButton.Name = "SelectProfileButton";
             SelectProfileButton.Size = new Size(60, 27);
             SelectProfileButton.TabIndex = 7;
@@ -190,7 +204,7 @@
             // 
             DeleteButton.BackColor = Color.FromArgb(173, 102, 213);
             DeleteButton.FlatStyle = FlatStyle.Flat;
-            DeleteButton.Location = new Point(330, 371);
+            DeleteButton.Location = new Point(398, 371);
             DeleteButton.Name = "DeleteButton";
             DeleteButton.Size = new Size(60, 27);
             DeleteButton.TabIndex = 6;
@@ -202,7 +216,7 @@
             // 
             BackButton.BackColor = Color.FromArgb(173, 102, 213);
             BackButton.FlatStyle = FlatStyle.Flat;
-            BackButton.Location = new Point(460, 371);
+            BackButton.Location = new Point(528, 371);
             BackButton.Name = "BackButton";
             BackButton.Size = new Size(60, 27);
             BackButton.TabIndex = 5;
@@ -218,14 +232,14 @@
             Profiles.ItemHeight = 21;
             Profiles.Location = new Point(12, 114);
             Profiles.Name = "Profiles";
-            Profiles.Size = new Size(508, 214);
+            Profiles.Size = new Size(576, 214);
             Profiles.TabIndex = 4;
             // 
             // ClearButton
             // 
             ClearButton.BackColor = Color.FromArgb(173, 102, 213);
             ClearButton.FlatStyle = FlatStyle.Flat;
-            ClearButton.Location = new Point(396, 371);
+            ClearButton.Location = new Point(464, 371);
             ClearButton.Name = "ClearButton";
             ClearButton.Size = new Size(60, 27);
             ClearButton.TabIndex = 3;
@@ -237,7 +251,7 @@
             // 
             AddButton.BackColor = Color.FromArgb(173, 102, 213);
             AddButton.FlatStyle = FlatStyle.Flat;
-            AddButton.Location = new Point(188, 371);
+            AddButton.Location = new Point(256, 371);
             AddButton.Name = "AddButton";
             AddButton.Size = new Size(60, 27);
             AddButton.TabIndex = 2;
@@ -251,14 +265,14 @@
             ProfileInput.Location = new Point(12, 334);
             ProfileInput.Name = "ProfileInput";
             ProfileInput.PlaceholderText = "Enter the name of a new profile";
-            ProfileInput.Size = new Size(508, 31);
+            ProfileInput.Size = new Size(576, 31);
             ProfileInput.TabIndex = 1;
             // 
             // ChangeProfileForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(532, 405);
+            ClientSize = new Size(600, 405);
             Controls.Add(panel1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
@@ -292,5 +306,6 @@
         private Button SelectProfileButton;
         private Button RenameButton;
         private Button ChangePriorityButton;
+        private Button ExportButton;
     }
 }

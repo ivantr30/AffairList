@@ -4,6 +4,7 @@ namespace AffairList
     public partial class SettingsForm : BaseForm
     {
         private bool _isConfirmed = true;
+
         public SettingsForm(Settings settings)
             : base(settings)
         {
@@ -182,7 +183,7 @@ namespace AffairList
                 string newX = Interaction.InputBox("Enter x coordinate," +
                     $" max width is {settings.width}",
                     "InputWindow", "");
-                if(string.IsNullOrEmpty(newX)) return;
+                if (string.IsNullOrEmpty(newX)) return;
                 settings.SetProfileX(int.Parse(newX));
                 if (settings.GetProfileX() > settings.width) throw new Exception();
             }
@@ -320,8 +321,23 @@ namespace AffairList
                 DistanceToNotificate.Text = distanceToNotificate.ToString();
                 _isConfirmed = false;
             }
-            catch{
+            catch
+            {
                 MessageBox.Show("Error, wrong input type");
+            }
+        }
+
+        private void ExportButton_Click(object sender, EventArgs e)
+        {
+            ExportSettingsFileDialog.ShowDialog();
+            try
+            {
+                File.Copy("settings.json", ExportSettingsFileDialog.SelectedPath+"\\settings.json");
+                MessageBox.Show("Settings config was exported succesfully");
+            }
+            catch
+            {
+                MessageBox.Show("Error");
             }
         }
     }

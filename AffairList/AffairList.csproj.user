@@ -25,6 +25,9 @@
     <Compile Update="InputKeyForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="ProfilesExportPicker.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -12,8 +12,8 @@ namespace AffairList
         {
             InitializeComponent();
 
-            _trayMenu.Items.Add("Открыть", null, OnOpen);
-            _trayMenu.Items.Add("Выход", null, OnExit);
+            _trayMenu.Items.Add("Открыть", null, OnOpen!);
+            _trayMenu.Items.Add("Выход", null, OnExit!);
 
             trayIcon.Text = "AffairList";
             trayIcon.Icon = SystemIcons.Application;

@@ -9,7 +9,7 @@ namespace AffairList
         private string _priorityWord = " Priority.txt";
         private string _priorityTag = " \"Priority\"";
 
-        public ChangeProfileForm(Settings settings) : 
+        public ChangeProfileForm(Settings settings) :
             base(settings)
         {
             InitializeComponent();
@@ -23,9 +23,9 @@ namespace AffairList
             _profileLines = Directory.GetFiles(settings.listsDirectoryFullPath)
                     .OrderByDescending(x => x.EndsWith(_priorityWord)).ToList();
 
-            foreach (var profile in _profileLines)
+            for (int i = 0; i < _profileLines.Count; i++)
             {
-                FileInfo profileFile = new FileInfo(profile);
+                FileInfo profileFile = new FileInfo(_profileLines[i]);
                 Profiles.Items.Add(profileFile.Name);
             }
             if (Profiles.Items.Count > 0)
@@ -83,9 +83,9 @@ namespace AffairList
                 MessageBox.Show("Error, textbox is null");
                 return;
             }
-            foreach (var file in _profileLines)
+            for (int i = 0; i < _profileLines.Count; i++)
             {
-                FileInfo fileInfo = new FileInfo(file);
+                FileInfo fileInfo = new FileInfo(_profileLines[i]);
                 if (ProfileInput.Text + ".txt" == fileInfo.Name)
                 {
                     MessageBox.Show("Error, this file already exists");
@@ -98,12 +98,9 @@ namespace AffairList
 
             _profileLines.Add(settings.listsDirectoryFullPath + "\\" + ProfileInput.Text + ".txt");
 
-            using (File.Create(settings.listsDirectoryFullPath + "\\" + ProfileInput.Text + ".txt"))
-            {
+            using (File.Create(settings.listsDirectoryFullPath + "\\" + ProfileInput.Text + ".txt")) { }
 
-            }
-
-            ProfileInput.Text = "";
+            ProfileInput.Clear();
         }
         private void DeleteProfile()
         {
@@ -114,12 +111,12 @@ namespace AffairList
                     MessageBoxButtons.YesNo);
                 if (dialogres == DialogResult.No) return;
 
-                foreach (var file in _profileLines)
+               for (int i = 0; i < _profileLines.Count; i++)
                 {
-                    FileInfo fileInfo = new FileInfo(file);
+                    FileInfo fileInfo = new FileInfo(_profileLines[i]);
                     if (Profiles.SelectedItem!.ToString() == fileInfo.Name)
                     {
-                        File.Delete(file);
+                        File.Delete(_profileLines[i]);
                     }
                 }
 
@@ -225,6 +222,12 @@ namespace AffairList
 
             File.Move(selectedProfileInfo.FullName, newProfileName);
             LoadProfiles();
+        }
+
+        private void ExportButton_Click(object sender, EventArgs e)
+        {
+            ProfilesExportPicker exportPicker = new ProfilesExportPicker(_profileLines, settings);
+            exportPicker.ShowDialog();
         }
     }
 }
