@@ -41,10 +41,7 @@ namespace AffairList
             }
             DistanceToNotificate.Text = settings.GetNotificationDayDistance().ToString();
         }
-        private void CloseButton_Click(object sender, EventArgs e)
-        {
-            Exit();
-        }
+        private void CloseButton_Click(object sender, EventArgs e) => Exit();
 
         private void Settings_KeyDown(object sender, KeyEventArgs e)
         {
@@ -68,25 +65,13 @@ namespace AffairList
             CloseButton.ForeColor = Color.Black;
         }
 
-        private void NameBackground_MouseDown(object sender, MouseEventArgs e)
-        {
-            SetLastPoint(e);
-        }
+        private void NameBackground_MouseDown(object sender, MouseEventArgs e) => SetLastPoint(e);
 
-        private void NameBackground_MouseMove(object sender, MouseEventArgs e)
-        {
-            MoveForm(e);
-        }
+        private void NameBackground_MouseMove(object sender, MouseEventArgs e) => MoveForm(e);
 
-        private void SettingsLab_MouseDown(object sender, MouseEventArgs e)
-        {
-            SetLastPoint(e);
-        }
+        private void SettingsLab_MouseDown(object sender, MouseEventArgs e) => SetLastPoint(e);
 
-        private void SettingsLab_MouseMove(object sender, MouseEventArgs e)
-        {
-            MoveForm(e);
-        }
+        private void SettingsLab_MouseMove(object sender, MouseEventArgs e) => MoveForm(e);
 
         private void BackButton_Click(object sender, EventArgs e)
         {
@@ -226,10 +211,7 @@ namespace AffairList
             LocationLab.Text = settings.GetProfileX() + ", " + settings.GetProfileY();
         }
 
-        private void Settings_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Exit();
-        }
+        private void Settings_FormClosing(object sender, FormClosingEventArgs e) => Exit();
 
         private void LocationLab_MouseEnter(object sender, EventArgs e)
         {
@@ -272,10 +254,7 @@ namespace AffairList
             AskToDeleteState.ForeColor = Color.White;
         }
 
-        private void MinimizeButton_Click(object sender, EventArgs e)
-        {
-            MinimizeForm();
-        }
+        private void MinimizeButton_Click(object sender, EventArgs e) => MinimizeForm();
 
         private void MinimizeButton_MouseEnter(object sender, EventArgs e)
         {

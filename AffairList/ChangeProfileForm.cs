@@ -43,20 +43,11 @@ namespace AffairList
             }
             return false;
         }
-        private void MinimizeButton_Click(object sender, EventArgs e)
-        {
-            MinimizeForm();
-        }
+        private void MinimizeButton_Click(object sender, EventArgs e) => MinimizeForm();
 
-        private void BackButton_Click(object sender, EventArgs e)
-        {
-            Restart();
-        }
+        private void BackButton_Click(object sender, EventArgs e) => Restart();
 
-        private void CloseButtonLab_Click(object sender, EventArgs e)
-        {
-            Exit();
-        }
+        private void CloseButtonLab_Click(object sender, EventArgs e) => Exit();
 
         private void CloseButtonLab_MouseEnter(object sender, EventArgs e)
         {
@@ -78,25 +69,13 @@ namespace AffairList
             MinimizeButton.ForeColor = Color.Black;
         }
 
-        private void NameBackground_MouseMove(object sender, MouseEventArgs e)
-        {
-            MoveForm(e);
-        }
+        private void NameBackground_MouseMove(object sender, MouseEventArgs e) => MoveForm(e);
 
-        private void NameBackground_MouseDown(object sender, MouseEventArgs e)
-        {
-            SetLastPoint(e);
-        }
+        private void NameBackground_MouseDown(object sender, MouseEventArgs e) => SetLastPoint(e);
 
-        private void ProfilesLab_MouseDown(object sender, MouseEventArgs e)
-        {
-            SetLastPoint(e);
-        }
+        private void ProfilesLab_MouseDown(object sender, MouseEventArgs e) => SetLastPoint(e);
 
-        private void ProfilesLab_MouseMove(object sender, MouseEventArgs e)
-        {
-            MoveForm(e);
-        }
+        private void ProfilesLab_MouseMove(object sender, MouseEventArgs e) => MoveForm(e);
         private void AddProfile()
         {
             if (ProfileInput.Text.Trim() == "")
@@ -161,20 +140,11 @@ namespace AffairList
             }
         }
 
-        private void AddButton_Click(object sender, EventArgs e)
-        {
-            AddProfile();
-        }
+        private void AddButton_Click(object sender, EventArgs e) => AddProfile();
 
-        private void DeleteButton_Click(object sender, EventArgs e)
-        {
-            DeleteProfile();
-        }
+        private void DeleteButton_Click(object sender, EventArgs e) => DeleteProfile();
 
-        private void ClearButton_Click(object sender, EventArgs e)
-        {
-            ProfileInput.Clear();
-        }
+        private void ClearButton_Click(object sender, EventArgs e) => ProfileInput.Clear();
 
         private void ChangeProfileForm_KeyDown(object sender, KeyEventArgs e)
         {

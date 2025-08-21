@@ -87,30 +87,15 @@ namespace AffairList
             }
         }
 
-        private void CloseButton_Click(object sender, EventArgs e)
-        {
-            Exit();
-        }
+        private void CloseButton_Click(object sender, EventArgs e) => Exit();
 
-        private void AffairsLab_MouseDown(object sender, MouseEventArgs e)
-        {
-            SetLastPoint(e);
-        }
+        private void AffairsLab_MouseDown(object sender, MouseEventArgs e) => SetLastPoint(e);
 
-        private void AffairsLab_MouseMove(object sender, MouseEventArgs e)
-        {
-            MoveForm(e);
-        }
+        private void AffairsLab_MouseMove(object sender, MouseEventArgs e) => MoveForm(e);
 
-        private void NameBackground_MouseDown_1(object sender, MouseEventArgs e)
-        {
-            SetLastPoint(e);
-        }
+        private void NameBackground_MouseDown_1(object sender, MouseEventArgs e) => SetLastPoint(e);
 
-        private void NameBackground_MouseMove_1(object sender, MouseEventArgs e)
-        {
-            MoveForm(e);
-        }
+        private void NameBackground_MouseMove_1(object sender, MouseEventArgs e) => MoveForm(e);
 
         private void CloseButton_MouseEnter(object sender, EventArgs e)
         {
@@ -176,28 +161,13 @@ namespace AffairList
 
             Affairs.Items.RemoveAt(selectedIndex);
         }
-        private void AddAffairButton_Click(object sender, EventArgs e)
-        {
-            AddAffair();
-        }
-        private void DeleteButton_Click(object sender, EventArgs e)
-        {
-            DeleteAffair();
-        }
-        private void ClearButton_Click(object sender, EventArgs e)
-        {
-            AffairInput.Text = "";
-        }
+        private void AddAffairButton_Click(object sender, EventArgs e) => AddAffair();
+        private void DeleteButton_Click(object sender, EventArgs e) => DeleteAffair();
+        private void ClearButton_Click(object sender, EventArgs e) => AffairInput.Clear();
 
-        private void BackButton_Click(object sender, EventArgs e)
-        {
-            Restart();
-        }
+        private void BackButton_Click(object sender, EventArgs e) => Restart();
 
-        private void ChangeListForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Exit();
-        }
+        private void ChangeListForm_FormClosing(object sender, FormClosingEventArgs e) => Exit();
 
         private void AddDeadlineButton_Click(object sender, EventArgs e)
         {
@@ -340,10 +310,7 @@ namespace AffairList
             SaveText(_lines);
         }
 
-        private void MinimizeButton_Click(object sender, EventArgs e)
-        {
-            MinimizeForm();
-        }
+        private void MinimizeButton_Click(object sender, EventArgs e) => MinimizeForm();
 
         private void MinimizeButton_MouseEnter(object sender, EventArgs e)
         {

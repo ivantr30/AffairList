@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ToDoList));
             Affairs = new Label();
             SuspendLayout();
             // 
@@ -52,6 +53,7 @@
             BackColor = Color.Black;
             ClientSize = new Size(1202, 666);
             Controls.Add(Affairs);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "ToDoList";
             ShowInTaskbar = false;
             Text = "List";

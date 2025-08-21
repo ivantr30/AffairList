@@ -28,15 +28,9 @@ namespace AffairList
             ShowInTaskbar = true;
         }
 
-        private void OnExit(object sender, EventArgs e)
-        {
-            Exit();
-        }
+        private void OnExit(object sender, EventArgs e) => Exit();
 
-        private void CloseButton_Click(object sender, EventArgs e)
-        {
-            Exit();
-        }
+        private void CloseButton_Click(object sender, EventArgs e) => Exit();
 
         private void CloseButton_MouseEnter(object sender, EventArgs e)
         {
@@ -48,25 +42,10 @@ namespace AffairList
             CloseButton.ForeColor = Color.Black;
         }
 
-        private void NameBackground_MouseDown(object sender, MouseEventArgs e)
-        {
-            SetLastPoint(e);
-        }
-
-        private void NameBackground_MouseMove(object sender, MouseEventArgs e)
-        {
-            MoveForm(e);
-        }
-
-        private void AffairListLab_MouseMove(object sender, MouseEventArgs e)
-        {
-            MoveForm(e);
-        }
-
-        private void AffairListLab_MouseDown(object sender, MouseEventArgs e)
-        {
-            SetLastPoint(e);
-        }
+        private void NameBackground_MouseDown(object sender, MouseEventArgs e) => SetLastPoint(e);
+        private void NameBackground_MouseMove(object sender, MouseEventArgs e) => MoveForm(e);
+        private void AffairListLab_MouseMove(object sender, MouseEventArgs e) => MoveForm(e);
+        private void AffairListLab_MouseDown(object sender, MouseEventArgs e) => SetLastPoint(e);
 
         private void OpenListButton_Click(object sender, EventArgs e)
         {
@@ -139,15 +118,8 @@ namespace AffairList
         {
             CreateForm(new HotKeySettings(settings));
         }
-        private void AffairList_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Exit();
-        }
-
-        private void MinimizeButton_Click(object sender, EventArgs e)
-        {
-            MinimizeForm();
-        }
+        private void AffairList_FormClosing(object sender, FormClosingEventArgs e) => Exit();
+        private void MinimizeButton_Click(object sender, EventArgs e) => MinimizeForm();
 
         private void MinimizeButton_MouseEnter(object sender, EventArgs e)
         {
@@ -173,9 +145,6 @@ namespace AffairList
             TopMost = true;
         }
 
-        private void AffairList_Shown(object sender, EventArgs e)
-        {
-            TopMost = false;
-        }
+        private void AffairList_Shown(object sender, EventArgs e) => TopMost = false;
     }
 }

@@ -108,9 +108,6 @@ namespace AffairList
         {
             return _loadTime.previousLoadTime;
         }
-        public void SetPreviousLoadTime(DateTime time)
-        {
-            _loadTime.previousLoadTime = time;
-        }
+        public void SetPreviousLoadTime(DateTime time) => _loadTime.previousLoadTime = time;
     }
 }

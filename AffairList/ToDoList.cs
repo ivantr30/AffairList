@@ -94,35 +94,13 @@ namespace AffairList
             }
         }
 
-        private void Affairs_MouseDown(object sender, MouseEventArgs e)
-        {
-            OnListMouseDown(e);
-        }
+        private void Affairs_MouseDown(object sender, MouseEventArgs e) => OnListMouseDown(e);
+        private void Affairs_MouseMove(object sender, MouseEventArgs e) => OnListMouseMove(e);
+        private void Affairs_MouseUp(object sender, MouseEventArgs e) => OnListMouseUp(e);
+        private void List_MouseDown(object sender, MouseEventArgs e) => OnListMouseDown(e);
+        private void List_MouseMove(object sender, MouseEventArgs e) => OnListMouseMove(e);
 
-        private void Affairs_MouseMove(object sender, MouseEventArgs e)
-        {
-            OnListMouseMove(e);
-        }
-
-        private void Affairs_MouseUp(object sender, MouseEventArgs e)
-        {
-            OnListMouseUp(e);
-        }
-
-        private void List_MouseDown(object sender, MouseEventArgs e)
-        {
-            OnListMouseDown(e);
-        }
-
-        private void List_MouseMove(object sender, MouseEventArgs e)
-        {
-            OnListMouseMove(e);
-        }
-
-        private void List_MouseUp(object sender, MouseEventArgs e)
-        {
-            OnListMouseUp(e);
-        }
+        private void List_MouseUp(object sender, MouseEventArgs e) => OnListMouseUp(e);
         private void OnListMouseDown(MouseEventArgs e)
         {
             if(canReplace) SetLastPoint(e);
@@ -147,9 +125,6 @@ namespace AffairList
             return Affairs;
         }
 
-        private void List_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Exit();
-        }
+        private void List_FormClosing(object sender, FormClosingEventArgs e) => Exit();
     }
 }

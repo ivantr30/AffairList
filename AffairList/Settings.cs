@@ -104,7 +104,7 @@ namespace AffairList
         }
         public void CreateListsDirectory()
         {
-            DirectoryInfo di = Directory.CreateDirectory(listsDirectoryFullPath);
+            DirectoryInfo dir = Directory.CreateDirectory(listsDirectoryFullPath);
         }
         public void CreateDefaultList()
         {
@@ -115,74 +115,56 @@ namespace AffairList
         {
             File.WriteAllText(settingsFileFullPath, JsonConvert.SerializeObject(_settings));
         }
-        public void SetCurrentProfile(string fullPath)
-        {
-            _settings.currentListFileFullPath = fullPath;
-        }
+        public void SetCurrentProfile(string fullPath) => _settings.currentListFileFullPath = fullPath;
+
         public string GetCurrentProfile()
         {
             return _settings.currentListFileFullPath;
         }
-        public void SetAutostart(bool autostart)
-        {
-            _settings.autostartState = autostart;
-        }
+        public void SetAutostart(bool autostart) => _settings.autostartState = autostart;
+
         public bool DoesAutostart()
         {
             return _settings.autostartState;
         }
-        public void SetAskToDelete(bool askToDelete)
-        {
-            _settings.askToDelete = askToDelete;
-        }
+        public void SetAskToDelete(bool askToDelete) => _settings.askToDelete = askToDelete;
+
         public bool DoesAskToDelete()
         {
             return _settings.askToDelete;
         }
-        public void SetCloseKey(Keys key)
-        {
-            _settings.closeKey = key;
-        }
+        public void SetCloseKey(Keys key) => _settings.closeKey = key;
+
         public Keys GetCloseKey()
         {
             return _settings.closeKey;
         }
-        public void SetReturnKey(Keys key)
-        {
-            _settings.returnKey = key;
-        }
+        public void SetReturnKey(Keys key) => _settings.returnKey = key;
+
         public Keys GetReturnKey()
         {
             return _settings.returnKey;
         }
-        public void SetTextColor(Color color)
-        {
-            _settings.textColor = color;
-        }
+
+        public void SetTextColor(Color color) => _settings.textColor = color;
+
         public Color GetTextColor()
         {
             return _settings.textColor;
         }
-        public void SetBgColor(Color color)
-        {
-            _settings.bgColor = color;
-        }
+
+        public void SetBgColor(Color color) => _settings.bgColor = color;
+
         public Color GetBgColor()
         {
             return _settings.bgColor;
         }
-        public void SetProfileX(int x)
-        {
-            _settings.x = x;
-        }
+        public void SetProfileX(int x) => _settings.x = x;
         public int GetProfileX()
         {
             return _settings.x;
         }
-        public void SetProfileY(int y)
-        {
-            _settings.y = y;
-        }
+        public void SetProfileY(int y) => _settings.y = y;
         public int GetProfileY()
         {
             return _settings.y;
@@ -191,10 +173,7 @@ namespace AffairList
         {
             return _settings.DoesNotificate;
         }
-        public void SetDoesNotificate(bool doesNotificate)
-        {
-            _settings.DoesNotificate = doesNotificate;
-        }
+        public void SetDoesNotificate(bool doesNotificate) => _settings.DoesNotificate = doesNotificate;
         public uint GetNotificationDayDistance()
         {
             return _settings.notificationDayDistance;

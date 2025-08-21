@@ -10,10 +10,7 @@ namespace AffairList
             this.settings = settings;
             InitializeComponent();
         }
-        public BaseForm()
-        {
-            InitializeComponent();
-        }
+        public BaseForm() => InitializeComponent();
         protected virtual void Exit()
         {
             AffairList.trayIcon.Visible = false;
@@ -24,10 +21,7 @@ namespace AffairList
             AffairList.trayIcon.Visible = false;
             Application.Restart();
         }
-        protected void SetLastPoint(MouseEventArgs e)
-        {
-            lastPoint = new Point(e.X, e.Y);
-        }
+        protected void SetLastPoint(MouseEventArgs e) => lastPoint = new Point(e.X, e.Y);
         protected void MoveForm(MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -41,9 +35,6 @@ namespace AffairList
             form.Show();
             Hide();
         }
-        protected void MinimizeForm()
-        {
-            WindowState = FormWindowState.Minimized;
-        }
+        protected void MinimizeForm() => WindowState = FormWindowState.Minimized;
     }
 }

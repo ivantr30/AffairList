@@ -28,15 +28,9 @@ namespace AffairList
             Restart();
         }
 
-        private void CloseButton_Click(object sender, EventArgs e)
-        {
-            Exit();
-        }
+        private void CloseButton_Click(object sender, EventArgs e) => Exit();
 
-        private void MinimizeButton_Click(object sender, EventArgs e)
-        {
-            MinimizeForm();
-        }
+        private void MinimizeButton_Click(object sender, EventArgs e) => MinimizeForm();
 
         private void ResetButton_Click(object sender, EventArgs e)
         {
@@ -144,22 +138,9 @@ namespace AffairList
             MinimizeButton.ForeColor = Color.Black;
         }
 
-        private void NameBackground_MouseMove(object sender, MouseEventArgs e)
-        {
-            MoveForm(e);
-        }
-        private void NameBackground_MouseDown(object sender, MouseEventArgs e)
-        {
-            SetLastPoint(e);
-        }
-        private void HotKeySettingsLab_MouseMove(object sender, MouseEventArgs e)
-        {
-            MoveForm(e);
-        }
-
-        private void HotKeySettingsLab_MouseDown(object sender, MouseEventArgs e)
-        {
-            SetLastPoint(e);
-        }
+        private void NameBackground_MouseMove(object sender, MouseEventArgs e) => MoveForm(e);
+        private void NameBackground_MouseDown(object sender, MouseEventArgs e) => SetLastPoint(e);
+        private void HotKeySettingsLab_MouseMove(object sender, MouseEventArgs e) => MoveForm(e);
+        private void HotKeySettingsLab_MouseDown(object sender, MouseEventArgs e) => SetLastPoint(e);
     }
 }

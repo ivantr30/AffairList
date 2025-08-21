@@ -5,10 +5,7 @@ namespace AffairList
     {
         public Keys Key { get; private set; }
         public event Action OnKeyPressed;
-        public InputKeyForm()
-        {
-            InitializeComponent();
-        }
+        public InputKeyForm() => InitializeComponent();
 
         private void InputKeyForm_KeyDown(object sender, KeyEventArgs e)
         {
