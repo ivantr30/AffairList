@@ -22,6 +22,7 @@ namespace AffairList
         public async Task Initialize(Settings settings)
         {
             if (!LoadTimeFileExist()) CreateLoadTimeFile();
+            if (!settings.DoesNotificate()) return;
             try
             {
                 using var readingLoadTimeFileResult = File.ReadAllTextAsync(LoadTimeFileFullPath);
@@ -29,8 +30,8 @@ namespace AffairList
 
                 _loadTime = JsonConvert.DeserializeObject<LoadTimeModel>(readingLoadTimeFileResult.Result)!;
                 if (_loadTime == null) throw new Exception("loadfile is null");
-
-                if (!(ShouldNotificate() && settings.DoesNotificate())) return;
+                
+                if (!ShouldNotificate()) return;
 
                 string[] profiles = Directory.GetFiles(settings.listsDirectoryFullPath);
 

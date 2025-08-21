@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace AffairList
 {
     public partial class AffairList : BaseForm
