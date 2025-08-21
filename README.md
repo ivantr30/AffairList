@@ -49,6 +49,7 @@
   * If you have .NET platform installed download "AffairListWithDotNet"
   * In the other case download "AffairList"
   * You don't need to download uninstaller separately, only if you accidently deleted it and need it back
+  * After downloading the rar file unrar it and run AffairList.exe
 ___
 ## Additional Information
 
