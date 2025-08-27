@@ -12,7 +12,7 @@ namespace AffairList
         private const string _appName = "AffairList";
         private readonly string _exePath = Application.ExecutablePath;
 
-        public readonly int width = Screen.PrimaryScreen.WorkingArea.Width;
+        public readonly int width = Screen.PrimaryScreen!.WorkingArea.Width;
         public readonly int height = Screen.PrimaryScreen.WorkingArea.Height;
 
         private SettingsModel _settings;
@@ -23,16 +23,15 @@ namespace AffairList
             _defaultListFileFullPath = listsDirectoryFullPath + "\\list.txt";
             settingsFileFullPath = Application.StartupPath + "settings.json";
 
-            Task.Run(() => Initialize());
+            Initialize();
         }
-        private async Task Initialize()
+        private void Initialize()
         {
-            if(!SettingsFileExists()) await CreateSettingsFile();
+            if(!SettingsFileExists()) CreateSettingsFile();
             if(!ListsDirectoryExists()) CreateListsDirectory();
             try
             {
-                var settingsFileReadingResult = await File.ReadAllTextAsync(settingsFileFullPath);
-                _settings = JsonConvert.DeserializeObject<SettingsModel>(settingsFileReadingResult)!;
+                _settings = JsonConvert.DeserializeObject<SettingsModel>(File.ReadAllText(settingsFileFullPath))!;
                 if (!File.Exists(GetCurrentProfile()))
                 {
                     ChooseProfile();
@@ -48,7 +47,7 @@ namespace AffairList
             }
             catch
             {
-                await WriteBaseSettings();
+                WriteBaseSettings();
             }
         }
         public async Task WriteBaseSettings()

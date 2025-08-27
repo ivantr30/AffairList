@@ -19,14 +19,13 @@ namespace AffairList
 
             Task.Run(() => Initialize(settings));
         }
+
         public async Task Initialize(Settings settings)
         {
             if (!LoadTimeFileExist()) CreateLoadTimeFile();
             if (!settings.DoesNotificate()) return;
 
-            using var readingLoadTimeFileResult = File.ReadAllTextAsync(LoadTimeFileFullPath);
-            await readingLoadTimeFileResult;
-            _loadTime = JsonConvert.DeserializeObject<LoadTimeModel>(readingLoadTimeFileResult.Result)!;
+            _loadTime = JsonConvert.DeserializeObject<LoadTimeModel>(File.ReadAllText(LoadTimeFileFullPath))!;
                 
             if (_loadTime == null) // Файл невалидный
             {
@@ -45,10 +44,7 @@ namespace AffairList
 
             foreach (var profile in profiles)
             {
-                using var readingFileResult = File.ReadAllLinesAsync(profile);
-                await readingFileResult;
-
-                string[] affairs = readingFileResult.Result;
+                string[] affairs = File.ReadAllLines(profile);
 
                 foreach (string affair in affairs)
                 {
