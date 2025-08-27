@@ -25,8 +25,9 @@ namespace AffairList
             if (!LoadTimeFileExist()) CreateLoadTimeFile();
             if (!settings.DoesNotificate()) return;
 
-            _loadTime = JsonConvert.DeserializeObject<LoadTimeModel>(File.ReadAllText(LoadTimeFileFullPath))!;
-                
+            _loadTime = JsonConvert.DeserializeObject<LoadTimeModel>
+                (await File.ReadAllTextAsync(LoadTimeFileFullPath))!;
+
             if (_loadTime == null) // Файл невалидный
             {
                 await WriteBaseTime();
@@ -44,7 +45,7 @@ namespace AffairList
 
             foreach (var profile in profiles)
             {
-                string[] affairs = File.ReadAllLines(profile);
+                string[] affairs = await File.ReadAllLinesAsync(profile);
 
                 foreach (string affair in affairs)
                 {
