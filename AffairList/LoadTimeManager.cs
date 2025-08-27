@@ -37,17 +37,14 @@ namespace AffairList
                 
             if (!ShouldNotificate()) return;
 
-            string[] profiles = Directory.GetFiles(settings.listsDirectoryFullPath);
 
             using NotifyIcon notification = new NotifyIcon();
             notification.Icon = SystemIcons.Exclamation;
             notification.BalloonTipTitle = "AffairList";
 
-            foreach (var profile in profiles)
+            foreach (var profile in Directory.EnumerateFiles(settings.listsDirectoryFullPath))
             {
-                string[] affairs = await File.ReadAllLinesAsync(profile);
-
-                foreach (string affair in affairs)
+                await foreach (string affair in File.ReadLinesAsync(profile))
                 {
                     if (!affair.StartsWith(_deadlineTag)) continue;
 
