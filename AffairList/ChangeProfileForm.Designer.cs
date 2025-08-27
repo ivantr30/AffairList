@@ -295,7 +295,6 @@
         private Label CloseButton;
         private Label ProfilesListLab;
         private Panel panel1;
-        private Button AddDeadlineButton;
         private Button DeleteButton;
         private Button BackButton;
         private ListBox Profiles;

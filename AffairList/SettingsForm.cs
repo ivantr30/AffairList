@@ -91,7 +91,7 @@ namespace AffairList
             Restart();
         }
 
-        private void ResetButton_Click(object sender, EventArgs e)
+        private async void ResetButton_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show(
                 "Do you really want to reset the settings?",
@@ -100,19 +100,19 @@ namespace AffairList
                 MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                if (!settings.SettingsFileExists()) settings.CreateSettingsFile();
+                if (!settings.SettingsFileExists()) await settings.CreateSettingsFile();
 
-                settings.WriteBaseSettings();
+                await settings.WriteBaseSettings();
 
                 MessageBox.Show("The settings were reseted succesfully");
             }
             Restart();
         }
 
-        private void ConfirmButton_Click(object sender, EventArgs e)
+        private async void ConfirmButton_Click(object sender, EventArgs e)
         {
             _isConfirmed = true;
-            settings.SaveSettings();
+            await settings.SaveSettings();
         }
 
         private void autostartStateLab_MouseDown(object sender, MouseEventArgs e)

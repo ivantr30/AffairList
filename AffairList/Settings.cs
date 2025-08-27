@@ -23,15 +23,16 @@ namespace AffairList
             _defaultListFileFullPath = listsDirectoryFullPath + "\\list.txt";
             settingsFileFullPath = Application.StartupPath + "settings.json";
 
-            Initialize();
+            Task.Run(() => Initialize());
         }
-        private void Initialize()
+        private async Task Initialize()
         {
-            if(!SettingsFileExists()) CreateSettingsFile();
+            if(!SettingsFileExists()) await CreateSettingsFile();
             if(!ListsDirectoryExists()) CreateListsDirectory();
             try
             {
-                _settings = JsonConvert.DeserializeObject<SettingsModel>(File.ReadAllText(settingsFileFullPath))!;
+                var settingsFileReadingResult = await File.ReadAllTextAsync(settingsFileFullPath);
+                _settings = JsonConvert.DeserializeObject<SettingsModel>(settingsFileReadingResult)!;
                 if (!File.Exists(GetCurrentProfile()))
                 {
                     ChooseProfile();
@@ -47,19 +48,20 @@ namespace AffairList
             }
             catch
             {
-                WriteBaseSettings();
+                await WriteBaseSettings();
             }
         }
-        public void WriteBaseSettings()
+        public async Task WriteBaseSettings()
         {
-            File.WriteAllText(settingsFileFullPath, JsonConvert.SerializeObject(new SettingsModel()));
+            await File.WriteAllTextAsync(settingsFileFullPath, 
+                JsonConvert.SerializeObject(new SettingsModel()));
         }
         private void ChooseProfile()
         {
-            var profiles = Directory.GetFiles(listsDirectoryFullPath);
-            if (profiles.Length > 0)
+            foreach (var profile in Directory.EnumerateFiles(listsDirectoryFullPath))
             {
-                SetCurrentProfile(profiles[0]);
+                SetCurrentProfile(profile);
+                break; // Получаем первый профиль и завершаем работу
             }
         }
         private void EnableAutoStart(string appName, string exePath)
@@ -78,7 +80,7 @@ namespace AffairList
         }
         public bool ListFilesAvailable()
         {
-            return Directory.GetFiles(listsDirectoryFullPath).Length > 0;
+            return Directory.EnumerateFiles(listsDirectoryFullPath).Count() > 0;
         }
         public bool SettingsFileExists()
         {
@@ -92,28 +94,28 @@ namespace AffairList
         {
             return File.Exists(GetCurrentProfile());
         }
-        public void CreateFiles()
+        public async Task CreateFiles()
         {
-            CreateSettingsFile();
+            await CreateSettingsFile();
             CreateListsDirectory();
         }
-        public void CreateSettingsFile()
+        public async Task CreateSettingsFile()
         {
             using (File.Create(settingsFileFullPath)) { }
-            WriteBaseSettings();
+            await WriteBaseSettings();
         }
         public void CreateListsDirectory()
         {
-            DirectoryInfo dir = Directory.CreateDirectory(listsDirectoryFullPath);
+            Directory.CreateDirectory(listsDirectoryFullPath);
         }
         public void CreateDefaultList()
         {
             using (File.Create(_defaultListFileFullPath)) { }
             SetCurrentProfile(_defaultListFileFullPath);
         }
-        public void SaveSettings()
+        public async Task SaveSettings()
         {
-            File.WriteAllText(settingsFileFullPath, JsonConvert.SerializeObject(_settings));
+            await File.WriteAllTextAsync(settingsFileFullPath, JsonConvert.SerializeObject(_settings));
         }
         public void SetCurrentProfile(string fullPath) => _settings.currentListFileFullPath = fullPath;
 

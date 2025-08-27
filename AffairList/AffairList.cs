@@ -16,7 +16,7 @@ namespace AffairList
             _trayMenu.Items.Add("Выход", null, OnExit!);
 
             trayIcon.Text = "AffairList";
-            trayIcon.Icon = SystemIcons.Application;
+            trayIcon.Icon = Icon.ExtractAssociatedIcon("AffairListLogo.ico");
 
             trayIcon.ContextMenuStrip = _trayMenu;
             trayIcon.Visible = true;
@@ -143,7 +143,7 @@ namespace AffairList
 
         private void AffairList_Load(object sender, EventArgs e)
         {
-            _loadTimeManager.SaveTime();
+            Task.Run(() => _loadTimeManager.SaveTime());
             TopMost = true;
         }
 

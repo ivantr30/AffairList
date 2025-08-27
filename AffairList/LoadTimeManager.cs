@@ -23,58 +23,56 @@ namespace AffairList
         {
             if (!LoadTimeFileExist()) CreateLoadTimeFile();
             if (!settings.DoesNotificate()) return;
-            try
-            {
-                using var readingLoadTimeFileResult = File.ReadAllTextAsync(LoadTimeFileFullPath);
-                await readingLoadTimeFileResult;
 
-                _loadTime = JsonConvert.DeserializeObject<LoadTimeModel>(readingLoadTimeFileResult.Result)!;
-                if (_loadTime == null) throw new Exception("loadfile is null");
+            using var readingLoadTimeFileResult = File.ReadAllTextAsync(LoadTimeFileFullPath);
+            await readingLoadTimeFileResult;
+            _loadTime = JsonConvert.DeserializeObject<LoadTimeModel>(readingLoadTimeFileResult.Result)!;
                 
-                if (!ShouldNotificate()) return;
-
-                string[] profiles = Directory.GetFiles(settings.listsDirectoryFullPath);
-
-                using NotifyIcon notification = new NotifyIcon();
-                notification.Icon = SystemIcons.Exclamation;
-                notification.BalloonTipTitle = "AffairList";
-
-                foreach (var profile in profiles)
-                {
-                    using var readingFileResult = File.ReadAllLinesAsync(profile);
-                    await readingFileResult;
-
-                    string[] affairs = readingFileResult.Result;
-
-                    foreach (string affair in affairs)
-                    {
-                        if (!affair.StartsWith(_deadlineTag)) continue;
-
-                        DateTime deadline = DateTime.Parse(affair.Substring(10, 11));
-
-                        int daysLeft = (deadline.Date - DateTime.Now.Date).Days;
-                        if (daysLeft > settings.GetNotificationDayDistance()) continue;
-
-                        if (daysLeft == 0)
-                        {
-                            TimeSpan day = new TimeSpan(24, 0, 0);
-                            TimeSpan now = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
-                            notification.BalloonTipText = AffairWithoutTags(affair) + $" - осталось {day - now}";
-                        }
-                        else if (daysLeft > 0) 
-                            notification.BalloonTipText = AffairWithoutTags(affair) + $" - осталось {daysLeft} дней";
-                        else
-                            notification.BalloonTipText = AffairWithoutTags(affair) + " - просрочено";
-
-                        notification.Visible = true;
-                        notification.ShowBalloonTip(1);
-                    }
-                }
-            }
-            catch
+            if (_loadTime == null) // Файл невалидный
             {
-                WriteBaseTime();
+                await WriteBaseTime();
                 await Initialize(settings);
+                return;
+            }
+                
+            if (!ShouldNotificate()) return;
+
+            string[] profiles = Directory.GetFiles(settings.listsDirectoryFullPath);
+
+            using NotifyIcon notification = new NotifyIcon();
+            notification.Icon = SystemIcons.Exclamation;
+            notification.BalloonTipTitle = "AffairList";
+
+            foreach (var profile in profiles)
+            {
+                using var readingFileResult = File.ReadAllLinesAsync(profile);
+                await readingFileResult;
+
+                string[] affairs = readingFileResult.Result;
+
+                foreach (string affair in affairs)
+                {
+                    if (!affair.StartsWith(_deadlineTag)) continue;
+
+                    DateTime deadline = DateTime.Parse(affair.Substring(10, 11));
+
+                    int daysLeft = (deadline.Date - DateTime.Now.Date).Days;
+                    if (daysLeft > settings.GetNotificationDayDistance()) continue;
+
+                    if (daysLeft == 0)
+                    {
+                        TimeSpan day = new TimeSpan(24, 0, 0);
+                        TimeSpan now = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+                        notification.BalloonTipText = AffairWithoutTags(affair) + $" - осталось {day - now}";
+                    }
+                    else if (daysLeft > 0) 
+                        notification.BalloonTipText = AffairWithoutTags(affair) + $" - осталось {daysLeft} дней";
+                    else
+                        notification.BalloonTipText = AffairWithoutTags(affair) + " - просрочено";
+
+                    notification.Visible = true;
+                    notification.ShowBalloonTip(1);
+                }
             }
         }
 
@@ -84,17 +82,18 @@ namespace AffairList
         }
         private string AffairWithoutTags(string affair)
         {
-            return affair.Substring(10).Replace(_priorityTag, _priorityWord);
+            return affair.Remove(0, 10).Replace(_priorityTag, _priorityWord);
         }
-        private void WriteBaseTime()
+        private async Task WriteBaseTime()
         {
-            File.WriteAllText(LoadTimeFileFullPath, JsonConvert.SerializeObject(new LoadTimeModel()));
+            await File.WriteAllTextAsync(LoadTimeFileFullPath, 
+                JsonConvert.SerializeObject(new LoadTimeModel()));
         }
 
-        public void SaveTime()
+        public async Task SaveTime()
         {
             SetPreviousLoadTime(DateTime.Now);
-            File.WriteAllText(LoadTimeFileFullPath, JsonConvert.SerializeObject(_loadTime));
+            await File.WriteAllTextAsync(LoadTimeFileFullPath, JsonConvert.SerializeObject(_loadTime));
         }
 
         public bool LoadTimeFileExist()

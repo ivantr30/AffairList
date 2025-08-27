@@ -109,14 +109,14 @@ namespace AffairList
         {
             if (canReplace) MoveForm(e);
         }
-        private void OnListMouseUp(MouseEventArgs e)
+        private async void OnListMouseUp(MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left && canReplace)
             {
                 canReplace = false;
                 settings.SetProfileX(Left + Affairs.Left);
                 settings.SetProfileY(Top + Affairs.Top);
-                settings.SaveSettings();
+                await settings.SaveSettings();
                 Restart();
             }
         }

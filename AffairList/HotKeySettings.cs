@@ -32,7 +32,7 @@ namespace AffairList
 
         private void MinimizeButton_Click(object sender, EventArgs e) => MinimizeForm();
 
-        private void ResetButton_Click(object sender, EventArgs e)
+        private async void ResetButton_Click(object sender, EventArgs e)
         {
             DialogResult resetOrNot = MessageBox.Show("Are you sure to reset hotkey settings?",
                 "Confirm form",
@@ -41,7 +41,7 @@ namespace AffairList
 
             settings.SetCloseKey(Keys.F7);
             settings.SetReturnKey(Keys.F6);
-            settings.SaveSettings();
+            await settings.SaveSettings();
 
             CloseKeyType.Text = "F7";
             BackKeyType.Text = "F6";
@@ -49,9 +49,9 @@ namespace AffairList
             _isConfirmed = false;
         }
 
-        private void ConfirmButton_Click(object sender, EventArgs e)
+        private async void ConfirmButton_Click(object sender, EventArgs e)
         {
-            settings.SaveSettings();
+            await settings.SaveSettings();
             _isConfirmed = true;
         }
         private void CloseKeyType_DoubleClick(object sender, EventArgs e)
