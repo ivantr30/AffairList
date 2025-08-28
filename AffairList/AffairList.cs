@@ -42,6 +42,8 @@
         {
             TopMost = true;
             ShowInTaskbar = true;
+            Show();
+            childForm?.Close();
         }
 
         private void OnExit(object sender, EventArgs e) => Exit();
@@ -63,7 +65,8 @@
         {
             Hide();
             childForm = form;
-            childForm.ShowDialog();
+            childForm?.ShowDialog();
+            Show();
         }
         public void SetLastPoint(MouseEventArgs e) => LastPoint = new Point(e.X, e.Y);
         public void MoveForm(MouseEventArgs e)
