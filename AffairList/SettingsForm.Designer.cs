@@ -34,6 +34,7 @@
             CloseButton = new Label();
             SettingsLab = new Label();
             panel1 = new Panel();
+            ExportButton = new Button();
             DistanceToNotificate = new Label();
             DistanceToNotificateLab = new Label();
             NotificationState = new Label();
@@ -54,7 +55,6 @@
             ResetButton = new Button();
             BackButton = new Button();
             ColorPicker = new ColorDialog();
-            ExportButton = new Button();
             ExportSettingsFileDialog = new FolderBrowserDialog();
             NameBackground.SuspendLayout();
             panel1.SuspendLayout();
@@ -144,6 +144,18 @@
             panel1.Size = new Size(440, 511);
             panel1.TabIndex = 1;
             // 
+            // ExportButton
+            // 
+            ExportButton.BackColor = Color.FromArgb(173, 102, 213);
+            ExportButton.FlatStyle = FlatStyle.Flat;
+            ExportButton.Location = new Point(12, 472);
+            ExportButton.Name = "ExportButton";
+            ExportButton.Size = new Size(75, 27);
+            ExportButton.TabIndex = 29;
+            ExportButton.Text = "Export";
+            ExportButton.UseVisualStyleBackColor = false;
+            ExportButton.Click += ExportButton_Click;
+            // 
             // DistanceToNotificate
             // 
             DistanceToNotificate.Anchor = AnchorStyles.Top | AnchorStyles.Right;
@@ -228,9 +240,9 @@
             AskToDelete.ForeColor = Color.White;
             AskToDelete.Location = new Point(12, 294);
             AskToDelete.Name = "AskToDelete";
-            AskToDelete.Size = new Size(153, 21);
+            AskToDelete.Size = new Size(263, 21);
             AskToDelete.TabIndex = 23;
-            AskToDelete.Text = "Ask to delete";
+            AskToDelete.Text = "Ask to delete an affair";
             AskToDelete.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // ThemeBoxCB
@@ -405,18 +417,6 @@
             BackButton.Text = "Back";
             BackButton.UseVisualStyleBackColor = false;
             BackButton.Click += BackButton_Click;
-            // 
-            // ExportButton
-            // 
-            ExportButton.BackColor = Color.FromArgb(173, 102, 213);
-            ExportButton.FlatStyle = FlatStyle.Flat;
-            ExportButton.Location = new Point(12, 472);
-            ExportButton.Name = "ExportButton";
-            ExportButton.Size = new Size(75, 27);
-            ExportButton.TabIndex = 29;
-            ExportButton.Text = "Export";
-            ExportButton.UseVisualStyleBackColor = false;
-            ExportButton.Click += ExportButton_Click;
             // 
             // SettingsForm
             // 

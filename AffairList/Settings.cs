@@ -1,5 +1,6 @@
 ﻿using Microsoft.Win32;
 using Newtonsoft.Json;
+using IWshRuntimeLibrary;
 namespace AffairList
 {
     public class Settings
@@ -31,18 +32,19 @@ namespace AffairList
             if(!ListsDirectoryExists()) CreateListsDirectory();
             try
             {
-                _settings = JsonConvert.DeserializeObject<SettingsModel>(File.ReadAllText(settingsFileFullPath))!;
-                if (!File.Exists(GetCurrentProfile()))
+                _settings = JsonConvert.DeserializeObject<SettingsModel>
+                    (System.IO.File.ReadAllText(settingsFileFullPath))!;
+                if (!System.IO.File.Exists(GetCurrentProfile()))
                 {
                     ChooseProfile();
                 }
                 if (DoesAutostart())
                 {
-                    EnableAutoStart(_appName, _exePath);
+                    EnableAutoStart();
                 }
                 else
                 {
-                    DisableAutoStart(_appName);
+                    DisableAutoStart();
                 }
             }
             catch
@@ -52,7 +54,7 @@ namespace AffairList
         }
         public async Task WriteBaseSettings()
         {
-            await File.WriteAllTextAsync(settingsFileFullPath, 
+            await System.IO.File.WriteAllTextAsync(settingsFileFullPath, 
                 JsonConvert.SerializeObject(new SettingsModel()));
         }
         private void ChooseProfile()
@@ -63,19 +65,35 @@ namespace AffairList
                 break; // Получаем первый профиль и завершаем работу
             }
         }
-        private void EnableAutoStart(string appName, string exePath)
+        private void EnableAutoStart()
         {
-            RegistryKey key = Registry.CurrentUser
-                .OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true)!;
+            string startupFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
 
-            key.SetValue(appName, $"\"{exePath}\"");
+            string shortcutPath = Path.Combine(startupFolderPath, Application.ProductName + ".lnk");
+
+            if (System.IO.File.Exists(shortcutPath))
+            {
+                return;
+            }
+
+            WshShell shell = new WshShell();
+            IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutPath);
+            
+            shortcut.Description = "AffairList";
+            shortcut.TargetPath = Application.ExecutablePath;     
+            shortcut.WorkingDirectory = Application.StartupPath;  
+                                                              
+            shortcut.Save();
         }
-        private void DisableAutoStart(string appName)
+        private void DisableAutoStart()
         {
-            RegistryKey key = Registry.CurrentUser
-                .OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true)!;
+            string startupFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+            string shortcutPath = Path.Combine(startupFolderPath, Application.ProductName + ".lnk");
 
-            key.DeleteValue(appName, false);
+            if (System.IO.File.Exists(shortcutPath))
+            {
+                System.IO.File.Delete(shortcutPath);
+            }
         }
         public bool ListFilesAvailable()
         {
@@ -83,7 +101,7 @@ namespace AffairList
         }
         public bool SettingsFileExists()
         {
-            return File.Exists(settingsFileFullPath);
+            return System.IO.File.Exists(settingsFileFullPath);
         }
         public bool ListsDirectoryExists()
         {
@@ -91,7 +109,7 @@ namespace AffairList
         }
         public bool CurrentListNotNull()
         {
-            return File.Exists(GetCurrentProfile());
+            return System.IO.File.Exists(GetCurrentProfile());
         }
         public async Task CreateFiles()
         {
@@ -100,7 +118,7 @@ namespace AffairList
         }
         public async Task CreateSettingsFile()
         {
-            using (File.Create(settingsFileFullPath)) { }
+            using (System.IO.File.Create(settingsFileFullPath)) { }
             await WriteBaseSettings();
         }
         public void CreateListsDirectory()
@@ -109,12 +127,12 @@ namespace AffairList
         }
         public void CreateDefaultList()
         {
-            using (File.Create(_defaultListFileFullPath)) { }
+            using (System.IO.File.Create(_defaultListFileFullPath)) { }
             SetCurrentProfile(_defaultListFileFullPath);
         }
         public async Task SaveSettings()
         {
-            await File.WriteAllTextAsync(settingsFileFullPath, JsonConvert.SerializeObject(_settings));
+            await System.IO.File.WriteAllTextAsync(settingsFileFullPath, JsonConvert.SerializeObject(_settings));
         }
         public void SetCurrentProfile(string fullPath) => _settings.currentListFileFullPath = fullPath;
 

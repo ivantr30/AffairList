@@ -15,7 +15,6 @@ namespace AffairList
         public LoadTimeManager(Settings settings)
         { 
             LoadTimeFileFullPath = Application.StartupPath + "loadtime.json";
-            _loadTime = new LoadTimeModel();
 
             Task.Run(() => Initialize(settings));
         }
