@@ -10,9 +10,6 @@ namespace AffairList
         public readonly string listsDirectoryFullPath;
         public readonly string settingsFileFullPath;
 
-        private const string _appName = "AffairList";
-        private readonly string _exePath = Application.ExecutablePath;
-
         public readonly int width = Screen.PrimaryScreen!.WorkingArea.Width;
         public readonly int height = Screen.PrimaryScreen.WorkingArea.Height;
 
@@ -67,14 +64,9 @@ namespace AffairList
         }
         private void EnableAutoStart()
         {
-            string startupFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+            string shortcutPath = GetAutostartShortcut();
 
-            string shortcutPath = Path.Combine(startupFolderPath, Application.ProductName + ".lnk");
-
-            if (System.IO.File.Exists(shortcutPath))
-            {
-                return;
-            }
+            if (System.IO.File.Exists(shortcutPath)) return;
 
             WshShell shell = new WshShell();
             IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutPath);
@@ -87,13 +79,16 @@ namespace AffairList
         }
         private void DisableAutoStart()
         {
-            string startupFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
-            string shortcutPath = Path.Combine(startupFolderPath, Application.ProductName + ".lnk");
-
+            string shortcutPath = GetAutostartShortcut();
             if (System.IO.File.Exists(shortcutPath))
             {
                 System.IO.File.Delete(shortcutPath);
             }
+        }
+        private string GetAutostartShortcut()
+        {
+            string startupFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+            return Path.Combine(startupFolderPath, Application.ProductName + ".lnk");
         }
         public bool ListFilesAvailable()
         {

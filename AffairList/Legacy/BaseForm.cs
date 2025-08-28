@@ -13,12 +13,12 @@ namespace AffairList
         public BaseForm() => InitializeComponent();
         protected virtual void Exit()
         {
-            AffairList.trayIcon.Visible = false;
+            AffairList1.trayIcon.Visible = false;
             Application.Exit();
         }
         protected virtual void Restart()
         {
-            AffairList.trayIcon.Visible = false;
+            AffairList1.trayIcon.Visible = false;
             Application.Restart();
         }
         protected void SetLastPoint(MouseEventArgs e) => lastPoint = new Point(e.X, e.Y);

@@ -67,6 +67,7 @@ namespace AffairList
                     notification.ShowBalloonTip(1);
                 }
             }
+            await SaveTime();
         }
 
         private bool ShouldNotificate()

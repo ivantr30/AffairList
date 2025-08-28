@@ -1,152 +1,81 @@
-using Newtonsoft.Json;
-
-namespace AffairList
+ï»¿namespace AffairList
 {
-    public partial class AffairList : BaseForm
+    public partial class AffairList : Form, IParentable
     {
-        public static readonly NotifyIcon trayIcon = new NotifyIcon();
+        private readonly NotifyIcon _trayIcon = new NotifyIcon();
         private ContextMenuStrip _trayMenu = new ContextMenuStrip();
+
         private LoadTimeManager _loadTimeManager;
+        private Settings _settings;
+
+        private Form childForm;
+
+        public Point LastPoint { get; set; }
 
         public AffairList()
         {
             InitializeComponent();
 
-            _trayMenu.Items.Add("Îòêðûòü", null, OnOpen!);
-            _trayMenu.Items.Add("Âûõîä", null, OnExit!);
+            Initialize();
+        }
+        private void Initialize()
+        {
+            _settings = new Settings();
+            _loadTimeManager = new LoadTimeManager(_settings);
 
-            trayIcon.Text = "AffairList";
-            trayIcon.Icon = Icon.ExtractAssociatedIcon("AffairListLogo.ico");
+            _trayMenu.Items.Add("ÐžÑ‚ÐºÑ€Ñ‹Ñ‚ÑŒ", null, OnOpen!);
+            _trayMenu.Items.Add("Ð’Ñ‹Ñ…Ð¾Ð´", null, OnExit!);
 
-            trayIcon.ContextMenuStrip = _trayMenu;
-            trayIcon.Visible = true;
+            _trayIcon.Text = "AffairList";
+            _trayIcon.Icon = Icon.ExtractAssociatedIcon("AffairListLogo.ico");
 
-            settings = new Settings();
-            _loadTimeManager = new LoadTimeManager(settings);
+            _trayIcon.ContextMenuStrip = _trayMenu;
+            _trayIcon.Visible = true;
+
+            SetControl(new MainMenu(_settings, _loadTimeManager, this));
+        }
+        private void AffairList_Shown(object sender, EventArgs e)
+        {
+            TopMost = false;
         }
         private void OnOpen(object sender, EventArgs e)
         {
-            Restart();
+            TopMost = true;
             ShowInTaskbar = true;
         }
 
         private void OnExit(object sender, EventArgs e) => Exit();
 
-        private void CloseButton_Click(object sender, EventArgs e) => Exit();
-
-        private void CloseButton_MouseEnter(object sender, EventArgs e)
+        public void Exit()
         {
-            CloseButton.ForeColor = Color.Gray;
+            _trayIcon.Visible = false;
+            _trayIcon.Dispose();
+            Application.Exit();
         }
-
-        private void CloseButton_MouseLeave(object sender, EventArgs e)
+        public void MinimizeForm() => WindowState = FormWindowState.Minimized;
+        public void SetControl(Control control)
         {
-            CloseButton.ForeColor = Color.Black;
+            Width = control.Width;
+            Height = control.Height;
+            Controls.Add(control);
         }
-
-        private void NameBackground_MouseDown(object sender, MouseEventArgs e) => SetLastPoint(e);
-        private void NameBackground_MouseMove(object sender, MouseEventArgs e) => MoveForm(e);
-        private void AffairListLab_MouseMove(object sender, MouseEventArgs e) => MoveForm(e);
-        private void AffairListLab_MouseDown(object sender, MouseEventArgs e) => SetLastPoint(e);
-
-        private void OpenListButton_Click(object sender, EventArgs e)
+        public void OpenForm(Form form)
         {
-            if (!settings.CurrentListNotNull())
+            Hide();
+            childForm = form;
+            childForm.ShowDialog();
+        }
+        public void SetLastPoint(MouseEventArgs e) => LastPoint = new Point(e.X, e.Y);
+        public void MoveForm(MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
             {
-                MessageBox.Show("Error, there is no list available");
-                return;
-            }
-            CreateForm(new ToDoList(settings));
-        }
-
-        private void ClearListButton_Click(object sender, EventArgs e)
-        {
-            DialogResult result = MessageBox.Show(
-            "Are you sure to clear your affair list?",
-            "Confirm window",
-            MessageBoxButtons.YesNo,
-            MessageBoxIcon.Question
-            );
-
-            if (result == DialogResult.Yes)
-            {
-                if (!settings.CurrentListNotNull())
-                {
-                    MessageBox.Show("Error, list file does not exist");
-                    return;
-                }
-                File.WriteAllText(settings.GetCurrentProfile(), "");
-                MessageBox.Show("The list is cleared");
+                Left += e.X - LastPoint.X;
+                Top += e.Y - LastPoint.Y;
             }
         }
 
-        private void ChangeListButton_Click(object sender, EventArgs e)
-        {
-            if (!settings.ListFilesAvailable())
-            {
-                DialogResult createDefault = MessageBox.Show("There are no profiles available," +
-                    " do you want to add default?",
-                    "Confirm Form",
-                    MessageBoxButtons.YesNo);
-                if (createDefault == DialogResult.No) return;
-
-                settings.CreateDefaultList();
-            }
-            CreateForm(new ChangeListForm(settings));
-        }
-
-        private void ReplaceAffairListButton_Click(object sender, EventArgs e)
-        {
-            if (!settings.CurrentListNotNull())
-            {
-                MessageBox.Show("Error, there is no list available");
-                return;
-            }
-            ToDoList list = new ToDoList(settings);
-            list.GetAffairs().BackColor = Color.White;
-            list.canReplace = true;
-            CreateForm(list);
-        }
-
-        private void SettingsButton_Click(object sender, EventArgs e)
-        {
-            CreateForm(new SettingsForm(settings));
-        }
-        private void ChangeProfileButton_Click(object sender, EventArgs e)
-        {
-            CreateForm(new ChangeProfileForm(settings));
-        }
-        private void HotKeyButton_Click(object sender, EventArgs e)
-        {
-            CreateForm(new HotKeySettings(settings));
-        }
-        private void AffairList_FormClosing(object sender, FormClosingEventArgs e) => Exit();
-        private void MinimizeButton_Click(object sender, EventArgs e) => MinimizeForm();
-
-        private void MinimizeButton_MouseEnter(object sender, EventArgs e)
-        {
-            MinimizeButton.ForeColor = Color.Gray;
-        }
-
-        private void MinimizeButton_MouseLeave(object sender, EventArgs e)
-        {
-            MinimizeButton.ForeColor = Color.Black;
-        }
-
-        private void AffairList_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == settings.GetCloseKey())
-            {
-                Exit();
-            }
-        }
-
-        private void AffairList_Load(object sender, EventArgs e)
-        {
-            Task.Run(() => _loadTimeManager.SaveTime());
-            TopMost = true;
-        }
-
-        private void AffairList_Shown(object sender, EventArgs e) => TopMost = false;
+        private void AffairList_FormClosing(object sender, FormClosingEventArgs e)
+            => Exit();
     }
 }
