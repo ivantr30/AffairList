@@ -56,7 +56,7 @@ namespace AffairList
                 MessageBox.Show("Error, there is no list available");
                 return;
             }
-            CreateForm(new ToDoList(settings));
+            //CreateForm(new ToDoList(settings));
         }
 
         private void ClearListButton_Click(object sender, EventArgs e)
@@ -102,10 +102,10 @@ namespace AffairList
                 MessageBox.Show("Error, there is no list available");
                 return;
             }
-            ToDoList list = new ToDoList(settings);
-            list.GetAffairs().BackColor = Color.White;
-            list.canReplace = true;
-            CreateForm(list);
+            //ToDoList list = new ToDoList(settings);
+            //list.GetAffairs().BackColor = Color.White;
+            //list.canReplace = true;
+            //CreateForm(list);
         }
 
         private void SettingsButton_Click(object sender, EventArgs e)

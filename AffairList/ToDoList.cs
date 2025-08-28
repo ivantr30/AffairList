@@ -10,8 +10,9 @@ namespace AffairList
 
         private string _priorityTag = "<priority>";
         private string _deadlineTag = "<deadline>";
+        public IParentable ParentElement { get; set; }
 
-        public ToDoList(Settings settings)
+        public ToDoList(Settings settings, IParentable parent)
             : base(settings)
         {
             InitializeComponent();
@@ -19,6 +20,7 @@ namespace AffairList
 
             LoadText();
             SetLocation();
+            ParentElement = parent;
         }
         private void SetLocation()
         {
@@ -90,7 +92,7 @@ namespace AffairList
             }
             if (e.KeyCode == settings.GetReturnKey())
             {
-                Restart();
+                Close();
             }
         }
 
@@ -124,7 +126,5 @@ namespace AffairList
         {
             return Affairs;
         }
-
-        private void List_FormClosing(object sender, FormClosingEventArgs e) => Exit();
     }
 }

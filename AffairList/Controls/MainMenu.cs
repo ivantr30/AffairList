@@ -54,7 +54,7 @@
                 MessageBox.Show("Error, there is no list available");
                 return;
             }
-            ParentElement.OpenForm(new ToDoList(_settings));
+            ParentElement.OpenForm(new ToDoList(_settings, ParentElement));
         }
         private void ReplaceAffairListButton_Click(object sender, EventArgs e)
         {
@@ -63,7 +63,7 @@
                 MessageBox.Show("Error, there is no list available");
                 return;
             }
-            ToDoList list = new ToDoList(_settings);
+            ToDoList list = new ToDoList(_settings, ParentElement);
             list.GetAffairs().BackColor = Color.White;
             list.canReplace = true;
             ParentElement.OpenForm(list);
