@@ -119,7 +119,7 @@ namespace AffairList
                 settings.SetProfileX(Left + Affairs.Left);
                 settings.SetProfileY(Top + Affairs.Top);
                 await settings.SaveSettings();
-                Restart();
+                Close();
             }
         }
         public Label GetAffairs()

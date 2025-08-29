@@ -1,11 +1,13 @@
-﻿using Microsoft.Win32;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using IWshRuntimeLibrary;
 namespace AffairList
 {
     public class Settings
     {
         private readonly string _defaultListFileFullPath;
+
+        public readonly string _programDirectoryFolder = Environment
+            .GetFolderPath(Environment.SpecialFolder.ApplicationData)+@"\AffairList\";
 
         public readonly string listsDirectoryFullPath;
         public readonly string settingsFileFullPath;
@@ -17,14 +19,15 @@ namespace AffairList
 
         public Settings()
         {
-            listsDirectoryFullPath = Application.StartupPath + "profiles\\";
-            _defaultListFileFullPath = listsDirectoryFullPath + "\\list.txt";
-            settingsFileFullPath = Application.StartupPath + "settings.json";
+            listsDirectoryFullPath = $@"{_programDirectoryFolder}\profiles\";
+            _defaultListFileFullPath = $@"{listsDirectoryFullPath}\list.txt";
+            settingsFileFullPath = $@"{_programDirectoryFolder}\settings.json";
 
             Initialize();
         }
         private void Initialize()
         {
+            if(!ProgramDirectoryExists()) CreateProgramDirectory();
             if(!SettingsFileExists()) CreateSettingsFile();
             if(!ListsDirectoryExists()) CreateListsDirectory();
             try
@@ -90,6 +93,11 @@ namespace AffairList
             string startupFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
             return Path.Combine(startupFolderPath, Application.ProductName + ".lnk");
         }
+
+        public bool ProgramDirectoryExists()
+        {
+            return System.IO.File.Exists(_programDirectoryFolder);
+        }
         public bool ListFilesAvailable()
         {
             return Directory.EnumerateFiles(listsDirectoryFullPath).Count() > 0;
@@ -124,6 +132,10 @@ namespace AffairList
         {
             using (System.IO.File.Create(_defaultListFileFullPath)) { }
             SetCurrentProfile(_defaultListFileFullPath);
+        }
+        public void CreateProgramDirectory()
+        {
+            Directory.CreateDirectory(_programDirectoryFolder);
         }
         public async Task SaveSettings()
         {
