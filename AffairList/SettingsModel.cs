@@ -11,7 +11,7 @@ namespace AffairList
         public Keys closeKey { get; set; } = Keys.F7;
         public Keys returnKey { get; set; } = Keys.F6;
 
-        public bool autostartState { get; set; } = true;
+        public bool autostartState { get; set; } = false;
         public bool askToDelete { get; set; } = true;
         public bool DoesNotificate { get; set; } = true;
 
