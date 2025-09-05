@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualBasic;
 using System.Runtime;
+using System.Threading.Tasks;
 namespace AffairList
 {
     public partial class ChangeProfileForm : BaseForm
@@ -163,13 +164,13 @@ namespace AffairList
             }
         }
 
-        private void SelectProfileButton_Click(object sender, EventArgs e)
+        private async Task SelectProfileButton_Click(object sender, EventArgs e)
         {
             settings.SetCurrentProfile(_profileLines[Profiles.SelectedIndex]);
-            settings.SaveSettings();
+            await settings.SaveSettings();
         }
 
-        private void RenameButton_Click(object sender, EventArgs e)
+        private async Task RenameButton_Click(object sender, EventArgs e)
         {
             if (Profiles.SelectedIndex == -1) return;
 
@@ -193,14 +194,14 @@ namespace AffairList
             if (settings.GetCurrentProfile() == selectedProfile.FullName)
             {
                 settings.SetCurrentProfile(newProfileName);
-                settings.SaveSettings();
+                await settings.SaveSettings();
             }
 
             File.Move(selectedProfile.FullName, newProfileName);
             LoadProfiles();
         }
 
-        private void ChangePriorityButton_Click(object sender, EventArgs e)
+        private async Task ChangePriorityButton_Click(object sender, EventArgs e)
         {
             if (Profiles.SelectedIndex == -1) return;
 
@@ -217,7 +218,7 @@ namespace AffairList
             if (selectedProfileInfo.FullName == settings.GetCurrentProfile())
             {
                 settings.SetCurrentProfile(newProfileName);
-                settings.SaveSettings();
+                await settings.SaveSettings();
             }
 
             File.Move(selectedProfileInfo.FullName, newProfileName);

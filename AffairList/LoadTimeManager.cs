@@ -16,13 +16,12 @@ namespace AffairList
         { 
             LoadTimeFileFullPath = $@"{settings._programDirectoryFolder}\loadtime.json";
 
-            Task.Run(() => Initialize(settings));
+            Task.Run(async () => await Initialize(settings));
         }
 
         public async Task Initialize(Settings settings)
         {
             if (!LoadTimeFileExist()) CreateLoadTimeFile();
-            if (!settings.DoesNotificate()) return;
 
             _loadTime = JsonConvert.DeserializeObject<LoadTimeModel>
                 (await File.ReadAllTextAsync(LoadTimeFileFullPath))!;
@@ -33,9 +32,12 @@ namespace AffairList
                 await Initialize(settings);
                 return;
             }
-                
-            if (!ShouldNotificate()) return;
 
+            await Notificate(settings);
+        }
+        public async Task Notificate(Settings settings)
+        {
+            if (!settings.DoesNotificate() || !ShouldNotificate()) return;
 
             using NotifyIcon notification = new NotifyIcon();
             notification.Icon = SystemIcons.Exclamation;
@@ -58,7 +60,7 @@ namespace AffairList
                         TimeSpan now = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
                         notification.BalloonTipText = AffairWithoutTags(affair) + $" - осталось {day - now}";
                     }
-                    else if (daysLeft > 0) 
+                    else if (daysLeft > 0)
                         notification.BalloonTipText = AffairWithoutTags(affair) + $" - осталось {daysLeft} дней";
                     else
                         notification.BalloonTipText = AffairWithoutTags(affair) + " - просрочено";
@@ -67,7 +69,6 @@ namespace AffairList
                     notification.ShowBalloonTip(1);
                 }
             }
-            await SaveTime();
         }
 
         private bool ShouldNotificate()

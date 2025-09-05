@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using IWshRuntimeLibrary;
+using System.Threading.Tasks;
 namespace AffairList
 {
     public class Settings
@@ -19,51 +20,51 @@ namespace AffairList
 
         public Settings()
         {
-            listsDirectoryFullPath = $@"{_programDirectoryFolder}\profiles\";
-            _defaultListFileFullPath = $@"{listsDirectoryFullPath}\list.txt";
-            settingsFileFullPath = $@"{_programDirectoryFolder}\settings.json";
+            listsDirectoryFullPath = $@"{_programDirectoryFolder}profiles\";
+            _defaultListFileFullPath = $@"{listsDirectoryFullPath}list.txt";
+            settingsFileFullPath = $@"{_programDirectoryFolder}settings.json";
 
-            Initialize();
+            // Может сломаться, проконтроллировать
+            Task.Run(async () => await Initialize());
         }
-        private void Initialize()
+        private async Task Initialize()
         {
             if(!ProgramDirectoryExists()) CreateProgramDirectory();
-            if(!SettingsFileExists()) CreateSettingsFile();
+            if(!SettingsFileExists()) await CreateSettingsFile();
             if(!ListsDirectoryExists()) CreateListsDirectory();
             try
             {
                 _settings = JsonConvert.DeserializeObject<SettingsModel>
-                    (System.IO.File.ReadAllText(settingsFileFullPath))!;
-                if (!System.IO.File.Exists(GetCurrentProfile()))
-                {
-                    ChooseProfile();
-                }
-                if (DoesAutostart())
-                {
-                    EnableAutoStart();
-                }
-                else
-                {
-                    DisableAutoStart();
-                }
+                    (await System.IO.File.ReadAllTextAsync(settingsFileFullPath))!;
             }
             catch
             {
-                WriteBaseSettings();
+                await WriteBaseSettings();
+            }
+            if (!System.IO.File.Exists(GetCurrentProfile()))
+            {
+                await SelectFirstProfile();
+            }
+            if (DoesAutostart())
+            {
+                EnableAutoStart();
+            }
+            else
+            {
+                DisableAutoStart();
             }
         }
         public async Task WriteBaseSettings()
         {
-            await System.IO.File.WriteAllTextAsync(settingsFileFullPath, 
+            Task writingBaseSettings = System.IO.File.WriteAllTextAsync(settingsFileFullPath,
                 JsonConvert.SerializeObject(new SettingsModel()));
+            _settings = new SettingsModel();
+            await writingBaseSettings;
         }
-        private void ChooseProfile()
+        private async Task SelectFirstProfile()
         {
-            foreach (var profile in Directory.EnumerateFiles(listsDirectoryFullPath))
-            {
-                SetCurrentProfile(profile);
-                break; // Получаем первый профиль и завершаем работу
-            }
+            SetCurrentProfile(Directory.EnumerateFiles(listsDirectoryFullPath).FirstOrDefault()!);
+            await SaveSettings();
         }
         private void EnableAutoStart()
         {
@@ -100,7 +101,7 @@ namespace AffairList
         }
         public bool ListFilesAvailable()
         {
-            return Directory.EnumerateFiles(listsDirectoryFullPath).Count() > 0;
+            return Directory.EnumerateFiles(listsDirectoryFullPath).FirstOrDefault() != null;
         }
         public bool SettingsFileExists()
         {
@@ -114,11 +115,6 @@ namespace AffairList
         {
             return System.IO.File.Exists(GetCurrentProfile());
         }
-        public async Task CreateFiles()
-        {
-            await CreateSettingsFile();
-            CreateListsDirectory();
-        }
         public async Task CreateSettingsFile()
         {
             using (System.IO.File.Create(settingsFileFullPath)) { }
@@ -128,10 +124,11 @@ namespace AffairList
         {
             Directory.CreateDirectory(listsDirectoryFullPath);
         }
-        public void CreateDefaultList()
+        public async void CreateDefaultList()
         {
             using (System.IO.File.Create(_defaultListFileFullPath)) { }
             SetCurrentProfile(_defaultListFileFullPath);
+            await SaveSettings();
         }
         public void CreateProgramDirectory()
         {
@@ -141,7 +138,10 @@ namespace AffairList
         {
             await System.IO.File.WriteAllTextAsync(settingsFileFullPath, JsonConvert.SerializeObject(_settings));
         }
-        public void SetCurrentProfile(string fullPath) => _settings.currentListFileFullPath = fullPath;
+        public void SetCurrentProfile(string fullPath)
+        {
+            _settings.currentListFileFullPath = fullPath ?? "";
+        }
 
         public string GetCurrentProfile()
         {
@@ -178,7 +178,6 @@ namespace AffairList
         {
             return _settings.textColor;
         }
-
         public void SetBgColor(Color color) => _settings.bgColor = color;
 
         public Color GetBgColor()

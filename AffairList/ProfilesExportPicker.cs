@@ -23,36 +23,40 @@ namespace AffairList
 
         private void OkButton_Click(object sender, EventArgs e)
         {
-            if (ProfilePicker.CheckedItems.Count != 0)
+            if (ProfilePicker.CheckedItems.Count == 0)
             {
-                ProfilesExportDialog.ShowDialog();
+                Close();
+                return;
+            }
 
-                for(int i = 0; i < ProfilePicker.CheckedItems.Count; i++)
+            ProfilesExportDialog.ShowDialog();
+
+            for (int i = 0; i < ProfilePicker.CheckedItems.Count; i++)
+            {
+                string sourceFilePath = settings.listsDirectoryFullPath +
+                    ProfilePicker.CheckedItems[i];
+                string destinationFilePath = ProfilesExportDialog.SelectedPath + "\\" +
+                    ProfilePicker.CheckedItems[i];
+
+                if (File.Exists(destinationFilePath))
                 {
-                    string sourceFilePath = settings.listsDirectoryFullPath +
-                        ProfilePicker.CheckedItems[i];
-                    string destinationFilePath = ProfilesExportDialog.SelectedPath + "\\" +
-                        ProfilePicker.CheckedItems[i];
-                    if (File.Exists(destinationFilePath))
+                    DialogResult result = MessageBox.Show(
+                        $"File {ProfilePicker.CheckedItems[i]} exists, do you want to override it?",
+                        "Confirmation",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Question);
+                    if(result == DialogResult.Yes)
                     {
-                        DialogResult result = MessageBox.Show(
-                            $"File {ProfilePicker.CheckedItems[i]} exists, do you want to override it?",
-                            "Confirmation",
-                            MessageBoxButtons.YesNo,
-                            MessageBoxIcon.Question);
-                        if(result == DialogResult.Yes)
-                        {
-                            File.Delete(destinationFilePath);
-                            File.Copy(sourceFilePath, destinationFilePath);
-                        }
-                    }
-                    else
-                    {
-                    File.Copy(sourceFilePath, destinationFilePath);
+                        File.Delete(destinationFilePath);
+                        File.Copy(sourceFilePath, destinationFilePath);
                     }
                 }
-                MessageBox.Show("Success");
+                else
+                {
+                    File.Copy(sourceFilePath, destinationFilePath);
+                }
             }
+            MessageBox.Show("Success");
             Close();
         }
     }
