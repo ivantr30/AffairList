@@ -164,13 +164,13 @@ namespace AffairList
             }
         }
 
-        private async Task SelectProfileButton_Click(object sender, EventArgs e)
+        private async void SelectProfileButton_Click(object sender, EventArgs e)
         {
             settings.SetCurrentProfile(_profileLines[Profiles.SelectedIndex]);
             await settings.SaveSettings();
         }
 
-        private async Task RenameButton_Click(object sender, EventArgs e)
+        private async void RenameButton_Click(object sender, EventArgs e)
         {
             if (Profiles.SelectedIndex == -1) return;
 
@@ -201,7 +201,7 @@ namespace AffairList
             LoadProfiles();
         }
 
-        private async Task ChangePriorityButton_Click(object sender, EventArgs e)
+        private async void ChangePriorityButton_Click(object sender, EventArgs e)
         {
             if (Profiles.SelectedIndex == -1) return;
 
