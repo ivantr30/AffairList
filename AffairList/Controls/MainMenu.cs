@@ -119,8 +119,9 @@
 
         private async void MainMenu_Load(object sender, EventArgs e)
         {
-            await _loadTimeManager.SaveTime();
-            await _loadTimeManager.Notificate(_settings);
+            Task savingLoadTime = _loadTimeManager.SaveTime();
+            Task notificating = _loadTimeManager.Notificate(_settings);
+            await Task.WhenAll(savingLoadTime, notificating);
         }
     }
 }

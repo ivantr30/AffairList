@@ -16,17 +16,16 @@ namespace AffairList
             : base(settings)
         {
             InitializeComponent();
-            SubscribeGlobalHook();
+            Task.WhenAll(SetLocation(), LoadText());
 
-            LoadText();
-            SetLocation();
+            SubscribeGlobalHook();
             ParentElement = parent;
         }
-        private void SetLocation()
+        private async Task SetLocation()
         {
             TopMost = true;
 
-            LoadSettings();
+            await LoadSettings();
 
             Width = settings.width;
             Height = settings.height + settings.height / 10;
@@ -40,42 +39,36 @@ namespace AffairList
             BackColor = settings.GetBgColor();
             TransparencyKey = settings.GetBgColor();
         }
-        private void LoadSettings()
+        private async Task LoadSettings()
         {
-            if (settings.SettingsFileExists())
-            {
-                Affairs.Left = settings.GetProfileX();
-                Affairs.Top = settings.GetProfileY();
-            }
-            else
-            {
-                MessageBox.Show("Нет настроек");
-                Restart();
-            }
+            if (!settings.SettingsFileExists()) await settings.CreateSettingsFile();
+            Affairs.Left = settings.GetProfileX();
+            Affairs.Top = settings.GetProfileY();
         }
-        private void LoadText()
+        private async Task LoadText()
         {
             if (settings.CurrentListNotNull())
             {
-                string[] result = File.ReadAllLines(settings.GetCurrentProfile());
-                for (int i = 0; i < result.Length; i++)
+                string[] text = await File.ReadAllLinesAsync(settings.GetCurrentProfile());
+                for (int i = 0; i < text.Length; i++)
                 {
-                    if (result[i].EndsWith(_priorityTag))
+                    if (text[i].EndsWith(_priorityTag))
                     {
-                        result[i] = result[i].Substring(0, result[i].Length - _priorityTag.Length)
+                        text[i] = text[i].Substring(0, text[i].Length - _priorityTag.Length)
                             .Trim();
                     }
-                    if (result[i].StartsWith(_deadlineTag))
+                    if (text[i].StartsWith(_deadlineTag))
                     {
-                        result[i] = result[i].Substring(_deadlineTag.Length);
+                        text[i] = text[i].Substring(_deadlineTag.Length);
                     }
                 }
-                Affairs.Text = string.Join("\n", result);
+                Affairs.Text = string.Join("\n", text);
             }
             else
             {
                 MessageBox.Show("Ошибка, не найден текущий список дел");
-                Restart();
+                Close();
+                return;
             }
             Affairs.Text += "\nЭто весь список ваших дел";
         }

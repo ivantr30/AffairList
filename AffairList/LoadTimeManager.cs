@@ -26,12 +26,7 @@ namespace AffairList
             _loadTime = JsonConvert.DeserializeObject<LoadTimeModel>
                 (await File.ReadAllTextAsync(LoadTimeFileFullPath))!;
 
-            if (_loadTime == null) // Файл невалидный
-            {
-                await WriteBaseTime();
-                await Initialize(settings);
-                return;
-            }
+            if (_loadTime == null) await WriteBaseTime();
 
             await Notificate(settings);
         }
@@ -58,10 +53,12 @@ namespace AffairList
                     {
                         TimeSpan day = new TimeSpan(24, 0, 0);
                         TimeSpan now = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
-                        notification.BalloonTipText = AffairWithoutTags(affair) + $" - осталось {day - now}";
+                        notification.BalloonTipText = AffairWithoutTags(affair) + 
+                            $" - осталось {day - now}";
                     }
                     else if (daysLeft > 0)
-                        notification.BalloonTipText = AffairWithoutTags(affair) + $" - осталось {daysLeft} дней";
+                        notification.BalloonTipText = AffairWithoutTags(affair) +
+                            $" - осталось {daysLeft} дней";
                     else
                         notification.BalloonTipText = AffairWithoutTags(affair) + " - просрочено";
 
@@ -81,8 +78,9 @@ namespace AffairList
         }
         private async Task WriteBaseTime()
         {
+            _loadTime = new LoadTimeModel();
             await File.WriteAllTextAsync(LoadTimeFileFullPath, 
-                JsonConvert.SerializeObject(new LoadTimeModel()));
+                JsonConvert.SerializeObject(_loadTime));
         }
 
         public async Task SaveTime()
