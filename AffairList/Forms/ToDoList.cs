@@ -16,17 +16,19 @@ namespace AffairList
         public ToDoList(Settings settings, IParentable parent)
         {
             InitializeComponent();
-            Task.WhenAll(SetLocation(), LoadText());
+            Task settingLocation = SetLocationAsync();
+            Task loadingText = LoadTextAsync();
 
             SubscribeGlobalHook();
             ParentElement = parent;
             _settings = settings;
+            Task.WhenAll(settingLocation, loadingText);
         }
-        private async Task SetLocation()
+        private async Task SetLocationAsync()
         {
             TopMost = true;
 
-            await LoadSettings();
+            await LoadSettingsAsync();
 
             Width = _settings.width;
             Height = _settings.height + _settings.height / 10;
@@ -40,13 +42,13 @@ namespace AffairList
             BackColor = _settings.GetBgColor();
             TransparencyKey = _settings.GetBgColor();
         }
-        private async Task LoadSettings()
+        private async Task LoadSettingsAsync()
         {
-            if (!_settings.SettingsFileExists()) await _settings.CreateSettingsFile();
+            if (!_settings.SettingsFileExists()) await _settings.CreateSettingsFileAsync();
             Affairs.Left = _settings.GetProfileX();
             Affairs.Top = _settings.GetProfileY();
         }
-        private async Task LoadText()
+        private async Task LoadTextAsync()
         {
             if (_settings.CurrentListNotNull())
             {
@@ -92,11 +94,11 @@ namespace AffairList
 
         private void Affairs_MouseDown(object sender, MouseEventArgs e) => OnListMouseDown(e);
         private void Affairs_MouseMove(object sender, MouseEventArgs e) => OnListMouseMove(e);
-        private void Affairs_MouseUp(object sender, MouseEventArgs e) => OnListMouseUp(e);
+        private void Affairs_MouseUp(object sender, MouseEventArgs e) => OnListMouseUpAsync(e);
         private void List_MouseDown(object sender, MouseEventArgs e) => OnListMouseDown(e);
         private void List_MouseMove(object sender, MouseEventArgs e) => OnListMouseMove(e);
 
-        private void List_MouseUp(object sender, MouseEventArgs e) => OnListMouseUp(e);
+        private void List_MouseUp(object sender, MouseEventArgs e) => OnListMouseUpAsync(e);
         private void OnListMouseDown(MouseEventArgs e)
         {
             if(canReplace) ParentElement.SetLastPoint(e);
@@ -105,14 +107,14 @@ namespace AffairList
         {
             if (canReplace) ParentElement.MoveForm(e);
         }
-        private async void OnListMouseUp(MouseEventArgs e)
+        private async void OnListMouseUpAsync(MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left && canReplace)
             {
                 canReplace = false;
                 _settings.SetProfileX(Left + Affairs.Left);
                 _settings.SetProfileY(Top + Affairs.Top);
-                await _settings.SaveSettings();
+                await _settings.SaveSettingsAsync();
                 Close();
             }
         }

@@ -16,21 +16,21 @@ namespace AffairList
         { 
             LoadTimeFileFullPath = $@"{settings._programDirectoryFolder}\loadtime.json";
 
-            Task.Run(async () => await Initialize(settings));
+            Task.Run(async () => await InitializeAsync(settings));
         }
 
-        public async Task Initialize(Settings settings)
+        public async Task InitializeAsync(Settings settings)
         {
             if (!LoadTimeFileExist()) CreateLoadTimeFile();
 
             _loadTime = JsonConvert.DeserializeObject<LoadTimeModel>
                 (await File.ReadAllTextAsync(LoadTimeFileFullPath))!;
 
-            if (_loadTime == null) await WriteBaseTime();
+            if (_loadTime == null) await WriteBaseTimeAsync();
 
-            await Notificate(settings);
+            await NotificateAsync(settings);
         }
-        public async Task Notificate(Settings settings)
+        public async Task NotificateAsync(Settings settings)
         {
             if (!settings.DoesNotificate() || !ShouldNotificate()) return;
 
@@ -76,14 +76,14 @@ namespace AffairList
         {
             return affair.Remove(0, 10).Replace(_priorityTag, _priorityWord);
         }
-        private async Task WriteBaseTime()
+        private async Task WriteBaseTimeAsync()
         {
             _loadTime = new LoadTimeModel();
             await File.WriteAllTextAsync(LoadTimeFileFullPath, 
                 JsonConvert.SerializeObject(_loadTime));
         }
 
-        public async Task SaveTime()
+        public async Task SaveTimeAsync()
         {
             SetPreviousLoadTime(DateTime.Now);
             await File.WriteAllTextAsync(LoadTimeFileFullPath, JsonConvert.SerializeObject(_loadTime));

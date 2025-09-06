@@ -25,12 +25,12 @@ namespace AffairList
             settingsFileFullPath = $@"{_programDirectoryFolder}settings.json";
 
             // Может сломаться, проконтроллировать
-            Task.Run(async () => await Initialize());
+            Task.Run(async () => await InitializeAsync());
         }
-        private async Task Initialize()
+        private async Task InitializeAsync()
         {
             if(!ProgramDirectoryExists()) CreateProgramDirectory();
-            if(!SettingsFileExists()) await CreateSettingsFile();
+            if(!SettingsFileExists()) await CreateSettingsFileAsync();
             if(!ListsDirectoryExists()) CreateListsDirectory();
             try
             {
@@ -39,11 +39,11 @@ namespace AffairList
             }
             catch
             {
-                await WriteBaseSettings();
+                await WriteBaseSettingsAsync();
             }
             if (!System.IO.File.Exists(GetCurrentProfile()))
             {
-                await SelectFirstProfile();
+                await SelectFirstProfileAsync();
             }
             if (DoesAutostart())
             {
@@ -54,17 +54,17 @@ namespace AffairList
                 DisableAutoStart();
             }
         }
-        public async Task WriteBaseSettings()
+        public async Task WriteBaseSettingsAsync()
         {
             Task writingBaseSettings = System.IO.File.WriteAllTextAsync(settingsFileFullPath,
                 JsonConvert.SerializeObject(new SettingsModel()));
             _settings = new SettingsModel();
             await writingBaseSettings;
         }
-        public async Task SelectFirstProfile()
+        public async Task SelectFirstProfileAsync()
         {
             SetCurrentProfile(Directory.EnumerateFiles(listsDirectoryFullPath).FirstOrDefault()!);
-            await SaveSettings();
+            await SaveSettingsAsync();
         }
         private void EnableAutoStart()
         {
@@ -115,28 +115,29 @@ namespace AffairList
         {
             return System.IO.File.Exists(GetCurrentProfile());
         }
-        public async Task CreateSettingsFile()
+        public async Task CreateSettingsFileAsync()
         {
             using (System.IO.File.Create(settingsFileFullPath)) { }
-            await WriteBaseSettings();
+            await WriteBaseSettingsAsync();
         }
         public void CreateListsDirectory()
         {
             Directory.CreateDirectory(listsDirectoryFullPath);
         }
-        public async void CreateDefaultList()
+        public async void CreateDefaultListAsync()
         {
             using (System.IO.File.Create(_defaultListFileFullPath)) { }
             SetCurrentProfile(_defaultListFileFullPath);
-            await SaveSettings();
+            await SaveSettingsAsync();
         }
         public void CreateProgramDirectory()
         {
             Directory.CreateDirectory(_programDirectoryFolder);
         }
-        public async Task SaveSettings()
+        public async Task SaveSettingsAsync()
         {
-            await System.IO.File.WriteAllTextAsync(settingsFileFullPath, JsonConvert.SerializeObject(_settings));
+            await System.IO.File.WriteAllTextAsync(settingsFileFullPath, 
+                JsonConvert.SerializeObject(_settings));
         }
         public void SetCurrentProfile(string fullPath)
         {

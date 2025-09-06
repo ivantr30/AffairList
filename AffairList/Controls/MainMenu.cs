@@ -100,7 +100,7 @@
                     MessageBoxButtons.YesNo);
                 if (createDefault == DialogResult.No) return;
 
-                _settings.CreateDefaultList();
+                _settings.CreateDefaultListAsync();
             }
             ParentElement.SetControl(new ChangeListForm1(_settings));
         }
@@ -110,7 +110,7 @@
         }
         private void ChangeProfileButton_Click(object sender, EventArgs e)
         {
-            ParentElement.SetControl(new ChangeProfileForm1(_settings));
+            ParentElement.SetControl(new AffairsManager(_settings));
         }
         private void HotKeyButton_Click(object sender, EventArgs e)
         {
@@ -119,8 +119,8 @@
 
         private async void MainMenu_Load(object sender, EventArgs e)
         {
-            Task savingLoadTime = _loadTimeManager.SaveTime();
-            Task notificating = _loadTimeManager.Notificate(_settings);
+            Task savingLoadTime = _loadTimeManager.SaveTimeAsync();
+            Task notificating = _loadTimeManager.NotificateAsync(_settings);
             await Task.WhenAll(savingLoadTime, notificating);
         }
     }

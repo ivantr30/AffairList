@@ -3,14 +3,14 @@ using System.Runtime;
 using System.Threading.Tasks;
 namespace AffairList
 {
-    public partial class ChangeProfileForm : BaseForm
+    public partial class ChangeProfileForm1 : BaseForm
     {
         private List<string> _profileLines;
 
         private string _priorityWord = " Priority.txt";
         private string _priorityTag = " \"Priority\"";
 
-        public ChangeProfileForm(Settings settings) :
+        public ChangeProfileForm1(Settings settings) :
             base(settings)
         {
             InitializeComponent();

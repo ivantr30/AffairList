@@ -26,7 +26,7 @@ namespace AffairList
         {
             InitializeComponent();
             LoadProfiles();
-            Task.Run(() => LoadText());
+            Task.Run(() => LoadTextAsync());
             _settings = settings;
         }
         private void LoadProfiles()
@@ -45,7 +45,7 @@ namespace AffairList
             }
         }
         // Дополнить логику тем, что инициализацию lines вынести в конструктор
-        private async Task LoadText()
+        private async Task LoadTextAsync()
         {
             Affairs.Items.Clear();
             if (_settings.CurrentListNotNull())
@@ -84,11 +84,11 @@ namespace AffairList
             }
             if (e.KeyCode == _addAffairKey)
             {
-                await AddAffair();
+                await AddAffairAsync();
             }
             if (e.KeyCode == _deleteAffairKey)
             {
-                await DeleteAffair();
+                await DeleteAffairAsync();
             }
         }
 
@@ -117,7 +117,7 @@ namespace AffairList
             CloseButton.ForeColor = Color.Black;
         }
 
-        private async Task AddAffair()
+        private async Task AddAffairAsync()
         {
             if (AffairInput.Text.Trim() == "")
             {
@@ -128,12 +128,12 @@ namespace AffairList
 
             if (!_settings.CurrentListNotNull())
             {
-                await IfCurrentListDisappeared();
+                await IfCurrentListDisappearedAsync();
             }
 
             string inputText = AffairInput.Text + ".";
 
-            Task appendingText = AppendText(inputText + "\n");
+            Task appendingText = AppendTextAsync(inputText + "\n");
 
             Affairs.Items.Add(inputText);
             Affairs.SelectedIndex = Affairs.Items.Count - 1;
@@ -143,7 +143,7 @@ namespace AffairList
             AffairInput.Text = "";
             await appendingText;
         }
-        private async Task DeleteAffair()
+        private async Task DeleteAffairAsync()
         {
             if (Affairs.SelectedIndex == -1) return;
 
@@ -157,11 +157,11 @@ namespace AffairList
 
             if (!_settings.CurrentListNotNull())
             {
-                await IfCurrentListDisappeared();
+                await IfCurrentListDisappearedAsync();
             }
             _lines.RemoveAt(Affairs.SelectedIndex);
 
-            Task savingText = SaveText(_lines);
+            Task savingText = SaveTextAsync(_lines);
 
             int selectedIndex = 0;
             if (Affairs.SelectedIndex == 0 && Affairs.Items.Count > 1)
@@ -178,13 +178,13 @@ namespace AffairList
             Affairs.Items.RemoveAt(selectedIndex);
             await savingText;
         }
-        private async Task IfCurrentListDisappeared()
+        private async Task IfCurrentListDisappearedAsync()
         {
-            await _settings.SelectFirstProfile();
-            if (string.IsNullOrEmpty(_settings.GetCurrentProfile())) _settings.CreateDefaultList();
+            await _settings.SelectFirstProfileAsync();
+            if (string.IsNullOrEmpty(_settings.GetCurrentProfile())) _settings.CreateDefaultListAsync();
         }
-        private async void AddAffairButton_Click(object sender, EventArgs e) => await AddAffair();
-        private async void DeleteButton_Click(object sender, EventArgs e) => await DeleteAffair();
+        private async void AddAffairButton_Click(object sender, EventArgs e) => await AddAffairAsync();
+        private async void DeleteButton_Click(object sender, EventArgs e) => await DeleteAffairAsync();
         private void ClearButton_Click(object sender, EventArgs e) => AffairInput.Clear();
 
         private void BackButton_Click(object sender, EventArgs e) => ParentElement.Return();
@@ -212,7 +212,7 @@ namespace AffairList
                 AddDeadline(hasDeadline: false);
             }
 
-            await SaveText(_lines);
+            await SaveTextAsync(_lines);
         }
         private void DeleteDeadline()
         {
@@ -267,7 +267,7 @@ namespace AffairList
 
             _lines[Affairs.SelectedIndex] = selectedWord;
 
-            Task savingText = SaveText(_lines);
+            Task savingText = SaveTextAsync(_lines);
 
             Affairs.Items[Affairs.SelectedIndex] = Affairs.Items[Affairs.SelectedIndex]
                 .ToString()!.Replace(affair, renaming);
@@ -301,7 +301,9 @@ namespace AffairList
                 _lines[Affairs.SelectedIndex] += " " + _priorityTag;
             }
 
-            await Task.WhenAll(SaveText(_lines), LoadText());
+            Task savingText = SaveTextAsync(_lines);
+            Task loadingText = LoadTextAsync();
+            await Task.WhenAll(savingText, loadingText);
         }
         private void Affairs_MouseDown(object sender, MouseEventArgs e)
         {
@@ -325,7 +327,7 @@ namespace AffairList
             _lines[_currentDragIndex] = _lines[Affairs.SelectedIndex];
             _lines[Affairs.SelectedIndex] = switcher;
 
-            Task savingText = SaveText(_lines);
+            Task savingText = SaveTextAsync(_lines);
 
             switcher = (string)Affairs.Items[_currentDragIndex];
             Affairs.Items[_currentDragIndex] = Affairs.Items[Affairs.SelectedIndex];
@@ -346,7 +348,7 @@ namespace AffairList
         {
             MinimizeButton.ForeColor = Color.Black;
         }
-        private async Task ChangeProfile()
+        private async Task ChangeProfileAsync()
         {
             var profiles = Directory.GetFiles(_settings.listsDirectoryFullPath);
             foreach (var profile in profiles)
@@ -355,7 +357,7 @@ namespace AffairList
                 if (profileInfo.Name == ProfileBox.SelectedItem!.ToString())
                 {
                     _settings.SetCurrentProfile(profileInfo.FullName);
-                    await _settings.SaveSettings();
+                    await _settings.SaveSettingsAsync();
                     _selectedAffairIndex = 0;
                     return;
                 }
@@ -369,25 +371,25 @@ namespace AffairList
                 ProfileBox.Text = _settings.GetCurrentProfile();
                 return;
             }
-            await ChangeProfile();
-            await LoadText();
+            await ChangeProfileAsync();
+            await LoadTextAsync();
         }
 
         private async void ProfileBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            await ChangeProfile();
-            await LoadText();
+            await ChangeProfileAsync();
+            await LoadTextAsync();
         }
 
         private void Affairs_SelectedValueChanged(object sender, EventArgs e)
         {
             _selectedAffairIndex = Affairs.SelectedIndex;
         }
-        private async Task SaveText(List<string> lines)
+        private async Task SaveTextAsync(List<string> lines)
         {
             await File.WriteAllLinesAsync(_settings.GetCurrentProfile(), lines);
         }
-        private async Task AppendText(string line)
+        private async Task AppendTextAsync(string line)
         {
             await File.AppendAllTextAsync(_settings.GetCurrentProfile(), line);
         }
