@@ -61,7 +61,7 @@ namespace AffairList
             _settings = new SettingsModel();
             await writingBaseSettings;
         }
-        private async Task SelectFirstProfile()
+        public async Task SelectFirstProfile()
         {
             SetCurrentProfile(Directory.EnumerateFiles(listsDirectoryFullPath).FirstOrDefault()!);
             await SaveSettings();

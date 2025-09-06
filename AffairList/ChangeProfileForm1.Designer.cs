@@ -1,6 +1,6 @@
 ﻿namespace AffairList
 {
-    partial class ChangeProfileForm
+    partial class ChangeProfileForm1
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChangeProfileForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChangeProfileForm1));
             ProfilesLab = new Label();
             NameBackground = new Panel();
             CloseButtonLab = new Label();

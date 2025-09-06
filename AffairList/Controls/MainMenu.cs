@@ -102,7 +102,7 @@
 
                 _settings.CreateDefaultList();
             }
-            ParentElement.SetControl(new ChangeListForm(_settings));
+            ParentElement.SetControl(new ChangeListForm1(_settings));
         }
         private void SettingsButton_Click(object sender, EventArgs e)
         {
@@ -110,11 +110,11 @@
         }
         private void ChangeProfileButton_Click(object sender, EventArgs e)
         {
-            ParentElement.SetControl(new ChangeProfileForm(_settings));
+            ParentElement.SetControl(new ChangeProfileForm1(_settings));
         }
         private void HotKeyButton_Click(object sender, EventArgs e)
         {
-            ParentElement.SetControl(new HotKeySettings(_settings));
+            ParentElement.SetControl(new HotKeySettings1(_settings));
         }
 
         private async void MainMenu_Load(object sender, EventArgs e)

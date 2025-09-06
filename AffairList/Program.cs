@@ -12,9 +12,8 @@ namespace AffairList
             // see https://aka.ms/applicationconfiguration.
             
             ApplicationConfiguration.Initialize();
-            string mutexName = "AffairList";
 
-            using (Mutex mutex = new Mutex(true, mutexName, out bool createdNew))
+            using (Mutex mutex = new Mutex(true, name:"AffairList", out bool createdNew))
             {
                 if (createdNew)
                 {

@@ -1,6 +1,6 @@
 ﻿namespace AffairList
 {
-    partial class SettingsForm
+    partial class SettingsForm1
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm1));
             NameBackground = new Panel();
             MinimizeButton = new Label();
             CloseButton = new Label();

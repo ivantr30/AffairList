@@ -1,7 +1,6 @@
-﻿
-namespace AffairList
+﻿namespace AffairList
 {
-    public partial class InputKeyForm : BaseForm
+    public partial class InputKeyForm : Form
     {
         public Keys Key { get; private set; }
         public event Action OnKeyPressed;
@@ -9,12 +8,11 @@ namespace AffairList
 
         private void InputKeyForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Escape)
+            if (e.KeyCode != Keys.Escape)
             {
-                Close();
+                Key = e.KeyCode;
+                OnKeyPressed?.Invoke();
             }
-            Key = e.KeyCode;
-            OnKeyPressed?.Invoke();
             Close();
         }
     }

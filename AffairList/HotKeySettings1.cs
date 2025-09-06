@@ -1,11 +1,11 @@
 ﻿
 namespace AffairList
 {
-    public partial class HotKeySettings : BaseForm
+    public partial class HotKeySettings1 : BaseForm
     {
         private bool _isConfirmed = true;
         private Keys _inputKey;
-        public HotKeySettings(Settings settings) 
+        public HotKeySettings1(Settings settings) 
             : base(settings) 
         {
             InitializeComponent();

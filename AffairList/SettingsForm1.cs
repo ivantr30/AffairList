@@ -1,11 +1,11 @@
 ﻿using Microsoft.VisualBasic;
 namespace AffairList
 {
-    public partial class SettingsForm : BaseForm
+    public partial class SettingsForm1 : BaseForm
     {
         private bool _isConfirmed = true;
 
-        public SettingsForm(Settings settings)
+        public SettingsForm1(Settings settings)
             : base(settings)
         {
             InitializeComponent();

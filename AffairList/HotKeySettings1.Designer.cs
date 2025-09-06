@@ -1,6 +1,6 @@
 ﻿namespace AffairList
 {
-    partial class HotKeySettings
+    partial class HotKeySettings1
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HotKeySettings));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HotKeySettings1));
             HotKeySettingsLab = new Label();
             NameBackground = new Panel();
             MinimizeButton = new Label();

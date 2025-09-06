@@ -1,6 +1,6 @@
 ﻿namespace AffairList
 {
-    partial class ChangeListForm
+    partial class ChangeListForm1 
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChangeListForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChangeListForm1));
             NameBackground = new Panel();
             MinimizeButton = new Label();
             CloseButton = new Label();
@@ -256,15 +256,16 @@
             AffairInput.Size = new Size(539, 31);
             AffairInput.TabIndex = 1;
             // 
-            // ChangeListForm
+            // ChangeListForm1
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(563, 405);
             Controls.Add(panel1);
+            FormBorderStyle = FormBorderStyle.None;
             Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
-            Name = "ChangeListForm";
+            Name = "ChangeListForm1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "ChangeListForm";
             FormClosing += ChangeListForm_FormClosing;

@@ -1,12 +1,9 @@
-﻿
-using Newtonsoft.Json.Linq;
-using System;
-
-namespace AffairList
+﻿namespace AffairList
 {
-    public partial class ProfilesExportPicker : BaseForm
+    public partial class ProfilesExportPicker : Form
     {
-        public ProfilesExportPicker(List<string> profiles, Settings settings) : base(settings)
+        private Settings _settings;
+        public ProfilesExportPicker(List<string> profiles, Settings settings)
         {
             InitializeComponent();
             for (int i = 0; i < profiles.Count; i++)
@@ -14,6 +11,7 @@ namespace AffairList
                 FileInfo profileFile = new FileInfo(profiles[i]);
                 ProfilePicker.Items.Add(profileFile.Name);
             }
+            _settings = settings;
         }
 
         private void BackButton_Click(object sender, EventArgs e)
@@ -33,7 +31,7 @@ namespace AffairList
 
             for (int i = 0; i < ProfilePicker.CheckedItems.Count; i++)
             {
-                string sourceFilePath = settings.listsDirectoryFullPath +
+                string sourceFilePath = _settings.listsDirectoryFullPath +
                     ProfilePicker.CheckedItems[i];
                 string destinationFilePath = ProfilesExportDialog.SelectedPath + "\\" +
                     ProfilePicker.CheckedItems[i];

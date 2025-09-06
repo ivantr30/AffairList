@@ -37,54 +37,45 @@
             // 
             // ProfilePicker
             // 
+            resources.ApplyResources(ProfilePicker, "ProfilePicker");
             ProfilePicker.BackColor = Color.FromArgb(159, 62, 213);
             ProfilePicker.BorderStyle = BorderStyle.None;
             ProfilePicker.CheckOnClick = true;
             ProfilePicker.ForeColor = SystemColors.Info;
             ProfilePicker.FormattingEnabled = true;
-            ProfilePicker.Location = new Point(12, 12);
             ProfilePicker.Name = "ProfilePicker";
-            ProfilePicker.Size = new Size(496, 300);
-            ProfilePicker.TabIndex = 0;
             // 
             // BackButton
             // 
+            resources.ApplyResources(BackButton, "BackButton");
             BackButton.BackColor = Color.FromArgb(173, 102, 213);
-            BackButton.FlatStyle = FlatStyle.Flat;
-            BackButton.Location = new Point(448, 324);
             BackButton.Name = "BackButton";
-            BackButton.Size = new Size(60, 27);
-            BackButton.TabIndex = 6;
-            BackButton.Text = "Back";
             BackButton.UseVisualStyleBackColor = false;
             BackButton.Click += BackButton_Click;
             // 
             // OkButton
             // 
+            resources.ApplyResources(OkButton, "OkButton");
             OkButton.BackColor = Color.FromArgb(173, 102, 213);
-            OkButton.FlatStyle = FlatStyle.Flat;
-            OkButton.Location = new Point(382, 324);
             OkButton.Name = "OkButton";
-            OkButton.Size = new Size(60, 27);
-            OkButton.TabIndex = 7;
-            OkButton.Text = "Ok";
             OkButton.UseVisualStyleBackColor = false;
             OkButton.Click += OkButton_Click;
             // 
+            // ProfilesExportDialog
+            // 
+            resources.ApplyResources(ProfilesExportDialog, "ProfilesExportDialog");
+            // 
             // ProfilesExportPicker
             // 
-            AutoScaleDimensions = new SizeF(7F, 17F);
+            resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(72, 3, 111);
-            ClientSize = new Size(520, 358);
             Controls.Add(OkButton);
             Controls.Add(BackButton);
             Controls.Add(ProfilePicker);
             FormBorderStyle = FormBorderStyle.None;
-            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "ProfilesExportPicker";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "ProfilesExportPicker";
+            ShowIcon = false;
             ResumeLayout(false);
         }
 

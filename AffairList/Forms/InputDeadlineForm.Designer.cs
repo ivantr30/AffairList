@@ -37,54 +37,42 @@
             // DeadlinePicker
             // 
             DeadlinePicker.Format = DateTimePickerFormat.Short;
-            DeadlinePicker.Location = new Point(125, 112);
+            resources.ApplyResources(DeadlinePicker, "DeadlinePicker");
             DeadlinePicker.Name = "DeadlinePicker";
-            DeadlinePicker.Size = new Size(200, 25);
-            DeadlinePicker.TabIndex = 0;
             DeadlinePicker.Value = new DateTime(2025, 7, 25, 0, 0, 0, 0);
             DeadlinePicker.KeyDown += DeadlinePicker_KeyDown;
             // 
             // ConfirmButton
             // 
             ConfirmButton.BackColor = Color.FromArgb(173, 102, 213);
-            ConfirmButton.FlatStyle = FlatStyle.Flat;
+            resources.ApplyResources(ConfirmButton, "ConfirmButton");
             ConfirmButton.ForeColor = SystemColors.MenuText;
-            ConfirmButton.Location = new Point(125, 143);
             ConfirmButton.Name = "ConfirmButton";
-            ConfirmButton.Size = new Size(70, 27);
-            ConfirmButton.TabIndex = 3;
-            ConfirmButton.Text = "Confirm";
             ConfirmButton.UseVisualStyleBackColor = false;
             ConfirmButton.Click += ConfirmButton_Click;
             // 
             // BackButton
             // 
             BackButton.BackColor = Color.FromArgb(173, 102, 213);
-            BackButton.FlatStyle = FlatStyle.Flat;
+            resources.ApplyResources(BackButton, "BackButton");
             BackButton.ForeColor = SystemColors.MenuText;
-            BackButton.Location = new Point(255, 143);
             BackButton.Name = "BackButton";
-            BackButton.Size = new Size(70, 27);
-            BackButton.TabIndex = 4;
-            BackButton.Text = "Back";
             BackButton.UseVisualStyleBackColor = false;
             BackButton.Click += BackButton_Click;
             // 
             // InputDeadlineForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 17F);
+            resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.WindowFrame;
-            ClientSize = new Size(450, 270);
             Controls.Add(BackButton);
             Controls.Add(ConfirmButton);
             Controls.Add(DeadlinePicker);
             ForeColor = SystemColors.WindowFrame;
-            Icon = (Icon)resources.GetObject("$this.Icon");
+            FormBorderStyle = FormBorderStyle.None;
+            KeyPreview = true;
             Name = "InputDeadlineForm";
             ShowInTaskbar = false;
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "InputDeadlineForm";
             TransparencyKey = SystemColors.WindowFrame;
             ResumeLayout(false);
         }

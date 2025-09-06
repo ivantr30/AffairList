@@ -4,40 +4,37 @@
     <_LastSelectedProfileId>F:\source\repos\AffairList\AffairList\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Update="AffairList.cs">
+    <Compile Update="Controls\AffairsManager.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Forms\AffairList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Legacy\AffairList1.cs">
+    <Compile Update="Forms\InputDeadlineForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Legacy\BaseForm.cs">
+    <Compile Update="Legacy\ChangeListForm1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="ChangeListForm.cs">
+    <Compile Update="ChangeProfileForm1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="ChangeProfileForm.cs">
+    <Compile Update="HotKeySettings1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="HotKeySettings.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="InputDeadlineForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="InputKeyForm.cs">
+    <Compile Update="Forms\InputKeyForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Controls\MainMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="ProfilesExportPicker.cs">
+    <Compile Update="Forms\ProfilesExportPicker.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="SettingsForm.cs">
+    <Compile Update="SettingsForm1.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="ToDoList.cs">
+    <Compile Update="Forms\ToDoList.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

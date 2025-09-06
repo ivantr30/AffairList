@@ -1,6 +1,6 @@
 ﻿namespace AffairList
 {
-    partial class BaseForm
+    partial class InputKeyForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,19 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InputKeyForm));
+            ClickKeyLabel = new Label();
             SuspendLayout();
             // 
-            // BaseForm
+            // ClickKeyLabel
             // 
-            AutoScaleDimensions = new SizeF(7F, 17F);
+            resources.ApplyResources(ClickKeyLabel, "ClickKeyLabel");
+            ClickKeyLabel.Name = "ClickKeyLabel";
+            // 
+            // InputKeyForm
+            // 
+            resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            Controls.Add(ClickKeyLabel);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "BaseForm";
-            Text = "BaseForm";
+            KeyPreview = true;
+            Name = "InputKeyForm";
+            ShowIcon = false;
+            KeyDown += InputKeyForm_KeyDown;
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private Label ClickKeyLabel;
     }
 }
