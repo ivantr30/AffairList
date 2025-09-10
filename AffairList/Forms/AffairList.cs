@@ -64,10 +64,18 @@
         public void SetControl(Control control)
         {
             if (control is IKeyPreviewable kp)
-                KeyDown += kp.Handlers;
-            if(Controls.Count > 0)
+            {
+                KeyDown += kp.KeyDownHandlers;
+                KeyPress += kp.KeyPressHandlers;
+                KeyDown += kp.KeyUpHandlers;
+            }
+            if (Controls.Count > 0)
                 if (Controls[0] is IKeyPreviewable ckp)
-                    KeyDown -= ckp.Handlers;
+                {
+                    KeyDown -= ckp.KeyDownHandlers;
+                    KeyPress -= ckp.KeyPressHandlers;
+                    KeyDown -= ckp.KeyUpHandlers;
+                }
             this.Controls.Clear();
             Width = control.Width;
             Height = control.Height;

@@ -21,7 +21,9 @@ namespace AffairList
 
         private Settings _settings;
         public IParentable ParentElement { get; private set; }
-        public KeyEventHandler Handlers { get; private set; }
+        public KeyEventHandler KeyDownHandlers { get; private set; }
+        public KeyPressEventHandler KeyPressHandlers  { get; private set; }
+        public KeyEventHandler KeyUpHandlers { get; private set; }
 
         public AffairsManager(Settings settings, IParentable parentElement)
         {
@@ -29,7 +31,7 @@ namespace AffairList
             ParentElement = parentElement;
             InitializeComponent();
             TabStop = true;
-            Handlers += AffairsManager_KeyDown;
+            KeyDownHandlers += AffairsManager_KeyDown;
             LoadProfiles();
             LoadTextAsync();
         }

@@ -39,9 +39,8 @@
             Affairs.ForeColor = Color.MediumSpringGreen;
             Affairs.Location = new Point(981, 9);
             Affairs.Name = "Affairs";
-            Affairs.Size = new Size(45, 25);
+            Affairs.Size = new Size(0, 25);
             Affairs.TabIndex = 0;
-            Affairs.Text = "хуй";
             Affairs.MouseDown += Affairs_MouseDown;
             Affairs.MouseMove += Affairs_MouseMove;
             Affairs.MouseUp += Affairs_MouseUp;

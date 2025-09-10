@@ -2,6 +2,8 @@
 {
     public interface IKeyPreviewable
     {
-        KeyEventHandler Handlers { get; }
+        KeyEventHandler KeyDownHandlers { get; }
+        KeyPressEventHandler KeyPressHandlers { get; }
+        KeyEventHandler KeyUpHandlers { get; }
     }
 }
