@@ -1,6 +1,5 @@
 ﻿using Gma.System.MouseKeyHook;
 using System.Text;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace AffairList
 {
@@ -62,13 +61,13 @@ namespace AffairList
                     if (currentAffair.EndsWith(_priorityTag))
                     {
                         currentAffair = currentAffair
-                            .Substring(0, currentAffair.Length - _priorityTag.Length).Trim();
+                            .Substring(0, currentAffair.Length - _priorityTag.Length);
                     }
                     if (currentAffair.StartsWith(_deadlineTag))
                     {
                         currentAffair = currentAffair.Remove(0, _deadlineTag.Length);
                     }
-                    affairsShower.AppendLine(affair);
+                    affairsShower.AppendLine(affair.Trim());
                 }
                 Affairs.Text += affairsShower.ToString() + "Это весь список ваших дел";
             }

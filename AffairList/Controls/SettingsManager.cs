@@ -7,7 +7,7 @@ namespace AffairList
 
         private Settings _settings;
 
-        public IParentable ParentElement { get; set; }
+        public IParentable ParentElement { get; private set; }
 
         public SettingsManager(Settings settings, IParentable parentElement)
         {

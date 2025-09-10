@@ -57,15 +57,22 @@
         }
         public void Return()
         {
-            SetControl(mainMenu);
+            if (Controls[0] != mainMenu)
+                SetControl(mainMenu);
         }
         public void MinimizeForm() => WindowState = FormWindowState.Minimized;
         public void SetControl(Control control)
         {
-            Controls.Clear();
+            if (control is IKeyPreviewable kp)
+                KeyDown += kp.Handlers;
+            if(Controls.Count > 0)
+                if (Controls[0] is IKeyPreviewable ckp)
+                    KeyDown -= ckp.Handlers;
+            this.Controls.Clear();
             Width = control.Width;
             Height = control.Height;
-            Controls.Add(control);
+            this.Controls.Add(control);
+            Focus();
         }
         public void OpenForm(Form form)
         {
@@ -86,5 +93,17 @@
 
         private void AffairList_FormClosing(object sender, FormClosingEventArgs e)
             => Exit();
+
+        private void AffairList_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == _settings.GetCloseKey())
+            {
+                Exit();
+            }
+            if (e.KeyCode == _settings.GetReturnKey())
+            {
+                Return();
+            }
+        }
     }
 }

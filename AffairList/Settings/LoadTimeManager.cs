@@ -21,19 +21,20 @@ namespace AffairList
 
             _settings = settings;
 
-            Task.WhenAll(InitializeAsync(), NotificateAsync());
+            Initialize();
+            Notificate();
         }
 
-        public async Task InitializeAsync()
+        public void Initialize()
         {
             if (!LoadTimeFileExist()) CreateLoadTimeFile();
 
             _loadTime = JsonConvert.DeserializeObject<LoadTimeModel>
                 (File.ReadAllText(LoadTimeFileFullPath))!;
 
-            if (_loadTime == null) await WriteBaseTimeAsync();
+            if (_loadTime == null) Task.Run(() => WriteBaseTimeAsync());
         }
-        public async Task NotificateAsync()
+        public void Notificate()
         {
             if (!_settings.DoesNotificate() || !ShouldNotificate()) return;
 
@@ -43,7 +44,7 @@ namespace AffairList
 
             foreach (var profile in Directory.EnumerateFiles(_settings.listsDirectoryFullPath))
             {
-                await foreach (string affair in File.ReadLinesAsync(profile))
+                foreach (string affair in File.ReadLines(profile))
                 {
                     if (!affair.StartsWith(_deadlineTag)) continue;
 

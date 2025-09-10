@@ -4,7 +4,7 @@
     {
         private Settings _settings;
         private LoadTimeManager _loadTimeManager;
-        public IParentable ParentElement { get; set; }
+        public IParentable ParentElement { get; private set; }
 
         public MainMenu(Settings settings, LoadTimeManager loadTimeManager, IParentable parent)
         {
@@ -63,8 +63,8 @@
                 MessageBox.Show("Error, there is no list available");
                 return;
             }
-            ToDoList list = new ToDoList(_settings, ParentElement) 
-            { BackColor = Color.White, canReplace = true};
+            ToDoList list = new ToDoList(_settings, ParentElement)
+            { BackColor = Color.White, canReplace = true };
             ParentElement.OpenForm(list);
         }
 
@@ -119,8 +119,8 @@
         private async void MainMenu_Load(object sender, EventArgs e)
         {
             Task savingLoadTime = _loadTimeManager.SaveTimeAsync();
-            Task notificating = _loadTimeManager.NotificateAsync();
-            await Task.WhenAll(savingLoadTime, notificating);
+            _loadTimeManager.Notificate();
+            await Task.WhenAll(savingLoadTime);
         }
     }
 }

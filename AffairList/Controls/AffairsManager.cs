@@ -2,7 +2,7 @@
 
 namespace AffairList
 {
-    public partial class AffairsManager : UserControl, IChildable
+    public partial class AffairsManager : UserControl, IChildable, IKeyPreviewable
     {
         private int _currentDragIndex = 0;
         private int _deadlineDateNTagLength = 21;
@@ -20,15 +20,18 @@ namespace AffairList
         private Keys _deleteAffairKey = Keys.Delete;
 
         private Settings _settings;
-        public IParentable ParentElement { get; set; }
+        public IParentable ParentElement { get; private set; }
+        public KeyEventHandler Handlers { get; private set; }
 
         public AffairsManager(Settings settings, IParentable parentElement)
         {
             _settings = settings;
             ParentElement = parentElement;
             InitializeComponent();
+            TabStop = true;
+            Handlers += AffairsManager_KeyDown;
             LoadProfiles();
-            Task.Run(() => LoadTextAsync());
+            LoadTextAsync();
         }
         private void LoadProfiles()
         {
@@ -53,10 +56,10 @@ namespace AffairList
             {
                 _lines = (await File.ReadAllLinesAsync(_settings.GetCurrentProfile()))
                     .OrderByDescending(x => x.EndsWith(_priorityTag)).AsParallel().ToList();
-
-                await foreach (string line in (IAsyncEnumerable<string>)_lines)
+                string currentLine;
+                foreach (string line in _lines)
                 {
-                    string currentLine = line;
+                    currentLine = line.Trim();
                     if (currentLine.EndsWith(_priorityTag))
                     {
                         currentLine = currentLine
@@ -73,16 +76,9 @@ namespace AffairList
                 else if (Affairs.Items.Count > 0) Affairs.SelectedIndex = 0;
             }
         }
-        private async void GlobalHook_KeyDown(object sender, KeyEventArgs e)
+
+        public async void AffairsManager_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == _settings.GetCloseKey())
-            {
-                ParentElement.Exit();
-            }
-            if (e.KeyCode == _settings.GetReturnKey())
-            {
-                ParentElement.Return();
-            }
             if (e.KeyCode == _addAffairKey)
             {
                 await AddAffairAsync();
@@ -92,20 +88,44 @@ namespace AffairList
                 await DeleteAffairAsync();
             }
         }
+        //protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        //{
+        //    if (keyData == _settings.GetCloseKey())
+        //    {
+        //        ParentElement.Exit();
+        //        return true;
+        //    }
+        //    if (keyData == _settings.GetReturnKey())
+        //    {
+        //        ParentElement.Return();
+        //        return true;
+        //    }
+        //    if (keyData == _addAffairKey)
+        //    {
+        //        _ = AddAffairAsync();
+        //        return true;
+        //    }
+        //    if (keyData == _deleteAffairKey)
+        //    {
+        //        _ = DeleteAffairAsync();
+        //        return true;
+        //    }
+        //    return base.ProcessCmdKey(ref msg, keyData);
+        //}
 
-        private void CloseButton_Click(object sender, EventArgs e) 
+        private void CloseButton_Click(object sender, EventArgs e)
             => ParentElement.Exit();
 
-        private void AffairsLab_MouseDown(object sender, MouseEventArgs e) 
+        private void AffairsLab_MouseDown(object sender, MouseEventArgs e)
             => ParentElement.SetLastPoint(e);
 
-        private void AffairsLab_MouseMove(object sender, MouseEventArgs e) 
+        private void AffairsLab_MouseMove(object sender, MouseEventArgs e)
             => ParentElement.MoveForm(e);
 
-        private void NameBackground_MouseDown_1(object sender, MouseEventArgs e)
+        private void NameBackground_MouseDown(object sender, MouseEventArgs e)
             => ParentElement.SetLastPoint(e);
 
-        private void NameBackground_MouseMove_1(object sender, MouseEventArgs e) 
+        private void NameBackground_MouseMove(object sender, MouseEventArgs e)
             => ParentElement.MoveForm(e);
 
         private void CloseButton_MouseEnter(object sender, EventArgs e)
@@ -182,7 +202,7 @@ namespace AffairList
         private async Task IfCurrentListDisappearedAsync()
         {
             await _settings.SelectFirstProfileAsync();
-            if (string.IsNullOrEmpty(_settings.GetCurrentProfile())) 
+            if (string.IsNullOrEmpty(_settings.GetCurrentProfile()))
                 _settings.CreateDefaultListAsync();
         }
         private async void AddAffairButton_Click(object sender, EventArgs e) => await AddAffairAsync();
@@ -191,10 +211,11 @@ namespace AffairList
 
         private void BackButton_Click(object sender, EventArgs e) => ParentElement.Return();
 
-        private void ChangeListForm_FormClosing(object sender, FormClosingEventArgs e) 
-            => ParentElement.Exit();
-
         private async void AddDeadlineButton_Click(object sender, EventArgs e)
+        {
+            await ManageDeadline();
+        }
+        private async Task ManageDeadline()
         {
             if (Affairs.SelectedIndex == -1) return;
 
@@ -245,6 +266,10 @@ namespace AffairList
         }
         private async void RenameAffairButton_Click(object sender, EventArgs e)
         {
+            await RenameAffair();
+        }
+        private async Task RenameAffair()
+        {
             if (Affairs.SelectedIndex == -1) return;
 
             string selectedWord = _lines[Affairs.SelectedIndex];
@@ -252,11 +277,11 @@ namespace AffairList
 
             if (selectedWord.StartsWith(_deadlineTag))
             {
-                affair = selectedWord.Remove(0, _deadlineDateNTagLength);
+                affair = affair.Substring(_deadlineDateNTagLength);
             }
             if (selectedWord.EndsWith(_priorityTag))
             {
-                affair = affair.Remove(affair.Length - _priorityTag.Length - 1);
+                affair = affair.Substring(0, affair.Length - _priorityTag.Length - 1);
             }
             affair = affair.Remove(affair.Length - 1); // Убираем точку в конце
 
@@ -310,6 +335,10 @@ namespace AffairList
         }
         private void Affairs_MouseDown(object sender, MouseEventArgs e)
         {
+            DragAffair();
+        }
+        private void DragAffair()
+        {
             if (!_isDragging)
             {
                 _isDragging = true;
@@ -318,6 +347,10 @@ namespace AffairList
         }
 
         private async void Affairs_MouseUp(object sender, MouseEventArgs e)
+        {
+            await SwitchAffairs();
+        }
+        private async Task SwitchAffairs()
         {
             if (Affairs.SelectedIndex == -1) return;
             bool newPlacePriority = _lines[Affairs.SelectedIndex].EndsWith(_priorityTag);

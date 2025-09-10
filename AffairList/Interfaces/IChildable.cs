@@ -2,6 +2,6 @@
 {
     public interface IChildable
     {
-        IParentable ParentElement { get; set; }
+        IParentable ParentElement { get; }
     }
 }

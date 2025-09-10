@@ -53,31 +53,42 @@
             // 
             resources.ApplyResources(MinimizeButton, "MinimizeButton");
             MinimizeButton.Name = "MinimizeButton";
+            MinimizeButton.Click += MinimizeButton_Click;
+            MinimizeButton.MouseEnter += MinimizeButton_MouseEnter;
+            MinimizeButton.MouseLeave += MinimizeButton_MouseLeave;
             // 
             // NameBackground
             // 
+            resources.ApplyResources(NameBackground, "NameBackground");
             NameBackground.BackColor = Color.FromArgb(159, 62, 213);
             NameBackground.Controls.Add(CloseButton);
             NameBackground.Controls.Add(MinimizeButton);
             NameBackground.Controls.Add(AffairsLab);
-            resources.ApplyResources(NameBackground, "NameBackground");
             NameBackground.Name = "NameBackground";
+            NameBackground.MouseDown += NameBackground_MouseDown;
+            NameBackground.MouseMove += NameBackground_MouseMove;
             // 
             // CloseButton
             // 
             resources.ApplyResources(CloseButton, "CloseButton");
             CloseButton.Name = "CloseButton";
+            CloseButton.Click += CloseButton_Click;
+            CloseButton.MouseEnter += CloseButton_MouseEnter;
+            CloseButton.MouseLeave += CloseButton_MouseLeave;
             // 
             // AffairsLab
             // 
             resources.ApplyResources(AffairsLab, "AffairsLab");
             AffairsLab.Name = "AffairsLab";
+            AffairsLab.MouseDown += AffairsLab_MouseDown;
+            AffairsLab.MouseMove += AffairsLab_MouseMove;
             // 
             // ProfileBox
             // 
-            ProfileBox.FormattingEnabled = true;
             resources.ApplyResources(ProfileBox, "ProfileBox");
+            ProfileBox.FormattingEnabled = true;
             ProfileBox.Name = "ProfileBox";
+            ProfileBox.SelectionChangeCommitted += ProfileBox_SelectionChangeCommitted;
             // 
             // DeadlineLab
             // 
@@ -90,6 +101,9 @@
             resources.ApplyResources(Affairs, "Affairs");
             Affairs.FormattingEnabled = true;
             Affairs.Name = "Affairs";
+            Affairs.SelectedValueChanged += Affairs_SelectedValueChanged;
+            Affairs.MouseDown += Affairs_MouseDown;
+            Affairs.MouseUp += Affairs_MouseUp;
             // 
             // AffairInput
             // 
@@ -98,6 +112,7 @@
             // 
             // panel1
             // 
+            resources.ApplyResources(panel1, "panel1");
             panel1.BackColor = Color.FromArgb(72, 3, 111);
             panel1.Controls.Add(RenameAffairButton);
             panel1.Controls.Add(ProfileBox);
@@ -111,56 +126,60 @@
             panel1.Controls.Add(AddAffairButton);
             panel1.Controls.Add(AffairInput);
             panel1.Controls.Add(NameBackground);
-            resources.ApplyResources(panel1, "panel1");
             panel1.Name = "panel1";
             // 
             // RenameAffairButton
             // 
-            RenameAffairButton.BackColor = Color.FromArgb(173, 102, 213);
             resources.ApplyResources(RenameAffairButton, "RenameAffairButton");
+            RenameAffairButton.BackColor = Color.FromArgb(173, 102, 213);
             RenameAffairButton.Name = "RenameAffairButton";
             RenameAffairButton.UseVisualStyleBackColor = false;
+            RenameAffairButton.Click += RenameAffairButton_Click;
             // 
             // AddDeadlineButton
             // 
-            AddDeadlineButton.BackColor = Color.FromArgb(173, 102, 213);
             resources.ApplyResources(AddDeadlineButton, "AddDeadlineButton");
+            AddDeadlineButton.BackColor = Color.FromArgb(173, 102, 213);
             AddDeadlineButton.Name = "AddDeadlineButton";
             AddDeadlineButton.UseVisualStyleBackColor = false;
+            AddDeadlineButton.Click += AddDeadlineButton_Click;
             // 
             // PriorityButton
             // 
-            PriorityButton.BackColor = Color.FromArgb(173, 102, 213);
             resources.ApplyResources(PriorityButton, "PriorityButton");
+            PriorityButton.BackColor = Color.FromArgb(173, 102, 213);
             PriorityButton.Name = "PriorityButton";
             PriorityButton.UseVisualStyleBackColor = false;
+            PriorityButton.Click += PriorityButton_Click;
             // 
             // DeleteButton
             // 
-            DeleteButton.BackColor = Color.FromArgb(173, 102, 213);
             resources.ApplyResources(DeleteButton, "DeleteButton");
+            DeleteButton.BackColor = Color.FromArgb(173, 102, 213);
             DeleteButton.Name = "DeleteButton";
             DeleteButton.UseVisualStyleBackColor = false;
+            DeleteButton.Click += DeleteButton_Click;
             // 
             // BackButton
             // 
-            BackButton.BackColor = Color.FromArgb(173, 102, 213);
             resources.ApplyResources(BackButton, "BackButton");
+            BackButton.BackColor = Color.FromArgb(173, 102, 213);
             BackButton.Name = "BackButton";
             BackButton.UseVisualStyleBackColor = false;
             BackButton.Click += BackButton_Click;
             // 
             // ClearButton
             // 
-            ClearButton.BackColor = Color.FromArgb(173, 102, 213);
             resources.ApplyResources(ClearButton, "ClearButton");
+            ClearButton.BackColor = Color.FromArgb(173, 102, 213);
             ClearButton.Name = "ClearButton";
             ClearButton.UseVisualStyleBackColor = false;
+            ClearButton.Click += ClearButton_Click;
             // 
             // AddAffairButton
             // 
-            AddAffairButton.BackColor = Color.FromArgb(173, 102, 213);
             resources.ApplyResources(AddAffairButton, "AddAffairButton");
+            AddAffairButton.BackColor = Color.FromArgb(173, 102, 213);
             AddAffairButton.Name = "AddAffairButton";
             AddAffairButton.UseVisualStyleBackColor = false;
             // 
@@ -170,6 +189,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(panel1);
             Name = "AffairsManager";
+            KeyDown += AffairsManager_KeyDown;
             NameBackground.ResumeLayout(false);
             NameBackground.PerformLayout();
             panel1.ResumeLayout(false);

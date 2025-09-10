@@ -27,7 +27,7 @@ namespace AffairList
             width = Screen.PrimaryScreen!.WorkingArea.Width;
             height = Screen.PrimaryScreen.WorkingArea.Height;
 
-            Task.Run(() => InitializeAsync());
+            InitializeAsync();
         }
         private async Task InitializeAsync()
         {

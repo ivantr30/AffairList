@@ -41,6 +41,7 @@
             TopMost = true;
             FormClosing += AffairList_FormClosing;
             Shown += AffairList_Shown;
+            KeyDown += AffairList_KeyDown;
             ResumeLayout(false);
         }
 
