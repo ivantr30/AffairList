@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Runtime;
 
 namespace AffairList
 {
@@ -12,33 +13,35 @@ namespace AffairList
 
         private LoadTimeModel _loadTime;
 
+        private Settings _settings;
+
         public LoadTimeManager(Settings settings)
         { 
             LoadTimeFileFullPath = $@"{settings._programDirectoryFolder}\loadtime.json";
 
-            Task.Run(async () => await InitializeAsync(settings));
+            _settings = settings;
+
+            Task.WhenAll(InitializeAsync(), NotificateAsync());
         }
 
-        public async Task InitializeAsync(Settings settings)
+        public async Task InitializeAsync()
         {
             if (!LoadTimeFileExist()) CreateLoadTimeFile();
 
             _loadTime = JsonConvert.DeserializeObject<LoadTimeModel>
-                (await File.ReadAllTextAsync(LoadTimeFileFullPath))!;
+                (File.ReadAllText(LoadTimeFileFullPath))!;
 
             if (_loadTime == null) await WriteBaseTimeAsync();
-
-            await NotificateAsync(settings);
         }
-        public async Task NotificateAsync(Settings settings)
+        public async Task NotificateAsync()
         {
-            if (!settings.DoesNotificate() || !ShouldNotificate()) return;
+            if (!_settings.DoesNotificate() || !ShouldNotificate()) return;
 
             using NotifyIcon notification = new NotifyIcon();
             notification.Icon = SystemIcons.Exclamation;
             notification.BalloonTipTitle = "AffairList";
 
-            foreach (var profile in Directory.EnumerateFiles(settings.listsDirectoryFullPath))
+            foreach (var profile in Directory.EnumerateFiles(_settings.listsDirectoryFullPath))
             {
                 await foreach (string affair in File.ReadLinesAsync(profile))
                 {
@@ -47,7 +50,7 @@ namespace AffairList
                     DateTime deadline = DateTime.Parse(affair.Substring(10, 11));
 
                     int daysLeft = (deadline.Date - DateTime.Now.Date).Days;
-                    if (daysLeft > settings.GetNotificationDayDistance()) continue;
+                    if (daysLeft > _settings.GetNotificationDayDistance()) continue;
 
                     if (daysLeft == 0)
                     {

@@ -1,4 +1,6 @@
 ﻿using Gma.System.MouseKeyHook;
+using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace AffairList
 {
@@ -16,12 +18,12 @@ namespace AffairList
         public ToDoList(Settings settings, IParentable parent)
         {
             InitializeComponent();
+            ParentElement = parent;
+            _settings = settings;
             Task settingLocation = SetLocationAsync();
             Task loadingText = LoadTextAsync();
 
             SubscribeGlobalHook();
-            ParentElement = parent;
-            _settings = settings;
             Task.WhenAll(settingLocation, loadingText);
         }
         private async Task SetLocationAsync()
@@ -52,20 +54,23 @@ namespace AffairList
         {
             if (_settings.CurrentListNotNull())
             {
-                string[] text = await File.ReadAllLinesAsync(_settings.GetCurrentProfile());
-                for (int i = 0; i < text.Length; i++)
+                StringBuilder affairsShower = new StringBuilder();
+                string currentAffair = "";
+                await foreach (string affair in File.ReadLinesAsync(_settings.GetCurrentProfile()))
                 {
-                    if (text[i].EndsWith(_priorityTag))
+                    currentAffair = affair;
+                    if (currentAffair.EndsWith(_priorityTag))
                     {
-                        text[i] = text[i].Substring(0, text[i].Length - _priorityTag.Length)
-                            .Trim();
+                        currentAffair = currentAffair
+                            .Substring(0, currentAffair.Length - _priorityTag.Length).Trim();
                     }
-                    if (text[i].StartsWith(_deadlineTag))
+                    if (currentAffair.StartsWith(_deadlineTag))
                     {
-                        text[i] = text[i].Substring(_deadlineTag.Length);
+                        currentAffair = currentAffair.Remove(0, _deadlineTag.Length);
                     }
+                    affairsShower.AppendLine(affair);
                 }
-                Affairs.Text = string.Join("\n", text);
+                Affairs.Text += affairsShower.ToString() + "Это весь список ваших дел";
             }
             else
             {
@@ -73,7 +78,6 @@ namespace AffairList
                 Close();
                 return;
             }
-            Affairs.Text += "\nЭто весь список ваших дел";
         }
         private void SubscribeGlobalHook()
         {
@@ -117,10 +121,6 @@ namespace AffairList
                 await _settings.SaveSettingsAsync();
                 Close();
             }
-        }
-        public Label GetAffairs()
-        {
-            return Affairs;
         }
     }
 }

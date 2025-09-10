@@ -22,12 +22,13 @@ namespace AffairList
         private Settings _settings;
         public IParentable ParentElement { get; set; }
 
-        public AffairsManager(Settings settings)
+        public AffairsManager(Settings settings, IParentable parentElement)
         {
+            _settings = settings;
+            ParentElement = parentElement;
             InitializeComponent();
             LoadProfiles();
             Task.Run(() => LoadTextAsync());
-            _settings = settings;
         }
         private void LoadProfiles()
         {
@@ -51,9 +52,9 @@ namespace AffairList
             if (_settings.CurrentListNotNull())
             {
                 _lines = (await File.ReadAllLinesAsync(_settings.GetCurrentProfile()))
-                    .OrderByDescending(x => x.EndsWith(_priorityTag)).ToList();
+                    .OrderByDescending(x => x.EndsWith(_priorityTag)).AsParallel().ToList();
 
-                await foreach (string line in _lines as IAsyncEnumerable<string>)
+                await foreach (string line in (IAsyncEnumerable<string>)_lines)
                 {
                     string currentLine = line;
                     if (currentLine.EndsWith(_priorityTag))
@@ -181,7 +182,8 @@ namespace AffairList
         private async Task IfCurrentListDisappearedAsync()
         {
             await _settings.SelectFirstProfileAsync();
-            if (string.IsNullOrEmpty(_settings.GetCurrentProfile())) _settings.CreateDefaultListAsync();
+            if (string.IsNullOrEmpty(_settings.GetCurrentProfile())) 
+                _settings.CreateDefaultListAsync();
         }
         private async void AddAffairButton_Click(object sender, EventArgs e) => await AddAffairAsync();
         private async void DeleteButton_Click(object sender, EventArgs e) => await DeleteAffairAsync();
@@ -189,7 +191,8 @@ namespace AffairList
 
         private void BackButton_Click(object sender, EventArgs e) => ParentElement.Return();
 
-        private void ChangeListForm_FormClosing(object sender, FormClosingEventArgs e) => ParentElement.Exit();
+        private void ChangeListForm_FormClosing(object sender, FormClosingEventArgs e) 
+            => ParentElement.Exit();
 
         private async void AddDeadlineButton_Click(object sender, EventArgs e)
         {
@@ -350,8 +353,7 @@ namespace AffairList
         }
         private async Task ChangeProfileAsync()
         {
-            var profiles = Directory.GetFiles(_settings.listsDirectoryFullPath);
-            foreach (var profile in profiles)
+            foreach (var profile in Directory.EnumerateFiles(_settings.listsDirectoryFullPath))
             {
                 FileInfo profileInfo = new FileInfo(profile);
                 if (profileInfo.Name == ProfileBox.SelectedItem!.ToString())

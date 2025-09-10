@@ -5,11 +5,13 @@ namespace AffairList
     {
         private bool _isConfirmed = true;
         private Keys _inputKey;
+
+        private Settings settings;
         public HotKeySettings1(Settings settings) 
-            : base(settings) 
         {
             InitializeComponent();
             LoadSettings();
+            this.settings = settings;
         }
         private void LoadSettings()
         {
@@ -41,7 +43,7 @@ namespace AffairList
 
             settings.SetCloseKey(Keys.F7);
             settings.SetReturnKey(Keys.F6);
-            await settings.SaveSettings();
+            await settings.SaveSettingsAsync();
 
             CloseKeyType.Text = "F7";
             BackKeyType.Text = "F6";
@@ -51,7 +53,7 @@ namespace AffairList
 
         private async void ConfirmButton_Click(object sender, EventArgs e)
         {
-            await settings.SaveSettings();
+            await settings.SaveSettingsAsync();
             _isConfirmed = true;
         }
         private void CloseKeyType_DoubleClick(object sender, EventArgs e)

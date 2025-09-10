@@ -4,7 +4,13 @@
     <_LastSelectedProfileId>F:\source\repos\AffairList\AffairList\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Update="BaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Controls\AffairsManager.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Update="Controls\SettingsManager.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Forms\AffairList.cs">

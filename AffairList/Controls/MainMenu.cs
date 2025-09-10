@@ -63,9 +63,8 @@
                 MessageBox.Show("Error, there is no list available");
                 return;
             }
-            ToDoList list = new ToDoList(_settings, ParentElement);
-            list.GetAffairs().BackColor = Color.White;
-            list.canReplace = true;
+            ToDoList list = new ToDoList(_settings, ParentElement) 
+            { BackColor = Color.White, canReplace = true};
             ParentElement.OpenForm(list);
         }
 
@@ -102,15 +101,15 @@
 
                 _settings.CreateDefaultListAsync();
             }
-            ParentElement.SetControl(new ChangeListForm1(_settings));
+            ParentElement.SetControl(new AffairsManager(_settings, ParentElement));
         }
         private void SettingsButton_Click(object sender, EventArgs e)
         {
-            ParentElement.SetControl(new SettingsForm(_settings));
+            ParentElement.SetControl(new SettingsManager(_settings, ParentElement));
         }
         private void ChangeProfileButton_Click(object sender, EventArgs e)
         {
-            ParentElement.SetControl(new AffairsManager(_settings));
+            ParentElement.SetControl(new AffairsManager(_settings, ParentElement));
         }
         private void HotKeyButton_Click(object sender, EventArgs e)
         {
@@ -120,7 +119,7 @@
         private async void MainMenu_Load(object sender, EventArgs e)
         {
             Task savingLoadTime = _loadTimeManager.SaveTimeAsync();
-            Task notificating = _loadTimeManager.NotificateAsync(_settings);
+            Task notificating = _loadTimeManager.NotificateAsync();
             await Task.WhenAll(savingLoadTime, notificating);
         }
     }

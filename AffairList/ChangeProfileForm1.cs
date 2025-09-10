@@ -10,11 +10,13 @@ namespace AffairList
         private string _priorityWord = " Priority.txt";
         private string _priorityTag = " \"Priority\"";
 
-        public ChangeProfileForm1(Settings settings) :
-            base(settings)
+        private Settings settings;
+
+        public ChangeProfileForm1(Settings settings)
         {
             InitializeComponent();
             LoadProfiles();
+            this.settings = settings;
         }
         private void LoadProfiles()
         {
@@ -167,7 +169,7 @@ namespace AffairList
         private async void SelectProfileButton_Click(object sender, EventArgs e)
         {
             settings.SetCurrentProfile(_profileLines[Profiles.SelectedIndex]);
-            await settings.SaveSettings();
+            await settings.SaveSettingsAsync();
         }
 
         private async void RenameButton_Click(object sender, EventArgs e)
@@ -194,7 +196,7 @@ namespace AffairList
             if (settings.GetCurrentProfile() == selectedProfile.FullName)
             {
                 settings.SetCurrentProfile(newProfileName);
-                await settings.SaveSettings();
+                await settings.SaveSettingsAsync();
             }
 
             File.Move(selectedProfile.FullName, newProfileName);
@@ -218,7 +220,7 @@ namespace AffairList
             if (selectedProfileInfo.FullName == settings.GetCurrentProfile())
             {
                 settings.SetCurrentProfile(newProfileName);
-                await settings.SaveSettings();
+                await settings.SaveSettingsAsync();
             }
 
             File.Move(selectedProfileInfo.FullName, newProfileName);

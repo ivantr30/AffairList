@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AffairsManager));
             MinimizeButton = new Label();
             NameBackground = new Panel();
+            CloseButton = new Label();
             AffairsLab = new Label();
             ProfileBox = new ComboBox();
             DeadlineLab = new Label();
@@ -43,20 +45,14 @@
             BackButton = new Button();
             ClearButton = new Button();
             AddAffairButton = new Button();
-            CloseButton = new Label();
             NameBackground.SuspendLayout();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
             // MinimizeButton
             // 
-            MinimizeButton.AutoSize = true;
-            MinimizeButton.Font = new Font("Unispace", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            MinimizeButton.Location = new Point(495, 0);
+            resources.ApplyResources(MinimizeButton, "MinimizeButton");
             MinimizeButton.Name = "MinimizeButton";
-            MinimizeButton.Size = new Size(31, 33);
-            MinimizeButton.TabIndex = 4;
-            MinimizeButton.Text = "-";
             // 
             // NameBackground
             // 
@@ -64,64 +60,41 @@
             NameBackground.Controls.Add(CloseButton);
             NameBackground.Controls.Add(MinimizeButton);
             NameBackground.Controls.Add(AffairsLab);
-            NameBackground.Dock = DockStyle.Top;
-            NameBackground.Location = new Point(0, 0);
+            resources.ApplyResources(NameBackground, "NameBackground");
             NameBackground.Name = "NameBackground";
-            NameBackground.Size = new Size(563, 86);
-            NameBackground.TabIndex = 0;
+            // 
+            // CloseButton
+            // 
+            resources.ApplyResources(CloseButton, "CloseButton");
+            CloseButton.Name = "CloseButton";
             // 
             // AffairsLab
             // 
-            AffairsLab.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            AffairsLab.AutoSize = true;
-            AffairsLab.Font = new Font("Unispace", 30F);
-            AffairsLab.Location = new Point(200, 26);
+            resources.ApplyResources(AffairsLab, "AffairsLab");
             AffairsLab.Name = "AffairsLab";
-            AffairsLab.Size = new Size(188, 48);
-            AffairsLab.TabIndex = 1;
-            AffairsLab.Text = "Affairs";
-            AffairsLab.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // ProfileBox
             // 
             ProfileBox.FormattingEnabled = true;
-            ProfileBox.Location = new Point(372, 88);
+            resources.ApplyResources(ProfileBox, "ProfileBox");
             ProfileBox.Name = "ProfileBox";
-            ProfileBox.Size = new Size(179, 25);
-            ProfileBox.TabIndex = 11;
             // 
             // DeadlineLab
             // 
-            DeadlineLab.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            DeadlineLab.AutoSize = true;
-            DeadlineLab.Font = new Font("Unispace", 15F);
+            resources.ApplyResources(DeadlineLab, "DeadlineLab");
             DeadlineLab.ForeColor = SystemColors.ButtonHighlight;
-            DeadlineLab.Location = new Point(10, 89);
             DeadlineLab.Name = "DeadlineLab";
-            DeadlineLab.Size = new Size(262, 24);
-            DeadlineLab.TabIndex = 3;
-            DeadlineLab.Text = "Deadline, Affair name";
-            DeadlineLab.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // Affairs
             // 
-            Affairs.Font = new Font("Segoe UI", 12F);
+            resources.ApplyResources(Affairs, "Affairs");
             Affairs.FormattingEnabled = true;
-            Affairs.HorizontalScrollbar = true;
-            Affairs.ItemHeight = 21;
-            Affairs.Location = new Point(12, 114);
             Affairs.Name = "Affairs";
-            Affairs.Size = new Size(539, 214);
-            Affairs.TabIndex = 4;
             // 
             // AffairInput
             // 
-            AffairInput.Font = new Font("Unispace", 15F);
-            AffairInput.Location = new Point(12, 334);
+            resources.ApplyResources(AffairInput, "AffairInput");
             AffairInput.Name = "AffairInput";
-            AffairInput.PlaceholderText = "Enter the name of a new affair";
-            AffairInput.Size = new Size(539, 31);
-            AffairInput.TabIndex = 1;
             // 
             // panel1
             // 
@@ -138,108 +111,65 @@
             panel1.Controls.Add(AddAffairButton);
             panel1.Controls.Add(AffairInput);
             panel1.Controls.Add(NameBackground);
-            panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(0, 0);
+            resources.ApplyResources(panel1, "panel1");
             panel1.Name = "panel1";
-            panel1.Size = new Size(563, 405);
-            panel1.TabIndex = 2;
             // 
             // RenameAffairButton
             // 
             RenameAffairButton.BackColor = Color.FromArgb(173, 102, 213);
-            RenameAffairButton.FlatStyle = FlatStyle.Flat;
-            RenameAffairButton.Location = new Point(358, 371);
+            resources.ApplyResources(RenameAffairButton, "RenameAffairButton");
             RenameAffairButton.Name = "RenameAffairButton";
-            RenameAffairButton.Size = new Size(65, 27);
-            RenameAffairButton.TabIndex = 12;
-            RenameAffairButton.Text = "Rename";
             RenameAffairButton.UseVisualStyleBackColor = false;
             // 
             // AddDeadlineButton
             // 
             AddDeadlineButton.BackColor = Color.FromArgb(173, 102, 213);
-            AddDeadlineButton.FlatStyle = FlatStyle.Flat;
-            AddDeadlineButton.Location = new Point(120, 371);
+            resources.ApplyResources(AddDeadlineButton, "AddDeadlineButton");
             AddDeadlineButton.Name = "AddDeadlineButton";
-            AddDeadlineButton.Size = new Size(100, 27);
-            AddDeadlineButton.TabIndex = 10;
-            AddDeadlineButton.Text = "AddDeadline";
             AddDeadlineButton.UseVisualStyleBackColor = false;
             // 
             // PriorityButton
             // 
             PriorityButton.BackColor = Color.FromArgb(173, 102, 213);
-            PriorityButton.FlatStyle = FlatStyle.Flat;
-            PriorityButton.Font = new Font("Segoe UI", 9F);
-            PriorityButton.Location = new Point(12, 371);
+            resources.ApplyResources(PriorityButton, "PriorityButton");
             PriorityButton.Name = "PriorityButton";
-            PriorityButton.Size = new Size(102, 27);
-            PriorityButton.TabIndex = 8;
-            PriorityButton.Text = "ChangePriority";
             PriorityButton.UseVisualStyleBackColor = false;
             // 
             // DeleteButton
             // 
             DeleteButton.BackColor = Color.FromArgb(173, 102, 213);
-            DeleteButton.FlatStyle = FlatStyle.Flat;
-            DeleteButton.Location = new Point(292, 371);
+            resources.ApplyResources(DeleteButton, "DeleteButton");
             DeleteButton.Name = "DeleteButton";
-            DeleteButton.Size = new Size(60, 27);
-            DeleteButton.TabIndex = 6;
-            DeleteButton.Text = "Delete";
             DeleteButton.UseVisualStyleBackColor = false;
             // 
             // BackButton
             // 
             BackButton.BackColor = Color.FromArgb(173, 102, 213);
-            BackButton.FlatStyle = FlatStyle.Flat;
-            BackButton.Location = new Point(495, 371);
+            resources.ApplyResources(BackButton, "BackButton");
             BackButton.Name = "BackButton";
-            BackButton.Size = new Size(56, 27);
-            BackButton.TabIndex = 5;
-            BackButton.Text = "Back";
             BackButton.UseVisualStyleBackColor = false;
+            BackButton.Click += BackButton_Click;
             // 
             // ClearButton
             // 
             ClearButton.BackColor = Color.FromArgb(173, 102, 213);
-            ClearButton.FlatStyle = FlatStyle.Flat;
-            ClearButton.Location = new Point(429, 371);
+            resources.ApplyResources(ClearButton, "ClearButton");
             ClearButton.Name = "ClearButton";
-            ClearButton.Size = new Size(60, 27);
-            ClearButton.TabIndex = 3;
-            ClearButton.Text = "Clear";
             ClearButton.UseVisualStyleBackColor = false;
             // 
             // AddAffairButton
             // 
             AddAffairButton.BackColor = Color.FromArgb(173, 102, 213);
-            AddAffairButton.FlatStyle = FlatStyle.Flat;
-            AddAffairButton.Location = new Point(226, 371);
+            resources.ApplyResources(AddAffairButton, "AddAffairButton");
             AddAffairButton.Name = "AddAffairButton";
-            AddAffairButton.Size = new Size(60, 27);
-            AddAffairButton.TabIndex = 2;
-            AddAffairButton.Text = "Add";
             AddAffairButton.UseVisualStyleBackColor = false;
-            // 
-            // CloseButton
-            // 
-            CloseButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            CloseButton.AutoSize = true;
-            CloseButton.Font = new Font("Unispace", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            CloseButton.Location = new Point(532, 0);
-            CloseButton.Name = "CloseButton";
-            CloseButton.Size = new Size(31, 33);
-            CloseButton.TabIndex = 3;
-            CloseButton.Text = "X";
             // 
             // AffairsManager
             // 
-            AutoScaleDimensions = new SizeF(7F, 17F);
+            resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(panel1);
             Name = "AffairsManager";
-            Size = new Size(563, 405);
             NameBackground.ResumeLayout(false);
             NameBackground.PerformLayout();
             panel1.ResumeLayout(false);

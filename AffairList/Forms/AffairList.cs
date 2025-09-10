@@ -16,7 +16,6 @@
         public AffairList()
         {
             InitializeComponent();
-
             Initialize();
         }
         private void Initialize()

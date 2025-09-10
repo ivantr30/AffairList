@@ -96,7 +96,7 @@ namespace AffairList
         {
         }
 
-        private void MinimizeButton_Click(object sender, EventArgs e) => MinimizeForm();
+        private void MinimizeButton_Click(object sender, EventArgs e) { } //MinimizeForm(); 
 
         private void MinimizeButton_MouseEnter(object sender, EventArgs e)
         {

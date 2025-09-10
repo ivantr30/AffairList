@@ -13,8 +13,8 @@ namespace AffairList
         public readonly string listsDirectoryFullPath;
         public readonly string settingsFileFullPath;
 
-        public readonly int width = Screen.PrimaryScreen!.WorkingArea.Width;
-        public readonly int height = Screen.PrimaryScreen.WorkingArea.Height;
+        public readonly int width;
+        public readonly int height;
 
         private SettingsModel _settings;
 
@@ -24,8 +24,10 @@ namespace AffairList
             _defaultListFileFullPath = $@"{listsDirectoryFullPath}list.txt";
             settingsFileFullPath = $@"{_programDirectoryFolder}settings.json";
 
-            // Может сломаться, проконтроллировать
-            Task.Run(async () => await InitializeAsync());
+            width = Screen.PrimaryScreen!.WorkingArea.Width;
+            height = Screen.PrimaryScreen.WorkingArea.Height;
+
+            Task.Run(() => InitializeAsync());
         }
         private async Task InitializeAsync()
         {
@@ -34,8 +36,10 @@ namespace AffairList
             if(!ListsDirectoryExists()) CreateListsDirectory();
             try
             {
+                //_settings = JsonConvert.DeserializeObject<SettingsModel>
+                //    (await System.IO.File.ReadAllTextAsync(settingsFileFullPath))!;
                 _settings = JsonConvert.DeserializeObject<SettingsModel>
-                    (await System.IO.File.ReadAllTextAsync(settingsFileFullPath))!;
+                    (System.IO.File.ReadAllText(settingsFileFullPath))!;
             }
             catch
             {
@@ -97,7 +101,7 @@ namespace AffairList
 
         public bool ProgramDirectoryExists()
         {
-            return System.IO.File.Exists(_programDirectoryFolder);
+            return Directory.Exists(_programDirectoryFolder);
         }
         public bool ListFilesAvailable()
         {

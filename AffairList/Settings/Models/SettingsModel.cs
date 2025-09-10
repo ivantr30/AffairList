@@ -1,5 +1,4 @@
-﻿
-namespace AffairList
+﻿namespace AffairList
 {
     public class SettingsModel
     {

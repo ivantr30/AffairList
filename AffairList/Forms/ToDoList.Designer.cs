@@ -53,7 +53,9 @@
             BackColor = Color.Black;
             ClientSize = new Size(1202, 666);
             Controls.Add(Affairs);
+            FormBorderStyle = FormBorderStyle.None;
             Icon = (Icon)resources.GetObject("$this.Icon");
+            KeyPreview = true;
             Name = "ToDoList";
             ShowInTaskbar = false;
             Text = "List";

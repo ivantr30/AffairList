@@ -1,22 +1,27 @@
 ﻿using Microsoft.VisualBasic;
 namespace AffairList
 {
-    public partial class SettingsForm1 : BaseForm
+    public partial class SettingsManager : UserControl, IChildable
     {
         private bool _isConfirmed = true;
 
-        private Settings settings;
-        public SettingsForm1(Settings settings)
+        private Settings _settings;
+
+        public IParentable ParentElement { get; set; }
+
+        public SettingsManager(Settings settings, IParentable parentElement)
         {
+            _settings = settings;
+            ParentElement = parentElement;
             InitializeComponent();
             LoadSettings();
         }
         private void LoadSettings()
         {
-            LocationLab.Text = settings.GetProfileX() + ", " + settings.GetProfileY();
-            ListTextColorLab.ForeColor = settings.GetTextColor();
-            ListBgTextColorLab.ForeColor = settings.GetBgColor();
-            if (settings.DoesAutostart())
+            LocationLab.Text = _settings.GetProfileX() + ", " + _settings.GetProfileY();
+            ListTextColorLab.ForeColor = _settings.GetTextColor();
+            ListBgTextColorLab.ForeColor = _settings.GetBgColor();
+            if (_settings.DoesAutostart())
             {
                 autostartStateLab.Text = "On";
             }
@@ -24,7 +29,7 @@ namespace AffairList
             {
                 autostartStateLab.Text = "OFF";
             }
-            if (settings.DoesAskToDelete())
+            if (_settings.DoesAskToDelete())
             {
                 AskToDeleteState.Text = "On";
             }
@@ -32,7 +37,7 @@ namespace AffairList
             {
                 AskToDeleteState.Text = "OFF";
             }
-            if (settings.DoesNotificate())
+            if (_settings.DoesNotificate())
             {
                 NotificationState.Text = "On";
             }
@@ -40,19 +45,19 @@ namespace AffairList
             {
                 NotificationState.Text = "OFF";
             }
-            DistanceToNotificate.Text = settings.GetNotificationDayDistance().ToString();
+            DistanceToNotificate.Text = _settings.GetNotificationDayDistance().ToString();
         }
-        private void CloseButton_Click(object sender, EventArgs e) => Exit();
+        private void CloseButton_Click(object sender, EventArgs e) => ParentElement.Exit();
 
         private void Settings_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == settings.GetCloseKey())
+            if (e.KeyCode == _settings.GetCloseKey())
             {
-                Exit();
+                ParentElement.Exit();
             }
-            if (e.KeyCode == settings.GetReturnKey())
+            if (e.KeyCode == _settings.GetReturnKey())
             {
-                Restart();
+                ParentElement.Return();
             }
         }
 
@@ -65,15 +70,17 @@ namespace AffairList
         {
             CloseButton.ForeColor = Color.Black;
         }
+        private void NameBackground_MouseDown(object sender, MouseEventArgs e)
+            => ParentElement.SetLastPoint(e);
 
-        private void NameBackground_MouseDown(object sender, MouseEventArgs e) => SetLastPoint(e);
+        private void NameBackground_MouseMove(object sender, MouseEventArgs e) 
+            => ParentElement.MoveForm(e);
 
-        private void NameBackground_MouseMove(object sender, MouseEventArgs e) => MoveForm(e);
+        private void SettingsLab_MouseDown(object sender, MouseEventArgs e) 
+            => ParentElement.SetLastPoint(e);
 
-        private void SettingsLab_MouseDown(object sender, MouseEventArgs e) => SetLastPoint(e);
-
-        private void SettingsLab_MouseMove(object sender, MouseEventArgs e) => MoveForm(e);
-
+        private void SettingsLab_MouseMove(object sender, MouseEventArgs e)
+            => ParentElement.MoveForm(e);
         private void BackButton_Click(object sender, EventArgs e)
         {
             if (!_isConfirmed)
@@ -88,7 +95,7 @@ namespace AffairList
                     return;
                 }
             }
-            Restart();
+            ParentElement.Return();
         }
 
         private async void ResetButton_Click(object sender, EventArgs e)
@@ -100,19 +107,19 @@ namespace AffairList
                 MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                if (!settings.SettingsFileExists()) await settings.CreateSettingsFileAsync();
+                if (!_settings.SettingsFileExists()) await _settings.CreateSettingsFileAsync();
 
-                await settings.WriteBaseSettingsAsync();
+                await _settings.WriteBaseSettingsAsync();
 
                 MessageBox.Show("The settings were reseted succesfully");
             }
-            Restart();
+            ParentElement.Return();
         }
 
         private async void ConfirmButton_Click(object sender, EventArgs e)
         {
             _isConfirmed = true;
-            await settings.SaveSettingsAsync();
+            await _settings.SaveSettingsAsync();
         }
 
         private void autostartStateLab_MouseDown(object sender, MouseEventArgs e)
@@ -121,12 +128,12 @@ namespace AffairList
             if (autostartStateLab.Text == "On")
             {
                 autostartStateLab.Text = "OFF";
-                settings.SetAutostart(false);
+                _settings.SetAutostart(false);
             }
             else
             {
                 autostartStateLab.Text = "On";
-                settings.SetAutostart(true);
+                _settings.SetAutostart(true);
             }
             _isConfirmed = false;
         }
@@ -151,7 +158,7 @@ namespace AffairList
             Color newColor = ListColorChanger();
             if (newColor == Color.Empty) return;
             ListTextColorLab.ForeColor = newColor;
-            settings.SetTextColor(newColor);
+            _settings.SetTextColor(newColor);
         }
 
         private void PickBgColorButton_Click(object sender, EventArgs e)
@@ -159,7 +166,7 @@ namespace AffairList
             Color newColor = ListColorChanger();
             if (newColor == Color.Empty) return;
             ListBgTextColorLab.ForeColor = newColor;
-            settings.SetBgColor(newColor);
+            _settings.SetBgColor(newColor);
         }
         private Color ListColorChanger()
         {
@@ -177,42 +184,43 @@ namespace AffairList
 
         private void LocationLab_DoubleClick(object sender, EventArgs e)
         {
-            int prevX = settings.GetProfileX(), prevY = settings.GetProfileY();
+            int prevX = _settings.GetProfileX(), prevY = _settings.GetProfileY();
             try
             {
                 string newX = Interaction.InputBox("Enter x coordinate," +
-                    $" max width is {settings.width}",
+                    $" max width is {_settings.width}",
                     "InputWindow", "");
                 if (string.IsNullOrEmpty(newX)) return;
-                settings.SetProfileX(int.Parse(newX));
-                if (settings.GetProfileX() > settings.width) throw new Exception();
+                _settings.SetProfileX(int.Parse(newX));
+                if (_settings.GetProfileX() > _settings.width) throw new Exception();
             }
             catch
             {
                 MessageBox.Show("Error");
-                settings.SetProfileX(prevX);
+                _settings.SetProfileX(prevX);
                 return;
             }
             try
             {
                 string newY = Interaction.InputBox("Enter y coordinate" +
-                    $" max height is {settings.height}",
+                    $" max height is {_settings.height}",
                     "InputWindow", "");
                 if (string.IsNullOrEmpty(newY)) return;
-                settings.SetProfileY(int.Parse(newY));
-                if (settings.GetProfileY() > settings.height) throw new Exception();
+                _settings.SetProfileY(int.Parse(newY));
+                if (_settings.GetProfileY() > _settings.height) throw new Exception();
             }
             catch
             {
                 MessageBox.Show("Error");
-                settings.SetProfileY(prevY);
+                _settings.SetProfileY(prevY);
                 return;
             }
             _isConfirmed = false;
-            LocationLab.Text = settings.GetProfileX() + ", " + settings.GetProfileY();
+            LocationLab.Text = _settings.GetProfileX() + ", " + _settings.GetProfileY();
         }
 
-        private void Settings_FormClosing(object sender, FormClosingEventArgs e) => Exit();
+        private void Settings_FormClosing(object sender, FormClosingEventArgs e)
+            => ParentElement.Exit();
 
         private void LocationLab_MouseEnter(object sender, EventArgs e)
         {
@@ -230,12 +238,12 @@ namespace AffairList
             if (AskToDeleteState.Text == "On")
             {
                 AskToDeleteState.Text = "OFF";
-                settings.SetAskToDelete(false);
+                _settings.SetAskToDelete(false);
             }
             else
             {
                 AskToDeleteState.Text = "On";
-                settings.SetAskToDelete(true);
+                _settings.SetAskToDelete(true);
             }
             _isConfirmed = false;
         }
@@ -255,7 +263,8 @@ namespace AffairList
             AskToDeleteState.ForeColor = Color.White;
         }
 
-        private void MinimizeButton_Click(object sender, EventArgs e) => MinimizeForm();
+        private void MinimizeButton_Click(object sender, EventArgs e)
+            => ParentElement.MinimizeForm();
 
         private void MinimizeButton_MouseEnter(object sender, EventArgs e)
         {
@@ -275,8 +284,8 @@ namespace AffairList
         private void NotificationState_MouseDown(object sender, MouseEventArgs e)
         {
             NotificationState.ForeColor = Color.DarkGray;
-            settings.SetDoesNotificate(!settings.DoesNotificate());
-            NotificationState.Text = settings.DoesNotificate() ? "On" : "OFF";
+            _settings.SetDoesNotificate(!_settings.DoesNotificate());
+            NotificationState.Text = _settings.DoesNotificate() ? "On" : "OFF";
             _isConfirmed = false;
         }
 
@@ -312,12 +321,12 @@ namespace AffairList
                 string distance = Interaction.InputBox(
                     "Enter how many days far from the deadline you want to be notified",
                     "Day distance to notificate input box",
-                    settings.GetNotificationDayDistance().ToString());
+                    _settings.GetNotificationDayDistance().ToString());
 
                 if (string.IsNullOrEmpty(distance)) return;
 
                 uint distanceToNotificate = uint.Parse(distance);
-                settings.SetNotificationDayDistance(distanceToNotificate);
+                _settings.SetNotificationDayDistance(distanceToNotificate);
                 DistanceToNotificate.Text = distanceToNotificate.ToString();
                 _isConfirmed = false;
             }
@@ -332,7 +341,7 @@ namespace AffairList
             ExportSettingsFileDialog.ShowDialog();
             try
             {
-                File.Copy("settings.json", ExportSettingsFileDialog.SelectedPath+"\\settings.json");
+                File.Copy("settings.json", ExportSettingsFileDialog.SelectedPath + "\\settings.json");
                 MessageBox.Show("Settings config was exported succesfully");
             }
             catch
