@@ -30,7 +30,6 @@ namespace AffairList
             _settings = settings;
             ParentElement = parentElement;
             InitializeComponent();
-            TabStop = true;
             KeyDownHandlers += AffairsManager_KeyDown;
             LoadProfiles();
             LoadTextAsync();

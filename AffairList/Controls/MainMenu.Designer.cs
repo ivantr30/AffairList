@@ -133,6 +133,7 @@
             ClearListButton.FlatAppearance.BorderSize = 0;
             ClearListButton.ForeColor = SystemColors.ButtonHighlight;
             ClearListButton.Name = "ClearListButton";
+            ClearListButton.TabStop = false;
             ClearListButton.UseVisualStyleBackColor = false;
             ClearListButton.Click += ClearListButton_Click;
             // 

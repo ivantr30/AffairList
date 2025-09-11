@@ -182,6 +182,7 @@
             AddAffairButton.BackColor = Color.FromArgb(173, 102, 213);
             AddAffairButton.Name = "AddAffairButton";
             AddAffairButton.UseVisualStyleBackColor = false;
+            AddAffairButton.Click += AddAffairButton_Click;
             // 
             // AffairsManager
             // 
