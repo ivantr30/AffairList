@@ -69,6 +69,7 @@
             ExportButton.TabIndex = 29;
             ExportButton.Text = "Export";
             ExportButton.UseVisualStyleBackColor = false;
+            ExportButton.Click += ExportButton_Click;
             // 
             // DistanceToNotificate
             // 
@@ -82,6 +83,9 @@
             DistanceToNotificate.TabIndex = 28;
             DistanceToNotificate.Text = "0";
             DistanceToNotificate.TextAlign = ContentAlignment.MiddleRight;
+            DistanceToNotificate.DoubleClick += DistanceToNotificate_DoubleClick;
+            DistanceToNotificate.MouseEnter += DistanceToNotificate_MouseEnter;
+            DistanceToNotificate.MouseLeave += DistanceToNotificate_MouseLeave;
             // 
             // DistanceToNotificateLab
             // 
@@ -108,6 +112,9 @@
             NotificationState.TabIndex = 26;
             NotificationState.Text = "On";
             NotificationState.TextAlign = ContentAlignment.MiddleCenter;
+            NotificationState.MouseDown += NotificationState_MouseDown;
+            NotificationState.MouseEnter += NotificationState_MouseEnter;
+            NotificationState.MouseLeave += NotificationState_MouseLeave;
             // 
             // NotificationStateLab
             // 
@@ -134,6 +141,9 @@
             AskToDeleteState.TabIndex = 24;
             AskToDeleteState.Text = "On";
             AskToDeleteState.TextAlign = ContentAlignment.MiddleCenter;
+            AskToDeleteState.MouseDown += AskToDeleteState_MouseDown;
+            AskToDeleteState.MouseEnter += AskToDeleteState_MouseEnter;
+            AskToDeleteState.MouseLeave += AskToDeleteState_MouseLeave;
             // 
             // AskToDelete
             // 
@@ -155,6 +165,7 @@
             ThemeBoxCB.Name = "ThemeBoxCB";
             ThemeBoxCB.Size = new Size(121, 25);
             ThemeBoxCB.TabIndex = 22;
+            ThemeBoxCB.SelectedValueChanged += ThemeBoxCB_SelectedValueChanged;
             // 
             // CurrentThemeLab
             // 
@@ -182,6 +193,7 @@
             PickBgColorButton.TabIndex = 18;
             PickBgColorButton.Text = "Pick color";
             PickBgColorButton.UseVisualStyleBackColor = false;
+            PickBgColorButton.Click += PickBgColorButton_Click;
             // 
             // PickTextColorButton
             // 
@@ -196,6 +208,7 @@
             PickTextColorButton.TabIndex = 17;
             PickTextColorButton.Text = "Pick color";
             PickTextColorButton.UseVisualStyleBackColor = false;
+            PickTextColorButton.Click += PickTextColorButton_Click;
             // 
             // panel1
             // 
@@ -239,6 +252,9 @@
             autostartStateLab.TabIndex = 16;
             autostartStateLab.Text = "On";
             autostartStateLab.TextAlign = ContentAlignment.MiddleCenter;
+            autostartStateLab.MouseDown += autostartStateLab_MouseDown;
+            autostartStateLab.MouseEnter += autostartStateLab_MouseEnter;
+            autostartStateLab.MouseLeave += autostartStateLab_MouseLeave;
             // 
             // AutostartLab
             // 
@@ -291,6 +307,9 @@
             LocationLab.TabIndex = 9;
             LocationLab.Text = "0, 0";
             LocationLab.TextAlign = ContentAlignment.MiddleRight;
+            LocationLab.DoubleClick += LocationLab_DoubleClick;
+            LocationLab.MouseEnter += LocationLab_MouseEnter;
+            LocationLab.MouseLeave += LocationLab_MouseLeave;
             // 
             // ListLocationLab
             // 
@@ -315,6 +334,7 @@
             ConfirmButton.TabIndex = 8;
             ConfirmButton.Text = "Confirm";
             ConfirmButton.UseVisualStyleBackColor = false;
+            ConfirmButton.Click += ConfirmButton_Click;
             // 
             // ResetButton
             // 
@@ -326,6 +346,7 @@
             ResetButton.TabIndex = 7;
             ResetButton.Text = "Reset";
             ResetButton.UseVisualStyleBackColor = false;
+            ResetButton.Click += ResetButton_Click;
             // 
             // BackButton
             // 
@@ -337,6 +358,7 @@
             BackButton.TabIndex = 6;
             BackButton.Text = "Back";
             BackButton.UseVisualStyleBackColor = false;
+            BackButton.Click += BackButton_Click;
             // 
             // NameBackground
             // 
@@ -349,6 +371,8 @@
             NameBackground.Name = "NameBackground";
             NameBackground.Size = new Size(440, 142);
             NameBackground.TabIndex = 0;
+            NameBackground.MouseDown += NameBackground_MouseDown;
+            NameBackground.MouseMove += NameBackground_MouseMove;
             // 
             // MinimizeButton
             // 
@@ -359,6 +383,9 @@
             MinimizeButton.Size = new Size(31, 33);
             MinimizeButton.TabIndex = 25;
             MinimizeButton.Text = "-";
+            MinimizeButton.Click += MinimizeButton_Click;
+            MinimizeButton.MouseEnter += MinimizeButton_MouseEnter;
+            MinimizeButton.MouseLeave += MinimizeButton_MouseLeave;
             // 
             // CloseButton
             // 
@@ -369,6 +396,9 @@
             CloseButton.Size = new Size(31, 33);
             CloseButton.TabIndex = 2;
             CloseButton.Text = "X";
+            CloseButton.Click += CloseButton_Click;
+            CloseButton.MouseEnter += CloseButton_MouseEnter;
+            CloseButton.MouseLeave += CloseButton_MouseLeave;
             // 
             // SettingsLab
             // 
@@ -381,6 +411,8 @@
             SettingsLab.TabIndex = 1;
             SettingsLab.Text = "Settings";
             SettingsLab.TextAlign = ContentAlignment.MiddleCenter;
+            SettingsLab.MouseDown += SettingsLab_MouseDown;
+            SettingsLab.MouseMove += SettingsLab_MouseMove;
             // 
             // SettingsManager
             // 

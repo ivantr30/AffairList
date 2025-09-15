@@ -76,10 +76,10 @@
                     KeyPress -= ckp.KeyPressHandlers;
                     KeyDown -= ckp.KeyUpHandlers;
                 }
-            this.Controls.Clear();
             Width = control.Width;
             Height = control.Height;
-            this.Controls.Add(control);
+            Controls.Clear();
+            Controls.Add(control);
             Focus();
         }
         public void OpenForm(Form form)

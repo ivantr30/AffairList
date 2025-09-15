@@ -31,8 +31,8 @@ namespace AffairList
 
             await LoadSettingsAsync();
 
-            Width = _settings.width;
-            Height = _settings.height + _settings.height / 10;
+            Width = _settings.screenWidth;
+            Height = _settings.screenHeight + _settings.screenHeight / 10;
 
             Affairs.AutoSize = false;
             Affairs.Size = new Size(500, Height);

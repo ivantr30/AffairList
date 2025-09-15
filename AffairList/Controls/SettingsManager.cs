@@ -1,18 +1,22 @@
 ﻿using Microsoft.VisualBasic;
 namespace AffairList
 {
-    public partial class SettingsManager : UserControl, IChildable
+    public partial class SettingsManager : UserControl, IChildable, IKeyPreviewable
     {
         private bool _isConfirmed = true;
 
         private Settings _settings;
 
         public IParentable ParentElement { get; private set; }
+        public KeyEventHandler KeyDownHandlers { get; private set; }
+        public KeyPressEventHandler KeyPressHandlers { get; private set; }
+        public KeyEventHandler KeyUpHandlers { get; private set; }
 
         public SettingsManager(Settings settings, IParentable parentElement)
         {
             _settings = settings;
             ParentElement = parentElement;
+            KeyDownHandlers += Settings_KeyDown!;
             InitializeComponent();
             LoadSettings();
         }
@@ -73,10 +77,10 @@ namespace AffairList
         private void NameBackground_MouseDown(object sender, MouseEventArgs e)
             => ParentElement.SetLastPoint(e);
 
-        private void NameBackground_MouseMove(object sender, MouseEventArgs e) 
+        private void NameBackground_MouseMove(object sender, MouseEventArgs e)
             => ParentElement.MoveForm(e);
 
-        private void SettingsLab_MouseDown(object sender, MouseEventArgs e) 
+        private void SettingsLab_MouseDown(object sender, MouseEventArgs e)
             => ParentElement.SetLastPoint(e);
 
         private void SettingsLab_MouseMove(object sender, MouseEventArgs e)
@@ -111,9 +115,8 @@ namespace AffairList
 
                 await _settings.WriteBaseSettingsAsync();
 
-                MessageBox.Show("The settings were reseted succesfully");
+                LoadSettings();
             }
-            ParentElement.Return();
         }
 
         private async void ConfirmButton_Click(object sender, EventArgs e)
@@ -124,7 +127,7 @@ namespace AffairList
 
         private void autostartStateLab_MouseDown(object sender, MouseEventArgs e)
         {
-            autostartStateLab.ForeColor = Color.DarkGray;
+            // Решить, как реализовать логику моментального применения состояния автостарта
             if (autostartStateLab.Text == "On")
             {
                 autostartStateLab.Text = "OFF";
@@ -139,11 +142,6 @@ namespace AffairList
         }
 
         private void autostartStateLab_MouseLeave(object sender, EventArgs e)
-        {
-            autostartStateLab.ForeColor = Color.White;
-        }
-
-        private void autostartStateLab_MouseUp(object sender, MouseEventArgs e)
         {
             autostartStateLab.ForeColor = Color.White;
         }
@@ -188,39 +186,50 @@ namespace AffairList
             try
             {
                 string newX = Interaction.InputBox("Enter x coordinate," +
-                    $" max width is {_settings.width}",
+                    $" max width is {_settings.screenWidth}",
                     "InputWindow", "");
                 if (string.IsNullOrEmpty(newX)) return;
                 _settings.SetProfileX(int.Parse(newX));
-                if (_settings.GetProfileX() > _settings.width) throw new Exception();
+                if (_settings.GetProfileX() > _settings.screenWidth
+                    || _settings.GetProfileX() < 0) throw new ArgumentException();
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show("Error, x is out of the screen width");
+                _settings.SetProfileX(prevX);
+                return;
             }
             catch
             {
-                MessageBox.Show("Error");
+                MessageBox.Show("Error, wrong input format");
                 _settings.SetProfileX(prevX);
                 return;
             }
             try
             {
                 string newY = Interaction.InputBox("Enter y coordinate" +
-                    $" max height is {_settings.height}",
+                    $" max height is {_settings.screenHeight}",
                     "InputWindow", "");
                 if (string.IsNullOrEmpty(newY)) return;
                 _settings.SetProfileY(int.Parse(newY));
-                if (_settings.GetProfileY() > _settings.height) throw new Exception();
+                if (_settings.GetProfileY() > _settings.screenHeight
+                    || _settings.GetProfileY() < 0) throw new ArgumentException();
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show("Error, y is out of the screen height");
+                _settings.SetProfileY(prevY);
+                return;
             }
             catch
             {
-                MessageBox.Show("Error");
+                MessageBox.Show("Error, wrong input format");
                 _settings.SetProfileY(prevY);
                 return;
             }
             _isConfirmed = false;
             LocationLab.Text = _settings.GetProfileX() + ", " + _settings.GetProfileY();
         }
-
-        private void Settings_FormClosing(object sender, FormClosingEventArgs e)
-            => ParentElement.Exit();
 
         private void LocationLab_MouseEnter(object sender, EventArgs e)
         {
@@ -234,7 +243,6 @@ namespace AffairList
 
         private void AskToDeleteState_MouseDown(object sender, MouseEventArgs e)
         {
-            AskToDeleteState.ForeColor = Color.DarkGray;
             if (AskToDeleteState.Text == "On")
             {
                 AskToDeleteState.Text = "OFF";
@@ -258,11 +266,6 @@ namespace AffairList
             AskToDeleteState.ForeColor = Color.Gray;
         }
 
-        private void AskToDeleteState_MouseUp(object sender, MouseEventArgs e)
-        {
-            AskToDeleteState.ForeColor = Color.White;
-        }
-
         private void MinimizeButton_Click(object sender, EventArgs e)
             => ParentElement.MinimizeForm();
 
@@ -276,14 +279,8 @@ namespace AffairList
             MinimizeButton.ForeColor = Color.Black;
         }
 
-        private void ThemeBoxCB_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void NotificationState_MouseDown(object sender, MouseEventArgs e)
         {
-            NotificationState.ForeColor = Color.DarkGray;
             _settings.SetDoesNotificate(!_settings.DoesNotificate());
             NotificationState.Text = _settings.DoesNotificate() ? "On" : "OFF";
             _isConfirmed = false;
@@ -298,12 +295,6 @@ namespace AffairList
         {
             NotificationState.ForeColor = Color.White;
         }
-
-        private void NotificationState_MouseUp(object sender, MouseEventArgs e)
-        {
-            NotificationState.ForeColor = Color.Gray;
-        }
-
         private void DistanceToNotificate_MouseEnter(object sender, EventArgs e)
         {
             DistanceToNotificate.ForeColor = Color.Gray;
@@ -346,8 +337,13 @@ namespace AffairList
             }
             catch
             {
-                MessageBox.Show("Error");
+                MessageBox.Show("Error during file copying operation");
             }
+        }
+
+        private void ThemeBoxCB_SelectedValueChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

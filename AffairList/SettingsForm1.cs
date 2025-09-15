@@ -181,11 +181,11 @@ namespace AffairList
             try
             {
                 string newX = Interaction.InputBox("Enter x coordinate," +
-                    $" max width is {settings.width}",
+                    $" max width is {settings.screenWidth}",
                     "InputWindow", "");
                 if (string.IsNullOrEmpty(newX)) return;
                 settings.SetProfileX(int.Parse(newX));
-                if (settings.GetProfileX() > settings.width) throw new Exception();
+                if (settings.GetProfileX() > settings.screenWidth) throw new Exception();
             }
             catch
             {
@@ -196,11 +196,11 @@ namespace AffairList
             try
             {
                 string newY = Interaction.InputBox("Enter y coordinate" +
-                    $" max height is {settings.height}",
+                    $" max height is {settings.screenHeight}",
                     "InputWindow", "");
                 if (string.IsNullOrEmpty(newY)) return;
                 settings.SetProfileY(int.Parse(newY));
-                if (settings.GetProfileY() > settings.height) throw new Exception();
+                if (settings.GetProfileY() > settings.screenHeight) throw new Exception();
             }
             catch
             {

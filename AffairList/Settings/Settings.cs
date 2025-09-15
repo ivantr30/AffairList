@@ -13,8 +13,8 @@ namespace AffairList
         public readonly string listsDirectoryFullPath;
         public readonly string settingsFileFullPath;
 
-        public readonly int width;
-        public readonly int height;
+        public readonly int screenWidth;
+        public readonly int screenHeight;
 
         private SettingsModel _settings;
 
@@ -24,8 +24,8 @@ namespace AffairList
             _defaultListFileFullPath = $@"{listsDirectoryFullPath}list.txt";
             settingsFileFullPath = $@"{_programDirectoryFolder}settings.json";
 
-            width = Screen.PrimaryScreen!.WorkingArea.Width;
-            height = Screen.PrimaryScreen.WorkingArea.Height;
+            screenWidth = Screen.PrimaryScreen!.WorkingArea.Width;
+            screenHeight = Screen.PrimaryScreen.WorkingArea.Height;
 
             InitializeAsync();
         }
@@ -36,8 +36,6 @@ namespace AffairList
             if(!ListsDirectoryExists()) CreateListsDirectory();
             try
             {
-                //_settings = JsonConvert.DeserializeObject<SettingsModel>
-                //    (await System.IO.File.ReadAllTextAsync(settingsFileFullPath))!;
                 _settings = JsonConvert.DeserializeObject<SettingsModel>
                     (System.IO.File.ReadAllText(settingsFileFullPath))!;
             }
