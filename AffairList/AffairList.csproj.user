@@ -10,6 +10,9 @@
     <Compile Update="Controls\AffairsManager.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="Controls\HotkeySettingsManager.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Update="Controls\SettingsManager.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -20,9 +23,6 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="ChangeProfileForm1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="HotKeySettings1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\InputKeyForm.cs">

@@ -1,22 +1,41 @@
-﻿
-namespace AffairList
+﻿namespace AffairList
 {
-    public partial class HotKeySettings1 : BaseForm
+    public partial class HotkeySettingsManager : UserControl, IChildable, IKeyPreviewable
     {
         private bool _isConfirmed = true;
         private Keys _inputKey;
 
-        private Settings settings;
-        public HotKeySettings1(Settings settings) 
+        private Settings _settings;
+
+        public IParentable ParentElement { get; private set; }
+        public KeyEventHandler KeyDownHandlers { get; private set; }
+        public KeyPressEventHandler KeyPressHandlers { get; private set; }
+        public KeyEventHandler KeyUpHandlers { get; private set; }
+
+        private Action _hotkeysUpdater;
+
+        public HotkeySettingsManager(Settings settings)
         {
             InitializeComponent();
             LoadSettings();
-            this.settings = settings;
+            KeyDownHandlers += HotkeySettingsManager_KeyDown;
+            _settings = settings;
         }
         private void LoadSettings()
         {
-            CloseKeyType.Text = settings.GetCloseKey().ToString();
-            BackKeyType.Text = settings.GetReturnKey().ToString();
+            CloseKeyType.Text = _settings.GetCloseKey().ToString();
+            BackKeyType.Text = _settings.GetReturnKey().ToString();
+        }
+        private void HotkeySettingsManager_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == _settings.GetCloseKey())
+            {
+                ParentElement.Exit();
+            }
+            if (e.KeyCode == _settings.GetReturnKey())
+            {
+                ParentElement.Return();
+            }
         }
         private void BackButton_Click(object sender, EventArgs e)
         {
@@ -27,12 +46,12 @@ namespace AffairList
                 MessageBoxButtons.YesNo);
                 if (saveOrNot == DialogResult.No) return;
             }
-            Restart();
+            ParentElement.Return();
         }
 
-        private void CloseButton_Click(object sender, EventArgs e) => Exit();
+        private void CloseButton_Click(object sender, EventArgs e) => ParentElement.Exit();
 
-        private void MinimizeButton_Click(object sender, EventArgs e) => MinimizeForm();
+        private void MinimizeButton_Click(object sender, EventArgs e) => ParentElement.MinimizeForm();
 
         private async void ResetButton_Click(object sender, EventArgs e)
         {
@@ -41,19 +60,18 @@ namespace AffairList
                 MessageBoxButtons.YesNo);
             if (resetOrNot == DialogResult.No) return;
 
-            settings.SetCloseKey(Keys.F7);
-            settings.SetReturnKey(Keys.F6);
-            await settings.SaveSettingsAsync();
+            _settings.SetCloseKey(Keys.F7);
+            _settings.SetReturnKey(Keys.F6);
+            await _settings.SaveSettingsAsync();
 
             CloseKeyType.Text = "F7";
             BackKeyType.Text = "F6";
-
-            _isConfirmed = false;
         }
 
         private async void ConfirmButton_Click(object sender, EventArgs e)
         {
-            await settings.SaveSettingsAsync();
+            _hotkeysUpdater?.Invoke();
+            await _settings.SaveSettingsAsync();
             _isConfirmed = true;
         }
         private void CloseKeyType_DoubleClick(object sender, EventArgs e)
@@ -61,9 +79,20 @@ namespace AffairList
             _inputKey = SetKey();
             if (_inputKey == Keys.Escape) return;
 
-            settings.SetCloseKey(_inputKey);
-            CloseKeyType.Text = settings.GetCloseKey().ToString();
+            _hotkeysUpdater -= SetCloseKey;
+            _hotkeysUpdater += SetCloseKey;
+            CloseKeyType.Text = _inputKey.ToString();
             _isConfirmed = false;
+        }
+
+        private void SetCloseKey()
+        {
+            _settings.SetCloseKey(_inputKey);
+        }
+
+        private void SetReturnKey()
+        {
+            _settings.SetCloseKey(_inputKey);
         }
 
         private void BackKeyType_DoubleClick(object sender, EventArgs e)
@@ -71,15 +100,17 @@ namespace AffairList
             _inputKey = SetKey();
             if (_inputKey == Keys.Escape) return;
 
-            settings.SetReturnKey(_inputKey);
-            BackKeyType.Text = settings.GetReturnKey().ToString();
+            _hotkeysUpdater -= SetReturnKey;
+            _hotkeysUpdater += SetReturnKey;
+            BackKeyType.Text = _inputKey.ToString();
             _isConfirmed = false;
         }
         private Keys SetKey()
         {
             Keys key = Keys.None;
             InputKeyForm keyForm = new InputKeyForm();
-            keyForm.OnKeyPressed += delegate {
+            keyForm.OnKeyPressed += delegate
+            {
                 key = keyForm.Key;
             };
             keyForm.ShowDialog();
@@ -140,9 +171,13 @@ namespace AffairList
             MinimizeButton.ForeColor = Color.Black;
         }
 
-        private void NameBackground_MouseMove(object sender, MouseEventArgs e) => MoveForm(e);
-        private void NameBackground_MouseDown(object sender, MouseEventArgs e) => SetLastPoint(e);
-        private void HotKeySettingsLab_MouseMove(object sender, MouseEventArgs e) => MoveForm(e);
-        private void HotKeySettingsLab_MouseDown(object sender, MouseEventArgs e) => SetLastPoint(e);
+        private void NameBackground_MouseMove(object sender, MouseEventArgs e) 
+            => ParentElement.MoveForm(e);
+        private void NameBackground_MouseDown(object sender, MouseEventArgs e)
+            => ParentElement.SetLastPoint(e);
+        private void HotKeySettingsLab_MouseMove(object sender, MouseEventArgs e)
+            => ParentElement.MoveForm(e);
+        private void HotKeySettingsLab_MouseDown(object sender, MouseEventArgs e)
+            => ParentElement.SetLastPoint(e);
     }
 }
