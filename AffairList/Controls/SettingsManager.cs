@@ -7,6 +7,8 @@ namespace AffairList
 
         private Settings _settings;
 
+        private Action settingsUpdater;
+
         public IParentable ParentElement { get; private set; }
         public KeyEventHandler KeyDownHandlers { get; private set; }
         public KeyPressEventHandler KeyPressHandlers { get; private set; }
@@ -122,21 +124,23 @@ namespace AffairList
         private async void ConfirmButton_Click(object sender, EventArgs e)
         {
             _isConfirmed = true;
+            settingsUpdater?.Invoke();
             await _settings.SaveSettingsAsync();
         }
 
         private void autostartStateLab_MouseDown(object sender, MouseEventArgs e)
         {
-            // Решить, как реализовать логику моментального применения состояния автостарта
             if (autostartStateLab.Text == "On")
             {
                 autostartStateLab.Text = "OFF";
-                _settings.SetAutostart(false);
+                settingsUpdater += () => _settings.SetAutostart(false);
+                settingsUpdater += _settings.DisableAutoStart;
             }
             else
             {
                 autostartStateLab.Text = "On";
-                _settings.SetAutostart(true);
+                settingsUpdater += () => _settings.SetAutostart(true);
+                settingsUpdater += _settings.EnableAutoStart;
             }
             _isConfirmed = false;
         }
@@ -156,7 +160,7 @@ namespace AffairList
             Color newColor = ListColorChanger();
             if (newColor == Color.Empty) return;
             ListTextColorLab.ForeColor = newColor;
-            _settings.SetTextColor(newColor);
+            settingsUpdater += () => _settings.SetTextColor(newColor);
         }
 
         private void PickBgColorButton_Click(object sender, EventArgs e)
@@ -164,7 +168,7 @@ namespace AffairList
             Color newColor = ListColorChanger();
             if (newColor == Color.Empty) return;
             ListBgTextColorLab.ForeColor = newColor;
-            _settings.SetBgColor(newColor);
+            settingsUpdater += () => _settings.SetBgColor(newColor);
         }
         private Color ListColorChanger()
         {
@@ -182,53 +186,50 @@ namespace AffairList
 
         private void LocationLab_DoubleClick(object sender, EventArgs e)
         {
-            int prevX = _settings.GetProfileX(), prevY = _settings.GetProfileY();
+            int newX, newY;
             try
             {
-                string newX = Interaction.InputBox("Enter x coordinate," +
-                    $" max width is {_settings.screenWidth}",
-                    "InputWindow", "");
-                if (string.IsNullOrEmpty(newX)) return;
-                _settings.SetProfileX(int.Parse(newX));
-                if (_settings.GetProfileX() > _settings.screenWidth
-                    || _settings.GetProfileX() < 0) throw new ArgumentException();
+                newX = int.Parse(Interaction.InputBox(
+                    $"Enter x coordinate, max width is {_settings.screenWidth}",
+                    "InputWindow", ""));
+
+                if (newX > _settings.screenWidth || newX < 0) throw new ArgumentException();
+
+                settingsUpdater += () => _settings.SetProfileX(newX);
             }
             catch (ArgumentException ex)
             {
                 MessageBox.Show("Error, x is out of the screen width");
-                _settings.SetProfileX(prevX);
                 return;
             }
             catch
             {
                 MessageBox.Show("Error, wrong input format");
-                _settings.SetProfileX(prevX);
                 return;
             }
             try
             {
-                string newY = Interaction.InputBox("Enter y coordinate" +
-                    $" max height is {_settings.screenHeight}",
-                    "InputWindow", "");
-                if (string.IsNullOrEmpty(newY)) return;
-                _settings.SetProfileY(int.Parse(newY));
-                if (_settings.GetProfileY() > _settings.screenHeight
-                    || _settings.GetProfileY() < 0) throw new ArgumentException();
+                newY = int.Parse(Interaction.InputBox(
+                    $"Enter y coordinate max height is {_settings.screenHeight}",
+                    "InputWindow", ""));
+
+                if (newY > _settings.screenHeight
+                    || newY < 0) throw new ArgumentException();
+
+                settingsUpdater += () => _settings.SetProfileY(newY);
             }
             catch (ArgumentException ex)
             {
                 MessageBox.Show("Error, y is out of the screen height");
-                _settings.SetProfileY(prevY);
                 return;
             }
             catch
             {
                 MessageBox.Show("Error, wrong input format");
-                _settings.SetProfileY(prevY);
                 return;
             }
             _isConfirmed = false;
-            LocationLab.Text = _settings.GetProfileX() + ", " + _settings.GetProfileY();
+            LocationLab.Text = newX + ", " + newY;
         }
 
         private void LocationLab_MouseEnter(object sender, EventArgs e)
@@ -246,12 +247,12 @@ namespace AffairList
             if (AskToDeleteState.Text == "On")
             {
                 AskToDeleteState.Text = "OFF";
-                _settings.SetAskToDelete(false);
+                settingsUpdater += () => _settings.SetAskToDelete(false);
             }
             else
             {
                 AskToDeleteState.Text = "On";
-                _settings.SetAskToDelete(true);
+                settingsUpdater += () => _settings.SetAskToDelete(true);
             }
             _isConfirmed = false;
         }
@@ -281,8 +282,8 @@ namespace AffairList
 
         private void NotificationState_MouseDown(object sender, MouseEventArgs e)
         {
-            _settings.SetDoesNotificate(!_settings.DoesNotificate());
-            NotificationState.Text = _settings.DoesNotificate() ? "On" : "OFF";
+            settingsUpdater += () => _settings.SetDoesNotificate(!_settings.DoesNotificate());
+            NotificationState.Text = !_settings.DoesNotificate() ? "On" : "OFF";
             _isConfirmed = false;
         }
 
@@ -309,15 +310,12 @@ namespace AffairList
         {
             try
             {
-                string distance = Interaction.InputBox(
+                uint distanceToNotificate = uint.Parse(Interaction.InputBox(
                     "Enter how many days far from the deadline you want to be notified",
                     "Day distance to notificate input box",
-                    _settings.GetNotificationDayDistance().ToString());
+                    _settings.GetNotificationDayDistance().ToString()));
 
-                if (string.IsNullOrEmpty(distance)) return;
-
-                uint distanceToNotificate = uint.Parse(distance);
-                _settings.SetNotificationDayDistance(distanceToNotificate);
+                settingsUpdater += () => _settings.SetNotificationDayDistance(distanceToNotificate);
                 DistanceToNotificate.Text = distanceToNotificate.ToString();
                 _isConfirmed = false;
             }

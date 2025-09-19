@@ -68,7 +68,7 @@ namespace AffairList
             SetCurrentProfile(Directory.EnumerateFiles(listsDirectoryFullPath).FirstOrDefault()!);
             await SaveSettingsAsync();
         }
-        private void EnableAutoStart()
+        public void EnableAutoStart()
         {
             string shortcutPath = GetAutostartShortcut();
 
@@ -83,7 +83,7 @@ namespace AffairList
                                                               
             shortcut.Save();
         }
-        private void DisableAutoStart()
+        public void DisableAutoStart()
         {
             string shortcutPath = GetAutostartShortcut();
             if (System.IO.File.Exists(shortcutPath))

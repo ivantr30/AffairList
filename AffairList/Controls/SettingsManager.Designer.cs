@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsManager));
             ExportButton = new Button();
             DistanceToNotificate = new Label();
             DistanceToNotificateLab = new Label();
@@ -61,157 +62,93 @@
             // 
             // ExportButton
             // 
+            resources.ApplyResources(ExportButton, "ExportButton");
             ExportButton.BackColor = Color.FromArgb(173, 102, 213);
-            ExportButton.FlatStyle = FlatStyle.Flat;
-            ExportButton.Location = new Point(12, 472);
             ExportButton.Name = "ExportButton";
-            ExportButton.Size = new Size(75, 27);
-            ExportButton.TabIndex = 29;
-            ExportButton.Text = "Export";
             ExportButton.UseVisualStyleBackColor = false;
             ExportButton.Click += ExportButton_Click;
             // 
             // DistanceToNotificate
             // 
-            DistanceToNotificate.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            DistanceToNotificate.AutoSize = true;
-            DistanceToNotificate.Font = new Font("Unispace", 13F);
+            resources.ApplyResources(DistanceToNotificate, "DistanceToNotificate");
             DistanceToNotificate.ForeColor = Color.White;
-            DistanceToNotificate.Location = new Point(386, 355);
             DistanceToNotificate.Name = "DistanceToNotificate";
-            DistanceToNotificate.Size = new Size(21, 21);
-            DistanceToNotificate.TabIndex = 28;
-            DistanceToNotificate.Text = "0";
-            DistanceToNotificate.TextAlign = ContentAlignment.MiddleRight;
             DistanceToNotificate.DoubleClick += DistanceToNotificate_DoubleClick;
             DistanceToNotificate.MouseEnter += DistanceToNotificate_MouseEnter;
             DistanceToNotificate.MouseLeave += DistanceToNotificate_MouseLeave;
             // 
             // DistanceToNotificateLab
             // 
-            DistanceToNotificateLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            DistanceToNotificateLab.AutoSize = true;
-            DistanceToNotificateLab.Font = new Font("Unispace", 13F);
+            resources.ApplyResources(DistanceToNotificateLab, "DistanceToNotificateLab");
             DistanceToNotificateLab.ForeColor = Color.White;
-            DistanceToNotificateLab.Location = new Point(12, 355);
             DistanceToNotificateLab.Name = "DistanceToNotificateLab";
-            DistanceToNotificateLab.Size = new Size(252, 21);
-            DistanceToNotificateLab.TabIndex = 27;
-            DistanceToNotificateLab.Text = "Distance to notificate";
-            DistanceToNotificateLab.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // NotificationState
             // 
-            NotificationState.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            NotificationState.AutoSize = true;
-            NotificationState.Font = new Font("Unispace", 13F);
+            resources.ApplyResources(NotificationState, "NotificationState");
             NotificationState.ForeColor = Color.White;
-            NotificationState.Location = new Point(375, 324);
             NotificationState.Name = "NotificationState";
-            NotificationState.Size = new Size(32, 21);
-            NotificationState.TabIndex = 26;
-            NotificationState.Text = "On";
-            NotificationState.TextAlign = ContentAlignment.MiddleCenter;
             NotificationState.MouseDown += NotificationState_MouseDown;
             NotificationState.MouseEnter += NotificationState_MouseEnter;
             NotificationState.MouseLeave += NotificationState_MouseLeave;
             // 
             // NotificationStateLab
             // 
-            NotificationStateLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            NotificationStateLab.AutoSize = true;
-            NotificationStateLab.Font = new Font("Unispace", 13F);
+            resources.ApplyResources(NotificationStateLab, "NotificationStateLab");
             NotificationStateLab.ForeColor = Color.White;
-            NotificationStateLab.Location = new Point(12, 324);
             NotificationStateLab.Name = "NotificationStateLab";
-            NotificationStateLab.Size = new Size(153, 21);
-            NotificationStateLab.TabIndex = 25;
-            NotificationStateLab.Text = "Notificate me";
-            NotificationStateLab.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // AskToDeleteState
             // 
-            AskToDeleteState.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            AskToDeleteState.AutoSize = true;
-            AskToDeleteState.Font = new Font("Unispace", 13F);
+            resources.ApplyResources(AskToDeleteState, "AskToDeleteState");
             AskToDeleteState.ForeColor = Color.White;
-            AskToDeleteState.Location = new Point(375, 293);
             AskToDeleteState.Name = "AskToDeleteState";
-            AskToDeleteState.Size = new Size(32, 21);
-            AskToDeleteState.TabIndex = 24;
-            AskToDeleteState.Text = "On";
-            AskToDeleteState.TextAlign = ContentAlignment.MiddleCenter;
             AskToDeleteState.MouseDown += AskToDeleteState_MouseDown;
             AskToDeleteState.MouseEnter += AskToDeleteState_MouseEnter;
             AskToDeleteState.MouseLeave += AskToDeleteState_MouseLeave;
             // 
             // AskToDelete
             // 
-            AskToDelete.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            AskToDelete.AutoSize = true;
-            AskToDelete.Font = new Font("Unispace", 13F);
+            resources.ApplyResources(AskToDelete, "AskToDelete");
             AskToDelete.ForeColor = Color.White;
-            AskToDelete.Location = new Point(12, 293);
             AskToDelete.Name = "AskToDelete";
-            AskToDelete.Size = new Size(263, 21);
-            AskToDelete.TabIndex = 23;
-            AskToDelete.Text = "Ask to delete an affair";
-            AskToDelete.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // ThemeBoxCB
             // 
+            resources.ApplyResources(ThemeBoxCB, "ThemeBoxCB");
             ThemeBoxCB.FormattingEnabled = true;
-            ThemeBoxCB.Location = new Point(286, 386);
             ThemeBoxCB.Name = "ThemeBoxCB";
-            ThemeBoxCB.Size = new Size(121, 25);
-            ThemeBoxCB.TabIndex = 22;
             ThemeBoxCB.SelectedValueChanged += ThemeBoxCB_SelectedValueChanged;
             // 
             // CurrentThemeLab
             // 
-            CurrentThemeLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            CurrentThemeLab.AutoSize = true;
-            CurrentThemeLab.Font = new Font("Unispace", 13F);
+            resources.ApplyResources(CurrentThemeLab, "CurrentThemeLab");
             CurrentThemeLab.ForeColor = Color.White;
-            CurrentThemeLab.Location = new Point(12, 386);
             CurrentThemeLab.Name = "CurrentThemeLab";
-            CurrentThemeLab.Size = new Size(153, 21);
-            CurrentThemeLab.TabIndex = 21;
-            CurrentThemeLab.Text = "Current theme";
-            CurrentThemeLab.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // PickBgColorButton
             // 
+            resources.ApplyResources(PickBgColorButton, "PickBgColorButton");
             PickBgColorButton.BackColor = Color.FromArgb(173, 102, 213);
             PickBgColorButton.FlatAppearance.BorderSize = 0;
-            PickBgColorButton.FlatStyle = FlatStyle.Flat;
-            PickBgColorButton.Font = new Font("Tahoma", 10F);
             PickBgColorButton.ForeColor = Color.White;
-            PickBgColorButton.Location = new Point(332, 222);
             PickBgColorButton.Name = "PickBgColorButton";
-            PickBgColorButton.Size = new Size(75, 30);
-            PickBgColorButton.TabIndex = 18;
-            PickBgColorButton.Text = "Pick color";
             PickBgColorButton.UseVisualStyleBackColor = false;
             PickBgColorButton.Click += PickBgColorButton_Click;
             // 
             // PickTextColorButton
             // 
+            resources.ApplyResources(PickTextColorButton, "PickTextColorButton");
             PickTextColorButton.BackColor = Color.FromArgb(173, 102, 213);
             PickTextColorButton.FlatAppearance.BorderSize = 0;
-            PickTextColorButton.FlatStyle = FlatStyle.Flat;
-            PickTextColorButton.Font = new Font("Tahoma", 10F);
             PickTextColorButton.ForeColor = Color.White;
-            PickTextColorButton.Location = new Point(332, 187);
             PickTextColorButton.Name = "PickTextColorButton";
-            PickTextColorButton.Size = new Size(75, 30);
-            PickTextColorButton.TabIndex = 17;
-            PickTextColorButton.Text = "Pick color";
             PickTextColorButton.UseVisualStyleBackColor = false;
             PickTextColorButton.Click += PickTextColorButton_Click;
             // 
             // panel1
             // 
+            resources.ApplyResources(panel1, "panel1");
             panel1.BackColor = Color.FromArgb(72, 3, 111);
             panel1.Controls.Add(ExportButton);
             panel1.Controls.Add(DistanceToNotificate);
@@ -234,193 +171,118 @@
             panel1.Controls.Add(ResetButton);
             panel1.Controls.Add(BackButton);
             panel1.Controls.Add(NameBackground);
-            panel1.Dock = DockStyle.Fill;
-            panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(440, 511);
-            panel1.TabIndex = 2;
             // 
             // autostartStateLab
             // 
-            autostartStateLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            autostartStateLab.AutoSize = true;
-            autostartStateLab.Font = new Font("Unispace", 13F);
+            resources.ApplyResources(autostartStateLab, "autostartStateLab");
             autostartStateLab.ForeColor = Color.White;
-            autostartStateLab.Location = new Point(375, 262);
             autostartStateLab.Name = "autostartStateLab";
-            autostartStateLab.Size = new Size(32, 21);
-            autostartStateLab.TabIndex = 16;
-            autostartStateLab.Text = "On";
-            autostartStateLab.TextAlign = ContentAlignment.MiddleCenter;
             autostartStateLab.MouseDown += autostartStateLab_MouseDown;
             autostartStateLab.MouseEnter += autostartStateLab_MouseEnter;
             autostartStateLab.MouseLeave += autostartStateLab_MouseLeave;
             // 
             // AutostartLab
             // 
-            AutostartLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            AutostartLab.AutoSize = true;
-            AutostartLab.Font = new Font("Unispace", 13F);
+            resources.ApplyResources(AutostartLab, "AutostartLab");
             AutostartLab.ForeColor = Color.White;
-            AutostartLab.Location = new Point(12, 262);
             AutostartLab.Name = "AutostartLab";
-            AutostartLab.Size = new Size(175, 21);
-            AutostartLab.TabIndex = 14;
-            AutostartLab.Text = "Autostart state";
-            AutostartLab.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // ListBgTextColorLab
             // 
-            ListBgTextColorLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            ListBgTextColorLab.AutoSize = true;
-            ListBgTextColorLab.Font = new Font("Unispace", 13F);
+            resources.ApplyResources(ListBgTextColorLab, "ListBgTextColorLab");
             ListBgTextColorLab.ForeColor = Color.White;
-            ListBgTextColorLab.Location = new Point(12, 224);
             ListBgTextColorLab.Name = "ListBgTextColorLab";
-            ListBgTextColorLab.Size = new Size(241, 21);
-            ListBgTextColorLab.TabIndex = 11;
-            ListBgTextColorLab.Text = "List background color";
-            ListBgTextColorLab.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // ListTextColorLab
             // 
-            ListTextColorLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            ListTextColorLab.AutoSize = true;
-            ListTextColorLab.Font = new Font("Unispace", 13F);
+            resources.ApplyResources(ListTextColorLab, "ListTextColorLab");
             ListTextColorLab.ForeColor = Color.White;
-            ListTextColorLab.Location = new Point(12, 189);
             ListTextColorLab.Name = "ListTextColorLab";
-            ListTextColorLab.Size = new Size(175, 21);
-            ListTextColorLab.TabIndex = 10;
-            ListTextColorLab.Text = "List text color";
-            ListTextColorLab.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // LocationLab
             // 
-            LocationLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            LocationLab.Font = new Font("Unispace", 13F);
+            resources.ApplyResources(LocationLab, "LocationLab");
             LocationLab.ForeColor = Color.White;
-            LocationLab.Location = new Point(286, 154);
             LocationLab.Name = "LocationLab";
-            LocationLab.RightToLeft = RightToLeft.No;
-            LocationLab.Size = new Size(121, 21);
-            LocationLab.TabIndex = 9;
-            LocationLab.Text = "0, 0";
-            LocationLab.TextAlign = ContentAlignment.MiddleRight;
             LocationLab.DoubleClick += LocationLab_DoubleClick;
             LocationLab.MouseEnter += LocationLab_MouseEnter;
             LocationLab.MouseLeave += LocationLab_MouseLeave;
             // 
             // ListLocationLab
             // 
-            ListLocationLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            ListLocationLab.AutoSize = true;
-            ListLocationLab.Font = new Font("Unispace", 13F);
+            resources.ApplyResources(ListLocationLab, "ListLocationLab");
             ListLocationLab.ForeColor = Color.White;
-            ListLocationLab.Location = new Point(12, 154);
             ListLocationLab.Name = "ListLocationLab";
-            ListLocationLab.Size = new Size(197, 21);
-            ListLocationLab.TabIndex = 3;
-            ListLocationLab.Text = "List x,y location";
-            ListLocationLab.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // ConfirmButton
             // 
+            resources.ApplyResources(ConfirmButton, "ConfirmButton");
             ConfirmButton.BackColor = Color.FromArgb(173, 102, 213);
-            ConfirmButton.FlatStyle = FlatStyle.Flat;
-            ConfirmButton.Location = new Point(191, 472);
             ConfirmButton.Name = "ConfirmButton";
-            ConfirmButton.Size = new Size(75, 27);
-            ConfirmButton.TabIndex = 8;
-            ConfirmButton.Text = "Confirm";
             ConfirmButton.UseVisualStyleBackColor = false;
             ConfirmButton.Click += ConfirmButton_Click;
             // 
             // ResetButton
             // 
+            resources.ApplyResources(ResetButton, "ResetButton");
             ResetButton.BackColor = Color.FromArgb(173, 102, 213);
-            ResetButton.FlatStyle = FlatStyle.Flat;
-            ResetButton.Location = new Point(272, 472);
             ResetButton.Name = "ResetButton";
-            ResetButton.Size = new Size(75, 27);
-            ResetButton.TabIndex = 7;
-            ResetButton.Text = "Reset";
             ResetButton.UseVisualStyleBackColor = false;
             ResetButton.Click += ResetButton_Click;
             // 
             // BackButton
             // 
+            resources.ApplyResources(BackButton, "BackButton");
             BackButton.BackColor = Color.FromArgb(173, 102, 213);
-            BackButton.FlatStyle = FlatStyle.Flat;
-            BackButton.Location = new Point(353, 472);
             BackButton.Name = "BackButton";
-            BackButton.Size = new Size(75, 27);
-            BackButton.TabIndex = 6;
-            BackButton.Text = "Back";
             BackButton.UseVisualStyleBackColor = false;
             BackButton.Click += BackButton_Click;
             // 
             // NameBackground
             // 
+            resources.ApplyResources(NameBackground, "NameBackground");
             NameBackground.BackColor = Color.FromArgb(159, 62, 213);
             NameBackground.Controls.Add(MinimizeButton);
             NameBackground.Controls.Add(CloseButton);
             NameBackground.Controls.Add(SettingsLab);
-            NameBackground.Dock = DockStyle.Top;
-            NameBackground.Location = new Point(0, 0);
             NameBackground.Name = "NameBackground";
-            NameBackground.Size = new Size(440, 142);
-            NameBackground.TabIndex = 0;
             NameBackground.MouseDown += NameBackground_MouseDown;
             NameBackground.MouseMove += NameBackground_MouseMove;
             // 
             // MinimizeButton
             // 
-            MinimizeButton.AutoSize = true;
-            MinimizeButton.Font = new Font("Unispace", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            MinimizeButton.Location = new Point(376, 0);
+            resources.ApplyResources(MinimizeButton, "MinimizeButton");
             MinimizeButton.Name = "MinimizeButton";
-            MinimizeButton.Size = new Size(31, 33);
-            MinimizeButton.TabIndex = 25;
-            MinimizeButton.Text = "-";
             MinimizeButton.Click += MinimizeButton_Click;
             MinimizeButton.MouseEnter += MinimizeButton_MouseEnter;
             MinimizeButton.MouseLeave += MinimizeButton_MouseLeave;
             // 
             // CloseButton
             // 
-            CloseButton.AutoSize = true;
-            CloseButton.Font = new Font("Unispace", 20F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            CloseButton.Location = new Point(409, 0);
+            resources.ApplyResources(CloseButton, "CloseButton");
             CloseButton.Name = "CloseButton";
-            CloseButton.Size = new Size(31, 33);
-            CloseButton.TabIndex = 2;
-            CloseButton.Text = "X";
             CloseButton.Click += CloseButton_Click;
             CloseButton.MouseEnter += CloseButton_MouseEnter;
             CloseButton.MouseLeave += CloseButton_MouseLeave;
             // 
             // SettingsLab
             // 
-            SettingsLab.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            SettingsLab.AutoSize = true;
-            SettingsLab.Font = new Font("Unispace", 30F);
-            SettingsLab.Location = new Point(118, 52);
+            resources.ApplyResources(SettingsLab, "SettingsLab");
             SettingsLab.Name = "SettingsLab";
-            SettingsLab.Size = new Size(212, 48);
-            SettingsLab.TabIndex = 1;
-            SettingsLab.Text = "Settings";
-            SettingsLab.TextAlign = ContentAlignment.MiddleCenter;
             SettingsLab.MouseDown += SettingsLab_MouseDown;
             SettingsLab.MouseMove += SettingsLab_MouseMove;
             // 
+            // ExportSettingsFileDialog
+            // 
+            resources.ApplyResources(ExportSettingsFileDialog, "ExportSettingsFileDialog");
+            // 
             // SettingsManager
             // 
-            AutoScaleDimensions = new SizeF(7F, 17F);
+            resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(panel1);
             Name = "SettingsManager";
-            Size = new Size(440, 511);
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             NameBackground.ResumeLayout(false);
