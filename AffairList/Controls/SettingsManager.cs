@@ -327,10 +327,21 @@ namespace AffairList
 
         private void ExportButton_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("Select folder to export config into");
             ExportSettingsFileDialog.ShowDialog();
+            string destSettingsFilePath = ExportSettingsFileDialog.SelectedPath + "\\settings.json";
             try
             {
-                File.Copy("settings.json", ExportSettingsFileDialog.SelectedPath + "\\settings.json");
+                if (File.Exists(destSettingsFilePath))
+                {
+                    DialogResult rewriteOrCancel = MessageBox
+                        .Show("File with this name already exists there, rewrite it?"
+                        , "Rewrite or cancel"
+                        , MessageBoxButtons.YesNo);
+                    if (rewriteOrCancel == DialogResult.No) return;
+                    File.Delete(destSettingsFilePath);
+                }
+                File.Copy(_settings.settingsFileFullPath, destSettingsFilePath);
                 MessageBox.Show("Settings config was exported succesfully");
             }
             catch

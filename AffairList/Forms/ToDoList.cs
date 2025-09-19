@@ -7,7 +7,7 @@ namespace AffairList
     {
         private IKeyboardMouseEvents _globalHook;
 
-        public bool canReplace { get; set; } = false;
+        public bool canReplace { get; set; }
 
         private string _priorityTag = "<priority>";
         private string _deadlineTag = "<deadline>";
@@ -67,7 +67,7 @@ namespace AffairList
                     {
                         currentAffair = currentAffair.Remove(0, _deadlineTag.Length);
                     }
-                    affairsShower.AppendLine(affair.Trim());
+                    affairsShower.AppendLine(currentAffair.Trim());
                 }
                 Affairs.Text += affairsShower.ToString() + "Это весь список ваших дел";
             }
@@ -108,7 +108,7 @@ namespace AffairList
         }
         private void OnListMouseMove(MouseEventArgs e)
         {
-            if (canReplace) ParentElement.MoveForm(e);
+            if (canReplace) ParentElement.MoveChildForm(e);
         }
         private async void OnListMouseUpAsync(MouseEventArgs e)
         {
@@ -120,6 +120,10 @@ namespace AffairList
                 await _settings.SaveSettingsAsync();
                 Close();
             }
+        }
+        public Label GetAffairs()
+        {
+            return Affairs;
         }
     }
 }

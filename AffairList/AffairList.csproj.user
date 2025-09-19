@@ -19,9 +19,6 @@
     <Compile Update="Forms\InputDeadlineForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Legacy\ChangeListForm1.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="ChangeProfileForm1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -35,9 +32,6 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Forms\ProfilesExportPicker.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="SettingsForm1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Forms\ToDoList.cs">

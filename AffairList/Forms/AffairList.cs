@@ -98,6 +98,14 @@
                 Top += e.Y - LastPoint.Y;
             }
         }
+        public void MoveChildForm(MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                childForm.Left += e.X - LastPoint.X;
+                childForm.Top += e.Y - LastPoint.Y;
+            }
+        }
 
         private void AffairList_FormClosing(object sender, FormClosingEventArgs e)
             => Exit();

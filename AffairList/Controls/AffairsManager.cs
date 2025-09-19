@@ -204,7 +204,7 @@ namespace AffairList
         {
             await _settings.SelectFirstProfileAsync();
             if (string.IsNullOrEmpty(_settings.GetCurrentProfile()))
-                _settings.CreateDefaultListAsync();
+                await _settings.CreateDefaultListAsync();
         }
         private async void AddAffairButton_Click(object sender, EventArgs e) => await AddAffairAsync();
         private async void DeleteButton_Click(object sender, EventArgs e) => await DeleteAffairAsync();

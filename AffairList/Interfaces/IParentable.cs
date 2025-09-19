@@ -9,5 +9,6 @@
         void MinimizeForm();
         void SetLastPoint(MouseEventArgs e);
         void MoveForm(MouseEventArgs e);
+        void MoveChildForm(MouseEventArgs e);
     }
 }

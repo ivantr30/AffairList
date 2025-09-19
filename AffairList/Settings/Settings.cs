@@ -126,7 +126,7 @@ namespace AffairList
         {
             Directory.CreateDirectory(listsDirectoryFullPath);
         }
-        public async void CreateDefaultListAsync()
+        public async Task CreateDefaultListAsync()
         {
             using (System.IO.File.Create(_defaultListFileFullPath)) { }
             SetCurrentProfile(_defaultListFileFullPath);

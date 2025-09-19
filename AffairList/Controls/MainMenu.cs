@@ -63,8 +63,8 @@
                 MessageBox.Show("Error, there is no list available");
                 return;
             }
-            ToDoList list = new ToDoList(_settings, ParentElement)
-            { BackColor = Color.White, canReplace = true };
+            ToDoList list = new ToDoList(_settings, ParentElement) { canReplace = true };
+            list.GetAffairs().BackColor = Color.White;
             ParentElement.OpenForm(list);
         }
 
@@ -89,7 +89,7 @@
             }
         }
 
-        private void ChangeListButton_Click(object sender, EventArgs e)
+        private async void ChangeListButton_Click(object sender, EventArgs e)
         {
             if (!_settings.ListFilesAvailable())
             {
@@ -99,7 +99,7 @@
                     MessageBoxButtons.YesNo);
                 if (createDefault == DialogResult.No) return;
 
-                _settings.CreateDefaultListAsync();
+                await _settings.CreateDefaultListAsync();
             }
             ParentElement.SetControl(new AffairsManager(_settings, ParentElement));
         }
@@ -109,7 +109,7 @@
         }
         private void ChangeProfileButton_Click(object sender, EventArgs e)
         {
-            ParentElement.SetControl(new AffairsManager(_settings, ParentElement));
+            ParentElement.SetControl(new ChangeProfileForm1(_settings));
         }
         private void HotKeyButton_Click(object sender, EventArgs e)
         {
