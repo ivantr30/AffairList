@@ -133,6 +133,8 @@ namespace AffairList
 
                 await _settings.WriteBaseSettingsAsync();
 
+                _isConfirmed = true;
+
                 LoadSettings();
             }
         }

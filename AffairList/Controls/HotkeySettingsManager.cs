@@ -1,9 +1,10 @@
 ﻿namespace AffairList
 {
-    public partial class HotkeySettingsManager : UserControl, IChildable, IKeyPreviewable
+    public partial class HotKeySettingsManager : UserControl, IChildable, IKeyPreviewable
     {
         private bool _isConfirmed = true;
-        private Keys _inputKey;
+        private Keys _newCloseKey;
+        private Keys _newReturnKey;
 
         private Settings _settings;
 
@@ -14,19 +15,20 @@
 
         private Action _hotkeysUpdater;
 
-        public HotkeySettingsManager(Settings settings)
+        public HotKeySettingsManager(Settings settings, IParentable parent)
         {
             InitializeComponent();
-            LoadSettings();
-            KeyDownHandlers += HotkeySettingsManager_KeyDown;
+            KeyDownHandlers += HotKeySettingsManager_KeyDown;
             _settings = settings;
+            ParentElement = parent;
+            LoadSettings();
         }
         private void LoadSettings()
         {
             CloseKeyType.Text = _settings.GetCloseKey().ToString();
             BackKeyType.Text = _settings.GetReturnKey().ToString();
         }
-        private void HotkeySettingsManager_KeyDown(object sender, KeyEventArgs e)
+        private void HotKeySettingsManager_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == _settings.GetCloseKey())
             {
@@ -66,43 +68,45 @@
 
             CloseKeyType.Text = "F7";
             BackKeyType.Text = "F6";
+            _isConfirmed = true;
         }
 
         private async void ConfirmButton_Click(object sender, EventArgs e)
         {
+            _hotkeysUpdater?.GetInvocationList();
             _hotkeysUpdater?.Invoke();
             await _settings.SaveSettingsAsync();
             _isConfirmed = true;
         }
         private void CloseKeyType_DoubleClick(object sender, EventArgs e)
         {
-            _inputKey = SetKey();
-            if (_inputKey == Keys.Escape) return;
+            _newCloseKey = SetKey();
+            if (_newCloseKey == Keys.Escape) return;
 
             _hotkeysUpdater -= SetCloseKey;
             _hotkeysUpdater += SetCloseKey;
-            CloseKeyType.Text = _inputKey.ToString();
+            CloseKeyType.Text = _newCloseKey.ToString();
             _isConfirmed = false;
         }
 
         private void SetCloseKey()
         {
-            _settings.SetCloseKey(_inputKey);
+            _settings.SetCloseKey(_newCloseKey);
         }
 
         private void SetReturnKey()
         {
-            _settings.SetCloseKey(_inputKey);
+            _settings.SetReturnKey(_newReturnKey);
         }
 
         private void BackKeyType_DoubleClick(object sender, EventArgs e)
         {
-            _inputKey = SetKey();
-            if (_inputKey == Keys.Escape) return;
+            _newReturnKey = SetKey();
+            if (_newReturnKey == Keys.Escape) return;
 
             _hotkeysUpdater -= SetReturnKey;
             _hotkeysUpdater += SetReturnKey;
-            BackKeyType.Text = _inputKey.ToString();
+            BackKeyType.Text = _newReturnKey.ToString();
             _isConfirmed = false;
         }
         private Keys SetKey()
@@ -122,19 +126,9 @@
             CloseKeyType.ForeColor = Color.Gray;
         }
 
-        private void CloseKeyType_MouseUp(object sender, MouseEventArgs e)
-        {
-            CloseKeyType.ForeColor = Color.White;
-        }
-
         private void BackKeyType_MouseEnter(object sender, EventArgs e)
         {
             BackKeyType.ForeColor = Color.Gray;
-        }
-
-        private void BackKeyType_MouseUp(object sender, MouseEventArgs e)
-        {
-            BackKeyType.ForeColor = Color.White;
         }
 
         private void BackKeyType_MouseLeave(object sender, EventArgs e)
@@ -166,12 +160,8 @@
         {
             MinimizeButton.ForeColor = Color.Black;
         }
-        private void MinimizeButton_MouseUp(object sender, MouseEventArgs e)
-        {
-            MinimizeButton.ForeColor = Color.Black;
-        }
 
-        private void NameBackground_MouseMove(object sender, MouseEventArgs e) 
+        private void NameBackground_MouseMove(object sender, MouseEventArgs e)
             => ParentElement.MoveForm(e);
         private void NameBackground_MouseDown(object sender, MouseEventArgs e)
             => ParentElement.SetLastPoint(e);

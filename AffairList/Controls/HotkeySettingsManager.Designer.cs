@@ -1,6 +1,6 @@
 ﻿namespace AffairList
 {
-    partial class HotkeySettingsManager
+    partial class HotKeySettingsManager
     {
         /// <summary> 
         /// Обязательная переменная конструктора.
@@ -28,18 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HotkeySettingsManager));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HotKeySettingsManager));
             HotKeySettingsLab = new Label();
             NameBackground = new Panel();
             MinimizeButton = new Label();
             CloseButton = new Label();
-            panel1 = new Panel();
             BackKeyType = new Label();
-            ConfirmButton = new Button();
             BackKeyLab = new Label();
             CloseKeyType = new Label();
-            ResetButton = new Button();
             CloseKeyLab = new Label();
+            panel1 = new Panel();
+            ConfirmButton = new Button();
+            ResetButton = new Button();
             BackButton = new Button();
             NameBackground.SuspendLayout();
             panel1.SuspendLayout();
@@ -49,6 +49,8 @@
             // 
             resources.ApplyResources(HotKeySettingsLab, "HotKeySettingsLab");
             HotKeySettingsLab.Name = "HotKeySettingsLab";
+            HotKeySettingsLab.MouseDown += HotKeySettingsLab_MouseDown;
+            HotKeySettingsLab.MouseMove += HotKeySettingsLab_MouseMove;
             // 
             // NameBackground
             // 
@@ -58,16 +60,54 @@
             NameBackground.Controls.Add(CloseButton);
             NameBackground.Controls.Add(HotKeySettingsLab);
             NameBackground.Name = "NameBackground";
+            NameBackground.MouseDown += NameBackground_MouseDown;
+            NameBackground.MouseMove += NameBackground_MouseMove;
             // 
             // MinimizeButton
             // 
             resources.ApplyResources(MinimizeButton, "MinimizeButton");
             MinimizeButton.Name = "MinimizeButton";
+            MinimizeButton.Click += MinimizeButton_Click;
+            MinimizeButton.MouseEnter += MinimizeButton_MouseEnter;
+            MinimizeButton.MouseLeave += MinimizeButton_MouseLeave;
             // 
             // CloseButton
             // 
             resources.ApplyResources(CloseButton, "CloseButton");
             CloseButton.Name = "CloseButton";
+            CloseButton.Click += CloseButton_Click;
+            CloseButton.MouseEnter += CloseButton_MouseEnter;
+            CloseButton.MouseLeave += CloseButton_MouseLeave;
+            // 
+            // BackKeyType
+            // 
+            resources.ApplyResources(BackKeyType, "BackKeyType");
+            BackKeyType.ForeColor = Color.White;
+            BackKeyType.Name = "BackKeyType";
+            BackKeyType.DoubleClick += BackKeyType_DoubleClick;
+            BackKeyType.MouseEnter += BackKeyType_MouseEnter;
+            BackKeyType.MouseLeave += BackKeyType_MouseLeave;
+            // 
+            // BackKeyLab
+            // 
+            resources.ApplyResources(BackKeyLab, "BackKeyLab");
+            BackKeyLab.ForeColor = Color.White;
+            BackKeyLab.Name = "BackKeyLab";
+            // 
+            // CloseKeyType
+            // 
+            resources.ApplyResources(CloseKeyType, "CloseKeyType");
+            CloseKeyType.ForeColor = Color.White;
+            CloseKeyType.Name = "CloseKeyType";
+            CloseKeyType.DoubleClick += CloseKeyType_DoubleClick;
+            CloseKeyType.MouseEnter += CloseKeyType_MouseEnter;
+            CloseKeyType.MouseLeave += CloseKeyType_MouseLeave;
+            // 
+            // CloseKeyLab
+            // 
+            resources.ApplyResources(CloseKeyLab, "CloseKeyLab");
+            CloseKeyLab.ForeColor = Color.White;
+            CloseKeyLab.Name = "CloseKeyLab";
             // 
             // panel1
             // 
@@ -83,30 +123,13 @@
             panel1.Controls.Add(BackButton);
             panel1.Name = "panel1";
             // 
-            // BackKeyType
-            // 
-            resources.ApplyResources(BackKeyType, "BackKeyType");
-            BackKeyType.ForeColor = Color.White;
-            BackKeyType.Name = "BackKeyType";
-            // 
             // ConfirmButton
             // 
             resources.ApplyResources(ConfirmButton, "ConfirmButton");
             ConfirmButton.BackColor = Color.FromArgb(173, 102, 213);
             ConfirmButton.Name = "ConfirmButton";
             ConfirmButton.UseVisualStyleBackColor = false;
-            // 
-            // BackKeyLab
-            // 
-            resources.ApplyResources(BackKeyLab, "BackKeyLab");
-            BackKeyLab.ForeColor = Color.White;
-            BackKeyLab.Name = "BackKeyLab";
-            // 
-            // CloseKeyType
-            // 
-            resources.ApplyResources(CloseKeyType, "CloseKeyType");
-            CloseKeyType.ForeColor = Color.White;
-            CloseKeyType.Name = "CloseKeyType";
+            ConfirmButton.Click += ConfirmButton_Click;
             // 
             // ResetButton
             // 
@@ -114,12 +137,7 @@
             ResetButton.BackColor = Color.FromArgb(173, 102, 213);
             ResetButton.Name = "ResetButton";
             ResetButton.UseVisualStyleBackColor = false;
-            // 
-            // CloseKeyLab
-            // 
-            resources.ApplyResources(CloseKeyLab, "CloseKeyLab");
-            CloseKeyLab.ForeColor = Color.White;
-            CloseKeyLab.Name = "CloseKeyLab";
+            ResetButton.Click += ResetButton_Click;
             // 
             // BackButton
             // 
@@ -127,14 +145,15 @@
             BackButton.BackColor = Color.FromArgb(173, 102, 213);
             BackButton.Name = "BackButton";
             BackButton.UseVisualStyleBackColor = false;
+            BackButton.Click += BackButton_Click;
             // 
-            // HotkeySettingsManager
+            // HotKeySettingsManager
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(panel1);
-            Name = "HotkeySettingsManager";
-            KeyDown += HotkeySettingsManager_KeyDown;
+            Name = "HotKeySettingsManager";
+            KeyDown += HotKeySettingsManager_KeyDown;
             NameBackground.ResumeLayout(false);
             NameBackground.PerformLayout();
             panel1.ResumeLayout(false);
@@ -148,13 +167,13 @@
         private Panel NameBackground;
         private Label MinimizeButton;
         private Label CloseButton;
-        private Panel panel1;
-        private Button ConfirmButton;
-        private Button ResetButton;
-        private Button BackButton;
         private Label BackKeyType;
         private Label BackKeyLab;
         private Label CloseKeyType;
         private Label CloseKeyLab;
+        private Panel panel1;
+        private Button ConfirmButton;
+        private Button ResetButton;
+        private Button BackButton;
     }
 }

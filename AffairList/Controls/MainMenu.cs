@@ -113,7 +113,7 @@
         }
         private void HotKeyButton_Click(object sender, EventArgs e)
         {
-            ParentElement.SetControl(new HotKeySettings1(_settings));
+            ParentElement.SetControl(new HotKeySettingsManager(_settings, ParentElement));
         }
 
         private async void MainMenu_Load(object sender, EventArgs e)

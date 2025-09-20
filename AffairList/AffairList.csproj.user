@@ -10,7 +10,7 @@
     <Compile Update="Controls\AffairsManager.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="Controls\HotkeySettingsManager.cs">
+    <Compile Update="Controls\HotKeySettingsManager.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Controls\SettingsManager.cs">
