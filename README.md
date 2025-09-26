@@ -9,14 +9,14 @@
 ## Features and Usage
   * __Open List__
     * Opens selected list on the screen on top of all non-fullscreen apps
-  * __Affair Menegment__ or __ChangeList buttons__
+  * __Affair Menegment__
     * Add
     * Remove
     * Rename
     * Add deadline (and if you want you can be notified by the program about your deadlines with definite day distance)
     * Set priority (Sets affair position to the top of others)
     * Clear input line
-  * __List Menegment__ or __ChangeProfile buttons__
+  * __Profile Menegment__ 
     * Add
     * Remove
     * Rename
@@ -27,7 +27,7 @@
     * Allows you to change list position to open
   * __Clear List__
     * Removes all your affairs from current list
-  * __Settings Forms__
+  * __Settings and LoadTimeManager__
     * Both of them use simple principe to change a settings - double click on the current value or one click to toggle state
     * Both of them allow you to set base settings (Reset button)
     * Both of them always ask you to confirm your changes
