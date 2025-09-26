@@ -36,16 +36,16 @@
             // 
             // DeadlinePicker
             // 
-            DeadlinePicker.Format = DateTimePickerFormat.Short;
             resources.ApplyResources(DeadlinePicker, "DeadlinePicker");
+            DeadlinePicker.Format = DateTimePickerFormat.Short;
             DeadlinePicker.Name = "DeadlinePicker";
             DeadlinePicker.Value = new DateTime(2025, 7, 25, 0, 0, 0, 0);
             DeadlinePicker.KeyDown += DeadlinePicker_KeyDown;
             // 
             // ConfirmButton
             // 
-            ConfirmButton.BackColor = Color.FromArgb(173, 102, 213);
             resources.ApplyResources(ConfirmButton, "ConfirmButton");
+            ConfirmButton.BackColor = Color.FromArgb(173, 102, 213);
             ConfirmButton.ForeColor = SystemColors.MenuText;
             ConfirmButton.Name = "ConfirmButton";
             ConfirmButton.UseVisualStyleBackColor = false;
@@ -53,8 +53,8 @@
             // 
             // BackButton
             // 
-            BackButton.BackColor = Color.FromArgb(173, 102, 213);
             resources.ApplyResources(BackButton, "BackButton");
+            BackButton.BackColor = Color.FromArgb(173, 102, 213);
             BackButton.ForeColor = SystemColors.MenuText;
             BackButton.Name = "BackButton";
             BackButton.UseVisualStyleBackColor = false;

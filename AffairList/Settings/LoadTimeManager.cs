@@ -17,7 +17,7 @@ namespace AffairList
 
         public LoadTimeManager(Settings settings)
         { 
-            LoadTimeFileFullPath = $@"{settings._programDirectoryFolder}\loadtime.json";
+            LoadTimeFileFullPath = $@"{settings.programDirectoryFolderFullPath}\loadtime.json";
 
             _settings = settings;
 
@@ -30,9 +30,9 @@ namespace AffairList
             if (!LoadTimeFileExist()) CreateLoadTimeFile();
 
             _loadTime = JsonConvert.DeserializeObject<LoadTimeModel>
-                (File.ReadAllText(LoadTimeFileFullPath))!;
+                    (File.ReadAllText(LoadTimeFileFullPath))!;
 
-            if (_loadTime == null) Task.Run(() => WriteBaseTimeAsync());
+            if (_loadTime == null) WriteBaseTimeAsync();
         }
         public void Notificate()
         {

@@ -13,6 +13,10 @@
             _settings = settings;
             _loadTimeManager = loadTimeManager;
             ParentElement = parent;
+            if (AffairListDebug.DEBUG)
+            {
+                ErrorHelpLab.Text = "DEBUG MOD ON";
+            }
         }
 
         private void CloseButton_Click(object sender, EventArgs e)
@@ -109,7 +113,7 @@
         }
         private void ChangeProfileButton_Click(object sender, EventArgs e)
         {
-            ParentElement.SetControl(new ChangeProfileForm1(_settings));
+            ParentElement.SetControl(new ProfileManager(_settings, ParentElement));
         }
         private void HotKeyButton_Click(object sender, EventArgs e)
         {

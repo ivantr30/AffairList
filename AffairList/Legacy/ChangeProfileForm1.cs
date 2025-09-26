@@ -1,6 +1,4 @@
 ﻿using Microsoft.VisualBasic;
-using System.Runtime;
-using System.Threading.Tasks;
 namespace AffairList
 {
     public partial class ChangeProfileForm1 : BaseForm

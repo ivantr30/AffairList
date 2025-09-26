@@ -45,6 +45,7 @@ namespace AffairList
             }
             if (profilesCount > 0)
             {
+                if(!File.Exists(_settings.GetCurrentProfile())) _settings.SelectFirstProfileAsync();
                 FileInfo selectedProfile = new FileInfo(_settings.GetCurrentProfile());
                 ProfileBox.SelectedIndex = ProfileBox.Items.IndexOf(selectedProfile.Name);
             }

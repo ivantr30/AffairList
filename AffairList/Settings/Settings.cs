@@ -7,7 +7,7 @@ namespace AffairList
     {
         private readonly string _defaultListFileFullPath;
 
-        public readonly string _programDirectoryFolder = Environment
+        public readonly string programDirectoryFolderFullPath = Environment
             .GetFolderPath(Environment.SpecialFolder.ApplicationData)+@"\AffairList\";
 
         public readonly string listsDirectoryFullPath;
@@ -20,9 +20,19 @@ namespace AffairList
 
         public Settings()
         {
-            listsDirectoryFullPath = $@"{_programDirectoryFolder}profiles\";
-            _defaultListFileFullPath = $@"{listsDirectoryFullPath}list.txt";
-            settingsFileFullPath = $@"{_programDirectoryFolder}settings.json";
+            if (AffairListDebug.DEBUG)
+            {
+                programDirectoryFolderFullPath += @"Debug\";
+                listsDirectoryFullPath = $@"{programDirectoryFolderFullPath}profiles\";
+                _defaultListFileFullPath = $@"{listsDirectoryFullPath}list.txt";
+                settingsFileFullPath = $@"{programDirectoryFolderFullPath}settings.json";
+            }
+            else
+            {
+                listsDirectoryFullPath = $@"{programDirectoryFolderFullPath}profiles\";
+                _defaultListFileFullPath = $@"{listsDirectoryFullPath}list.txt";
+                settingsFileFullPath = $@"{programDirectoryFolderFullPath}settings.json";
+            }
 
             screenWidth = Screen.PrimaryScreen!.WorkingArea.Width;
             screenHeight = Screen.PrimaryScreen.WorkingArea.Height;
@@ -47,14 +57,6 @@ namespace AffairList
             {
                 await SelectFirstProfileAsync();
             }
-            if (DoesAutostart())
-            {
-                EnableAutoStart();
-            }
-            else
-            {
-                DisableAutoStart();
-            }
         }
         public async Task WriteBaseSettingsAsync()
         {
@@ -65,7 +67,8 @@ namespace AffairList
         }
         public async Task SelectFirstProfileAsync()
         {
-            SetCurrentProfile(Directory.EnumerateFiles(listsDirectoryFullPath).FirstOrDefault()!);
+            Directory.GetFiles(listsDirectoryFullPath);
+            SetCurrentProfile(Directory.EnumerateFiles(listsDirectoryFullPath).First());
             await SaveSettingsAsync();
         }
         public void EnableAutoStart()
@@ -79,8 +82,8 @@ namespace AffairList
             
             shortcut.Description = "AffairList";
             shortcut.TargetPath = Application.ExecutablePath;     
-            shortcut.WorkingDirectory = Application.StartupPath;  
-                                                              
+            shortcut.WorkingDirectory = Application.StartupPath;
+
             shortcut.Save();
         }
         public void DisableAutoStart()
@@ -99,7 +102,7 @@ namespace AffairList
 
         public bool ProgramDirectoryExists()
         {
-            return Directory.Exists(_programDirectoryFolder);
+            return Directory.Exists(programDirectoryFolderFullPath);
         }
         public bool ListFilesAvailable()
         {
@@ -134,7 +137,7 @@ namespace AffairList
         }
         public void CreateProgramDirectory()
         {
-            Directory.CreateDirectory(_programDirectoryFolder);
+            Directory.CreateDirectory(programDirectoryFolderFullPath);
         }
         public async Task SaveSettingsAsync()
         {

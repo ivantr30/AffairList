@@ -1,6 +1,6 @@
 ﻿namespace AffairList
 {
-    partial class ChangeProfileForm1
+    partial class ProfileManager
     {
         /// <summary>
         /// Required designer variable.
@@ -268,17 +268,14 @@
             ProfileInput.Size = new Size(576, 31);
             ProfileInput.TabIndex = 1;
             // 
-            // ChangeProfileForm
+            // ChangeProfileForm1
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(600, 405);
             Controls.Add(panel1);
-            Icon = (Icon)resources.GetObject("$this.Icon");
-            KeyPreview = true;
-            Name = "ChangeProfileForm";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "ChangeProfileForm";
+            Name = "ProfileManager";
+            Text = "ProfileManager";
             KeyDown += ChangeProfileForm_KeyDown;
             NameBackground.ResumeLayout(false);
             NameBackground.PerformLayout();
