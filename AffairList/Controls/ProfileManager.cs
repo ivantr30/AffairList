@@ -1,7 +1,4 @@
 ﻿using Microsoft.VisualBasic;
-using System;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-
 namespace AffairList
 {
     public partial class ProfileManager : UserControl, IChildable, IKeyPreviewable

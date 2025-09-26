@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace AffairList
+﻿namespace AffairList
 {
     public static class AffairListDebug
     {

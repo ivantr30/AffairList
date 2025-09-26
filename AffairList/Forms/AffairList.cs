@@ -52,7 +52,9 @@
         public void Exit()
         {
             _trayIcon.Visible = false;
-            _trayIcon.Dispose();
+            _trayIcon.Dispose(); 
+            _trayMenu?.Dispose();
+            childForm?.Dispose();
             Application.Exit();
         }
         public void Return()
@@ -63,19 +65,18 @@
         public void MinimizeForm() => WindowState = FormWindowState.Minimized;
         public void SetControl(Control control)
         {
+            if (Controls.Count > 0 && Controls[0] is IKeyPreviewable ckp)
+            {
+                KeyDown -= ckp.KeyDownHandlers;
+                KeyPress -= ckp.KeyPressHandlers;
+                KeyUp -= ckp.KeyUpHandlers;
+            }
             if (control is IKeyPreviewable kp)
             {
                 KeyDown += kp.KeyDownHandlers;
                 KeyPress += kp.KeyPressHandlers;
-                KeyDown += kp.KeyUpHandlers;
+                KeyUp += kp.KeyUpHandlers;
             }
-            if (Controls.Count > 0)
-                if (Controls[0] is IKeyPreviewable ckp)
-                {
-                    KeyDown -= ckp.KeyDownHandlers;
-                    KeyPress -= ckp.KeyPressHandlers;
-                    KeyDown -= ckp.KeyUpHandlers;
-                }
             Width = control.Width;
             Height = control.Height;
             Controls.Clear();
@@ -87,6 +88,8 @@
             Hide();
             childForm = form;
             childForm?.ShowDialog();
+            childForm?.Dispose();
+            childForm = null;
             Show();
         }
         public void SetLastPoint(MouseEventArgs e) => LastPoint = new Point(e.X, e.Y);

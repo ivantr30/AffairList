@@ -15,6 +15,10 @@
         {
             if (disposing && (components != null))
             {
+                KeyDownHandlers = null;
+                KeyPressHandlers = null;
+                KeyUpHandlers = null;
+                _hotkeysUpdater = null;
                 components.Dispose();
             }
             base.Dispose(disposing);

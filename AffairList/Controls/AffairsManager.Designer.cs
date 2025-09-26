@@ -15,6 +15,10 @@
         {
             if (disposing && (components != null))
             {
+                _lines = null;
+                KeyDownHandlers = null;
+                KeyPressHandlers = null;
+                KeyUpHandlers = null;
                 components.Dispose();
             }
             base.Dispose(disposing);
