@@ -2,6 +2,6 @@
 {
     public static class AffairListDebug
     {
-        public const bool DEBUG = false;
+        public const bool DEBUG = true;
     }
 }

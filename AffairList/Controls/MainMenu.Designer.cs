@@ -178,7 +178,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(panel1);
             Name = "MainMenu";
-            KeyDown += MainMenu_KeyDown;
             NameBackground.ResumeLayout(false);
             NameBackground.PerformLayout();
             panel1.ResumeLayout(false);

@@ -194,7 +194,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(panel1);
             Name = "AffairsManager";
-            KeyDown += AffairsManager_KeyDown;
             NameBackground.ResumeLayout(false);
             NameBackground.PerformLayout();
             panel1.ResumeLayout(false);

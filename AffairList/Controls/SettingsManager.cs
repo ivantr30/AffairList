@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualBasic;
 namespace AffairList
 {
-    public partial class SettingsManager : UserControl, IChildable, IKeyPreviewable
+    public partial class SettingsManager : UserControl, IChildable
     {
         private bool _isConfirmed = true;
 
@@ -10,9 +10,6 @@ namespace AffairList
         private Action _settingsUpdater;
 
         public IParentable ParentElement { get; private set; }
-        public KeyEventHandler KeyDownHandlers { get; private set; }
-        public KeyPressEventHandler KeyPressHandlers { get; private set; }
-        public KeyEventHandler KeyUpHandlers { get; private set; }
 
         private int _newX;
         private int _newY;
@@ -28,7 +25,6 @@ namespace AffairList
             InitializeComponent();
             _settings = settings;
             ParentElement = parentElement;
-            KeyDownHandlers += Settings_KeyDown!;
         }
         private void LoadSettings()
         {
@@ -80,18 +76,6 @@ namespace AffairList
         private void CloseButton_Click(object sender, EventArgs e)
         {
             if(CanLeave()) ParentElement.Exit();
-        }
-
-        private void Settings_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == _settings.GetCloseKey())
-            {
-                ParentElement.Exit();
-            }
-            if (e.KeyCode == _settings.GetReturnKey())
-            {
-                ParentElement.Return();
-            }
         }
 
         private void CloseButton_MouseEnter(object sender, EventArgs e)

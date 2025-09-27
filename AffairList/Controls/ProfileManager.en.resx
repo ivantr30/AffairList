@@ -150,6 +150,9 @@
   <data name="CloseButtonLab.Size" type="System.Drawing.Size, System.Drawing">
     <value>31, 33</value>
   </data>
+  <data name="CloseButtonLab.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
   <data name="CloseButtonLab.Text" xml:space="preserve">
     <value>X</value>
   </data>
@@ -165,11 +168,44 @@
   <data name="MinimizeButton.Text" xml:space="preserve">
     <value>-</value>
   </data>
+  <data name="CloseButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="CloseButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="CloseButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Unispace, 20pt, style=Bold</value>
+  </data>
+  <data name="CloseButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>31, 33</value>
+  </data>
+  <data name="CloseButton.Text" xml:space="preserve">
+    <value>X</value>
+  </data>
   <data name="NameBackground.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Top</value>
   </data>
   <data name="NameBackground.Size" type="System.Drawing.Size, System.Drawing">
     <value>600, 86</value>
+  </data>
+  <data name="ProfilesListLab.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="ProfilesListLab.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="ProfilesListLab.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Unispace, 15pt</value>
+  </data>
+  <data name="ProfilesListLab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>106, 24</value>
+  </data>
+  <data name="ProfilesListLab.Text" xml:space="preserve">
+    <value>Profiles</value>
+  </data>
+  <data name="ProfilesListLab.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
   </data>
   <data name="ExportButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -191,45 +227,6 @@
   </data>
   <data name="ChangePriorityButton.Text" xml:space="preserve">
     <value>ChangePriority</value>
-  </data>
-  <data name="ProfilesListLab.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="ProfilesListLab.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="ProfilesListLab.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Unispace, 15pt</value>
-  </data>
-  <data name="ProfilesListLab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>106, 24</value>
-  </data>
-  <data name="ProfilesListLab.Text" xml:space="preserve">
-    <value>Profiles</value>
-  </data>
-  <data name="ProfilesListLab.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="Profiles.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 12pt</value>
-  </data>
-  <data name="Profiles.HorizontalScrollbar" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="Profiles.ItemHeight" type="System.Int32, mscorlib">
-    <value>21</value>
-  </data>
-  <data name="Profiles.Size" type="System.Drawing.Size, System.Drawing">
-    <value>576, 214</value>
-  </data>
-  <data name="ProfileInput.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Unispace, 15pt</value>
-  </data>
-  <data name="ProfileInput.PlaceholderText" xml:space="preserve">
-    <value>Enter the name of a new profile</value>
-  </data>
-  <data name="ProfileInput.Size" type="System.Drawing.Size, System.Drawing">
-    <value>576, 31</value>
   </data>
   <data name="RenameButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
@@ -267,6 +264,18 @@
   <data name="BackButton.Text" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="Profiles.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="Profiles.HorizontalScrollbar" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Profiles.ItemHeight" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="Profiles.Size" type="System.Drawing.Size, System.Drawing">
+    <value>576, 214</value>
+  </data>
   <data name="ClearButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
@@ -285,11 +294,23 @@
   <data name="AddButton.Text" xml:space="preserve">
     <value>Add</value>
   </data>
+  <data name="ProfileInput.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Unispace, 15pt</value>
+  </data>
+  <data name="ProfileInput.PlaceholderText" xml:space="preserve">
+    <value>Enter the name of a new profile</value>
+  </data>
+  <data name="ProfileInput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>576, 31</value>
+  </data>
   <data name="panel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
     <value>600, 405</value>
+  </data>
+  <data name="panel1.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
     <value>600, 405</value>

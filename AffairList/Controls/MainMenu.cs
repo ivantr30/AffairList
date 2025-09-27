@@ -1,14 +1,10 @@
 ﻿namespace AffairList
 {
-    public partial class MainMenu : UserControl, IChildable, IKeyPreviewable
+    public partial class MainMenu : UserControl, IChildable
     {
         private Settings _settings;
         private LoadTimeManager _loadTimeManager;
         public IParentable ParentElement { get; private set; }
-
-        public KeyEventHandler KeyDownHandlers { get; private set; }
-        public KeyPressEventHandler KeyPressHandlers { get; private set; }
-        public KeyEventHandler KeyUpHandlers { get; private set; }
 
         private Control _affairsManager;
         private Control _profileManager;
@@ -24,7 +20,6 @@
             _settings = settings;
             _loadTimeManager = loadTimeManager;
             ParentElement = parent;
-            KeyDownHandlers += MainMenu_KeyDown;
             if (AffairListDebug.DEBUG)
             {
                 ErrorHelpLab.Text = "DEBUG MOD ON";
@@ -154,14 +149,6 @@
         {
             _loadTimeManager.Notificate();
             await _loadTimeManager.SaveTimeAsync();
-        }
-
-        private void MainMenu_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == _settings.GetCloseKey())
-            {
-                ParentElement.Exit();
-            }
         }
     }
 }

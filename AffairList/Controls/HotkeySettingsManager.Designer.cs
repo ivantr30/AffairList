@@ -15,9 +15,6 @@
         {
             if (disposing && (components != null))
             {
-                KeyDownHandlers = null;
-                KeyPressHandlers = null;
-                KeyUpHandlers = null;
                 _hotkeysUpdater = null;
                 components.Dispose();
             }
@@ -157,7 +154,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(panel1);
             Name = "HotKeySettingsManager";
-            KeyDown += HotKeySettingsManager_KeyDown;
             NameBackground.ResumeLayout(false);
             NameBackground.PerformLayout();
             panel1.ResumeLayout(false);

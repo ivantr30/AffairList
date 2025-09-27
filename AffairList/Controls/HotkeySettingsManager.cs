@@ -1,6 +1,6 @@
 ﻿namespace AffairList
 {
-    public partial class HotKeySettingsManager : UserControl, IChildable, IKeyPreviewable
+    public partial class HotKeySettingsManager : UserControl, IChildable
     {
         private bool _isConfirmed = true;
         private Keys _newCloseKey;
@@ -9,16 +9,12 @@
         private Settings _settings;
 
         public IParentable ParentElement { get; private set; }
-        public KeyEventHandler KeyDownHandlers { get; private set; }
-        public KeyPressEventHandler KeyPressHandlers { get; private set; }
-        public KeyEventHandler KeyUpHandlers { get; private set; }
 
         private Action _hotkeysUpdater;
 
         public HotKeySettingsManager(Settings settings, IParentable parent)
         {
             InitializeComponent();
-            KeyDownHandlers += HotKeySettingsManager_KeyDown;
             _settings = settings;
             ParentElement = parent;
         }
@@ -26,17 +22,6 @@
         {
             CloseKeyType.Text = _settings.GetCloseKey().ToString();
             BackKeyType.Text = _settings.GetReturnKey().ToString();
-        }
-        private void HotKeySettingsManager_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == _settings.GetCloseKey())
-            {
-                ParentElement.Exit();
-            }
-            if (e.KeyCode == _settings.GetReturnKey())
-            {
-                ParentElement.Return();
-            }
         }
         private void BackButton_Click(object sender, EventArgs e)
         {

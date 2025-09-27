@@ -117,473 +117,473 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="MinimizeButton.Text" xml:space="preserve">
-    <value>-</value>
-  </data>
-  <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="AffairsLab.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="AffairInput.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;CloseButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="ClearButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 27</value>
-  </data>
-  <data name="&gt;&gt;ClearButton.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;AddAffairButton.ZOrder" xml:space="preserve">
-    <value>9</value>
-  </data>
-  <data name="&gt;&gt;MinimizeButton.Name" xml:space="preserve">
-    <value>MinimizeButton</value>
-  </data>
-  <data name="&gt;&gt;DeadlineLab.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="RenameAffairButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>65, 27</value>
-  </data>
-  <data name="PriorityButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>102, 27</value>
-  </data>
-  <data name="NameBackground.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="DeleteButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="&gt;&gt;PriorityButton.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;AddAffairButton.Name" xml:space="preserve">
-    <value>AddAffairButton</value>
-  </data>
-  <data name="AffairsLab.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;PriorityButton.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;DeleteButton.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="&gt;&gt;AddDeadlineButton.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="DeleteButton.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="CloseButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>31, 33</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="Affairs.HorizontalScrollbar" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="NameBackground.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="&gt;&gt;PriorityButton.Name" xml:space="preserve">
-    <value>PriorityButton</value>
-  </data>
-  <data name="DeadlineLab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 89</value>
-  </data>
-  <data name="AddAffairButton.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;ProfileBox.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;BackButton.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;RenameAffairButton.Name" xml:space="preserve">
-    <value>RenameAffairButton</value>
-  </data>
-  <data name="&gt;&gt;DeleteButton.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>AffairsManager</value>
-  </data>
-  <data name="BackButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>56, 27</value>
-  </data>
-  <data name="AffairsLab.Text" xml:space="preserve">
-    <value>Affairs</value>
-  </data>
-  <data name="&gt;&gt;NameBackground.Name" xml:space="preserve">
-    <value>NameBackground</value>
-  </data>
-  <data name="&gt;&gt;BackButton.ZOrder" xml:space="preserve">
-    <value>6</value>
-  </data>
-  <data name="AffairInput.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 334</value>
-  </data>
-  <data name="AddDeadlineButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="&gt;&gt;AffairInput.Name" xml:space="preserve">
-    <value>AffairInput</value>
-  </data>
-  <data name="&gt;&gt;CloseButton.Parent" xml:space="preserve">
-    <value>NameBackground</value>
-  </data>
-  <data name="AffairInput.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Unispace, 15pt</value>
-  </data>
-  <data name="&gt;&gt;Affairs.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="DeadlineLab.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="&gt;&gt;RenameAffairButton.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>563, 405</value>
-  </data>
-  <data name="RenameAffairButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>358, 371</value>
-  </data>
-  <data name="ClearButton.Text" xml:space="preserve">
-    <value>Clear</value>
-  </data>
-  <data name="&gt;&gt;AffairInput.ZOrder" xml:space="preserve">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;ClearButton.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="&gt;&gt;AddDeadlineButton.Name" xml:space="preserve">
-    <value>AddDeadlineButton</value>
-  </data>
-  <data name="&gt;&gt;panel1.Name" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;NameBackground.ZOrder" xml:space="preserve">
-    <value>11</value>
-  </data>
-  <data name="BackButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>495, 371</value>
-  </data>
-  <data name="AddAffairButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
   <data name="CloseButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Right</value>
-  </data>
-  <data name="ClearButton.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="AffairInput.PlaceholderText" xml:space="preserve">
-    <value>Enter the name of a new affair</value>
-  </data>
-  <data name="AddDeadlineButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 27</value>
-  </data>
-  <data name="&gt;&gt;RenameAffairButton.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;NameBackground.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;AffairsLab.Parent" xml:space="preserve">
-    <value>NameBackground</value>
-  </data>
-  <data name="ProfileBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>372, 88</value>
-  </data>
-  <data name="RenameAffairButton.TabIndex" type="System.Int32, mscorlib">
-    <value>12</value>
-  </data>
-  <data name="&gt;&gt;AddAffairButton.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;AffairInput.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="AddAffairButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>226, 371</value>
-  </data>
-  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="BackButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="RenameAffairButton.Text" xml:space="preserve">
-    <value>Rename</value>
-  </data>
-  <data name="CloseButton.Text" xml:space="preserve">
-    <value>X</value>
-  </data>
-  <data name="panel1.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="PriorityButton.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 9pt</value>
-  </data>
-  <data name="&gt;&gt;DeadlineLab.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="NameBackground.Size" type="System.Drawing.Size, System.Drawing">
-    <value>563, 86</value>
-  </data>
-  <data name="MinimizeButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>31, 33</value>
-  </data>
-  <data name="ClearButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="&gt;&gt;AddAffairButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="DeadlineLab.Text" xml:space="preserve">
-    <value>Deadline, Affair name</value>
-  </data>
-  <data name="Affairs.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 114</value>
-  </data>
-  <data name="&gt;&gt;MinimizeButton.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="MinimizeButton.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="panel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="&gt;&gt;ProfileBox.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;DeadlineLab.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="Affairs.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="&gt;&gt;PriorityButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="BackButton.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="BackButton.Text" xml:space="preserve">
-    <value>Back</value>
-  </data>
-  <data name="PriorityButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="&gt;&gt;BackButton.Name" xml:space="preserve">
-    <value>BackButton</value>
-  </data>
-  <data name="CloseButton.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="DeadlineLab.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="ClearButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>429, 371</value>
-  </data>
-  <data name="DeleteButton.Text" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="DeleteButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 27</value>
-  </data>
-  <data name="ProfileBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>179, 25</value>
-  </data>
-  <data name="CloseButton.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="Affairs.ItemHeight" type="System.Int32, mscorlib">
-    <value>21</value>
-  </data>
-  <data name="PriorityButton.TabIndex" type="System.Int32, mscorlib">
-    <value>8</value>
-  </data>
-  <data name="DeleteButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>292, 371</value>
-  </data>
-  <data name="&gt;&gt;Affairs.ZOrder" xml:space="preserve">
-    <value>7</value>
-  </data>
-  <data name="AffairsLab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>188, 48</value>
-  </data>
-  <data name="Affairs.Size" type="System.Drawing.Size, System.Drawing">
-    <value>539, 214</value>
-  </data>
-  <data name="&gt;&gt;AffairsLab.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MinimizeButton.Parent" xml:space="preserve">
-    <value>NameBackground</value>
-  </data>
-  <data name="&gt;&gt;Affairs.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ProfileBox.Name" xml:space="preserve">
-    <value>ProfileBox</value>
-  </data>
-  <data name="MinimizeButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>495, 0</value>
-  </data>
-  <data name="AddDeadlineButton.TabIndex" type="System.Int32, mscorlib">
-    <value>10</value>
-  </data>
-  <data name="&gt;&gt;CloseButton.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;DeleteButton.Name" xml:space="preserve">
-    <value>DeleteButton</value>
-  </data>
-  <data name="DeadlineLab.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
-  </data>
-  <data name="MinimizeButton.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="&gt;&gt;CloseButton.Name" xml:space="preserve">
-    <value>CloseButton</value>
-  </data>
-  <data name="&gt;&gt;RenameAffairButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>7, 17</value>
   </data>
   <data name="&gt;&gt;Affairs.Name" xml:space="preserve">
     <value>Affairs</value>
   </data>
-  <data name="DeadlineLab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>262, 24</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="NameBackground.Size" type="System.Drawing.Size, System.Drawing">
+    <value>563, 86</value>
   </data>
-  <data name="&gt;&gt;ClearButton.Name" xml:space="preserve">
-    <value>ClearButton</value>
+  <data name="&gt;&gt;NameBackground.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;BackButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="PriorityButton.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
   </data>
-  <data name="NameBackground.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
+  <data name="DeadlineLab.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
   </data>
-  <data name="&gt;&gt;DeleteButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="RenameAffairButton.Text" xml:space="preserve">
+    <value>Rename</value>
   </data>
-  <data name="AddAffairButton.Text" xml:space="preserve">
-    <value>Add</value>
+  <data name="&gt;&gt;ProfileBox.Parent" xml:space="preserve">
+    <value>panel1</value>
   </data>
-  <data name="&gt;&gt;AffairsLab.ZOrder" xml:space="preserve">
+  <data name="MinimizeButton.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="PriorityButton.Text" xml:space="preserve">
+    <value>ChangePriority</value>
+  </data>
+  <data name="AddAffairButton.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
-  <data name="AffairInput.Size" type="System.Drawing.Size, System.Drawing">
-    <value>539, 31</value>
+  <data name="&gt;&gt;AddAffairButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;AddDeadlineButton.Type" xml:space="preserve">
+  <data name="Affairs.HorizontalScrollbar" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="MinimizeButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>31, 33</value>
+  </data>
+  <data name="&gt;&gt;AddAffairButton.Name" xml:space="preserve">
+    <value>AddAffairButton</value>
+  </data>
+  <data name="MinimizeButton.Text" xml:space="preserve">
+    <value>-</value>
+  </data>
+  <data name="panel1.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;NameBackground.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="AffairInput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 334</value>
+  </data>
+  <data name="&gt;&gt;BackButton.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="AffairInput.PlaceholderText" xml:space="preserve">
+    <value>Enter the name of a new affair</value>
+  </data>
+  <data name="CloseButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Unispace, 20pt, style=Bold</value>
+  </data>
+  <data name="MinimizeButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>495, 0</value>
+  </data>
+  <data name="AddAffairButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>226, 371</value>
+  </data>
+  <data name="MinimizeButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="AddDeadlineButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>120, 371</value>
+  </data>
+  <data name="DeadlineLab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 89</value>
+  </data>
+  <data name="&gt;&gt;AffairsLab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="BackButton.Text" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="AffairsLab.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="CloseButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="RenameAffairButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="DeleteButton.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="&gt;&gt;AffairsLab.Parent" xml:space="preserve">
+    <value>NameBackground</value>
+  </data>
+  <data name="ClearButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="AddDeadlineButton.Text" xml:space="preserve">
+    <value>AddDeadline</value>
+  </data>
+  <data name="&gt;&gt;PriorityButton.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="AffairInput.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Unispace, 15pt</value>
+  </data>
+  <data name="&gt;&gt;AffairInput.Name" xml:space="preserve">
+    <value>AffairInput</value>
+  </data>
+  <data name="&gt;&gt;RenameAffairButton.Name" xml:space="preserve">
+    <value>RenameAffairButton</value>
+  </data>
+  <data name="&gt;&gt;DeadlineLab.Name" xml:space="preserve">
+    <value>DeadlineLab</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AddDeadlineButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 27</value>
+  </data>
+  <data name="AddAffairButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="&gt;&gt;MinimizeButton.Name" xml:space="preserve">
+    <value>MinimizeButton</value>
+  </data>
+  <data name="Affairs.Size" type="System.Drawing.Size, System.Drawing">
+    <value>539, 214</value>
+  </data>
+  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="AffairsLab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>200, 26</value>
+  </data>
+  <data name="DeleteButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 27</value>
+  </data>
+  <data name="Affairs.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="Affairs.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 114</value>
+  </data>
+  <data name="&gt;&gt;DeadlineLab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CloseButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RenameAffairButton.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="AffairsLab.Text" xml:space="preserve">
+    <value>Affairs</value>
+  </data>
+  <data name="&gt;&gt;BackButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="MinimizeButton.Font" type="System.Drawing.Font, System.Drawing">
     <value>Unispace, 20pt, style=Bold</value>
   </data>
-  <data name="&gt;&gt;ProfileBox.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="CloseButton.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Unispace, 20pt, style=Bold</value>
-  </data>
-  <data name="AffairsLab.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="&gt;&gt;NameBackground.Parent" xml:space="preserve">
+  <data name="&gt;&gt;AddAffairButton.Parent" xml:space="preserve">
     <value>panel1</value>
   </data>
-  <data name="&gt;&gt;AffairsLab.Name" xml:space="preserve">
-    <value>AffairsLab</value>
+  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="PriorityButton.Text" xml:space="preserve">
-    <value>ChangePriority</value>
-  </data>
-  <data name="AddDeadlineButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>120, 371</value>
-  </data>
-  <data name="&gt;&gt;MinimizeButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ProfileBox.TabIndex" type="System.Int32, mscorlib">
-    <value>11</value>
-  </data>
-  <data name="AddAffairButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 27</value>
-  </data>
-  <data name="Affairs.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Segoe UI, 12pt</value>
-  </data>
-  <data name="RenameAffairButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="&gt;&gt;AffairInput.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>563, 405</value>
-  </data>
-  <data name="CloseButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>532, 0</value>
-  </data>
-  <data name="PriorityButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 371</value>
-  </data>
-  <data name="&gt;&gt;AddDeadlineButton.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="DeadlineLab.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Unispace, 15pt</value>
-  </data>
-  <data name="AddDeadlineButton.Text" xml:space="preserve">
-    <value>AddDeadline</value>
-  </data>
-  <data name="&gt;&gt;DeadlineLab.Name" xml:space="preserve">
-    <value>DeadlineLab</value>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>AffairsManager</value>
   </data>
   <data name="DeadlineLab.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="AffairsLab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>200, 26</value>
+  <data name="BackButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 27</value>
+  </data>
+  <data name="CloseButton.Text" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="&gt;&gt;Affairs.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="PriorityButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="&gt;&gt;ProfileBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="AddAffairButton.Text" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="RenameAffairButton.TabIndex" type="System.Int32, mscorlib">
+    <value>12</value>
+  </data>
+  <data name="CloseButton.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="BackButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>495, 371</value>
+  </data>
+  <data name="&gt;&gt;DeleteButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AffairsLab.Name" xml:space="preserve">
+    <value>AffairsLab</value>
+  </data>
+  <data name="DeleteButton.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;Affairs.ZOrder" xml:space="preserve">
+    <value>7</value>
   </data>
   <data name="&gt;&gt;ClearButton.Type" xml:space="preserve">
     <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="&gt;&gt;AddDeadlineButton.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
   <data name="AffairsLab.Font" type="System.Drawing.Font, System.Drawing">
     <value>Unispace, 30pt</value>
   </data>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>563, 405</value>
+  </data>
+  <data name="RenameAffairButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 27</value>
+  </data>
+  <data name="BackButton.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>7, 17</value>
+  </data>
+  <data name="Affairs.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="BackButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="ProfileBox.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="&gt;&gt;MinimizeButton.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="PriorityButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>102, 27</value>
+  </data>
+  <data name="&gt;&gt;panel1.Name" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;AffairInput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RenameAffairButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AffairInput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>539, 31</value>
+  </data>
+  <data name="&gt;&gt;DeleteButton.Name" xml:space="preserve">
+    <value>DeleteButton</value>
+  </data>
+  <data name="AddDeadlineButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="&gt;&gt;DeadlineLab.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="CloseButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>31, 33</value>
+  </data>
+  <data name="&gt;&gt;CloseButton.Parent" xml:space="preserve">
+    <value>NameBackground</value>
+  </data>
+  <data name="&gt;&gt;DeleteButton.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;PriorityButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="AffairsLab.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="DeleteButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>292, 371</value>
+  </data>
+  <data name="Affairs.ItemHeight" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="DeadlineLab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>262, 24</value>
+  </data>
+  <data name="DeadlineLab.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Unispace, 15pt</value>
+  </data>
+  <data name="ClearButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 27</value>
+  </data>
+  <data name="NameBackground.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;MinimizeButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ClearButton.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="ClearButton.Text" xml:space="preserve">
+    <value>Clear</value>
+  </data>
   <data name="AffairsLab.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
+  </data>
+  <data name="AddDeadlineButton.TabIndex" type="System.Int32, mscorlib">
+    <value>10</value>
+  </data>
+  <data name="RenameAffairButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>358, 371</value>
+  </data>
+  <data name="&gt;&gt;MinimizeButton.Parent" xml:space="preserve">
+    <value>NameBackground</value>
+  </data>
+  <data name="&gt;&gt;ProfileBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ClearButton.Name" xml:space="preserve">
+    <value>ClearButton</value>
+  </data>
+  <data name="AddAffairButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 27</value>
+  </data>
+  <data name="AffairsLab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>188, 48</value>
+  </data>
+  <data name="&gt;&gt;AffairsLab.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="PriorityButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9pt</value>
+  </data>
+  <data name="&gt;&gt;AffairInput.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="ProfileBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>179, 25</value>
+  </data>
+  <data name="&gt;&gt;AddDeadlineButton.Name" xml:space="preserve">
+    <value>AddDeadlineButton</value>
+  </data>
+  <data name="&gt;&gt;PriorityButton.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;BackButton.Name" xml:space="preserve">
+    <value>BackButton</value>
+  </data>
+  <data name="&gt;&gt;AddDeadlineButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="NameBackground.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="&gt;&gt;ClearButton.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="DeadlineLab.Text" xml:space="preserve">
+    <value>Deadline, Affair name</value>
+  </data>
+  <data name="&gt;&gt;BackButton.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="&gt;&gt;AffairInput.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="AffairInput.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;RenameAffairButton.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;CloseButton.Name" xml:space="preserve">
+    <value>CloseButton</value>
+  </data>
+  <data name="&gt;&gt;Affairs.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="NameBackground.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="ClearButton.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="AffairsLab.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;AddDeadlineButton.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="panel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="&gt;&gt;AddAffairButton.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="DeleteButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>563, 405</value>
+  </data>
+  <data name="PriorityButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 371</value>
+  </data>
+  <data name="&gt;&gt;ProfileBox.Name" xml:space="preserve">
+    <value>ProfileBox</value>
+  </data>
+  <data name="CloseButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>532, 0</value>
+  </data>
+  <data name="ClearButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>429, 371</value>
+  </data>
+  <data name="&gt;&gt;PriorityButton.Name" xml:space="preserve">
+    <value>PriorityButton</value>
+  </data>
+  <data name="DeadlineLab.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;CloseButton.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="ProfileBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>372, 88</value>
+  </data>
+  <data name="&gt;&gt;NameBackground.Name" xml:space="preserve">
+    <value>NameBackground</value>
+  </data>
+  <data name="&gt;&gt;DeleteButton.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="&gt;&gt;NameBackground.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="DeadlineLab.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="&gt;&gt;DeadlineLab.Parent" xml:space="preserve">
+    <value>panel1</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>

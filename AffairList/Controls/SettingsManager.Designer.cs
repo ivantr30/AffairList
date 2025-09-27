@@ -15,9 +15,6 @@
         {
             if (disposing && (components != null))
             {
-                KeyDownHandlers = null;
-                KeyPressHandlers = null;
-                KeyUpHandlers = null;
                 _settingsUpdater = null;
                 components.Dispose();
             }
