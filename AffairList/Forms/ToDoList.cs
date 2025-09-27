@@ -104,7 +104,7 @@ namespace AffairList
         private void List_MouseUp(object sender, MouseEventArgs e) => OnListMouseUpAsync(e);
         private void OnListMouseDown(MouseEventArgs e)
         {
-            if(canReplace) ParentElement.SetLastPoint(e);
+            if (canReplace) ParentElement.SetLastPoint(e);
         }
         private void OnListMouseMove(MouseEventArgs e)
         {
@@ -124,6 +124,12 @@ namespace AffairList
         public Label GetAffairs()
         {
             return Affairs;
+        }
+
+        private void ToDoList_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Affairs.BackColor = _settings.GetBgColor();
+            canReplace = false;
         }
     }
 }

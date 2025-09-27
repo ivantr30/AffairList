@@ -25,11 +25,10 @@ namespace AffairList
 
         public SettingsManager(Settings settings, IParentable parentElement)
         {
+            InitializeComponent();
             _settings = settings;
             ParentElement = parentElement;
             KeyDownHandlers += Settings_KeyDown!;
-            InitializeComponent();
-            LoadSettings();
         }
         private void LoadSettings()
         {
@@ -405,6 +404,7 @@ namespace AffairList
         {
             MessageBox.Show("Select folder to export config into");
             ExportSettingsFileDialog.ShowDialog();
+            if (string.IsNullOrEmpty(ExportSettingsFileDialog.SelectedPath)) return;
             string destSettingsFilePath = ExportSettingsFileDialog.SelectedPath + "\\settings.json";
             try
             {
@@ -429,6 +429,11 @@ namespace AffairList
         private void ThemeBoxCB_SelectedValueChanged(object sender, EventArgs e)
         {
 
+        }
+
+        public void OnAddition()
+        {
+            LoadSettings();
         }
     }
 }

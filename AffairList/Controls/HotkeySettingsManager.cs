@@ -21,7 +21,6 @@
             KeyDownHandlers += HotKeySettingsManager_KeyDown;
             _settings = settings;
             ParentElement = parent;
-            LoadSettings();
         }
         private void LoadSettings()
         {
@@ -169,5 +168,10 @@
             => ParentElement.MoveForm(e);
         private void HotKeySettingsLab_MouseDown(object sender, MouseEventArgs e)
             => ParentElement.SetLastPoint(e);
+
+        public void OnAddition()
+        {
+            LoadSettings();
+        }
     }
 }

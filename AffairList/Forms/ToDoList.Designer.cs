@@ -56,9 +56,9 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
             Name = "ToDoList";
-            ShowInTaskbar = false;
             Text = "List";
             TransparencyKey = Color.Black;
+            FormClosing += ToDoList_FormClosing;
             MouseDown += List_MouseDown;
             MouseMove += List_MouseMove;
             MouseUp += List_MouseUp;

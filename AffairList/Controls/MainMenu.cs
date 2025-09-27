@@ -1,10 +1,21 @@
 ﻿namespace AffairList
 {
-    public partial class MainMenu : UserControl, IChildable
+    public partial class MainMenu : UserControl, IChildable, IKeyPreviewable
     {
         private Settings _settings;
         private LoadTimeManager _loadTimeManager;
         public IParentable ParentElement { get; private set; }
+
+        public KeyEventHandler KeyDownHandlers { get; private set; }
+        public KeyPressEventHandler KeyPressHandlers { get; private set; }
+        public KeyEventHandler KeyUpHandlers { get; private set; }
+
+        private Control _affairsManager;
+        private Control _profileManager;
+        private Control _settingsManager;
+        private Control _hotkeySettingsManager;
+
+        private ToDoList _toDoList;
 
         public MainMenu(Settings settings, LoadTimeManager loadTimeManager, IParentable parent)
         {
@@ -13,6 +24,7 @@
             _settings = settings;
             _loadTimeManager = loadTimeManager;
             ParentElement = parent;
+            KeyDownHandlers += MainMenu_KeyDown;
             if (AffairListDebug.DEBUG)
             {
                 ErrorHelpLab.Text = "DEBUG MOD ON";
@@ -67,9 +79,12 @@
                 MessageBox.Show("Error, there is no list available");
                 return;
             }
-            ToDoList list = new ToDoList(_settings, ParentElement) { canReplace = true };
-            list.GetAffairs().BackColor = Color.White;
-            ParentElement.OpenForm(list);
+            if (_toDoList == null)
+            {
+                _toDoList = new ToDoList(_settings, ParentElement) { canReplace = true };
+            }
+            _toDoList.GetAffairs().BackColor = Color.White;
+            ParentElement.OpenForm(_toDoList);
         }
 
         private async void ClearListButton_Click(object sender, EventArgs e)
@@ -105,26 +120,48 @@
 
                 await _settings.CreateDefaultListAsync();
             }
-            ParentElement.SetControl(new AffairsManager(_settings, ParentElement));
+            if (_affairsManager == null)
+            {
+                _affairsManager = new AffairsManager(_settings, ParentElement);
+            }
+            ParentElement.SetControl(_affairsManager);
         }
         private void SettingsButton_Click(object sender, EventArgs e)
         {
-            ParentElement.SetControl(new SettingsManager(_settings, ParentElement));
+            if (_settingsManager == null)
+            {
+                _settingsManager = new SettingsManager(_settings, ParentElement);
+            }
+            ParentElement.SetControl(_settingsManager);
         }
         private void ChangeProfileButton_Click(object sender, EventArgs e)
         {
-            ParentElement.SetControl(new ProfileManager(_settings, ParentElement));
+            if (_profileManager == null)
+            {
+                _profileManager = new ProfileManager(_settings, ParentElement);
+            }
+            ParentElement.SetControl(_profileManager);
         }
         private void HotKeyButton_Click(object sender, EventArgs e)
         {
-            ParentElement.SetControl(new HotKeySettingsManager(_settings, ParentElement));
+            if (_hotkeySettingsManager == null)
+            {
+                _hotkeySettingsManager = new HotKeySettingsManager(_settings, ParentElement);
+            }
+            ParentElement.SetControl(_hotkeySettingsManager);
+        }
+        public async void OnAddition()
+        {
+            _loadTimeManager.Notificate();
+            await _loadTimeManager.SaveTimeAsync();
         }
 
-        private async void MainMenu_Load(object sender, EventArgs e)
+        private void MainMenu_KeyDown(object sender, KeyEventArgs e)
         {
-            Task savingLoadTime = _loadTimeManager.SaveTimeAsync();
-            _loadTimeManager.Notificate();
-            await Task.WhenAll(savingLoadTime);
+            if (e.KeyCode == _settings.GetCloseKey())
+            {
+                ParentElement.Exit();
+            }
         }
     }
 }

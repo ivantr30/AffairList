@@ -29,6 +29,8 @@
 
             ProfilesExportDialog.ShowDialog();
 
+            if (string.IsNullOrEmpty(ProfilesExportDialog.SelectedPath)) return;
+
             for (int i = 0; i < ProfilePicker.CheckedItems.Count; i++)
             {
                 string sourceFilePath = _settings.listsDirectoryFullPath +
@@ -43,16 +45,40 @@
                         "Confirmation",
                         MessageBoxButtons.YesNo,
                         MessageBoxIcon.Question);
-                    if(result == DialogResult.Yes)
+                    if (result == DialogResult.No)
+                    {
+                        Close();
+                        return;
+                    }
+                    try
                     {
                         File.Delete(destinationFilePath);
-                        File.Copy(sourceFilePath, destinationFilePath);
+                    }
+                    catch (IOException)
+                    {
+                        MessageBox.Show("Error, the file is in use");
+                    }
+                    catch (UnauthorizedAccessException)
+                    {
+                        MessageBox.Show("Error, the acces denied");
                     }
                 }
                 else
                 {
-                    File.Copy(sourceFilePath, destinationFilePath);
+                    try
+                    {
+                        File.Copy(sourceFilePath, destinationFilePath);
+                    }
+                    catch (IOException)
+                    {
+                        MessageBox.Show("Error, the file is in use");
+                    }
+                    catch (UnauthorizedAccessException)
+                    {
+                        MessageBox.Show("Error, the acces denied");
+                    }
                 }
+
             }
             MessageBox.Show("Success");
             Close();

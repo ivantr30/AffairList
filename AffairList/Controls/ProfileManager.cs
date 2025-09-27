@@ -25,7 +25,6 @@ namespace AffairList
             _settings = settings;
             ParentElement = parent;
             KeyDownHandlers += ChangeProfileForm_KeyDown;
-            LoadProfiles();
         }
 
         private void LoadProfiles()
@@ -300,6 +299,11 @@ namespace AffairList
         {
             ProfilesExportPicker exportPicker = new ProfilesExportPicker(_profileLines, _settings);
             exportPicker.ShowDialog();
+        }
+
+        public void OnAddition()
+        {
+            LoadProfiles();
         }
     }
 }

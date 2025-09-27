@@ -27,12 +27,10 @@ namespace AffairList
 
         public AffairsManager(Settings settings, IParentable parentElement)
         {
+            InitializeComponent();
             _settings = settings;
             ParentElement = parentElement;
-            InitializeComponent();
             KeyDownHandlers += AffairsManager_KeyDown;
-            LoadProfiles();
-            LoadTextAsync();
         }
         private void LoadProfiles()
         {
@@ -50,7 +48,6 @@ namespace AffairList
                 ProfileBox.SelectedIndex = ProfileBox.Items.IndexOf(selectedProfile.Name);
             }
         }
-        // Дополнить логику тем, что инициализацию lines вынести в конструктор
         private async Task LoadTextAsync()
         {
             Affairs.Items.Clear();
@@ -90,30 +87,6 @@ namespace AffairList
                 await DeleteAffairAsync();
             }
         }
-        //protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        //{
-        //    if (keyData == _settings.GetCloseKey())
-        //    {
-        //        ParentElement.Exit();
-        //        return true;
-        //    }
-        //    if (keyData == _settings.GetReturnKey())
-        //    {
-        //        ParentElement.Return();
-        //        return true;
-        //    }
-        //    if (keyData == _addAffairKey)
-        //    {
-        //        _ = AddAffairAsync();
-        //        return true;
-        //    }
-        //    if (keyData == _deleteAffairKey)
-        //    {
-        //        _ = DeleteAffairAsync();
-        //        return true;
-        //    }
-        //    return base.ProcessCmdKey(ref msg, keyData);
-        //}
 
         private void CloseButton_Click(object sender, EventArgs e)
             => ParentElement.Exit();
@@ -149,11 +122,6 @@ namespace AffairList
             }
             if (ContainKeyWords(AffairInput.Text)) return;
 
-            if (!_settings.CurrentListNotNull())
-            {
-                await IfCurrentListDisappearedAsync();
-            }
-
             string inputText = AffairInput.Text + ".";
 
             Task appendingText = AppendTextAsync(inputText + "\n");
@@ -178,10 +146,6 @@ namespace AffairList
                 if (dialogres == DialogResult.No) return;
             }
 
-            if (!_settings.CurrentListNotNull())
-            {
-                await IfCurrentListDisappearedAsync();
-            }
             _lines.RemoveAt(Affairs.SelectedIndex);
 
             Task savingText = SaveTextAsync(_lines);
@@ -200,12 +164,6 @@ namespace AffairList
 
             Affairs.Items.RemoveAt(selectedIndex);
             await savingText;
-        }
-        private async Task IfCurrentListDisappearedAsync()
-        {
-            await _settings.SelectFirstProfileAsync();
-            if (string.IsNullOrEmpty(_settings.GetCurrentProfile()))
-                await _settings.CreateDefaultListAsync();
         }
         private async void AddAffairButton_Click(object sender, EventArgs e) => await AddAffairAsync();
         private async void DeleteButton_Click(object sender, EventArgs e) => await DeleteAffairAsync();
@@ -429,6 +387,11 @@ namespace AffairList
         private async Task AppendTextAsync(string line)
         {
             await File.AppendAllTextAsync(_settings.GetCurrentProfile(), line);
+        }
+        public void OnAddition()
+        {
+            LoadProfiles();
+            LoadTextAsync();
         }
     }
 }

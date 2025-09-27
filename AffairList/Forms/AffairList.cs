@@ -8,8 +8,8 @@
         private LoadTimeManager _loadTimeManager;
         private Settings _settings;
 
-        private Form childForm;
-        private Control mainMenu;
+        private Form _childForm;
+        private MainMenu _mainMenu;
 
         public Point LastPoint { get; set; }
 
@@ -32,8 +32,12 @@
             _trayIcon.ContextMenuStrip = _trayMenu;
             _trayIcon.Visible = true;
 
-            mainMenu = new MainMenu(_settings, _loadTimeManager, this);
-            SetControl(mainMenu);
+            _mainMenu = new MainMenu(_settings, _loadTimeManager, this);
+            SetControl(_mainMenu);
+        }
+        private void AffairList_Load(object sender, EventArgs e)
+        {
+            TopMost = true;
         }
         private void AffairList_Shown(object sender, EventArgs e)
         {
@@ -41,10 +45,14 @@
         }
         private void OnOpen(object sender, EventArgs e)
         {
+            if (_childForm != null)
+            {
+                _childForm.Show();
+                return;
+            } 
             TopMost = true;
             ShowInTaskbar = true;
             Show();
-            childForm?.Close();
         }
 
         private void OnExit(object sender, EventArgs e) => Exit();
@@ -52,15 +60,15 @@
         public void Exit()
         {
             _trayIcon.Visible = false;
-            _trayIcon.Dispose(); 
+            _trayIcon.Dispose();
             _trayMenu?.Dispose();
-            childForm?.Dispose();
+            _childForm?.Dispose();
             Application.Exit();
         }
         public void Return()
         {
-            if (Controls[0] != mainMenu)
-                SetControl(mainMenu);
+            if (Controls[0] != _mainMenu)
+                SetControl(_mainMenu);
         }
         public void MinimizeForm() => WindowState = FormWindowState.Minimized;
         public void SetControl(Control control)
@@ -81,15 +89,19 @@
             Height = control.Height;
             Controls.Clear();
             Controls.Add(control);
+            if(control is IChildable childControl)
+            {
+                childControl.OnAddition();
+            }
             Focus();
         }
         public void OpenForm(Form form)
         {
             Hide();
-            childForm = form;
-            childForm?.ShowDialog();
-            childForm?.Dispose();
-            childForm = null;
+            _childForm = form;
+            _childForm?.ShowDialog();
+            _childForm?.Dispose();
+            _childForm = null;
             Show();
         }
         public void SetLastPoint(MouseEventArgs e) => LastPoint = new Point(e.X, e.Y);
@@ -105,8 +117,8 @@
         {
             if (e.Button == MouseButtons.Left)
             {
-                childForm.Left += e.X - LastPoint.X;
-                childForm.Top += e.Y - LastPoint.Y;
+                _childForm.Left += e.X - LastPoint.X;
+                _childForm.Top += e.Y - LastPoint.Y;
             }
         }
 

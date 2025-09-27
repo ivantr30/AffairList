@@ -39,8 +39,8 @@
             FormBorderStyle = FormBorderStyle.None;
             KeyPreview = true;
             Name = "AffairList";
-            TopMost = true;
             FormClosing += AffairList_FormClosing;
+            Load += AffairList_Load;
             Shown += AffairList_Shown;
             KeyDown += AffairList_KeyDown;
             ResumeLayout(false);

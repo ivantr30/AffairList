@@ -3,5 +3,6 @@
     public interface IChildable
     {
         IParentable ParentElement { get; }
+        void OnAddition();
     }
 }
