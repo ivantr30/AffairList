@@ -183,14 +183,6 @@ namespace AffairList
             {
                 DeleteProfile(Profiles.SelectedItem.ToString());
             }
-            if (e.KeyCode == _settings.GetReturnKey())
-            {
-                ParentElement.Return();
-            }
-            if (e.KeyCode == _settings.GetCloseKey())
-            {
-                ParentElement.Exit();
-            }
         }
 
         private async void SelectProfileButton_Click(object sender, EventArgs e)
