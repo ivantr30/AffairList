@@ -73,6 +73,18 @@
         public void MinimizeForm() => WindowState = FormWindowState.Minimized;
         public void SetControl(Control control)
         {
+            if (Controls.Count > 0 && Controls[0] is IKeyPreviewable ckp)
+            {
+                KeyDown -= ckp.KeyDownHandlers;
+                KeyPress -= ckp.KeyPressHandlers;
+                KeyUp -= ckp.KeyUpHandlers;
+            }
+            if (control is IKeyPreviewable kp)
+            {
+                KeyDown += kp.KeyDownHandlers;
+                KeyPress += kp.KeyPressHandlers;
+                KeyUp += kp.KeyUpHandlers;
+            }
             Width = control.Width;
             Height = control.Height;
             Controls.Clear();

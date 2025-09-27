@@ -74,7 +74,7 @@
                 MessageBox.Show("Error, there is no list available");
                 return;
             }
-            if (_toDoList == null)
+            if (_toDoList == null || _toDoList.IsDisposed)
             {
                 _toDoList = new ToDoList(_settings, ParentElement) { canReplace = true };
             }
