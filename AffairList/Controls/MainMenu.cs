@@ -147,8 +147,12 @@
         }
         public async void OnAddition()
         {
-            _loadTimeManager.Notificate();
+            await _loadTimeManager.NotificateAsync();
             await _loadTimeManager.SaveTimeAsync();
+        }
+
+        private async void MainMenu_Load(object sender, EventArgs e)
+        {
         }
     }
 }

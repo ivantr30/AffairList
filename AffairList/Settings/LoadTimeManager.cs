@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace AffairList
 {
@@ -36,30 +35,38 @@ namespace AffairList
                 WriteBaseTime();
                 _fileLogger.LogWarning($"{DateTime.Now} LoadTimeFile wasn't present and was created");
             }
-
-            _loadTime = JsonConvert.DeserializeObject<LoadTimeModel>
-                    (File.ReadAllText(LoadTimeFileFullPath))!;
-
-            if (_loadTime == null)
+            try
+            {
+                _loadTime = JsonConvert.DeserializeObject<LoadTimeModel>
+                        (File.ReadAllText(LoadTimeFileFullPath))!;
+            }
+            catch
             {
                 WriteBaseTime();
                 _fileLogger.LogWarning(
                     $"{DateTime.Now} LoadTimeFile wasn't in right format and was rewritten");
             }
         }
-        public void Notificate()
+        public bool IsLaunchedFromAutostart()
+        {
+            string[] args = Environment.GetCommandLineArgs();
+            return args.Contains("--autostart");
+        }
+        public async Task NotificateAsync()
         {
             if (!_settings.DoesNotificate() || !ShouldNotificate()) return;
 
             _fileLogger.LogInformation($"{DateTime.Now} Starting notificating");
 
-            using NotifyIcon notification = new NotifyIcon();
-            notification.Icon = SystemIcons.Exclamation;
-            notification.BalloonTipTitle = "AffairList";
+            // Костылище ебаное, ибо блять я не виноват в том, что из-за винды оно работаёт криво
+            if(IsLaunchedFromAutostart()) await Task.Delay(1000);
+
+            using NotifyIcon notification = new NotifyIcon()
+            { Icon = SystemIcons.Exclamation, BalloonTipTitle = "AffairList", Visible = true };
 
             foreach (var profile in Directory.EnumerateFiles(_settings.listsDirectoryFullPath))
             {
-                foreach (string affair in File.ReadLines(profile))
+                await foreach (string affair in File.ReadLinesAsync(profile))
                 {
                     if (!affair.StartsWith(_deadlineTag)) continue;
 
@@ -81,12 +88,11 @@ namespace AffairList
                     else
                         notification.BalloonTipText = AffairWithoutTags(affair) + " - просрочено";
 
-                    notification.Visible = true;
-                    notification.ShowBalloonTip(1);
+                    notification.ShowBalloonTip(3000);
                 }
             }
+            _fileLogger.LogInformation($"{DateTime.Now} notified");
         }
-
         private bool ShouldNotificate()
         {
             return (GetPreviousLoadTime().Date != DateTime.Now.Date) || (DateTime.Now.Hour - GetPreviousLoadTime().Hour >= 8);

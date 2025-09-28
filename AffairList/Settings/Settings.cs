@@ -78,6 +78,8 @@ namespace AffairList
             {
                 SelectFirstProfile();
             }
+            if(DoesAutostart()) EnableAutoStart();
+            else DisableAutoStart();
         }
         private void LoadSettings()
         {
@@ -129,8 +131,9 @@ namespace AffairList
             IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutPath);
             
             shortcut.Description = "AffairList";
-            shortcut.TargetPath = Application.ExecutablePath;     
+            shortcut.TargetPath = Application.ExecutablePath;    
             shortcut.WorkingDirectory = Application.StartupPath;
+            shortcut.Arguments = "--autostart";
 
             shortcut.Save();
         }
