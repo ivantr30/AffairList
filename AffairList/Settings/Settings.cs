@@ -12,64 +12,112 @@ namespace AffairList
 
         public readonly string listsDirectoryFullPath;
         public readonly string settingsFileFullPath;
+        public readonly string logFileFullPath;
 
         public readonly int screenWidth;
         public readonly int screenHeight;
 
         private SettingsModel _settings;
 
+        private FileLogger _fileLogger;
+
         public Settings()
         {
             if (AffairListDebug.DEBUG)
             {
                 programDirectoryFolderFullPath += @"Debug\";
-                listsDirectoryFullPath = $@"{programDirectoryFolderFullPath}profiles\";
-                _defaultListFileFullPath = $@"{listsDirectoryFullPath}list.txt";
-                settingsFileFullPath = $@"{programDirectoryFolderFullPath}settings.json";
             }
-            else
-            {
-                listsDirectoryFullPath = $@"{programDirectoryFolderFullPath}profiles\";
-                _defaultListFileFullPath = $@"{listsDirectoryFullPath}list.txt";
-                settingsFileFullPath = $@"{programDirectoryFolderFullPath}settings.json";
-            }
+            listsDirectoryFullPath = $@"{programDirectoryFolderFullPath}profiles\";
+            _defaultListFileFullPath = $@"{listsDirectoryFullPath}list.txt";
+            settingsFileFullPath = $@"{programDirectoryFolderFullPath}settings.json";
+            logFileFullPath = $@"{programDirectoryFolderFullPath}logs.txt";
 
             screenWidth = Screen.PrimaryScreen!.WorkingArea.Width;
             screenHeight = Screen.PrimaryScreen.WorkingArea.Height;
 
-            InitializeAsync();
+            _fileLogger = new FileLogger(logFileFullPath);
+
+            Initialize();
         }
         private async Task InitializeAsync()
         {
-            if(!ProgramDirectoryExists()) CreateProgramDirectory();
-            if(!SettingsFileExists()) await CreateSettingsFileAsync();
-            if(!ListsDirectoryExists()) CreateListsDirectory();
+            if (!LogFileExists()) CreateLogFile();
+            if (!ProgramDirectoryExists()) CreateProgramDirectory();
+            if (!SettingsFileExists()) await CreateSettingsFileAsync();
+            if (!ListsDirectoryExists()) CreateListsDirectory();
             try
             {
-                _settings = JsonConvert.DeserializeObject<SettingsModel>
-                    (System.IO.File.ReadAllText(settingsFileFullPath))!;
+                await LoadSettingsAsync();
             }
             catch
             {
                 await WriteBaseSettingsAsync();
+                _fileLogger.LogError($"{DateTime.Now} settings file was not valid");
             }
             if (!System.IO.File.Exists(GetCurrentProfile()))
             {
                 await SelectFirstProfileAsync();
             }
         }
+        private void Initialize()
+        {
+            if (!LogFileExists()) CreateLogFile();
+            if (!ProgramDirectoryExists()) CreateProgramDirectory();
+            if (!SettingsFileExists()) CreateSettingsFile();
+            if (!ListsDirectoryExists()) CreateListsDirectory();
+            try
+            {
+                LoadSettings();
+            }
+            catch
+            {
+                WriteBaseSettings();
+                _fileLogger.LogError($"{DateTime.Now} settings file was not valid");
+            }
+            if (!System.IO.File.Exists(GetCurrentProfile()))
+            {
+                SelectFirstProfile();
+            }
+        }
+        private void LoadSettings()
+        {
+            _settings = JsonConvert.DeserializeObject<SettingsModel>
+                    (System.IO.File.ReadAllText(settingsFileFullPath))!;
+            _fileLogger.LogInformation($"{DateTime.Now} settings were loaded succesfully");
+        }
+        private async Task LoadSettingsAsync()
+        {
+            _settings = JsonConvert.DeserializeObject<SettingsModel>
+                    (await System.IO.File.ReadAllTextAsync(settingsFileFullPath))!;
+            _fileLogger.LogInformation($"{DateTime.Now} settings were loaded succesfully");
+        }
         public async Task WriteBaseSettingsAsync()
         {
-            Task writingBaseSettings = System.IO.File.WriteAllTextAsync(settingsFileFullPath,
-                JsonConvert.SerializeObject(new SettingsModel()));
             _settings = new SettingsModel();
-            await writingBaseSettings;
+            await System.IO.File.WriteAllTextAsync(settingsFileFullPath,
+                JsonConvert.SerializeObject(_settings));
+            _fileLogger.LogInformation($"{DateTime.Now} settings were dropped to default succesfully");
+        }
+        public void WriteBaseSettings()
+        {
+            _settings = new SettingsModel();
+            System.IO.File.WriteAllText(settingsFileFullPath,
+                JsonConvert.SerializeObject(_settings));
+            _fileLogger.LogInformation($"{DateTime.Now} settings were dropped to default succesfully");
         }
         public async Task SelectFirstProfileAsync()
         {
             Directory.GetFiles(listsDirectoryFullPath);
             SetCurrentProfile(Directory.EnumerateFiles(listsDirectoryFullPath).First());
             await SaveSettingsAsync();
+            _fileLogger.LogInformation($"{DateTime.Now} first profile was selected succesfully");
+        }
+        public void SelectFirstProfile()
+        {
+            Directory.GetFiles(listsDirectoryFullPath);
+            SetCurrentProfile(Directory.EnumerateFiles(listsDirectoryFullPath).First());
+            SaveSettings();
+            _fileLogger.LogInformation($"{DateTime.Now} first profile was selected succesfully");
         }
         public void EnableAutoStart()
         {
@@ -116,6 +164,10 @@ namespace AffairList
         {
             return Directory.Exists(listsDirectoryFullPath);
         }
+        public bool LogFileExists()
+        {
+            return System.IO.File.Exists(logFileFullPath);
+        }
         public bool CurrentListNotNull()
         {
             return System.IO.File.Exists(GetCurrentProfile());
@@ -124,25 +176,58 @@ namespace AffairList
         {
             using (System.IO.File.Create(settingsFileFullPath)) { }
             await WriteBaseSettingsAsync();
+            _fileLogger.LogInformation(
+                $"{DateTime.Now} settings was created");
+        }
+        public void CreateSettingsFile()
+        {
+            using (System.IO.File.Create(settingsFileFullPath)) { }
+            _fileLogger.LogInformation(
+                $"{DateTime.Now} settings was created");
+            WriteBaseSettings();
         }
         public void CreateListsDirectory()
         {
             Directory.CreateDirectory(listsDirectoryFullPath);
+            _fileLogger.LogInformation(
+                $"{DateTime.Now} lists directory was created");
         }
         public async Task CreateDefaultListAsync()
         {
             using (System.IO.File.Create(_defaultListFileFullPath)) { }
             SetCurrentProfile(_defaultListFileFullPath);
             await SaveSettingsAsync();
+            _fileLogger.LogInformation(
+                $"{DateTime.Now} default list was created");
+        }
+        public void CreateDefaultList()
+        {
+            using (System.IO.File.Create(_defaultListFileFullPath)) { }
+            SetCurrentProfile(_defaultListFileFullPath);
+            SaveSettings();
+            _fileLogger.LogInformation(
+                $"{DateTime.Now} default list was created");
         }
         public void CreateProgramDirectory()
         {
             Directory.CreateDirectory(programDirectoryFolderFullPath);
+            _fileLogger.LogInformation(
+                $"{DateTime.Now} program directory was created");
+        }
+        public void CreateLogFile()
+        {
+            using(System.IO.File.Create(logFileFullPath)) { }
+            _fileLogger.LogInformation(
+                $"{DateTime.Now} log file was created");
         }
         public async Task SaveSettingsAsync()
         {
             await System.IO.File.WriteAllTextAsync(settingsFileFullPath, 
                 JsonConvert.SerializeObject(_settings));
+        }
+        public void SaveSettings()
+        {
+            System.IO.File.WriteAllText(settingsFileFullPath, JsonConvert.SerializeObject(_settings));
         }
         public void SetCurrentProfile(string fullPath)
         {

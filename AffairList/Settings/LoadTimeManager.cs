@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System.Runtime;
+﻿using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace AffairList
 {
@@ -15,28 +15,43 @@ namespace AffairList
 
         private Settings _settings;
 
-        public LoadTimeManager(Settings settings)
-        { 
-            LoadTimeFileFullPath = $@"{settings.programDirectoryFolderFullPath}\loadtime.json";
+        private FileLogger _fileLogger;
 
+        public LoadTimeManager(Settings settings)
+        {
             _settings = settings;
 
+            LoadTimeFileFullPath = $@"{_settings.programDirectoryFolderFullPath}\loadtime.json";
+
+            _fileLogger = new FileLogger(_settings.logFileFullPath);
+
             Initialize();
-            Notificate();
         }
 
         public void Initialize()
         {
-            if (!LoadTimeFileExist()) CreateLoadTimeFile();
+            if (!LoadTimeFileExist())
+            {
+                CreateLoadTimeFile();
+                WriteBaseTime();
+                _fileLogger.LogWarning($"{DateTime.Now} LoadTimeFile wasn't present and was created");
+            }
 
             _loadTime = JsonConvert.DeserializeObject<LoadTimeModel>
                     (File.ReadAllText(LoadTimeFileFullPath))!;
 
-            if (_loadTime == null) WriteBaseTimeAsync();
+            if (_loadTime == null)
+            {
+                WriteBaseTime();
+                _fileLogger.LogWarning(
+                    $"{DateTime.Now} LoadTimeFile wasn't in right format and was rewritten");
+            }
         }
         public void Notificate()
         {
             if (!_settings.DoesNotificate() || !ShouldNotificate()) return;
+
+            _fileLogger.LogInformation($"{DateTime.Now} Starting notificating");
 
             using NotifyIcon notification = new NotifyIcon();
             notification.Icon = SystemIcons.Exclamation;
@@ -80,11 +95,11 @@ namespace AffairList
         {
             return affair.Remove(0, 10).Replace(_priorityTag, _priorityWord);
         }
-        private async Task WriteBaseTimeAsync()
+        private void WriteBaseTime()
         {
             _loadTime = new LoadTimeModel();
-            await File.WriteAllTextAsync(LoadTimeFileFullPath, 
-                JsonConvert.SerializeObject(_loadTime));
+            File.WriteAllText(LoadTimeFileFullPath, JsonConvert.SerializeObject(_loadTime));
+            _fileLogger.LogInformation($"{DateTime.Now} load time was set to base");
         }
 
         public async Task SaveTimeAsync()
@@ -100,6 +115,7 @@ namespace AffairList
         public void CreateLoadTimeFile()
         {
             using (File.Create(LoadTimeFileFullPath)) { }
+            _fileLogger.LogInformation($"{DateTime.Now} load time file was created");
         }
         public DateTime GetPreviousLoadTime()
         {

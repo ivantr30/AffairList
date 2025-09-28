@@ -43,7 +43,7 @@ namespace AffairList
             }
             if (profilesCount > 0)
             {
-                if(!File.Exists(_settings.GetCurrentProfile())) _settings.SelectFirstProfileAsync();
+                if(!File.Exists(_settings.GetCurrentProfile())) _settings.SelectFirstProfile();
                 FileInfo selectedProfile = new FileInfo(_settings.GetCurrentProfile());
                 ProfileBox.SelectedIndex = ProfileBox.Items.IndexOf(selectedProfile.Name);
             }
@@ -71,7 +71,8 @@ namespace AffairList
                     }
                     Affairs.Items.Add(currentLine);
                 }
-                if (_selectedAffairIndex != -1 && Affairs.Items.Count > 0) Affairs.SelectedIndex = _selectedAffairIndex;
+                if (_selectedAffairIndex != -1 && Affairs.Items.Count > 0) 
+                    Affairs.SelectedIndex = _selectedAffairIndex;
                 else if (Affairs.Items.Count > 0) Affairs.SelectedIndex = 0;
             }
         }
@@ -388,10 +389,10 @@ namespace AffairList
         {
             await File.AppendAllTextAsync(_settings.GetCurrentProfile(), line);
         }
-        public void OnAddition()
+        public async void OnAddition()
         {
             LoadProfiles();
-            LoadTextAsync();
+            await LoadTextAsync();
         }
     }
 }

@@ -390,24 +390,40 @@ namespace AffairList
             ExportSettingsFileDialog.ShowDialog();
             if (string.IsNullOrEmpty(ExportSettingsFileDialog.SelectedPath)) return;
             string destSettingsFilePath = ExportSettingsFileDialog.SelectedPath + "\\settings.json";
-            try
+            if (File.Exists(destSettingsFilePath))
             {
-                if (File.Exists(destSettingsFilePath))
+                DialogResult rewriteOrCancel = MessageBox
+                    .Show("File with this name already exists there, rewrite it?"
+                    , "Rewrite or cancel"
+                    , MessageBoxButtons.YesNo);
+                if (rewriteOrCancel == DialogResult.No) return;
+                try
                 {
-                    DialogResult rewriteOrCancel = MessageBox
-                        .Show("File with this name already exists there, rewrite it?"
-                        , "Rewrite or cancel"
-                        , MessageBoxButtons.YesNo);
-                    if (rewriteOrCancel == DialogResult.No) return;
                     File.Delete(destSettingsFilePath);
                 }
-                File.Copy(_settings.settingsFileFullPath, destSettingsFilePath);
-                MessageBox.Show("Settings config was exported succesfully");
+                catch (IOException)
+                {
+                    MessageBox.Show("Error, the file is in use");
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    MessageBox.Show("Error, the acces denied");
+                }
             }
-            catch
+            try
             {
-                MessageBox.Show("Error during file copying operation");
+                File.Copy(_settings.settingsFileFullPath, destSettingsFilePath);
             }
+            catch (IOException)
+            {
+                MessageBox.Show("Error, the file is in use");
+            }
+            catch (UnauthorizedAccessException)
+            {
+                MessageBox.Show("Error, the acces denied");
+            }
+
+            MessageBox.Show("Settings config was exported succesfully");
         }
 
         private void ThemeBoxCB_SelectedValueChanged(object sender, EventArgs e)
