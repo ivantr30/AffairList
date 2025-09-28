@@ -35,6 +35,7 @@ namespace AffairList
         private void LoadProfiles()
         {
             int profilesCount = 0;
+            ProfileBox.Items.Clear();
             foreach (string profile in Directory.EnumerateFiles(_settings.listsDirectoryFullPath))
             {
                 profilesCount++;

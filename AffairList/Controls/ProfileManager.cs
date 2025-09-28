@@ -173,7 +173,7 @@ namespace AffairList
 
         private void ClearButton_Click(object sender, EventArgs e) => ProfileInput.Clear();
 
-        private void ChangeProfileForm_KeyDown(object sender, KeyEventArgs e)
+        private async void ChangeProfileForm_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {

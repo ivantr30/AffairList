@@ -125,7 +125,7 @@
         private void AffairList_FormClosing(object sender, FormClosingEventArgs e)
             => Exit();
 
-        private void AffairList_KeyDown(object sender, KeyEventArgs e)
+        private async void AffairList_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == _settings.GetCloseKey())
             {
