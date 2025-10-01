@@ -10,6 +10,7 @@ namespace AffairList
         public bool canReplace { get; set; }
 
         private string _priorityTag = "<priority>";
+        private string _priorityWord = " Priority";
         private string _deadlineTag = "<deadline>";
         public IParentable ParentElement { get; set; }
         private Settings _settings;
@@ -60,8 +61,7 @@ namespace AffairList
                     currentAffair = affair;
                     if (currentAffair.EndsWith(_priorityTag))
                     {
-                        currentAffair = currentAffair
-                            .Substring(0, currentAffair.Length - _priorityTag.Length);
+                        currentAffair = currentAffair.Replace($". {_priorityTag}", $"{_priorityWord}.");
                     }
                     if (currentAffair.StartsWith(_deadlineTag))
                     {

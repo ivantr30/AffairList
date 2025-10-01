@@ -124,7 +124,7 @@ namespace AffairList
             }
             if (ContainKeyWords(AffairInput.Text)) return;
 
-            string inputText = AffairInput.Text + ".";
+            string inputText = CapitalizeAffair(AffairInput.Text) + ".";
 
             Task appendingText = AppendTextAsync(inputText + "\n");
 
@@ -253,6 +253,8 @@ namespace AffairList
             if (ContainKeyWords(renaming)) return;
             if (string.IsNullOrEmpty(renaming)) return;
 
+            renaming = CapitalizeAffair(renaming);
+
             selectedWord = selectedWord.Replace(affair, renaming);
 
             _lines[Affairs.SelectedIndex] = selectedWord;
@@ -294,6 +296,11 @@ namespace AffairList
             Task savingText = SaveTextAsync(_lines);
             Task loadingText = LoadTextAsync();
             await Task.WhenAll(savingText, loadingText);
+        }
+
+        private string CapitalizeAffair(string affair)
+        {
+            return char.ToUpper(affair[0]) + affair[1..];
         }
         private void Affairs_MouseDown(object sender, MouseEventArgs e)
         {

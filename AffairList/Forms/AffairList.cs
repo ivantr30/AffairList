@@ -102,7 +102,9 @@
             _childForm?.ShowDialog();
             _childForm?.Dispose();
             _childForm = null;
+            TopMost = true;
             Show();
+            TopMost = false;
         }
         public void SetLastPoint(MouseEventArgs e) => LastPoint = new Point(e.X, e.Y);
         public void MoveForm(MouseEventArgs e)

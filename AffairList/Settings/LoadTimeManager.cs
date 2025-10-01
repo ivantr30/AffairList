@@ -47,26 +47,18 @@ namespace AffairList
                     $"{DateTime.Now} LoadTimeFile wasn't in right format and was rewritten");
             }
         }
-        public bool IsLaunchedFromAutostart()
-        {
-            string[] args = Environment.GetCommandLineArgs();
-            return args.Contains("--autostart");
-        }
-        public async Task NotificateAsync()
+        public void Notificate()
         {
             if (!_settings.DoesNotificate() || !ShouldNotificate()) return;
 
             _fileLogger.LogInformation($"{DateTime.Now} Starting notificating");
 
-            // Костылище ебаное, ибо блять я не виноват в том, что из-за винды оно работаёт криво
-            if(IsLaunchedFromAutostart()) await Task.Delay(1000);
-
             using NotifyIcon notification = new NotifyIcon()
-            { Icon = SystemIcons.Exclamation, BalloonTipTitle = "AffairList", Visible = true };
+            { Icon = SystemIcons.Exclamation, BalloonTipTitle = "AffairList", Visible = true};
 
-            foreach (var profile in Directory.EnumerateFiles(_settings.listsDirectoryFullPath))
+            foreach (var profile in Directory.GetFiles(_settings.listsDirectoryFullPath))
             {
-                await foreach (string affair in File.ReadLinesAsync(profile))
+                foreach (string affair in File.ReadAllLines(profile))
                 {
                     if (!affair.StartsWith(_deadlineTag)) continue;
 
@@ -79,7 +71,7 @@ namespace AffairList
                     {
                         TimeSpan day = new TimeSpan(24, 0, 0);
                         TimeSpan now = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
-                        notification.BalloonTipText = AffairWithoutTags(affair) + 
+                        notification.BalloonTipText = AffairWithoutTags(affair) +
                             $" - осталось {day - now}";
                     }
                     else if (daysLeft > 0)
@@ -88,7 +80,7 @@ namespace AffairList
                     else
                         notification.BalloonTipText = AffairWithoutTags(affair) + " - просрочено";
 
-                    notification.ShowBalloonTip(3000);
+                    notification.ShowBalloonTip(1000);
                 }
             }
             _fileLogger.LogInformation($"{DateTime.Now} notified");
@@ -112,6 +104,11 @@ namespace AffairList
         {
             SetPreviousLoadTime(DateTime.Now);
             await File.WriteAllTextAsync(LoadTimeFileFullPath, JsonConvert.SerializeObject(_loadTime));
+        }
+        public void SaveTime()
+        {
+            SetPreviousLoadTime(DateTime.Now);
+            File.WriteAllText(LoadTimeFileFullPath, JsonConvert.SerializeObject(_loadTime));
         }
 
         public bool LoadTimeFileExist()
