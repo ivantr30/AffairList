@@ -54,7 +54,7 @@ namespace AffairList
             _fileLogger.LogInformation($"{DateTime.Now} Starting notificating");
 
             using NotifyIcon notification = new NotifyIcon()
-            { Icon = SystemIcons.Exclamation, BalloonTipTitle = "AffairList", Visible = true};
+            { Icon = SystemIcons.Exclamation, BalloonTipTitle = "AffairList", Visible = true };
 
             foreach (var profile in Directory.GetFiles(_settings.listsDirectoryFullPath))
             {

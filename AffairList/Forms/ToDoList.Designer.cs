@@ -55,6 +55,8 @@
             FormBorderStyle = FormBorderStyle.None;
             Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "ToDoList";
             Text = "List";
             TransparencyKey = Color.Black;
