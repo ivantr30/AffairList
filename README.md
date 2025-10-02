@@ -45,13 +45,18 @@
     * Allows you to change buttons to close the program or return to main form
 
 ## Installation
-  * To download any of the version you should open Releases at the main github repository page and there download version you want
-  * If you have .NET platform installed download "AffairListWithDotNet"
-  * In the other case download "AffairList"
-  * You don't need to download uninstaller separately, only if you accidently deleted it and need it back
-  * After downloading the rar file unrar it and run AffairList.exe
+  * __Step 1__: To download any of the version you should open Releases at the main github repository page and there download the version you want
+  * __Step 2__: If you have .NET platform installed download "AffairListWithDotNet"
+  * __Step 2 Alternative__: In the other case download "AffairList"
+  * __Step 4__: After downloading the rar file unrar it and run AffairList.exe
+  * __Step 5__: Excellent, now you have installed AffairList(if there are some problems with it dm me)
+## Uninstallation
+  * __Step 1__: If you turn on notificating turn it off before deleting the program, or if you have already deleted it the autostart link file is stored in the windows autostart folder and you can just delete it from there. Why you should do that? if you don't want to see a deleted program in the autostart list(for example in task manager)
+  * __Step 2__: Then, you can just delete the folder with all it's files or run unistall.bat
+  * __Step 3__: if you want to delete ALL AffairList's files(settings, logs, your lists) delete AffairList folder which are stored in this path -> __DiskName:\Users\YourUserName\AppData\Roaming\AffairList__
 ___
 ## Additional Information
+I have a figma board about my program(tech stack, near future plans, etc.) -> [AdditionalInformation](https://www.figma.com/board/vvslo4P5bBi9AcwdXShUim/AffairListPres?node-id=0-1&p=f&t=mmNOrSIPd5xV5Qye-0)
 
 The project is in active developing and am trying to add as many good features as i can.
 - [ ] In the near future i will add accounts and list syncronizations
