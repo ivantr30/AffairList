@@ -13,10 +13,13 @@
         public bool autostartState { get; set; } = false;
         public bool askToDelete { get; set; } = true;
         public bool DoesNotificate { get; set; } = true;
+        // For ToDoList.cs
+        public bool CanBeAlwaysReplaced { get; set; } = false;
 
         public int x { get; set; } = 0;
         public int y { get; set; } = 0;
         public uint notificationDayDistance { get; set; } = 1;
+        public uint notificationHourDistance { get; set; } = 8;
 
     }
 }

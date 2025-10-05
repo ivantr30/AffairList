@@ -94,15 +94,25 @@ namespace AffairList
         public async Task WriteBaseSettingsAsync()
         {
             _settings = new SettingsModel();
+
+            if (_settings.autostartState) EnableAutoStart();
+            else DisableAutoStart();
+
             await System.IO.File.WriteAllTextAsync(settingsFileFullPath,
                 JsonConvert.SerializeObject(_settings));
+
             _fileLogger.LogInformation($"{DateTime.Now} settings were dropped to default succesfully");
         }
         public void WriteBaseSettings()
         {
             _settings = new SettingsModel();
+
+            if(_settings.autostartState) EnableAutoStart();
+            else DisableAutoStart();
+
             System.IO.File.WriteAllText(settingsFileFullPath,
                 JsonConvert.SerializeObject(_settings));
+
             _fileLogger.LogInformation($"{DateTime.Now} settings were dropped to default succesfully");
         }
         public async Task SelectFirstProfileAsync()
@@ -289,14 +299,37 @@ namespace AffairList
         {
             return _settings.DoesNotificate;
         }
-        public void SetDoesNotificate(bool doesNotificate) => _settings.DoesNotificate = doesNotificate;
+        public void SetDoesNotificate(bool doesNotificate) 
+            => _settings.DoesNotificate = doesNotificate;
         public uint GetNotificationDayDistance()
         {
             return _settings.notificationDayDistance;
         }
-        public void SetNotificationDayDistance(uint notificationDistance)
+        public void SetNotificationDayDistance(uint notificationDayDistance)
         {
-            _settings.notificationDayDistance = notificationDistance;
+            _settings.notificationDayDistance = notificationDayDistance;
         }
+        public uint GetNotificationHourDistance()
+        {
+            return _settings.notificationHourDistance;
+        }
+        public void SetNotificationHourDistance(uint notificationHourDistance)
+        {
+            _settings.notificationHourDistance = notificationHourDistance;
+        }
+        /// <summary>
+        /// For ToDoList.cs
+        /// </summary>
+        /// <returns></returns>
+        public bool CanBeAlwaysReplaced()
+        {
+            return _settings.CanBeAlwaysReplaced;
+        }
+        /// <summary>
+        /// For ToDoList.cs
+        /// </summary>
+        /// <returns></returns>
+        public void SetAlwaysReplacing(bool canBeAlwaysReplace)
+            => _settings.CanBeAlwaysReplaced = canBeAlwaysReplace;
     }
 }

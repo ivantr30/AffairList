@@ -3,8 +3,8 @@
     public partial class HotKeySettingsManager : UserControl, IChildable
     {
         private bool _isConfirmed = true;
-        private Keys _newCloseKey;
-        private Keys _newReturnKey;
+        private Keys _сloseKey;
+        private Keys _returnKey;
 
         private Settings _settings;
 
@@ -20,6 +20,8 @@
         }
         private void LoadSettings()
         {
+            _сloseKey = _settings.GetCloseKey();
+            _returnKey = _settings.GetReturnKey();
             CloseKeyType.Text = _settings.GetCloseKey().ToString();
             BackKeyType.Text = _settings.GetReturnKey().ToString();
         }
@@ -57,40 +59,69 @@
 
         private async void ConfirmButton_Click(object sender, EventArgs e)
         {
-            _hotkeysUpdater?.GetInvocationList();
             _hotkeysUpdater?.Invoke();
             await _settings.SaveSettingsAsync();
             _isConfirmed = true;
         }
         private void CloseKeyType_DoubleClick(object sender, EventArgs e)
         {
-            _newCloseKey = SetKey();
-            if (_newCloseKey == Keys.Escape) return;
+            Keys inputKey = SetKey();
+
+            if (IsKeyEscape(ref inputKey)) return;
+
+           if(inputKey == _returnKey)
+           {
+                BackKeyType.Text = CloseKeyType.Text;
+                SwitchKeys(ref _returnKey, ref _сloseKey, SetReturnKey);
+           }
+
+            _сloseKey = inputKey;
 
             _hotkeysUpdater -= SetCloseKey;
             _hotkeysUpdater += SetCloseKey;
-            CloseKeyType.Text = _newCloseKey.ToString();
+            CloseKeyType.Text = _сloseKey.ToString();
             _isConfirmed = false;
+        }
+        
+        private void SwitchKeys(ref Keys firstKey, ref Keys secondKey, Action keySetter)
+        {
+            firstKey = secondKey;
+            _hotkeysUpdater -= keySetter;
+            _hotkeysUpdater += keySetter;
+        }
+        
+        private bool IsKeyEscape(ref Keys key)
+        {
+            return key == Keys.Escape;
         }
 
         private void SetCloseKey()
         {
-            _settings.SetCloseKey(_newCloseKey);
+            _settings.SetCloseKey(_сloseKey);
         }
 
         private void SetReturnKey()
         {
-            _settings.SetReturnKey(_newReturnKey);
+            _settings.SetReturnKey(_returnKey);
         }
 
         private void BackKeyType_DoubleClick(object sender, EventArgs e)
         {
-            _newReturnKey = SetKey();
-            if (_newReturnKey == Keys.Escape) return;
+            Keys inputKey = SetKey();
+
+            if (IsKeyEscape(ref inputKey)) return;
+
+            if (inputKey == _сloseKey)
+            {
+                CloseKeyType.Text = BackKeyType.Text;
+                SwitchKeys(ref _сloseKey, ref _returnKey, SetCloseKey);
+            }
+
+            _returnKey = inputKey;
 
             _hotkeysUpdater -= SetReturnKey;
             _hotkeysUpdater += SetReturnKey;
-            BackKeyType.Text = _newReturnKey.ToString();
+            BackKeyType.Text = _returnKey.ToString();
             _isConfirmed = false;
         }
         private Keys SetKey()

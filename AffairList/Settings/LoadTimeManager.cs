@@ -96,7 +96,8 @@ namespace AffairList
         }
         private bool ShouldNotificate()
         {
-            return (GetPreviousLoadTime().Date != DateTime.Now.Date) || (DateTime.Now.Hour - GetPreviousLoadTime().Hour >= 8);
+            return (GetPreviousLoadTime().Date != DateTime.Now.Date) ||
+            (DateTime.Now.Hour - GetPreviousLoadTime().Hour >= _settings.GetNotificationHourDistance());
         }
         private string AffairWithoutTags(string affair)
         {
