@@ -57,8 +57,6 @@
             SettingsLab = new Label();
             ColorPicker = new ColorDialog();
             ExportSettingsFileDialog = new FolderBrowserDialog();
-            vScrollBar1 = new VScrollBar();
-            SettingsPanel = new Panel();
             panel1.SuspendLayout();
             NameBackground.SuspendLayout();
             SuspendLayout();
@@ -153,8 +151,6 @@
             // 
             resources.ApplyResources(panel1, "panel1");
             panel1.BackColor = Color.FromArgb(72, 3, 111);
-            panel1.Controls.Add(SettingsPanel);
-            panel1.Controls.Add(vScrollBar1);
             panel1.Controls.Add(ExportButton);
             panel1.Controls.Add(DistanceToNotificate);
             panel1.Controls.Add(DistanceToNotificateLab);
@@ -282,16 +278,6 @@
             // 
             resources.ApplyResources(ExportSettingsFileDialog, "ExportSettingsFileDialog");
             // 
-            // vScrollBar1
-            // 
-            resources.ApplyResources(vScrollBar1, "vScrollBar1");
-            vScrollBar1.Name = "vScrollBar1";
-            // 
-            // SettingsPanel
-            // 
-            resources.ApplyResources(SettingsPanel, "SettingsPanel");
-            SettingsPanel.Name = "SettingsPanel";
-            // 
             // SettingsManager
             // 
             resources.ApplyResources(this, "$this");
@@ -334,7 +320,5 @@
         private Label SettingsLab;
         private ColorDialog ColorPicker;
         private FolderBrowserDialog ExportSettingsFileDialog;
-        private Panel SettingsPanel;
-        private VScrollBar vScrollBar1;
     }
 }
