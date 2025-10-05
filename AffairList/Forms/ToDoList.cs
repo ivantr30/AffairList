@@ -104,21 +104,27 @@ namespace AffairList
         private void List_MouseUp(object sender, MouseEventArgs e) => OnListMouseUpAsync(e);
         private void OnListMouseDown(MouseEventArgs e)
         {
-            if (canReplace) ParentElement.SetLastPoint(e);
+            if (canReplace || _settings.CanBeAlwaysReplaced()) ParentElement.SetLastPoint(e);
         }
         private void OnListMouseMove(MouseEventArgs e)
         {
-            if (canReplace) ParentElement.MoveChildForm(e);
+            if (canReplace || _settings.CanBeAlwaysReplaced()) ParentElement.MoveChildForm(e);
         }
         private async void OnListMouseUpAsync(MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left && canReplace)
+            if (canReplace)
             {
                 canReplace = false;
                 _settings.SetProfileX(Left + Affairs.Left);
                 _settings.SetProfileY(Top + Affairs.Top);
                 await _settings.SaveSettingsAsync();
                 Close();
+            }
+            else if(_settings.CanBeAlwaysReplaced())
+            {
+                _settings.SetProfileX(Left + Affairs.Left);
+                _settings.SetProfileY(Top + Affairs.Top);
+                await _settings.SaveSettingsAsync();
             }
         }
         public Label GetAffairs()

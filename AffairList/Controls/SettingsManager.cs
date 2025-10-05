@@ -13,7 +13,8 @@ namespace AffairList
 
         private int _newX;
         private int _newY;
-        private uint _newDistanceToNotificate;
+        private uint _newDayDistanceToNotificate;
+        private uint _newHourDistanceToNotificate;
 
         private Color _newTextColor;
         private Color _newBgColor;
@@ -55,7 +56,16 @@ namespace AffairList
             {
                 NotificationState.Text = "OFF";
             }
-            DistanceToNotificate.Text = _settings.GetNotificationDayDistance().ToString();
+            if (_settings.CanBeAlwaysReplaced())
+            {
+                TodoListAlwaysReplacableState.Text = "On";
+            }
+            else
+            {
+                TodoListAlwaysReplacableState.Text = "OFF";
+            }
+            DayDistanceToNotificateState.Text = _settings.GetNotificationDayDistance().ToString();
+            HourDistanceToNotificateState.Text = _settings.GetNotificationHourDistance().ToString();
         }
         private bool CanLeave()
         {
@@ -75,7 +85,7 @@ namespace AffairList
         }
         private void CloseButton_Click(object sender, EventArgs e)
         {
-            if(CanLeave()) ParentElement.Exit();
+            if (CanLeave()) ParentElement.Exit();
         }
 
         private void CloseButton_MouseEnter(object sender, EventArgs e)
@@ -131,7 +141,7 @@ namespace AffairList
 
         private void autostartStateLab_MouseDown(object sender, MouseEventArgs e)
         {
-            if (_settingsUpdater != null && 
+            if (_settingsUpdater != null &&
                 _settingsUpdater.GetInvocationList().Contains(ToggleAutostartState))
             {
                 _settingsUpdater -= ToggleAutostartState;
@@ -148,7 +158,7 @@ namespace AffairList
         private void ToggleAutostartState()
         {
             _settings.SetAutostart(!_settings.DoesAutostart());
-            if(_newAutostartState) _settings.EnableAutoStart();
+            if (_newAutostartState) _settings.EnableAutoStart();
             else _settings.DisableAutoStart();
         }
 
@@ -278,7 +288,7 @@ namespace AffairList
 
         private void AskToDeleteState_MouseDown(object sender, MouseEventArgs e)
         {
-            if (_settingsUpdater != null && 
+            if (_settingsUpdater != null &&
                 _settingsUpdater.GetInvocationList().Contains(ToggleAskToDeleteState))
             {
                 _settingsUpdater -= ToggleAskToDeleteState;
@@ -321,7 +331,7 @@ namespace AffairList
 
         private void NotificationState_MouseDown(object sender, MouseEventArgs e)
         {
-            if (_settingsUpdater != null && 
+            if (_settingsUpdater != null &&
                 _settingsUpdater.GetInvocationList().Contains(ToggleNotificating))
             {
                 _settingsUpdater -= ToggleNotificating;
@@ -350,12 +360,12 @@ namespace AffairList
         }
         private void DistanceToNotificate_MouseEnter(object sender, EventArgs e)
         {
-            DistanceToNotificate.ForeColor = Color.Gray;
+            DayDistanceToNotificateState.ForeColor = Color.Gray;
         }
 
         private void DistanceToNotificate_MouseLeave(object sender, EventArgs e)
         {
-            DistanceToNotificate.ForeColor = Color.White;
+            DayDistanceToNotificateState.ForeColor = Color.White;
         }
 
         private void DistanceToNotificate_DoubleClick(object sender, EventArgs e)
@@ -365,12 +375,12 @@ namespace AffairList
                 uint distanceToNotificate = uint.Parse(Interaction.InputBox(
                     "Enter how many days far from the deadline you want to be notified",
                     "Day distance to notificate input box",
-                    _settings.GetNotificationDayDistance().ToString()));
+                    DayDistanceToNotificateState.Text));
 
-                _newDistanceToNotificate = distanceToNotificate;
-                _settingsUpdater -= SetDistanceToNotificate;
-                _settingsUpdater += SetDistanceToNotificate;
-                DistanceToNotificate.Text = distanceToNotificate.ToString();
+                _newDayDistanceToNotificate = distanceToNotificate;
+                _settingsUpdater -= SetDayDistanceToNotificate;
+                _settingsUpdater += SetDayDistanceToNotificate;
+                DayDistanceToNotificateState.Text = distanceToNotificate.ToString();
                 _isConfirmed = false;
             }
             catch
@@ -379,9 +389,9 @@ namespace AffairList
             }
         }
 
-        private void SetDistanceToNotificate()
+        private void SetDayDistanceToNotificate()
         {
-            _settings.SetNotificationDayDistance(_newDistanceToNotificate);
+            _settings.SetNotificationDayDistance(_newDayDistanceToNotificate);
         }
 
         private void ExportButton_Click(object sender, EventArgs e)
@@ -426,14 +436,83 @@ namespace AffairList
             MessageBox.Show("Settings config was exported succesfully");
         }
 
+        public void OnAddition()
+        {
+            LoadSettings();
+        }
+
         private void ThemeBoxCB_SelectedValueChanged(object sender, EventArgs e)
         {
 
         }
 
-        public void OnAddition()
+        private void FontComboBox_SelectedValueChanged(object sender, EventArgs e)
         {
-            LoadSettings();
+
+        }
+
+        private void TodoListAlwaysReplacableState_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (_settingsUpdater != null &&
+                _settingsUpdater.GetInvocationList().Contains(ToggleTodoListAlwaysReplacableState))
+            {
+                _settingsUpdater -= ToggleTodoListAlwaysReplacableState;
+            }
+            else
+            {
+                _settingsUpdater += ToggleTodoListAlwaysReplacableState;
+            }
+            TodoListAlwaysReplacableState.Text =
+                TodoListAlwaysReplacableState.Text == "OFF" ? "On" : "OFF";
+            _isConfirmed = false;
+        }
+        private void ToggleTodoListAlwaysReplacableState()
+        {
+            _settings.SetAlwaysReplacing(!_settings.CanBeAlwaysReplaced());
+        }
+
+        private void TodoListAlwaysReplacableState_MouseEnter(object sender, EventArgs e)
+        {
+            TodoListAlwaysReplacableState.ForeColor = Color.Gray;
+        }
+
+        private void TodoListAlwaysReplacableState_MouseLeave(object sender, EventArgs e)
+        {
+            TodoListAlwaysReplacableState.ForeColor = Color.White;
+        }
+
+        private void HourDistanceToNotificateState_DoubleClick(object sender, EventArgs e)
+        {
+            try
+            {
+                _newHourDistanceToNotificate = uint.Parse(Interaction
+                    .InputBox(
+                    "Enter hour distance to notificate",
+                    "Hour Notification Distance InputBox",
+                    HourDistanceToNotificateState.Text));
+                _settingsUpdater -= SetNotificationHourDistance;
+                _settingsUpdater += SetNotificationHourDistance;
+                HourDistanceToNotificateState.Text = _newHourDistanceToNotificate.ToString();
+                _isConfirmed = false;
+            }
+            catch 
+            {
+                MessageBox.Show("Error, wrong input format");
+            }
+        }
+        private void SetNotificationHourDistance()
+        {
+            _settings.SetNotificationHourDistance(_newHourDistanceToNotificate);
+        }
+
+        private void HourDistanceToNotificateState_MouseEnter(object sender, EventArgs e)
+        {
+            HourDistanceToNotificateState.ForeColor = Color.Gray;
+        }
+
+        private void HourDistanceToNotificateState_MouseLeave(object sender, EventArgs e)
+        {
+            HourDistanceToNotificateState.ForeColor = Color.White;
         }
     }
 }
