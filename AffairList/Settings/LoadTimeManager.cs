@@ -16,19 +16,23 @@ namespace AffairList
 
         private FileLogger _fileLogger;
 
-        public LoadTimeManager(Settings settings)
+        private NotifyIcon _notification;
+
+        public LoadTimeManager(Settings settings, NotifyIcon notification)
         {
             _settings = settings;
 
             LoadTimeFileFullPath = $@"{_settings.programDirectoryFolderFullPath}\loadtime.json";
 
-            _fileLogger = new FileLogger(_settings.logFileFullPath);
-
-            Initialize();
+            Initialize(notification);
         }
 
-        public void Initialize()
+        public void Initialize(NotifyIcon notification)
         {
+            _fileLogger = new FileLogger(_settings.logFileFullPath);
+
+            _notification = notification;
+
             if (!LoadTimeFileExist())
             {
                 CreateLoadTimeFile();
@@ -53,9 +57,6 @@ namespace AffairList
 
             _fileLogger.LogInformation($"{DateTime.Now} Starting notificating");
 
-            using NotifyIcon notification = new NotifyIcon()
-            { Icon = SystemIcons.Exclamation, BalloonTipTitle = "AffairList", Visible = true };
-
             foreach (var profile in Directory.GetFiles(_settings.listsDirectoryFullPath))
             {
                 foreach (string affair in File.ReadAllLines(profile))
@@ -70,17 +71,25 @@ namespace AffairList
                     if (daysLeft == 0)
                     {
                         TimeSpan day = new TimeSpan(24, 0, 0);
-                        TimeSpan now = new TimeSpan(DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
-                        notification.BalloonTipText = AffairWithoutTags(affair) +
+                        TimeSpan now = new TimeSpan(
+                            DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+                        _notification.BalloonTipIcon = ToolTipIcon.Info;
+                        _notification.BalloonTipText = AffairWithoutTags(affair) +
                             $" - осталось {day - now}";
                     }
                     else if (daysLeft > 0)
-                        notification.BalloonTipText = AffairWithoutTags(affair) +
+                    {
+                        _notification.BalloonTipIcon = ToolTipIcon.Info;
+                        _notification.BalloonTipText = AffairWithoutTags(affair) +
                             $" - осталось {daysLeft} дней";
+                    }
                     else
-                        notification.BalloonTipText = AffairWithoutTags(affair) + " - просрочено";
+                    {
+                        _notification.BalloonTipIcon = ToolTipIcon.Warning;
+                        _notification.BalloonTipText = AffairWithoutTags(affair) + " - просрочено";
+                    }
 
-                    notification.ShowBalloonTip(1000);
+                    _notification.ShowBalloonTip(1000);
                 }
             }
             _fileLogger.LogInformation($"{DateTime.Now} notified");

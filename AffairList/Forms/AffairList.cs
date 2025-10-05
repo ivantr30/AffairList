@@ -2,11 +2,9 @@
 {
     public partial class AffairList : Form, IParentable
     {
-        private readonly NotifyIcon _trayIcon = new NotifyIcon();
-        private ContextMenuStrip _trayMenu = new ContextMenuStrip();
-
         private LoadTimeManager _loadTimeManager;
         private Settings _settings;
+        private TrayIconManager _trayIconManager;
 
         private Form _childForm;
         private MainMenu _mainMenu;
@@ -20,17 +18,12 @@
         }
         private void Initialize()
         {
+            _trayIconManager = new TrayIconManager();
+            _trayIconManager.AddTrayMenuAction("Open", OnOpen);
+            _trayIconManager.AddTrayMenuAction("Close", OnExit);
+
             _settings = new Settings();
-            _loadTimeManager = new LoadTimeManager(_settings);
-
-            _trayMenu.Items.Add("Открыть", null, OnOpen!);
-            _trayMenu.Items.Add("Выход", null, OnExit!);
-
-            _trayIcon.Text = "AffairList";
-            _trayIcon.Icon = Icon.ExtractAssociatedIcon("AffairListLogo.ico");
-
-            _trayIcon.ContextMenuStrip = _trayMenu;
-            _trayIcon.Visible = true;
+            _loadTimeManager = new LoadTimeManager(_settings, _trayIconManager.TrayIcon);
 
             _mainMenu = new MainMenu(_settings, _loadTimeManager, this);
             SetControl(_mainMenu);
@@ -59,9 +52,7 @@
 
         public void Exit()
         {
-            _trayIcon.Visible = false;
-            _trayIcon.Dispose();
-            _trayMenu?.Dispose();
+            _trayIconManager.Dispose();
             _childForm?.Dispose();
             Application.Exit();
         }

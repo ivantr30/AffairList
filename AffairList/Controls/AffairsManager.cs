@@ -325,7 +325,11 @@ namespace AffairList
             bool newPlacePriority = _lines[Affairs.SelectedIndex].EndsWith(_priorityTag);
             bool oldPlacePriority = _lines[_currentDragIndex].EndsWith(_priorityTag);
 
-            if (newPlacePriority != oldPlacePriority) return;
+            if (newPlacePriority != oldPlacePriority)
+            {
+                _isDragging = false;
+                return;
+            } 
 
             // Не менять, уже нечего
             string switcher = _lines[_currentDragIndex];
