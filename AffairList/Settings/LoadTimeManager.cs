@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using AffairList.Logging;
+using Newtonsoft.Json;
 
 namespace AffairList
 {

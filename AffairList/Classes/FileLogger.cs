@@ -1,4 +1,4 @@
-﻿namespace AffairList
+﻿namespace AffairList.Logging
 {
     public enum LogType
     {

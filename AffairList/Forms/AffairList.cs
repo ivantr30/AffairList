@@ -1,4 +1,6 @@
-﻿namespace AffairList
+﻿using AffairList.TrayIcon;
+
+namespace AffairList
 {
     public partial class AffairList : Form, IParentable
     {
@@ -95,6 +97,7 @@
             _childForm = null;
             TopMost = true;
             Show();
+            _mainMenu.OnAddition();
             TopMost = false;
         }
         public void SetLastPoint(MouseEventArgs e) => LastPoint = new Point(e.X, e.Y);
@@ -118,7 +121,7 @@
         private void AffairList_FormClosing(object sender, FormClosingEventArgs e)
             => Exit();
 
-        private async void AffairList_KeyDown(object sender, KeyEventArgs e)
+        private void AffairList_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == _settings.GetCloseKey())
             {

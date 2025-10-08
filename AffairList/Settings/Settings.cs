@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using IWshRuntimeLibrary;
-using System.Threading.Tasks;
+using AffairList.Logging;
 namespace AffairList
 {
     public class Settings
