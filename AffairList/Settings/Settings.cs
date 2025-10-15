@@ -17,9 +17,9 @@ namespace AffairList
         public readonly int screenWidth;
         public readonly int screenHeight;
 
-        private SettingsModel _settings;
+        private SettingsModel _settings = null!;
 
-        private FileLogger _fileLogger;
+        private readonly FileLogger _fileLogger = null!;
 
         public Settings()
         {
@@ -129,7 +129,7 @@ namespace AffairList
             SaveSettings();
             _fileLogger.LogInformation($"{DateTime.Now} first profile was selected succesfully");
         }
-        public void EnableAutoStart()
+        public static void EnableAutoStart()
         {
             string shortcutPath = GetAutostartShortcut();
 
@@ -144,7 +144,7 @@ namespace AffairList
 
             shortcut.Save();
         }
-        public void DisableAutoStart()
+        public static void DisableAutoStart()
         {
             string shortcutPath = GetAutostartShortcut();
             if (System.IO.File.Exists(shortcutPath))
@@ -152,7 +152,7 @@ namespace AffairList
                 System.IO.File.Delete(shortcutPath);
             }
         }
-        private string GetAutostartShortcut()
+        private static string GetAutostartShortcut()
         {
             string startupFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
             return Path.Combine(startupFolderPath, Application.ProductName + ".lnk");

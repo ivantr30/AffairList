@@ -148,8 +148,8 @@ namespace AffairList
         private void ToggleAutostartState()
         {
             _settings.SetAutostart(!_settings.DoesAutostart());
-            if(_newAutostartState) _settings.EnableAutoStart();
-            else _settings.DisableAutoStart();
+            if(_newAutostartState) Settings.EnableAutoStart();
+            else Settings.DisableAutoStart();
         }
 
         private void autostartStateLab_MouseLeave(object sender, EventArgs e)
