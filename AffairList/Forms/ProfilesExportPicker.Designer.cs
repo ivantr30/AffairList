@@ -38,7 +38,7 @@
             // ProfilePicker
             // 
             resources.ApplyResources(ProfilePicker, "ProfilePicker");
-            ProfilePicker.BackColor = Color.FromArgb(159, 62, 213);
+            ProfilePicker.BackColor = (System.Drawing.Color)new Color(159, 62, 213);
             ProfilePicker.BorderStyle = BorderStyle.None;
             ProfilePicker.CheckOnClick = true;
             ProfilePicker.ForeColor = SystemColors.Info;
@@ -48,7 +48,7 @@
             // BackButton
             // 
             resources.ApplyResources(BackButton, "BackButton");
-            BackButton.BackColor = Color.FromArgb(173, 102, 213);
+            BackButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             BackButton.Name = "BackButton";
             BackButton.UseVisualStyleBackColor = false;
             BackButton.Click += BackButton_Click;
@@ -56,7 +56,7 @@
             // OkButton
             // 
             resources.ApplyResources(OkButton, "OkButton");
-            OkButton.BackColor = Color.FromArgb(173, 102, 213);
+            OkButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             OkButton.Name = "OkButton";
             OkButton.UseVisualStyleBackColor = false;
             OkButton.Click += OkButton_Click;
@@ -69,7 +69,7 @@
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(72, 3, 111);
+            BackColor = (System.Drawing.Color)new Color(72, 3, 111);
             Controls.Add(OkButton);
             Controls.Add(BackButton);
             Controls.Add(ProfilePicker);

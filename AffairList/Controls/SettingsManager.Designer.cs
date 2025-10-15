@@ -66,7 +66,7 @@
             // ExportButton
             // 
             resources.ApplyResources(ExportButton, "ExportButton");
-            ExportButton.BackColor = Color.FromArgb(173, 102, 213);
+            ExportButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             ExportButton.Name = "ExportButton";
             ExportButton.UseVisualStyleBackColor = false;
             ExportButton.Click += ExportButton_Click;
@@ -74,7 +74,7 @@
             // DistanceToNotificate
             // 
             resources.ApplyResources(DistanceToNotificate, "DistanceToNotificate");
-            DistanceToNotificate.ForeColor = Color.White;
+            DistanceToNotificate.ForeColor = (System.Drawing.Color)Color.White;
             DistanceToNotificate.Name = "DistanceToNotificate";
             DistanceToNotificate.DoubleClick += DistanceToNotificate_DoubleClick;
             DistanceToNotificate.MouseEnter += DistanceToNotificate_MouseEnter;
@@ -83,13 +83,13 @@
             // DistanceToNotificateLab
             // 
             resources.ApplyResources(DistanceToNotificateLab, "DistanceToNotificateLab");
-            DistanceToNotificateLab.ForeColor = Color.White;
+            DistanceToNotificateLab.ForeColor = (System.Drawing.Color)Color.White;
             DistanceToNotificateLab.Name = "DistanceToNotificateLab";
             // 
             // NotificationState
             // 
             resources.ApplyResources(NotificationState, "NotificationState");
-            NotificationState.ForeColor = Color.White;
+            NotificationState.ForeColor = (System.Drawing.Color)Color.White;
             NotificationState.Name = "NotificationState";
             NotificationState.MouseDown += NotificationState_MouseDown;
             NotificationState.MouseEnter += NotificationState_MouseEnter;
@@ -98,13 +98,13 @@
             // NotificationStateLab
             // 
             resources.ApplyResources(NotificationStateLab, "NotificationStateLab");
-            NotificationStateLab.ForeColor = Color.White;
+            NotificationStateLab.ForeColor = (System.Drawing.Color)Color.White;
             NotificationStateLab.Name = "NotificationStateLab";
             // 
             // AskToDeleteState
             // 
             resources.ApplyResources(AskToDeleteState, "AskToDeleteState");
-            AskToDeleteState.ForeColor = Color.White;
+            AskToDeleteState.ForeColor = (System.Drawing.Color)Color.White;
             AskToDeleteState.Name = "AskToDeleteState";
             AskToDeleteState.MouseDown += AskToDeleteState_MouseDown;
             AskToDeleteState.MouseEnter += AskToDeleteState_MouseEnter;
@@ -113,7 +113,7 @@
             // AskToDelete
             // 
             resources.ApplyResources(AskToDelete, "AskToDelete");
-            AskToDelete.ForeColor = Color.White;
+            AskToDelete.ForeColor = (System.Drawing.Color)Color.White;
             AskToDelete.Name = "AskToDelete";
             // 
             // ThemeBoxCB
@@ -126,15 +126,15 @@
             // CurrentThemeLab
             // 
             resources.ApplyResources(CurrentThemeLab, "CurrentThemeLab");
-            CurrentThemeLab.ForeColor = Color.White;
+            CurrentThemeLab.ForeColor = (System.Drawing.Color)Color.White;
             CurrentThemeLab.Name = "CurrentThemeLab";
             // 
             // PickBgColorButton
             // 
             resources.ApplyResources(PickBgColorButton, "PickBgColorButton");
-            PickBgColorButton.BackColor = Color.FromArgb(173, 102, 213);
+            PickBgColorButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             PickBgColorButton.FlatAppearance.BorderSize = 0;
-            PickBgColorButton.ForeColor = Color.White;
+            PickBgColorButton.ForeColor = (System.Drawing.Color)Color.White;
             PickBgColorButton.Name = "PickBgColorButton";
             PickBgColorButton.UseVisualStyleBackColor = false;
             PickBgColorButton.Click += PickBgColorButton_Click;
@@ -142,9 +142,9 @@
             // PickTextColorButton
             // 
             resources.ApplyResources(PickTextColorButton, "PickTextColorButton");
-            PickTextColorButton.BackColor = Color.FromArgb(173, 102, 213);
+            PickTextColorButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             PickTextColorButton.FlatAppearance.BorderSize = 0;
-            PickTextColorButton.ForeColor = Color.White;
+            PickTextColorButton.ForeColor = (System.Drawing.Color)Color.White;
             PickTextColorButton.Name = "PickTextColorButton";
             PickTextColorButton.UseVisualStyleBackColor = false;
             PickTextColorButton.Click += PickTextColorButton_Click;
@@ -152,7 +152,7 @@
             // panel1
             // 
             resources.ApplyResources(panel1, "panel1");
-            panel1.BackColor = Color.FromArgb(72, 3, 111);
+            panel1.BackColor = (System.Drawing.Color)new Color(72, 3, 111);
             panel1.Controls.Add(SettingsPanel);
             panel1.Controls.Add(vScrollBar1);
             panel1.Controls.Add(ExportButton);
@@ -181,7 +181,7 @@
             // autostartStateLab
             // 
             resources.ApplyResources(autostartStateLab, "autostartStateLab");
-            autostartStateLab.ForeColor = Color.White;
+            autostartStateLab.ForeColor = (System.Drawing.Color)Color.White;
             autostartStateLab.Name = "autostartStateLab";
             autostartStateLab.MouseDown += autostartStateLab_MouseDown;
             autostartStateLab.MouseEnter += autostartStateLab_MouseEnter;
@@ -190,25 +190,25 @@
             // AutostartLab
             // 
             resources.ApplyResources(AutostartLab, "AutostartLab");
-            AutostartLab.ForeColor = Color.White;
+            AutostartLab.ForeColor = (System.Drawing.Color)Color.White;
             AutostartLab.Name = "AutostartLab";
             // 
             // ListBgTextColorLab
             // 
             resources.ApplyResources(ListBgTextColorLab, "ListBgTextColorLab");
-            ListBgTextColorLab.ForeColor = Color.White;
+            ListBgTextColorLab.ForeColor = (System.Drawing.Color)Color.White;
             ListBgTextColorLab.Name = "ListBgTextColorLab";
             // 
             // ListTextColorLab
             // 
             resources.ApplyResources(ListTextColorLab, "ListTextColorLab");
-            ListTextColorLab.ForeColor = Color.White;
+            ListTextColorLab.ForeColor = (System.Drawing.Color)Color.White;
             ListTextColorLab.Name = "ListTextColorLab";
             // 
             // LocationLab
             // 
             resources.ApplyResources(LocationLab, "LocationLab");
-            LocationLab.ForeColor = Color.White;
+            LocationLab.ForeColor = (System.Drawing.Color)Color.White;
             LocationLab.Name = "LocationLab";
             LocationLab.DoubleClick += LocationLab_DoubleClick;
             LocationLab.MouseEnter += LocationLab_MouseEnter;
@@ -217,13 +217,13 @@
             // ListLocationLab
             // 
             resources.ApplyResources(ListLocationLab, "ListLocationLab");
-            ListLocationLab.ForeColor = Color.White;
+            ListLocationLab.ForeColor = (System.Drawing.Color)Color.White;
             ListLocationLab.Name = "ListLocationLab";
             // 
             // ConfirmButton
             // 
             resources.ApplyResources(ConfirmButton, "ConfirmButton");
-            ConfirmButton.BackColor = Color.FromArgb(173, 102, 213);
+            ConfirmButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             ConfirmButton.Name = "ConfirmButton";
             ConfirmButton.UseVisualStyleBackColor = false;
             ConfirmButton.Click += ConfirmButton_Click;
@@ -231,7 +231,7 @@
             // ResetButton
             // 
             resources.ApplyResources(ResetButton, "ResetButton");
-            ResetButton.BackColor = Color.FromArgb(173, 102, 213);
+            ResetButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             ResetButton.Name = "ResetButton";
             ResetButton.UseVisualStyleBackColor = false;
             ResetButton.Click += ResetButton_Click;
@@ -239,7 +239,7 @@
             // BackButton
             // 
             resources.ApplyResources(BackButton, "BackButton");
-            BackButton.BackColor = Color.FromArgb(173, 102, 213);
+            BackButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             BackButton.Name = "BackButton";
             BackButton.UseVisualStyleBackColor = false;
             BackButton.Click += BackButton_Click;
@@ -247,7 +247,7 @@
             // NameBackground
             // 
             resources.ApplyResources(NameBackground, "NameBackground");
-            NameBackground.BackColor = Color.FromArgb(159, 62, 213);
+            NameBackground.BackColor = (System.Drawing.Color)new Color(159, 62, 213);
             NameBackground.Controls.Add(MinimizeButton);
             NameBackground.Controls.Add(CloseButton);
             NameBackground.Controls.Add(SettingsLab);

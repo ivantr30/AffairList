@@ -56,7 +56,7 @@
             // NameBackground
             // 
             resources.ApplyResources(NameBackground, "NameBackground");
-            NameBackground.BackColor = Color.FromArgb(159, 62, 213);
+            NameBackground.BackColor = (System.Drawing.Color)new Color(159, 62, 213);
             NameBackground.Controls.Add(MinimizeButton);
             NameBackground.Controls.Add(CloseButton);
             NameBackground.Controls.Add(AffairListLab);
@@ -89,7 +89,7 @@
             // ChangeProfileButton
             // 
             resources.ApplyResources(ChangeProfileButton, "ChangeProfileButton");
-            ChangeProfileButton.BackColor = Color.FromArgb(173, 102, 213);
+            ChangeProfileButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             ChangeProfileButton.FlatAppearance.BorderSize = 0;
             ChangeProfileButton.ForeColor = SystemColors.ButtonHighlight;
             ChangeProfileButton.Name = "ChangeProfileButton";
@@ -99,7 +99,7 @@
             // HotKeyButton
             // 
             resources.ApplyResources(HotKeyButton, "HotKeyButton");
-            HotKeyButton.BackColor = Color.FromArgb(173, 102, 213);
+            HotKeyButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             HotKeyButton.FlatAppearance.BorderSize = 0;
             HotKeyButton.ForeColor = SystemColors.ButtonHighlight;
             HotKeyButton.Name = "HotKeyButton";
@@ -109,7 +109,7 @@
             // SettingsButton
             // 
             resources.ApplyResources(SettingsButton, "SettingsButton");
-            SettingsButton.BackColor = Color.FromArgb(173, 102, 213);
+            SettingsButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             SettingsButton.FlatAppearance.BorderSize = 0;
             SettingsButton.ForeColor = SystemColors.ButtonHighlight;
             SettingsButton.Name = "SettingsButton";
@@ -119,7 +119,7 @@
             // ChangeListButton
             // 
             resources.ApplyResources(ChangeListButton, "ChangeListButton");
-            ChangeListButton.BackColor = Color.FromArgb(173, 102, 213);
+            ChangeListButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             ChangeListButton.FlatAppearance.BorderSize = 0;
             ChangeListButton.ForeColor = SystemColors.ButtonHighlight;
             ChangeListButton.Name = "ChangeListButton";
@@ -129,7 +129,7 @@
             // ClearListButton
             // 
             resources.ApplyResources(ClearListButton, "ClearListButton");
-            ClearListButton.BackColor = Color.FromArgb(173, 102, 213);
+            ClearListButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             ClearListButton.FlatAppearance.BorderSize = 0;
             ClearListButton.ForeColor = SystemColors.ButtonHighlight;
             ClearListButton.Name = "ClearListButton";
@@ -140,7 +140,7 @@
             // panel1
             // 
             resources.ApplyResources(panel1, "panel1");
-            panel1.BackColor = Color.FromArgb(72, 3, 111);
+            panel1.BackColor = (System.Drawing.Color)new Color(72, 3, 111);
             panel1.Controls.Add(ErrorHelpLab);
             panel1.Controls.Add(ChangeProfileButton);
             panel1.Controls.Add(HotKeyButton);
@@ -155,7 +155,7 @@
             // OpenListButton
             // 
             resources.ApplyResources(OpenListButton, "OpenListButton");
-            OpenListButton.BackColor = Color.FromArgb(173, 102, 213);
+            OpenListButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             OpenListButton.FlatAppearance.BorderSize = 0;
             OpenListButton.ForeColor = SystemColors.ButtonHighlight;
             OpenListButton.Name = "OpenListButton";
@@ -165,7 +165,7 @@
             // ReplaceAffairListButton
             // 
             resources.ApplyResources(ReplaceAffairListButton, "ReplaceAffairListButton");
-            ReplaceAffairListButton.BackColor = Color.FromArgb(173, 102, 213);
+            ReplaceAffairListButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             ReplaceAffairListButton.FlatAppearance.BorderSize = 0;
             ReplaceAffairListButton.ForeColor = SystemColors.ButtonHighlight;
             ReplaceAffairListButton.Name = "ReplaceAffairListButton";

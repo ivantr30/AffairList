@@ -45,16 +45,16 @@
             => ParentElement.MinimizeForm();
 
         private void MinimizeButton_MouseEnter(object sender, EventArgs e)
-            => MinimizeButton.ForeColor = Color.Gray;
+            => MinimizeButton.ForeColor = (System.Drawing.Color)Color.Gray;
 
         private void MinimizeButton_MouseLeave(object sender, EventArgs e)
-            => MinimizeButton.ForeColor = Color.Black;
+            => MinimizeButton.ForeColor = (System.Drawing.Color)Color.Black;
 
         private void CloseButton_MouseEnter(object sender, EventArgs e)
-            => CloseButton.ForeColor = Color.Gray;
+            => CloseButton.ForeColor = (System.Drawing.Color)Color.Gray;
 
         private void CloseButton_MouseLeave(object sender, EventArgs e)
-            => CloseButton.ForeColor = Color.Black;
+            => CloseButton.ForeColor = (System.Drawing.Color)Color.Black;
 
         private void OpenListButton_Click(object sender, EventArgs e)
         {
@@ -73,7 +73,7 @@
                 return;
             }
             using ToDoList toDoList = new ToDoList(_settings, ParentElement) { canReplace = true };
-            toDoList.GetAffairs().BackColor = Color.White;
+            toDoList.GetAffairs().BackColor = (System.Drawing.Color)Color.White;
             ParentElement.OpenForm(toDoList, asDialog: true);
         }
 

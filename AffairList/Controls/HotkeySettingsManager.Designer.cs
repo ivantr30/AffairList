@@ -56,7 +56,7 @@
             // NameBackground
             // 
             resources.ApplyResources(NameBackground, "NameBackground");
-            NameBackground.BackColor = Color.FromArgb(159, 62, 213);
+            NameBackground.BackColor = (System.Drawing.Color)new Color(159, 62, 213);
             NameBackground.Controls.Add(MinimizeButton);
             NameBackground.Controls.Add(CloseButton);
             NameBackground.Controls.Add(HotKeySettingsLab);
@@ -83,7 +83,7 @@
             // BackKeyType
             // 
             resources.ApplyResources(BackKeyType, "BackKeyType");
-            BackKeyType.ForeColor = Color.White;
+            BackKeyType.ForeColor = (System.Drawing.Color)Color.White;
             BackKeyType.Name = "BackKeyType";
             BackKeyType.DoubleClick += BackKeyType_DoubleClick;
             BackKeyType.MouseEnter += BackKeyType_MouseEnter;
@@ -92,13 +92,13 @@
             // BackKeyLab
             // 
             resources.ApplyResources(BackKeyLab, "BackKeyLab");
-            BackKeyLab.ForeColor = Color.White;
+            BackKeyLab.ForeColor = (System.Drawing.Color)Color.White;
             BackKeyLab.Name = "BackKeyLab";
             // 
             // CloseKeyType
             // 
             resources.ApplyResources(CloseKeyType, "CloseKeyType");
-            CloseKeyType.ForeColor = Color.White;
+            CloseKeyType.ForeColor = (System.Drawing.Color)Color.White;
             CloseKeyType.Name = "CloseKeyType";
             CloseKeyType.DoubleClick += CloseKeyType_DoubleClick;
             CloseKeyType.MouseEnter += CloseKeyType_MouseEnter;
@@ -107,13 +107,13 @@
             // CloseKeyLab
             // 
             resources.ApplyResources(CloseKeyLab, "CloseKeyLab");
-            CloseKeyLab.ForeColor = Color.White;
+            CloseKeyLab.ForeColor = (System.Drawing.Color)Color.White;
             CloseKeyLab.Name = "CloseKeyLab";
             // 
             // panel1
             // 
             resources.ApplyResources(panel1, "panel1");
-            panel1.BackColor = Color.FromArgb(72, 3, 111);
+            panel1.BackColor = (System.Drawing.Color)new Color(72, 3, 111);
             panel1.Controls.Add(BackKeyType);
             panel1.Controls.Add(ConfirmButton);
             panel1.Controls.Add(BackKeyLab);
@@ -127,7 +127,7 @@
             // ConfirmButton
             // 
             resources.ApplyResources(ConfirmButton, "ConfirmButton");
-            ConfirmButton.BackColor = Color.FromArgb(173, 102, 213);
+            ConfirmButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             ConfirmButton.Name = "ConfirmButton";
             ConfirmButton.UseVisualStyleBackColor = false;
             ConfirmButton.Click += ConfirmButton_Click;
@@ -135,7 +135,7 @@
             // ResetButton
             // 
             resources.ApplyResources(ResetButton, "ResetButton");
-            ResetButton.BackColor = Color.FromArgb(173, 102, 213);
+            ResetButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             ResetButton.Name = "ResetButton";
             ResetButton.UseVisualStyleBackColor = false;
             ResetButton.Click += ResetButton_Click;
@@ -143,7 +143,7 @@
             // BackButton
             // 
             resources.ApplyResources(BackButton, "BackButton");
-            BackButton.BackColor = Color.FromArgb(173, 102, 213);
+            BackButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             BackButton.Name = "BackButton";
             BackButton.UseVisualStyleBackColor = false;
             BackButton.Click += BackButton_Click;

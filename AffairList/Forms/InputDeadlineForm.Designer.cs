@@ -45,7 +45,7 @@
             // ConfirmButton
             // 
             resources.ApplyResources(ConfirmButton, "ConfirmButton");
-            ConfirmButton.BackColor = Color.FromArgb(173, 102, 213);
+            ConfirmButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             ConfirmButton.ForeColor = SystemColors.MenuText;
             ConfirmButton.Name = "ConfirmButton";
             ConfirmButton.UseVisualStyleBackColor = false;
@@ -54,7 +54,7 @@
             // BackButton
             // 
             resources.ApplyResources(BackButton, "BackButton");
-            BackButton.BackColor = Color.FromArgb(173, 102, 213);
+            BackButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             BackButton.ForeColor = SystemColors.MenuText;
             BackButton.Name = "BackButton";
             BackButton.UseVisualStyleBackColor = false;

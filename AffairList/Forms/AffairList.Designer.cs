@@ -35,7 +35,7 @@
             // 
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.Indigo;
+            BackColor = (System.Drawing.Color)Color.Indigo;
             FormBorderStyle = FormBorderStyle.None;
             KeyPreview = true;
             Name = "AffairList";

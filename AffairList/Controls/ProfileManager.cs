@@ -63,22 +63,22 @@ namespace AffairList
 
         private void CloseButtonLab_MouseEnter(object sender, EventArgs e)
         {
-            CloseButtonLab.ForeColor = Color.Gray;
+            CloseButtonLab.ForeColor = (System.Drawing.Color)Color.Gray;
         }
 
         private void CloseButtonLab_MouseLeave(object sender, EventArgs e)
         {
-            CloseButtonLab.ForeColor = Color.Black;
+            CloseButtonLab.ForeColor = (System.Drawing.Color)Color.Black;
         }
 
         private void MinimizeButton_MouseEnter(object sender, EventArgs e)
         {
-            MinimizeButton.ForeColor = Color.Gray;
+            MinimizeButton.ForeColor = (System.Drawing.Color)Color.Gray;
         }
 
         private void MinimizeButton_MouseLeave(object sender, EventArgs e)
         {
-            MinimizeButton.ForeColor = Color.Black;
+            MinimizeButton.ForeColor = (System.Drawing.Color)Color.Black;
         }
 
         private void NameBackground_MouseMove(object sender, MouseEventArgs e)

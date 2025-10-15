@@ -39,10 +39,10 @@ namespace AffairList
             Affairs.Size = new Size(500, Height);
             Affairs.Padding = new Padding(0, 0, 180, 0);
 
-            Affairs.ForeColor = _settings.GetTextColor();
+            Affairs.ForeColor = (System.Drawing.Color)_settings.GetTextColor();
 
-            BackColor = _settings.GetBgColor();
-            TransparencyKey = _settings.GetBgColor();
+            BackColor = (System.Drawing.Color)_settings.GetBgColor();
+            TransparencyKey = (System.Drawing.Color)_settings.GetBgColor();
         }
         private async Task LoadSettingsAsync()
         {
@@ -128,7 +128,7 @@ namespace AffairList
 
         private void ToDoList_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Affairs.BackColor = _settings.GetBgColor();
+            Affairs.BackColor = (System.Drawing.Color)_settings.GetBgColor();
             canReplace = false;
         }
     }

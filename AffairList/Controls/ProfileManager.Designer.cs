@@ -70,7 +70,7 @@
             // 
             // NameBackground
             // 
-            NameBackground.BackColor = Color.FromArgb(159, 62, 213);
+            NameBackground.BackColor = (System.Drawing.Color)new Color(159, 62, 213);
             NameBackground.Controls.Add(CloseButtonLab);
             NameBackground.Controls.Add(MinimizeButton);
             NameBackground.Controls.Add(CloseButton);
@@ -136,7 +136,7 @@
             // 
             // panel1
             // 
-            panel1.BackColor = Color.FromArgb(72, 3, 111);
+            panel1.BackColor = (System.Drawing.Color)new Color(72, 3, 111);
             panel1.Controls.Add(ExportButton);
             panel1.Controls.Add(ChangePriorityButton);
             panel1.Controls.Add(RenameButton);
@@ -157,7 +157,7 @@
             // 
             // ExportButton
             // 
-            ExportButton.BackColor = Color.FromArgb(173, 102, 213);
+            ExportButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             ExportButton.FlatStyle = FlatStyle.Flat;
             ExportButton.Location = new Point(12, 371);
             ExportButton.Name = "ExportButton";
@@ -169,7 +169,7 @@
             // 
             // ChangePriorityButton
             // 
-            ChangePriorityButton.BackColor = Color.FromArgb(173, 102, 213);
+            ChangePriorityButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             ChangePriorityButton.FlatStyle = FlatStyle.Flat;
             ChangePriorityButton.Font = new Font("Segoe UI", 9.75F);
             ChangePriorityButton.Location = new Point(80, 371);
@@ -182,7 +182,7 @@
             // 
             // RenameButton
             // 
-            RenameButton.BackColor = Color.FromArgb(173, 102, 213);
+            RenameButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             RenameButton.FlatStyle = FlatStyle.Flat;
             RenameButton.Location = new Point(322, 371);
             RenameButton.Name = "RenameButton";
@@ -194,7 +194,7 @@
             // 
             // SelectProfileButton
             // 
-            SelectProfileButton.BackColor = Color.FromArgb(173, 102, 213);
+            SelectProfileButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             SelectProfileButton.FlatStyle = FlatStyle.Flat;
             SelectProfileButton.Location = new Point(190, 371);
             SelectProfileButton.Name = "SelectProfileButton";
@@ -206,7 +206,7 @@
             // 
             // DeleteButton
             // 
-            DeleteButton.BackColor = Color.FromArgb(173, 102, 213);
+            DeleteButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             DeleteButton.FlatStyle = FlatStyle.Flat;
             DeleteButton.Location = new Point(398, 371);
             DeleteButton.Name = "DeleteButton";
@@ -218,7 +218,7 @@
             // 
             // BackButton
             // 
-            BackButton.BackColor = Color.FromArgb(173, 102, 213);
+            BackButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             BackButton.FlatStyle = FlatStyle.Flat;
             BackButton.Location = new Point(528, 371);
             BackButton.Name = "BackButton";
@@ -241,7 +241,7 @@
             // 
             // ClearButton
             // 
-            ClearButton.BackColor = Color.FromArgb(173, 102, 213);
+            ClearButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             ClearButton.FlatStyle = FlatStyle.Flat;
             ClearButton.Location = new Point(464, 371);
             ClearButton.Name = "ClearButton";
@@ -253,7 +253,7 @@
             // 
             // AddButton
             // 
-            AddButton.BackColor = Color.FromArgb(173, 102, 213);
+            AddButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             AddButton.FlatStyle = FlatStyle.Flat;
             AddButton.Location = new Point(256, 371);
             AddButton.Name = "AddButton";

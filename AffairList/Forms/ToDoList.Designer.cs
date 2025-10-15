@@ -36,7 +36,7 @@
             // 
             Affairs.AutoSize = true;
             Affairs.Font = new Font("Berlin Sans FB Demi", 16F, FontStyle.Bold);
-            Affairs.ForeColor = Color.MediumSpringGreen;
+            Affairs.ForeColor = (System.Drawing.Color)Color.MediumSpringGreen;
             Affairs.Location = new Point(981, 9);
             Affairs.Name = "Affairs";
             Affairs.Size = new Size(0, 25);
@@ -49,7 +49,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.Black;
+            BackColor = (System.Drawing.Color)Color.Black;
             ClientSize = new Size(1202, 666);
             Controls.Add(Affairs);
             FormBorderStyle = FormBorderStyle.None;
@@ -59,7 +59,7 @@
             MinimizeBox = false;
             Name = "ToDoList";
             Text = "List";
-            TransparencyKey = Color.Black;
+            TransparencyKey = (System.Drawing.Color)Color.Black;
             FormClosing += ToDoList_FormClosing;
             MouseDown += List_MouseDown;
             MouseMove += List_MouseMove;

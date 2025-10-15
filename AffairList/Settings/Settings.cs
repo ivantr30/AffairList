@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
-using IWshRuntimeLibrary;
-using System.Threading.Tasks;
+﻿using IWshRuntimeLibrary;
+using System.Text.Json;
+
 namespace AffairList
 {
     public class Settings
@@ -81,13 +81,13 @@ namespace AffairList
         }
         private void LoadSettings()
         {
-            _settings = JsonConvert.DeserializeObject<SettingsModel>
+            _settings = JsonSerializer.Deserialize<SettingsModel>
                     (System.IO.File.ReadAllText(settingsFileFullPath))!;
             _fileLogger.LogInformation($"{DateTime.Now} settings were loaded succesfully");
         }
         private async Task LoadSettingsAsync()
         {
-            _settings = JsonConvert.DeserializeObject<SettingsModel>
+            _settings = JsonSerializer.Deserialize<SettingsModel>
                     (await System.IO.File.ReadAllTextAsync(settingsFileFullPath))!;
             _fileLogger.LogInformation($"{DateTime.Now} settings were loaded succesfully");
         }
@@ -99,7 +99,7 @@ namespace AffairList
             else DisableAutoStart();
 
             await System.IO.File.WriteAllTextAsync(settingsFileFullPath,
-                JsonConvert.SerializeObject(_settings));
+                JsonSerializer.Serialize(_settings));
 
             _fileLogger.LogInformation($"{DateTime.Now} settings were dropped to default succesfully");
         }
@@ -107,11 +107,11 @@ namespace AffairList
         {
             _settings = new SettingsModel();
 
-            if(_settings.autostartState) EnableAutoStart();
+            if (_settings.autostartState) EnableAutoStart();
             else DisableAutoStart();
 
             System.IO.File.WriteAllText(settingsFileFullPath,
-                JsonConvert.SerializeObject(_settings));
+                JsonSerializer.Serialize(_settings));
 
             _fileLogger.LogInformation($"{DateTime.Now} settings were dropped to default succesfully");
         }
@@ -226,18 +226,18 @@ namespace AffairList
         }
         public void CreateLogFile()
         {
-            using(System.IO.File.Create(logFileFullPath)) { }
+            using(System.IO.File.Create(logFileFullPath))
             _fileLogger.LogInformation(
                 $"{DateTime.Now} log file was created");
         }
         public async Task SaveSettingsAsync()
         {
-            await System.IO.File.WriteAllTextAsync(settingsFileFullPath, 
-                JsonConvert.SerializeObject(_settings));
+            await System.IO.File.WriteAllTextAsync(settingsFileFullPath,
+                JsonSerializer.Serialize(_settings));
         }
         public void SaveSettings()
         {
-            System.IO.File.WriteAllText(settingsFileFullPath, JsonConvert.SerializeObject(_settings));
+            System.IO.File.WriteAllText(settingsFileFullPath, JsonSerializer.Serialize(_settings));
         }
         public void SetCurrentProfile(string fullPath)
         {

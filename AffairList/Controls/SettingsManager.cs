@@ -29,8 +29,8 @@ namespace AffairList
         private void LoadSettings()
         {
             LocationLab.Text = _settings.GetProfileX() + ", " + _settings.GetProfileY();
-            ListTextColorLab.ForeColor = _settings.GetTextColor();
-            ListBgTextColorLab.ForeColor = _settings.GetBgColor();
+            ListTextColorLab.ForeColor = (System.Drawing.Color)_settings.GetTextColor();
+            ListBgTextColorLab.ForeColor = (System.Drawing.Color)_settings.GetBgColor();
             if (_settings.DoesAutostart())
             {
                 autostartStateLab.Text = "On";
@@ -80,12 +80,12 @@ namespace AffairList
 
         private void CloseButton_MouseEnter(object sender, EventArgs e)
         {
-            CloseButton.ForeColor = Color.Gray;
+            CloseButton.ForeColor = (System.Drawing.Color)Color.Gray;
         }
 
         private void CloseButton_MouseLeave(object sender, EventArgs e)
         {
-            CloseButton.ForeColor = Color.Black;
+            CloseButton.ForeColor = (System.Drawing.Color)Color.Black;
         }
         private void NameBackground_MouseDown(object sender, MouseEventArgs e)
             => ParentElement.SetLastPoint(e);
@@ -154,19 +154,19 @@ namespace AffairList
 
         private void autostartStateLab_MouseLeave(object sender, EventArgs e)
         {
-            autostartStateLab.ForeColor = Color.White;
+            autostartStateLab.ForeColor = (System.Drawing.Color)Color.White;
         }
 
         private void autostartStateLab_MouseEnter(object sender, EventArgs e)
         {
-            autostartStateLab.ForeColor = Color.Gray;
+            autostartStateLab.ForeColor = (System.Drawing.Color)Color.Gray;
         }
 
         private void PickTextColorButton_Click(object sender, EventArgs e)
         {
             Color newColor = ListColorChanger();
             if (newColor == Color.Empty) return;
-            ListTextColorLab.ForeColor = newColor;
+            ListTextColorLab.ForeColor = (System.Drawing.Color)newColor;
             _newTextColor = newColor;
             _settingsUpdater -= SetTextColor;
             _settingsUpdater += SetTextColor;
@@ -180,7 +180,7 @@ namespace AffairList
         {
             Color newColor = ListColorChanger();
             if (newColor == Color.Empty) return;
-            ListBgTextColorLab.ForeColor = newColor;
+            ListBgTextColorLab.ForeColor = (System.Drawing.Color)newColor;
             _newBgColor = newColor;
             _settingsUpdater -= SetBgColor;
             _settingsUpdater += SetBgColor;
@@ -268,12 +268,12 @@ namespace AffairList
 
         private void LocationLab_MouseEnter(object sender, EventArgs e)
         {
-            LocationLab.ForeColor = Color.Gray;
+            LocationLab.ForeColor = (System.Drawing.Color)Color.Gray;
         }
 
         private void LocationLab_MouseLeave(object sender, EventArgs e)
         {
-            LocationLab.ForeColor = Color.White;
+            LocationLab.ForeColor = (System.Drawing.Color)Color.White;
         }
 
         private void AskToDeleteState_MouseDown(object sender, MouseEventArgs e)
@@ -298,12 +298,12 @@ namespace AffairList
 
         private void AskToDeleteState_MouseLeave(object sender, EventArgs e)
         {
-            AskToDeleteState.ForeColor = Color.White;
+            AskToDeleteState.ForeColor = (System.Drawing.Color)Color.White;
         }
 
         private void AskToDeleteState_MouseEnter(object sender, EventArgs e)
         {
-            AskToDeleteState.ForeColor = Color.Gray;
+            AskToDeleteState.ForeColor = (System.Drawing.Color)Color.Gray;
         }
 
         private void MinimizeButton_Click(object sender, EventArgs e)
@@ -311,12 +311,12 @@ namespace AffairList
 
         private void MinimizeButton_MouseEnter(object sender, EventArgs e)
         {
-            MinimizeButton.ForeColor = Color.Gray;
+            MinimizeButton.ForeColor = (System.Drawing.Color)Color.Gray;
         }
 
         private void MinimizeButton_MouseLeave(object sender, EventArgs e)
         {
-            MinimizeButton.ForeColor = Color.Black;
+            MinimizeButton.ForeColor = (System.Drawing.Color)Color.Black;
         }
 
         private void NotificationState_MouseDown(object sender, MouseEventArgs e)
@@ -341,21 +341,21 @@ namespace AffairList
 
         private void NotificationState_MouseEnter(object sender, EventArgs e)
         {
-            NotificationState.ForeColor = Color.Gray;
+            NotificationState.ForeColor = (System.Drawing.Color)Color.Gray;
         }
 
         private void NotificationState_MouseLeave(object sender, EventArgs e)
         {
-            NotificationState.ForeColor = Color.White;
+            NotificationState.ForeColor = (System.Drawing.Color)Color.White;
         }
         private void DistanceToNotificate_MouseEnter(object sender, EventArgs e)
         {
-            DistanceToNotificate.ForeColor = Color.Gray;
+            DistanceToNotificate.ForeColor = (System.Drawing.Color)Color.Gray;
         }
 
         private void DistanceToNotificate_MouseLeave(object sender, EventArgs e)
         {
-            DistanceToNotificate.ForeColor = Color.White;
+            DistanceToNotificate.ForeColor = (System.Drawing.Color)Color.White;
         }
 
         private void DistanceToNotificate_DoubleClick(object sender, EventArgs e)

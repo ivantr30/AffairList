@@ -138,42 +138,42 @@
 
         private void CloseKeyType_MouseEnter(object sender, EventArgs e)
         {
-            CloseKeyType.ForeColor = Color.Gray;
+            CloseKeyType.ForeColor = (System.Drawing.Color)Color.Gray;
         }
 
         private void BackKeyType_MouseEnter(object sender, EventArgs e)
         {
-            BackKeyType.ForeColor = Color.Gray;
+            BackKeyType.ForeColor = (System.Drawing.Color)Color.Gray;
         }
 
         private void BackKeyType_MouseLeave(object sender, EventArgs e)
         {
-            BackKeyType.ForeColor = Color.White;
+            BackKeyType.ForeColor = (System.Drawing.Color)Color.White;
         }
 
         private void CloseKeyType_MouseLeave(object sender, EventArgs e)
         {
-            CloseKeyType.ForeColor = Color.White;
+            CloseKeyType.ForeColor = (System.Drawing.Color)Color.White;
         }
 
         private void CloseButton_MouseEnter(object sender, EventArgs e)
         {
-            CloseButton.ForeColor = Color.Gray;
+            CloseButton.ForeColor = (System.Drawing.Color)Color.Gray;
         }
 
         private void CloseButton_MouseLeave(object sender, EventArgs e)
         {
-            CloseButton.ForeColor = Color.Black;
+            CloseButton.ForeColor = (System.Drawing.Color)Color.Black;
         }
 
         private void MinimizeButton_MouseEnter(object sender, EventArgs e)
         {
-            MinimizeButton.ForeColor = Color.Gray;
+            MinimizeButton.ForeColor = (System.Drawing.Color)Color.Gray;
         }
 
         private void MinimizeButton_MouseLeave(object sender, EventArgs e)
         {
-            MinimizeButton.ForeColor = Color.Black;
+            MinimizeButton.ForeColor = (System.Drawing.Color)Color.Black;
         }
 
         private void NameBackground_MouseMove(object sender, MouseEventArgs e)

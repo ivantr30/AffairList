@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json;
 
 namespace AffairList
 {
@@ -6,17 +6,14 @@ namespace AffairList
     {
         public readonly string LoadTimeFileFullPath;
 
-        private string _priorityTag = "<priority>";
-        private string _priorityWord = "\"Priority\"";
-        private string _deadlineTag = "<deadline>";
+        private readonly string _priorityTag = "<priority>";
+        private readonly string _priorityWord = "\"Priority\"";
+        private readonly string _deadlineTag = "<deadline>";
 
-        private LoadTimeModel _loadTime;
-
-        private Settings _settings;
-
-        private FileLogger _fileLogger;
-
-        private NotifyIcon _notification;
+        private LoadTimeModel _loadTime = null!;
+        private readonly Settings _settings;
+        private FileLogger _fileLogger = null!;
+        private NotifyIcon _notification = null!;
 
         public LoadTimeManager(Settings settings, NotifyIcon notification)
         {
@@ -41,7 +38,7 @@ namespace AffairList
             }
             try
             {
-                _loadTime = JsonConvert.DeserializeObject<LoadTimeModel>
+                _loadTime = JsonSerializer.Deserialize<LoadTimeModel>
                         (File.ReadAllText(LoadTimeFileFullPath))!;
             }
             catch
@@ -101,24 +98,24 @@ namespace AffairList
         }
         private string AffairWithoutTags(string affair)
         {
-            return affair.Remove(0, 10).Replace(_priorityTag, _priorityWord);
+            return affair[10..].Replace(_priorityTag, _priorityWord);
         }
         private void WriteBaseTime()
         {
             _loadTime = new LoadTimeModel();
-            File.WriteAllText(LoadTimeFileFullPath, JsonConvert.SerializeObject(_loadTime));
+            File.WriteAllText(LoadTimeFileFullPath, JsonSerializer.Serialize(_loadTime));
             _fileLogger.LogInformation($"{DateTime.Now} load time was set to base");
         }
 
         public async Task SaveTimeAsync()
         {
             SetPreviousLoadTime(DateTime.Now);
-            await File.WriteAllTextAsync(LoadTimeFileFullPath, JsonConvert.SerializeObject(_loadTime));
+            await File.WriteAllTextAsync(LoadTimeFileFullPath, JsonSerializer.Serialize(_loadTime));
         }
         public void SaveTime()
         {
             SetPreviousLoadTime(DateTime.Now);
-            File.WriteAllText(LoadTimeFileFullPath, JsonConvert.SerializeObject(_loadTime));
+            File.WriteAllText(LoadTimeFileFullPath, JsonSerializer.Serialize(_loadTime));
         }
 
         public bool LoadTimeFileExist()

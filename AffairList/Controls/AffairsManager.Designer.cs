@@ -64,7 +64,7 @@
             // NameBackground
             // 
             resources.ApplyResources(NameBackground, "NameBackground");
-            NameBackground.BackColor = Color.FromArgb(159, 62, 213);
+            NameBackground.BackColor = (System.Drawing.Color)new Color(159, 62, 213);
             NameBackground.Controls.Add(CloseButton);
             NameBackground.Controls.Add(MinimizeButton);
             NameBackground.Controls.Add(AffairsLab);
@@ -117,7 +117,7 @@
             // panel1
             // 
             resources.ApplyResources(panel1, "panel1");
-            panel1.BackColor = Color.FromArgb(72, 3, 111);
+            panel1.BackColor = (System.Drawing.Color)new Color(72, 3, 111);
             panel1.Controls.Add(RenameAffairButton);
             panel1.Controls.Add(ProfileBox);
             panel1.Controls.Add(AddDeadlineButton);
@@ -135,7 +135,7 @@
             // RenameAffairButton
             // 
             resources.ApplyResources(RenameAffairButton, "RenameAffairButton");
-            RenameAffairButton.BackColor = Color.FromArgb(173, 102, 213);
+            RenameAffairButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             RenameAffairButton.Name = "RenameAffairButton";
             RenameAffairButton.UseVisualStyleBackColor = false;
             RenameAffairButton.Click += RenameAffairButton_Click;
@@ -143,7 +143,7 @@
             // AddDeadlineButton
             // 
             resources.ApplyResources(AddDeadlineButton, "AddDeadlineButton");
-            AddDeadlineButton.BackColor = Color.FromArgb(173, 102, 213);
+            AddDeadlineButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             AddDeadlineButton.Name = "AddDeadlineButton";
             AddDeadlineButton.UseVisualStyleBackColor = false;
             AddDeadlineButton.Click += AddDeadlineButton_Click;
@@ -151,7 +151,7 @@
             // PriorityButton
             // 
             resources.ApplyResources(PriorityButton, "PriorityButton");
-            PriorityButton.BackColor = Color.FromArgb(173, 102, 213);
+            PriorityButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             PriorityButton.Name = "PriorityButton";
             PriorityButton.UseVisualStyleBackColor = false;
             PriorityButton.Click += PriorityButton_Click;
@@ -159,7 +159,7 @@
             // DeleteButton
             // 
             resources.ApplyResources(DeleteButton, "DeleteButton");
-            DeleteButton.BackColor = Color.FromArgb(173, 102, 213);
+            DeleteButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             DeleteButton.Name = "DeleteButton";
             DeleteButton.UseVisualStyleBackColor = false;
             DeleteButton.Click += DeleteButton_Click;
@@ -167,7 +167,7 @@
             // BackButton
             // 
             resources.ApplyResources(BackButton, "BackButton");
-            BackButton.BackColor = Color.FromArgb(173, 102, 213);
+            BackButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             BackButton.Name = "BackButton";
             BackButton.UseVisualStyleBackColor = false;
             BackButton.Click += BackButton_Click;
@@ -175,7 +175,7 @@
             // ClearButton
             // 
             resources.ApplyResources(ClearButton, "ClearButton");
-            ClearButton.BackColor = Color.FromArgb(173, 102, 213);
+            ClearButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             ClearButton.Name = "ClearButton";
             ClearButton.UseVisualStyleBackColor = false;
             ClearButton.Click += ClearButton_Click;
@@ -183,7 +183,7 @@
             // AddAffairButton
             // 
             resources.ApplyResources(AddAffairButton, "AddAffairButton");
-            AddAffairButton.BackColor = Color.FromArgb(173, 102, 213);
+            AddAffairButton.BackColor = (System.Drawing.Color)new Color(173, 102, 213);
             AddAffairButton.Name = "AddAffairButton";
             AddAffairButton.UseVisualStyleBackColor = false;
             AddAffairButton.Click += AddAffairButton_Click;
