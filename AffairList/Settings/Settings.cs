@@ -61,8 +61,8 @@ namespace AffairList
         }
         private void Initialize()
         {
-            if (!LogFileExists()) CreateLogFile();
             if (!ProgramDirectoryExists()) CreateProgramDirectory();
+            if (!LogFileExists()) CreateLogFile();
             if (!SettingsFileExists()) CreateSettingsFile();
             if (!ListsDirectoryExists()) CreateListsDirectory();
             try
@@ -221,8 +221,6 @@ namespace AffairList
         public void CreateProgramDirectory()
         {
             Directory.CreateDirectory(programDirectoryFolderFullPath);
-            _fileLogger.LogInformation(
-                $"{DateTime.Now} program directory was created");
         }
         public void CreateLogFile()
         {
