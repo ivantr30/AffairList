@@ -86,11 +86,39 @@
             }
             Focus();
         }
-        public void OpenForm(Form form)
+        public void OpenForm(Form form, bool asDialog)
         {
             Hide();
             _childForm = form;
-            _childForm?.ShowDialog();
+            if (asDialog)
+            {
+                try
+                {
+                    _childForm.ShowDialog();
+                }
+                catch (ObjectDisposedException) { }
+                finally
+                {
+                    AfterFormClosed();
+                }
+            }
+            else
+            {
+                try
+                {
+                    _childForm.Show();
+                    _childForm.FormClosed += AfterFormClosed;
+                }
+                catch (ObjectDisposedException) { AfterFormClosed(); }
+            }
+        }
+        private void AfterFormClosed(object? sender, FormClosedEventArgs e)
+        {
+            AfterFormClosed();
+        }
+        private void AfterFormClosed()
+        {
+            _childForm.FormClosed -= AfterFormClosed;
             _childForm?.Dispose();
             _childForm = null;
             TopMost = true;

@@ -3,7 +3,7 @@
     public interface IParentable
     {
         void SetControl(Control control);
-        void OpenForm(Form form);
+        void OpenForm(Form form, bool asDialog);
         void Exit();
         void Return();
         void MinimizeForm();

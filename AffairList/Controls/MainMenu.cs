@@ -11,8 +11,6 @@
         private Control _settingsManager;
         private Control _hotkeySettingsManager;
 
-        private ToDoList _toDoList;
-
         public MainMenu(Settings settings, LoadTimeManager loadTimeManager, IParentable parent)
         {
             InitializeComponent();
@@ -65,7 +63,7 @@
                 MessageBox.Show("Error, there is no list available");
                 return;
             }
-            ParentElement.OpenForm(new ToDoList(_settings, ParentElement));
+            ParentElement.OpenForm(new ToDoList(_settings, ParentElement), asDialog: false);
         }
         private void ReplaceAffairListButton_Click(object sender, EventArgs e)
         {
@@ -74,12 +72,9 @@
                 MessageBox.Show("Error, there is no list available");
                 return;
             }
-            if (_toDoList == null || _toDoList.IsDisposed)
-            {
-                _toDoList = new ToDoList(_settings, ParentElement) { canReplace = true };
-            }
-            _toDoList.GetAffairs().BackColor = Color.White;
-            ParentElement.OpenForm(_toDoList);
+            using ToDoList toDoList = new ToDoList(_settings, ParentElement) { canReplace = true };
+            toDoList.GetAffairs().BackColor = Color.White;
+            ParentElement.OpenForm(toDoList, asDialog: true);
         }
 
         private async void ClearListButton_Click(object sender, EventArgs e)
