@@ -13,7 +13,8 @@ namespace AffairList
 
         private int _newX;
         private int _newY;
-        private uint _newDistanceToNotificate;
+        private uint _newDayDistanceToNotificate;
+        private uint _newHourDistanceToNotificate;
 
         private Color _newTextColor;
         private Color _newBgColor;
@@ -55,6 +56,7 @@ namespace AffairList
             {
                 NotificationState.Text = "OFF";
             }
+            HourDistanceToNotificate.Text = _settings.GetNotificationHourDistance().ToString();
             DistanceToNotificate.Text = _settings.GetNotificationDayDistance().ToString();
         }
         private bool CanLeave()
@@ -75,7 +77,7 @@ namespace AffairList
         }
         private void CloseButton_Click(object sender, EventArgs e)
         {
-            if(CanLeave()) ParentElement.Exit();
+            if (CanLeave()) ParentElement.Exit();
         }
 
         private void CloseButton_MouseEnter(object sender, EventArgs e)
@@ -131,7 +133,7 @@ namespace AffairList
 
         private void autostartStateLab_MouseDown(object sender, MouseEventArgs e)
         {
-            if (_settingsUpdater != null && 
+            if (_settingsUpdater != null &&
                 _settingsUpdater.GetInvocationList().Contains(ToggleAutostartState))
             {
                 _settingsUpdater -= ToggleAutostartState;
@@ -148,7 +150,7 @@ namespace AffairList
         private void ToggleAutostartState()
         {
             _settings.SetAutostart(!_settings.DoesAutostart());
-            if(_newAutostartState) _settings.EnableAutoStart();
+            if (_newAutostartState) _settings.EnableAutoStart();
             else _settings.DisableAutoStart();
         }
 
@@ -278,7 +280,7 @@ namespace AffairList
 
         private void AskToDeleteState_MouseDown(object sender, MouseEventArgs e)
         {
-            if (_settingsUpdater != null && 
+            if (_settingsUpdater != null &&
                 _settingsUpdater.GetInvocationList().Contains(ToggleAskToDeleteState))
             {
                 _settingsUpdater -= ToggleAskToDeleteState;
@@ -321,7 +323,7 @@ namespace AffairList
 
         private void NotificationState_MouseDown(object sender, MouseEventArgs e)
         {
-            if (_settingsUpdater != null && 
+            if (_settingsUpdater != null &&
                 _settingsUpdater.GetInvocationList().Contains(ToggleNotificating))
             {
                 _settingsUpdater -= ToggleNotificating;
@@ -362,12 +364,14 @@ namespace AffairList
         {
             try
             {
-                uint distanceToNotificate = uint.Parse(Interaction.InputBox(
+                string distanceNotFormated = Interaction.InputBox(
                     "Enter how many days far from the deadline you want to be notified",
                     "Day distance to notificate input box",
-                    _settings.GetNotificationDayDistance().ToString()));
+                    _settings.GetNotificationDayDistance().ToString());
+                if (string.IsNullOrEmpty(distanceNotFormated)) return;
+                uint distanceToNotificate = uint.Parse(distanceNotFormated);
 
-                _newDistanceToNotificate = distanceToNotificate;
+                _newDayDistanceToNotificate = distanceToNotificate;
                 _settingsUpdater -= SetDistanceToNotificate;
                 _settingsUpdater += SetDistanceToNotificate;
                 DistanceToNotificate.Text = distanceToNotificate.ToString();
@@ -381,7 +385,7 @@ namespace AffairList
 
         private void SetDistanceToNotificate()
         {
-            _settings.SetNotificationDayDistance(_newDistanceToNotificate);
+            _settings.SetNotificationDayDistance(_newDayDistanceToNotificate);
         }
 
         private void ExportButton_Click(object sender, EventArgs e)
@@ -431,9 +435,82 @@ namespace AffairList
 
         }
 
+        private void CurrentFontComboBox_SelectedValueChanged(object sender, EventArgs e)
+        {
+
+        }
+
         public void OnAddition()
         {
             LoadSettings();
+        }
+
+        private void HourDistanceToNotificate_DoubleClick(object sender, EventArgs e)
+        {
+            try
+            {
+                string distanceNotFormated = Interaction.InputBox(
+                    "Enter how many days far from the deadline you want to be notified",
+                    "Day distance to notificate input box",
+                    _settings.GetNotificationHourDistance().ToString());
+                if (string.IsNullOrEmpty(distanceNotFormated)) return;
+                uint distanceToNotificate = uint.Parse(distanceNotFormated);
+
+                _newHourDistanceToNotificate = distanceToNotificate;
+                _settingsUpdater -= SetHourDistanceToNotificate;
+                _settingsUpdater += SetHourDistanceToNotificate;
+                HourDistanceToNotificate.Text = distanceToNotificate.ToString();
+                _isConfirmed = false;
+            }
+            catch
+            {
+                MessageBox.Show("Error, wrong input type");
+            }
+        }
+
+        private void SetHourDistanceToNotificate()
+        {
+            _settings.SetNotificationHourDistance(_newHourDistanceToNotificate);
+        }
+
+        private void HourDistanceToNotificate_MouseEnter(object sender, EventArgs e)
+        {
+            HourDistanceToNotificate.ForeColor = Color.Gray;
+        }
+
+        private void HourDistanceToNotificate_MouseLeave(object sender, EventArgs e)
+        {
+            HourDistanceToNotificate.ForeColor = Color.White;
+        }
+
+        private void CanBeAlwaysReplacable_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (_settingsUpdater != null &&
+                _settingsUpdater.GetInvocationList().Contains(ToggleCanBeAlwaysReplacableState))
+            {
+                _settingsUpdater -= ToggleCanBeAlwaysReplacableState;
+            }
+            else
+            {
+                _settingsUpdater += ToggleCanBeAlwaysReplacableState;
+            }
+            CanBeAlwaysReplacable.Text = CanBeAlwaysReplacable.Text == "OFF" ? "On" : "OFF";
+            _isConfirmed = false;
+        }
+
+        private void ToggleCanBeAlwaysReplacableState()
+        {
+            _settings.SetAlwaysReplacing(!_settings.CanBeAlwaysReplaced());
+        }
+
+        private void CanBeAlwaysReplacable_MouseEnter(object sender, EventArgs e)
+        {
+            CanBeAlwaysReplacable.ForeColor = Color.Gray;
+        }
+
+        private void CanBeAlwaysReplacable_MouseLeave(object sender, EventArgs e)
+        {
+            CanBeAlwaysReplacable.ForeColor = Color.White;
         }
     }
 }
