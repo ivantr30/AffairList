@@ -57,6 +57,8 @@ namespace AffairList
 
             _fileLogger.LogInformation($"{DateTime.Now} Starting notificating");
 
+            Thread.Sleep(100);
+
             foreach (var profile in Directory.GetFiles(_settings.listsDirectoryFullPath))
             {
                 foreach (string affair in File.ReadAllLines(profile))
