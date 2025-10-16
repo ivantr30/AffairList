@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace AffairList
 {
@@ -51,21 +52,26 @@ namespace AffairList
                     $"{DateTime.Now} LoadTimeFile wasn't in right format and was rewritten");
             }
         }
-        public void Notificate()
+        public async Task Notificate()
         {
             if (!_settings.DoesNotificate() || !ShouldNotificate()) return;
 
             _fileLogger.LogInformation($"{DateTime.Now} Starting notificating");
 
-            Thread.Sleep(100);
+            _notification.BalloonTipIcon = ToolTipIcon.Info;
 
-            foreach (var profile in Directory.GetFiles(_settings.listsDirectoryFullPath))
+            await SaveTimeAsync();
+
+            string[] profiles = Directory.GetFiles(_settings.listsDirectoryFullPath);
+
+            for(int i = 0; i < profiles.Length; i++)
             {
-                foreach (string affair in File.ReadAllLines(profile))
+                string[] affairs = File.ReadAllLines(profiles[i]);
+                for(int j = 0; j < affairs.Length; j++)
                 {
-                    if (!affair.StartsWith(_deadlineTag)) continue;
+                    if (!affairs[j].StartsWith(_deadlineTag)) continue;
 
-                    DateTime deadline = DateTime.Parse(affair.Substring(10, 11));
+                    DateTime deadline = DateTime.Parse(affairs[j].Substring(10, 11));
 
                     int daysLeft = (deadline.Date - DateTime.Now.Date).Days;
                     if (daysLeft > _settings.GetNotificationDayDistance()) continue;
@@ -76,22 +82,23 @@ namespace AffairList
                         TimeSpan now = new TimeSpan(
                             DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
                         _notification.BalloonTipIcon = ToolTipIcon.Info;
-                        _notification.BalloonTipText = AffairWithoutTags(affair) +
+                        _notification.BalloonTipText = AffairWithoutTags(affairs[j]) +
                             $" - осталось {day - now}";
                     }
                     else if (daysLeft > 0)
                     {
                         _notification.BalloonTipIcon = ToolTipIcon.Info;
-                        _notification.BalloonTipText = AffairWithoutTags(affair) +
+                        _notification.BalloonTipText = AffairWithoutTags(affairs[j]) +
                             $" - осталось {daysLeft} дней";
                     }
                     else
                     {
                         _notification.BalloonTipIcon = ToolTipIcon.Warning;
-                        _notification.BalloonTipText = AffairWithoutTags(affair) + " - просрочено";
+                        _notification.BalloonTipText = AffairWithoutTags(affairs[j]) + " - просрочено";
                     }
-
+                    await Task.Delay(1500);
                     _notification.ShowBalloonTip(1000);
+                    await Task.Delay(1500);
                 }
             }
             _fileLogger.LogInformation($"{DateTime.Now} notified");

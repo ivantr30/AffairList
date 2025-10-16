@@ -140,14 +140,9 @@
             }
             ParentElement.SetControl(_hotkeySettingsManager);
         }
-        public void OnAddition()
+        public async void OnAddition()
         {
-            _loadTimeManager.Notificate();
-            _loadTimeManager.SaveTime();
-        }
-
-        private async void MainMenu_Load(object sender, EventArgs e)
-        {
+            await _loadTimeManager.Notificate();
         }
     }
 }
