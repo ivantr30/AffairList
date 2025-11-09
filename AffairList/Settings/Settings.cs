@@ -5,14 +5,14 @@ namespace AffairList
 {
     public class Settings
     {
-        private readonly string _defaultListFileFullPath;
+        private static readonly string _defaultListFileFullPath;
 
-        public readonly string programDirectoryFolderFullPath = Environment
+        public static readonly string programDirectoryFolderFullPath = Environment
             .GetFolderPath(Environment.SpecialFolder.ApplicationData)+@"\AffairList\";
 
-        public readonly string listsDirectoryFullPath;
-        public readonly string settingsFileFullPath;
-        public readonly string logFileFullPath;
+        public static readonly string listsDirectoryFullPath;
+        public static readonly string settingsFileFullPath;
+        public static readonly string logFileFullPath;
 
         public readonly int screenWidth;
         public readonly int screenHeight;
@@ -23,6 +23,15 @@ namespace AffairList
 
         public Settings()
         {
+            screenWidth = Screen.PrimaryScreen!.WorkingArea.Width;
+            screenHeight = Screen.PrimaryScreen.WorkingArea.Height;
+
+            _fileLogger = new FileLogger(logFileFullPath);
+
+            Initialize();
+        }
+        static Settings()
+        {
             if (AffairListDebug.DEBUG)
             {
                 programDirectoryFolderFullPath += @"Debug\";
@@ -31,13 +40,6 @@ namespace AffairList
             _defaultListFileFullPath = $@"{listsDirectoryFullPath}list.txt";
             settingsFileFullPath = $@"{programDirectoryFolderFullPath}settings.json";
             logFileFullPath = $@"{programDirectoryFolderFullPath}logs.txt";
-
-            screenWidth = Screen.PrimaryScreen!.WorkingArea.Width;
-            screenHeight = Screen.PrimaryScreen.WorkingArea.Height;
-
-            _fileLogger = new FileLogger(logFileFullPath);
-
-            Initialize();
         }
         private async Task InitializeAsync()
         {

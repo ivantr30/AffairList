@@ -33,7 +33,7 @@
 
             for (int i = 0; i < ProfilePicker.CheckedItems.Count; i++)
             {
-                string sourceFilePath = _settings.listsDirectoryFullPath +
+                string sourceFilePath = Settings.listsDirectoryFullPath +
                     ProfilePicker.CheckedItems[i];
                 string destinationFilePath = ProfilesExportDialog.SelectedPath + "\\" +
                     ProfilePicker.CheckedItems[i];

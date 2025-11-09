@@ -36,7 +36,7 @@ namespace AffairList
         {
             int profilesCount = 0;
             ProfileBox.Items.Clear();
-            foreach (string profile in Directory.EnumerateFiles(_settings.listsDirectoryFullPath))
+            foreach (string profile in Directory.EnumerateFiles(Settings.listsDirectoryFullPath))
             {
                 profilesCount++;
                 FileInfo profileInfo = new FileInfo(profile);
@@ -359,7 +359,7 @@ namespace AffairList
         }
         private async Task ChangeProfileAsync()
         {
-            foreach (var profile in Directory.EnumerateFiles(_settings.listsDirectoryFullPath))
+            foreach (var profile in Directory.EnumerateFiles(Settings.listsDirectoryFullPath))
             {
                 FileInfo profileInfo = new FileInfo(profile);
                 if (profileInfo.Name == ProfileBox.SelectedItem!.ToString())

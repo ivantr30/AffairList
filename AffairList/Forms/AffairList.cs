@@ -59,7 +59,9 @@
         public void Return()
         {
             if (Controls[0] != _mainMenu)
+            {
                 SetControl(_mainMenu);
+            }
         }
         public void MinimizeForm() => WindowState = FormWindowState.Minimized;
         public void SetControl(Control control)
@@ -123,6 +125,10 @@
             _childForm = null;
             TopMost = true;
             Show();
+            if (Controls[0] == _mainMenu)
+            {
+                _mainMenu.OnAddition();
+            }
             TopMost = false;
         }
         public void SetLastPoint(MouseEventArgs e) => LastPoint = new Point(e.X, e.Y);

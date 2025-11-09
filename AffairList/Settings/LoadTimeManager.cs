@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace AffairList
 {
@@ -23,14 +24,14 @@ namespace AffairList
         {
             _settings = settings;
 
-            LoadTimeFileFullPath = $@"{_settings.programDirectoryFolderFullPath}\loadtime.json";
+            LoadTimeFileFullPath = $@"{Settings.programDirectoryFolderFullPath}\loadtime.json";
 
             Initialize(notification);
         }
 
         public void Initialize(NotifyIcon notification)
         {
-            _fileLogger = new FileLogger(_settings.logFileFullPath);
+            _fileLogger = new FileLogger(Settings.logFileFullPath);
 
             _notification = notification;
 
@@ -52,17 +53,17 @@ namespace AffairList
                     $"{DateTime.Now} LoadTimeFile wasn't in right format and was rewritten");
             }
         }
-        public async Task Notificate()
+        public void Notificate()
         {
             if (!_settings.DoesNotificate() || !ShouldNotificate()) return;
 
             _fileLogger.LogInformation($"{DateTime.Now} Starting notificating");
 
-            _notification.BalloonTipIcon = ToolTipIcon.Info;
+            Dictionary<string, ToolTipIcon> notifications = [];
 
-            await SaveTimeAsync();
+            SaveTime();
 
-            string[] profiles = Directory.GetFiles(_settings.listsDirectoryFullPath);
+            string[] profiles = Directory.GetFiles(Settings.listsDirectoryFullPath);
 
             for(int i = 0; i < profiles.Length; i++)
             {
@@ -81,25 +82,28 @@ namespace AffairList
                         TimeSpan day = new TimeSpan(24, 0, 0);
                         TimeSpan now = new TimeSpan(
                             DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
-                        _notification.BalloonTipIcon = ToolTipIcon.Info;
-                        _notification.BalloonTipText = AffairWithoutTags(affairs[j]) +
-                            $" - осталось {day - now}";
+                        notifications.Add(
+                            AffairWithoutTags(affairs[j]) + $" - осталось {day - now}",
+                            ToolTipIcon.Info);
                     }
                     else if (daysLeft > 0)
                     {
-                        _notification.BalloonTipIcon = ToolTipIcon.Info;
-                        _notification.BalloonTipText = AffairWithoutTags(affairs[j]) +
-                            $" - осталось {daysLeft} дней";
+                        notifications.Add(
+                            AffairWithoutTags(affairs[j]) + $" - осталось {daysLeft} дней",
+                            ToolTipIcon.Info);
                     }
                     else
                     {
-                        _notification.BalloonTipIcon = ToolTipIcon.Warning;
-                        _notification.BalloonTipText = AffairWithoutTags(affairs[j]) + " - просрочено";
+                        notifications.Add(
+                            AffairWithoutTags(affairs[j]) + " - просрочено",
+                            ToolTipIcon.Warning);
                     }
-                    await Task.Delay(1500);
-                    _notification.ShowBalloonTip(1000);
-                    await Task.Delay(1500);
                 }
+            }
+
+            foreach (KeyValuePair<string, ToolTipIcon> notification in notifications)
+            {
+                _notification.ShowBalloonTip(3000, "AffairList", notification.Key, notification.Value);
             }
             _fileLogger.LogInformation($"{DateTime.Now} notified");
         }

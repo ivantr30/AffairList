@@ -416,7 +416,7 @@ namespace AffairList
             }
             try
             {
-                File.Copy(_settings.settingsFileFullPath, destSettingsFilePath);
+                File.Copy(Settings.settingsFileFullPath, destSettingsFilePath);
             }
             catch (IOException)
             {

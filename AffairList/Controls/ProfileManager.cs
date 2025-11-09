@@ -32,7 +32,7 @@ namespace AffairList
             if (!_settings.ListsDirectoryExists()) _settings.CreateListsDirectory();
 
             Profiles.Items.Clear();
-            _profileLines = Directory.GetFiles(_settings.listsDirectoryFullPath)
+            _profileLines = Directory.GetFiles(Settings.listsDirectoryFullPath)
                     .OrderByDescending(x => x.EndsWith(_priorityWord)).ToList();
 
             for (int i = 0; i < _profileLines.Count; i++)
@@ -117,9 +117,9 @@ namespace AffairList
         private void AddNewProfile(string profile)
         {
             Profiles.Items.Add(profile);
-            _profileLines.Add($@"{_settings.listsDirectoryFullPath}\{profile}");
+            _profileLines.Add($@"{Settings.listsDirectoryFullPath}\{profile}");
 
-            using (File.Create($@"{_settings.listsDirectoryFullPath}\{profile}")) { }
+            using (File.Create($@"{Settings.listsDirectoryFullPath}\{profile}")) { }
         }
         /// <summary>
         /// Requires only name with extension
@@ -128,8 +128,8 @@ namespace AffairList
         /// <returns></returns>
         private bool ProfileExists(string profileName)
         {
-            return File.Exists(_settings.listsDirectoryFullPath + profileName + ".txt")
-                || File.Exists(_settings.listsDirectoryFullPath + profileName);
+            return File.Exists(Settings.listsDirectoryFullPath + profileName + ".txt")
+                || File.Exists(Settings.listsDirectoryFullPath + profileName);
         }
         private void DeleteProfile(string profile)
         {
@@ -141,7 +141,7 @@ namespace AffairList
             if (dialogres == DialogResult.No) return;
 
             // It is without / because lists directory path ends with / (look into Settings.cs)
-            File.Delete($@"{_settings.listsDirectoryFullPath}{profile}");
+            File.Delete($@"{Settings.listsDirectoryFullPath}{profile}");
 
             if(profile.EndsWith(".txt")) 
                 _profileLines.Remove(_profileLines.Where(x => x.EndsWith(profile)).First());
@@ -267,7 +267,7 @@ namespace AffairList
                     .First());
             }
 
-            string newProfileName = _settings.listsDirectoryFullPath;
+            string newProfileName = Settings.listsDirectoryFullPath;
 
             if (selectedProfileInfo.Name.EndsWith(_priorityWord))
             {
