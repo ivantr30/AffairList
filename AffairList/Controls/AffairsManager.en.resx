@@ -117,12 +117,102 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="MinimizeButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>24, 31</value>
+  </data>
+  <data name="NameBackground.Size" type="System.Drawing.Size, System.Drawing">
+    <value>563, 76</value>
+  </data>
+  <data name="CloseButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>33, 31</value>
+  </data>
+  <data name="AffairsLab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>200, 23</value>
+  </data>
+  <data name="AffairsLab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>133, 46</value>
+  </data>
+  <data name="ProfileBox.Location" type="System.Drawing.Point, System.Drawing">
+    <value>372, 78</value>
+  </data>
+  <data name="ProfileBox.Size" type="System.Drawing.Size, System.Drawing">
+    <value>179, 23</value>
+  </data>
+  <data name="DeadlineLab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 79</value>
+  </data>
+  <data name="DeadlineLab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>198, 25</value>
+  </data>
+  <data name="Affairs.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 117</value>
+  </data>
+  <data name="Affairs.Size" type="System.Drawing.Size, System.Drawing">
+    <value>539, 172</value>
+  </data>
+  <data name="AffairInput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 295</value>
+  </data>
+  <data name="AffairInput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>539, 30</value>
+  </data>
+  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>563, 357</value>
+  </data>
+  <data name="RenameAffairButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>358, 327</value>
+  </data>
+  <data name="RenameAffairButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>65, 24</value>
+  </data>
+  <data name="AddDeadlineButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>120, 327</value>
+  </data>
+  <data name="AddDeadlineButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 24</value>
+  </data>
+  <data name="PriorityButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 327</value>
+  </data>
+  <data name="PriorityButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>102, 24</value>
+  </data>
+  <data name="DeleteButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>292, 327</value>
+  </data>
+  <data name="DeleteButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 24</value>
+  </data>
+  <data name="BackButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>495, 327</value>
+  </data>
+  <data name="BackButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>56, 24</value>
+  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="BackButton.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
   </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="ClearButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>429, 327</value>
+  </data>
+  <data name="ClearButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 24</value>
+  </data>
+  <data name="AddAffairButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>226, 327</value>
+  </data>
+  <data name="AddAffairButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 24</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>7, 15</value>
+  </data>
   <data name="$this.Location" type="System.Drawing.Point, System.Drawing">
     <value>-50, 0</value>
+  </data>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>563, 357</value>
   </data>
 </root>

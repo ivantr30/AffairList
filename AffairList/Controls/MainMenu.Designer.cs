@@ -55,11 +55,11 @@
             // 
             // NameBackground
             // 
-            resources.ApplyResources(NameBackground, "NameBackground");
             NameBackground.BackColor = Color.FromArgb(159, 62, 213);
             NameBackground.Controls.Add(MinimizeButton);
             NameBackground.Controls.Add(CloseButton);
             NameBackground.Controls.Add(AffairListLab);
+            resources.ApplyResources(NameBackground, "NameBackground");
             NameBackground.Name = "NameBackground";
             NameBackground.MouseDown += NameBackground_MouseDown;
             NameBackground.MouseMove += NameBackground_MouseMove;
@@ -88,9 +88,9 @@
             // 
             // ChangeProfileButton
             // 
-            resources.ApplyResources(ChangeProfileButton, "ChangeProfileButton");
             ChangeProfileButton.BackColor = Color.FromArgb(173, 102, 213);
             ChangeProfileButton.FlatAppearance.BorderSize = 0;
+            resources.ApplyResources(ChangeProfileButton, "ChangeProfileButton");
             ChangeProfileButton.ForeColor = SystemColors.ButtonHighlight;
             ChangeProfileButton.Name = "ChangeProfileButton";
             ChangeProfileButton.UseVisualStyleBackColor = false;
@@ -98,9 +98,9 @@
             // 
             // HotKeyButton
             // 
-            resources.ApplyResources(HotKeyButton, "HotKeyButton");
             HotKeyButton.BackColor = Color.FromArgb(173, 102, 213);
             HotKeyButton.FlatAppearance.BorderSize = 0;
+            resources.ApplyResources(HotKeyButton, "HotKeyButton");
             HotKeyButton.ForeColor = SystemColors.ButtonHighlight;
             HotKeyButton.Name = "HotKeyButton";
             HotKeyButton.UseVisualStyleBackColor = false;
@@ -108,9 +108,9 @@
             // 
             // SettingsButton
             // 
-            resources.ApplyResources(SettingsButton, "SettingsButton");
             SettingsButton.BackColor = Color.FromArgb(173, 102, 213);
             SettingsButton.FlatAppearance.BorderSize = 0;
+            resources.ApplyResources(SettingsButton, "SettingsButton");
             SettingsButton.ForeColor = SystemColors.ButtonHighlight;
             SettingsButton.Name = "SettingsButton";
             SettingsButton.UseVisualStyleBackColor = false;
@@ -118,9 +118,9 @@
             // 
             // ChangeListButton
             // 
-            resources.ApplyResources(ChangeListButton, "ChangeListButton");
             ChangeListButton.BackColor = Color.FromArgb(173, 102, 213);
             ChangeListButton.FlatAppearance.BorderSize = 0;
+            resources.ApplyResources(ChangeListButton, "ChangeListButton");
             ChangeListButton.ForeColor = SystemColors.ButtonHighlight;
             ChangeListButton.Name = "ChangeListButton";
             ChangeListButton.UseVisualStyleBackColor = false;
@@ -128,9 +128,9 @@
             // 
             // ClearListButton
             // 
-            resources.ApplyResources(ClearListButton, "ClearListButton");
             ClearListButton.BackColor = Color.FromArgb(173, 102, 213);
             ClearListButton.FlatAppearance.BorderSize = 0;
+            resources.ApplyResources(ClearListButton, "ClearListButton");
             ClearListButton.ForeColor = SystemColors.ButtonHighlight;
             ClearListButton.Name = "ClearListButton";
             ClearListButton.TabStop = false;
@@ -139,7 +139,6 @@
             // 
             // panel1
             // 
-            resources.ApplyResources(panel1, "panel1");
             panel1.BackColor = Color.FromArgb(72, 3, 111);
             panel1.Controls.Add(ErrorHelpLab);
             panel1.Controls.Add(ChangeProfileButton);
@@ -150,13 +149,14 @@
             panel1.Controls.Add(ChangeListButton);
             panel1.Controls.Add(ClearListButton);
             panel1.Controls.Add(NameBackground);
+            resources.ApplyResources(panel1, "panel1");
             panel1.Name = "panel1";
             // 
             // OpenListButton
             // 
-            resources.ApplyResources(OpenListButton, "OpenListButton");
             OpenListButton.BackColor = Color.FromArgb(173, 102, 213);
             OpenListButton.FlatAppearance.BorderSize = 0;
+            resources.ApplyResources(OpenListButton, "OpenListButton");
             OpenListButton.ForeColor = SystemColors.ButtonHighlight;
             OpenListButton.Name = "OpenListButton";
             OpenListButton.UseVisualStyleBackColor = false;
@@ -164,9 +164,9 @@
             // 
             // ReplaceAffairListButton
             // 
-            resources.ApplyResources(ReplaceAffairListButton, "ReplaceAffairListButton");
             ReplaceAffairListButton.BackColor = Color.FromArgb(173, 102, 213);
             ReplaceAffairListButton.FlatAppearance.BorderSize = 0;
+            resources.ApplyResources(ReplaceAffairListButton, "ReplaceAffairListButton");
             ReplaceAffairListButton.ForeColor = SystemColors.ButtonHighlight;
             ReplaceAffairListButton.Name = "ReplaceAffairListButton";
             ReplaceAffairListButton.UseVisualStyleBackColor = false;

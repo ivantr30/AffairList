@@ -127,10 +127,13 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="ProfilesLab.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Unispace, 30pt</value>
+    <value>Microsoft Sans Serif, 30pt</value>
+  </data>
+  <data name="ProfilesLab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>203, 21</value>
   </data>
   <data name="ProfilesLab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>212, 48</value>
+    <value>154, 46</value>
   </data>
   <data name="ProfilesLab.Text" xml:space="preserve">
     <value>Profiles</value>
@@ -145,10 +148,10 @@
     <value>True</value>
   </data>
   <data name="CloseButtonLab.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Unispace, 20pt, style=Bold</value>
+    <value>Microsoft Sans Serif, 20pt, style=Bold</value>
   </data>
   <data name="CloseButtonLab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>31, 33</value>
+    <value>33, 31</value>
   </data>
   <data name="CloseButtonLab.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -160,10 +163,10 @@
     <value>True</value>
   </data>
   <data name="MinimizeButton.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Unispace, 20pt, style=Bold</value>
+    <value>Microsoft Sans Serif, 20pt, style=Bold</value>
   </data>
   <data name="MinimizeButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>31, 33</value>
+    <value>24, 31</value>
   </data>
   <data name="MinimizeButton.Text" xml:space="preserve">
     <value>-</value>
@@ -175,10 +178,10 @@
     <value>True</value>
   </data>
   <data name="CloseButton.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Unispace, 20pt, style=Bold</value>
+    <value>Microsoft Sans Serif, 20pt, style=Bold</value>
   </data>
   <data name="CloseButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>31, 33</value>
+    <value>33, 31</value>
   </data>
   <data name="CloseButton.Text" xml:space="preserve">
     <value>X</value>
@@ -187,7 +190,7 @@
     <value>Top</value>
   </data>
   <data name="NameBackground.Size" type="System.Drawing.Size, System.Drawing">
-    <value>600, 86</value>
+    <value>600, 76</value>
   </data>
   <data name="ProfilesListLab.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>Top, Left, Right</value>
@@ -196,10 +199,13 @@
     <value>True</value>
   </data>
   <data name="ProfilesListLab.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Unispace, 15pt</value>
+    <value>Microsoft Sans Serif, 15pt</value>
+  </data>
+  <data name="ProfilesListLab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 79</value>
   </data>
   <data name="ProfilesListLab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>106, 24</value>
+    <value>76, 25</value>
   </data>
   <data name="ProfilesListLab.Text" xml:space="preserve">
     <value>Profiles</value>
@@ -210,8 +216,11 @@
   <data name="ExportButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
+  <data name="ExportButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 327</value>
+  </data>
   <data name="ExportButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>62, 27</value>
+    <value>62, 24</value>
   </data>
   <data name="ExportButton.Text" xml:space="preserve">
     <value>Export</value>
@@ -222,8 +231,11 @@
   <data name="ChangePriorityButton.Font" type="System.Drawing.Font, System.Drawing">
     <value>Segoe UI, 9.75pt</value>
   </data>
+  <data name="ChangePriorityButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>80, 327</value>
+  </data>
   <data name="ChangePriorityButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>104, 27</value>
+    <value>104, 24</value>
   </data>
   <data name="ChangePriorityButton.Text" xml:space="preserve">
     <value>ChangePriority</value>
@@ -231,8 +243,11 @@
   <data name="RenameButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
+  <data name="RenameButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>322, 327</value>
+  </data>
   <data name="RenameButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 27</value>
+    <value>70, 24</value>
   </data>
   <data name="RenameButton.Text" xml:space="preserve">
     <value>Rename</value>
@@ -240,8 +255,11 @@
   <data name="SelectProfileButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
+  <data name="SelectProfileButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>190, 327</value>
+  </data>
   <data name="SelectProfileButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 27</value>
+    <value>60, 24</value>
   </data>
   <data name="SelectProfileButton.Text" xml:space="preserve">
     <value>Select</value>
@@ -249,8 +267,11 @@
   <data name="DeleteButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
+  <data name="DeleteButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>398, 327</value>
+  </data>
   <data name="DeleteButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 27</value>
+    <value>60, 24</value>
   </data>
   <data name="DeleteButton.Text" xml:space="preserve">
     <value>Delete</value>
@@ -258,8 +279,11 @@
   <data name="BackButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
+  <data name="BackButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>528, 327</value>
+  </data>
   <data name="BackButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 27</value>
+    <value>60, 24</value>
   </data>
   <data name="BackButton.Text" xml:space="preserve">
     <value>Back</value>
@@ -273,14 +297,20 @@
   <data name="Profiles.ItemHeight" type="System.Int32, mscorlib">
     <value>21</value>
   </data>
+  <data name="Profiles.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 107</value>
+  </data>
   <data name="Profiles.Size" type="System.Drawing.Size, System.Drawing">
-    <value>576, 214</value>
+    <value>576, 172</value>
   </data>
   <data name="ClearButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
+  <data name="ClearButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>464, 327</value>
+  </data>
   <data name="ClearButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 27</value>
+    <value>60, 24</value>
   </data>
   <data name="ClearButton.Text" xml:space="preserve">
     <value>Clear</value>
@@ -288,31 +318,40 @@
   <data name="AddButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
   </data>
+  <data name="AddButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>256, 327</value>
+  </data>
   <data name="AddButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 27</value>
+    <value>60, 24</value>
   </data>
   <data name="AddButton.Text" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="ProfileInput.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Unispace, 15pt</value>
+    <value>Microsoft Sans Serif, 15pt</value>
+  </data>
+  <data name="ProfileInput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>12, 295</value>
   </data>
   <data name="ProfileInput.PlaceholderText" xml:space="preserve">
     <value>Enter the name of a new profile</value>
   </data>
   <data name="ProfileInput.Size" type="System.Drawing.Size, System.Drawing">
-    <value>576, 31</value>
+    <value>576, 30</value>
   </data>
   <data name="panel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
     <value>Fill</value>
   </data>
   <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>600, 405</value>
+    <value>600, 357</value>
   </data>
   <data name="panel1.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
   </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>7, 15</value>
+  </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>600, 405</value>
+    <value>600, 357</value>
   </data>
 </root>

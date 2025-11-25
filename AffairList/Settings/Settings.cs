@@ -76,7 +76,8 @@ namespace AffairList
                 WriteBaseSettings();
                 _fileLogger.LogError($"{DateTime.Now} settings file was not valid");
             }
-            if (!System.IO.File.Exists(GetCurrentProfile()))
+            if (!System.IO.File.Exists(GetCurrentProfile()) && 
+                Directory.EnumerateFiles(listsDirectoryFullPath).FirstOrDefault() != default)
             {
                 SelectFirstProfile();
             }

@@ -117,302 +117,296 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>450, 482</value>
-  </data>
-  <data name="&gt;&gt;HotKeyButton.Name" xml:space="preserve">
-    <value>HotKeyButton</value>
-  </data>
-  <data name="NameBackground.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>7, 17</value>
-  </data>
-  <data name="&gt;&gt;OpenListButton.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="ChangeProfileButton.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Tahoma, 9.75pt, style=Bold</value>
-  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="HotKeyButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="AffairListLab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>260, 48</value>
-  </data>
-  <data name="&gt;&gt;NameBackground.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ReplaceAffairListButton.Text" xml:space="preserve">
-    <value>ReplaceList</value>
-  </data>
-  <data name="MinimizeButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>31, 33</value>
-  </data>
-  <data name="ErrorHelpLab.Text" xml:space="preserve">
-    <value>Found an error? - ivanchikinator30 @ivantr30</value>
+  <data name="AffairListLab.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="AffairListLab.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="AffairListLab.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 30pt</value>
+  </data>
+  <data name="AffairListLab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>137, 11</value>
+  </data>
+  <data name="AffairListLab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>175, 46</value>
+  </data>
   <data name="AffairListLab.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
-  </data>
-  <data name="&gt;&gt;SettingsButton.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="HotKeyButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 100</value>
   </data>
   <data name="AffairListLab.Text" xml:space="preserve">
     <value>AffairList</value>
   </data>
-  <data name="&gt;&gt;ErrorHelpLab.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;CloseButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="AffairListLab.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="ErrorHelpLab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>25, 88</value>
-  </data>
-  <data name="&gt;&gt;CloseButton.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="panel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="MinimizeButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>384, 0</value>
-  </data>
-  <data name="ChangeListButton.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;HotKeyButton.Parent" xml:space="preserve">
-    <value>panel1</value>
+  <data name="AffairListLab.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
   </data>
   <data name="&gt;&gt;AffairListLab.Name" xml:space="preserve">
     <value>AffairListLab</value>
   </data>
-  <data name="ChangeListButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 100</value>
+  <data name="&gt;&gt;AffairListLab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="ChangeListButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="panel1.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="SettingsButton.Text" xml:space="preserve">
-    <value>Settings-Customize</value>
-  </data>
-  <data name="MinimizeButton.Text" xml:space="preserve">
-    <value>-</value>
-  </data>
-  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>450, 482</value>
-  </data>
-  <data name="&gt;&gt;ChangeProfileButton.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;panel1.Name" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="AffairListLab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>100, 15</value>
-  </data>
-  <data name="&gt;&gt;NameBackground.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="NameBackground.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;SettingsButton.Name" xml:space="preserve">
-    <value>SettingsButton</value>
-  </data>
-  <data name="OpenListButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="SettingsButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="HotKeyButton.Text" xml:space="preserve">
-    <value>Hotkey Settings</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ChangeProfileButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 100</value>
-  </data>
-  <data name="ClearListButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>35, 250</value>
-  </data>
-  <data name="&gt;&gt;NameBackground.Name" xml:space="preserve">
+  <data name="&gt;&gt;AffairListLab.Parent" xml:space="preserve">
     <value>NameBackground</value>
   </data>
-  <data name="SettingsButton.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Tahoma, 9.75pt, style=Bold</value>
-  </data>
-  <data name="MinimizeButton.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Unispace, 20pt, style=Bold</value>
-  </data>
-  <data name="&gt;&gt;ClearListButton.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="ReplaceAffairListButton.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Tahoma, 9.75pt, style=Bold</value>
-  </data>
-  <data name="ReplaceAffairListButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>315, 250</value>
-  </data>
-  <data name="&gt;&gt;ChangeListButton.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;HotKeyButton.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;AffairListLab.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-  <data name="&gt;&gt;MinimizeButton.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="MinimizeButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="MinimizeButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 20pt, style=Bold</value>
+  </data>
+  <data name="MinimizeButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>384, 0</value>
+  </data>
+  <data name="MinimizeButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>24, 31</value>
   </data>
   <data name="MinimizeButton.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
-  <data name="ReplaceAffairListButton.TabIndex" type="System.Int32, mscorlib">
-    <value>3</value>
+  <data name="MinimizeButton.Text" xml:space="preserve">
+    <value>-</value>
   </data>
-  <data name="HotKeyButton.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Tahoma, 9.75pt, style=Bold</value>
+  <data name="&gt;&gt;MinimizeButton.Name" xml:space="preserve">
+    <value>MinimizeButton</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>MainMenu</value>
+  <data name="&gt;&gt;MinimizeButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;ChangeProfileButton.ZOrder" xml:space="preserve">
-    <value>1</value>
+  <data name="&gt;&gt;MinimizeButton.Parent" xml:space="preserve">
+    <value>NameBackground</value>
   </data>
-  <data name="&gt;&gt;ErrorHelpLab.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;MinimizeButton.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="AffairListLab.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Unispace, 30pt</value>
+  <data name="CloseButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="CloseButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 20pt, style=Bold</value>
+  </data>
+  <data name="CloseButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>419, 0</value>
+  </data>
+  <data name="CloseButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>33, 31</value>
+  </data>
+  <data name="CloseButton.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="CloseButton.Text" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="&gt;&gt;CloseButton.Name" xml:space="preserve">
+    <value>CloseButton</value>
+  </data>
+  <data name="&gt;&gt;CloseButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CloseButton.Parent" xml:space="preserve">
+    <value>NameBackground</value>
+  </data>
+  <data name="&gt;&gt;CloseButton.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="NameBackground.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="NameBackground.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="NameBackground.Size" type="System.Drawing.Size, System.Drawing">
+    <value>450, 66</value>
+  </data>
+  <data name="NameBackground.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;NameBackground.Name" xml:space="preserve">
+    <value>NameBackground</value>
+  </data>
+  <data name="&gt;&gt;NameBackground.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;NameBackground.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;NameBackground.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="ErrorHelpLab.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
   </data>
   <data name="ErrorHelpLab.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
   <data name="ErrorHelpLab.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Unispace, 10pt</value>
+    <value>Microsoft Sans Serif, 10pt</value>
   </data>
-  <data name="&gt;&gt;HotKeyButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="ErrorHelpLab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>35, 87</value>
   </data>
-  <data name="ClearListButton.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Tahoma, 9.75pt, style=Bold</value>
+  <data name="ErrorHelpLab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>296, 17</value>
   </data>
-  <data name="&gt;&gt;AffairListLab.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="CloseButton.Text" xml:space="preserve">
-    <value>X</value>
-  </data>
-  <data name="&gt;&gt;ChangeListButton.Name" xml:space="preserve">
-    <value>ChangeListButton</value>
-  </data>
-  <data name="&gt;&gt;OpenListButton.Name" xml:space="preserve">
-    <value>OpenListButton</value>
-  </data>
-  <data name="&gt;&gt;ChangeListButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ClearListButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ChangeProfileButton.Text" xml:space="preserve">
-    <value>Change Profile</value>
-  </data>
-  <data name="&gt;&gt;AffairListLab.Parent" xml:space="preserve">
-    <value>NameBackground</value>
-  </data>
-  <data name="&gt;&gt;SettingsButton.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="ReplaceAffairListButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 100</value>
-  </data>
-  <data name="AffairListLab.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="OpenListButton.Text" xml:space="preserve">
-    <value>OpenList</value>
-  </data>
-  <data name="OpenListButton.TabIndex" type="System.Int32, mscorlib">
+  <data name="ErrorHelpLab.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
   </data>
-  <data name="&gt;&gt;SettingsButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="ErrorHelpLab.Text" xml:space="preserve">
+    <value>Found an error? - ivanchikinator30 @ivantr30</value>
   </data>
-  <data name="NameBackground.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
+  <data name="ErrorHelpLab.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;ErrorHelpLab.Name" xml:space="preserve">
+    <value>ErrorHelpLab</value>
+  </data>
+  <data name="&gt;&gt;ErrorHelpLab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ErrorHelpLab.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;ErrorHelpLab.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="ChangeProfileButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="ChangeProfileButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 9.75pt, style=Bold</value>
+  </data>
+  <data name="ChangeProfileButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>315, 121</value>
+  </data>
+  <data name="ChangeProfileButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 100</value>
   </data>
   <data name="ChangeProfileButton.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
   </data>
-  <data name="HotKeyButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>35, 125</value>
-  </data>
-  <data name="AffairListLab.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="&gt;&gt;ReplaceAffairListButton.ZOrder" xml:space="preserve">
-    <value>5</value>
-  </data>
-  <data name="SettingsButton.TabIndex" type="System.Int32, mscorlib">
-    <value>5</value>
-  </data>
-  <data name="ChangeListButton.Text" xml:space="preserve">
-    <value>ChangeList</value>
-  </data>
-  <data name="&gt;&gt;MinimizeButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;OpenListButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;ClearListButton.Name" xml:space="preserve">
-    <value>ClearListButton</value>
-  </data>
-  <data name="ErrorHelpLab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>403, 16</value>
-  </data>
-  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ChangeListButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>175, 250</value>
-  </data>
-  <data name="CloseButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>419, 0</value>
+  <data name="ChangeProfileButton.Text" xml:space="preserve">
+    <value>Change Profile</value>
   </data>
   <data name="&gt;&gt;ChangeProfileButton.Name" xml:space="preserve">
     <value>ChangeProfileButton</value>
   </data>
-  <data name="&gt;&gt;ReplaceAffairListButton.Name" xml:space="preserve">
-    <value>ReplaceAffairListButton</value>
+  <data name="&gt;&gt;ChangeProfileButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="OpenListButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>35, 370</value>
+  <data name="&gt;&gt;ChangeProfileButton.Parent" xml:space="preserve">
+    <value>panel1</value>
   </data>
-  <data name="&gt;&gt;MinimizeButton.Name" xml:space="preserve">
-    <value>MinimizeButton</value>
+  <data name="&gt;&gt;ChangeProfileButton.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
-  <data name="CloseButton.TabIndex" type="System.Int32, mscorlib">
+  <data name="HotKeyButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="HotKeyButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 9.75pt, style=Bold</value>
+  </data>
+  <data name="HotKeyButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>35, 121</value>
+  </data>
+  <data name="HotKeyButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 100</value>
+  </data>
+  <data name="HotKeyButton.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="HotKeyButton.Text" xml:space="preserve">
+    <value>Hotkey Settings</value>
+  </data>
+  <data name="&gt;&gt;HotKeyButton.Name" xml:space="preserve">
+    <value>HotKeyButton</value>
+  </data>
+  <data name="&gt;&gt;HotKeyButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;HotKeyButton.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;HotKeyButton.ZOrder" xml:space="preserve">
     <value>2</value>
+  </data>
+  <data name="SettingsButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="SettingsButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 9.75pt, style=Bold</value>
+  </data>
+  <data name="SettingsButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>175, 121</value>
+  </data>
+  <data name="SettingsButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 100</value>
+  </data>
+  <data name="SettingsButton.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="SettingsButton.Text" xml:space="preserve">
+    <value>Settings-Customize</value>
+  </data>
+  <data name="&gt;&gt;SettingsButton.Name" xml:space="preserve">
+    <value>SettingsButton</value>
+  </data>
+  <data name="&gt;&gt;SettingsButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SettingsButton.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;SettingsButton.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="ChangeListButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="ChangeListButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 9.75pt, style=Bold</value>
+  </data>
+  <data name="ChangeListButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>175, 241</value>
+  </data>
+  <data name="ChangeListButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 100</value>
+  </data>
+  <data name="ChangeListButton.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="ChangeListButton.Text" xml:space="preserve">
+    <value>ChangeList</value>
+  </data>
+  <data name="&gt;&gt;ChangeListButton.Name" xml:space="preserve">
+    <value>ChangeListButton</value>
+  </data>
+  <data name="&gt;&gt;ChangeListButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ChangeListButton.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;ChangeListButton.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="ClearListButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="ClearListButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 9.75pt, style=Bold</value>
+  </data>
+  <data name="ClearListButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>35, 241</value>
+  </data>
+  <data name="ClearListButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 100</value>
   </data>
   <data name="ClearListButton.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -420,112 +414,115 @@
   <data name="ClearListButton.Text" xml:space="preserve">
     <value>ClearList</value>
   </data>
-  <data name="ClearListButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
+  <data name="&gt;&gt;ClearListButton.Name" xml:space="preserve">
+    <value>ClearListButton</value>
   </data>
-  <data name="&gt;&gt;ErrorHelpLab.Name" xml:space="preserve">
-    <value>ErrorHelpLab</value>
+  <data name="&gt;&gt;ClearListButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;ReplaceAffairListButton.Parent" xml:space="preserve">
+  <data name="&gt;&gt;ClearListButton.Parent" xml:space="preserve">
     <value>panel1</value>
-  </data>
-  <data name="CloseButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>31, 33</value>
   </data>
   <data name="&gt;&gt;ClearListButton.ZOrder" xml:space="preserve">
     <value>7</value>
   </data>
-  <data name="SettingsButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 100</value>
-  </data>
-  <data name="&gt;&gt;ReplaceAffairListButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;NameBackground.ZOrder" xml:space="preserve">
-    <value>8</value>
-  </data>
-  <data name="HotKeyButton.TabIndex" type="System.Int32, mscorlib">
-    <value>6</value>
-  </data>
-  <data name="ErrorHelpLab.TabIndex" type="System.Int32, mscorlib">
-    <value>4</value>
-  </data>
-  <data name="MinimizeButton.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
-  </data>
-  <data name="NameBackground.Size" type="System.Drawing.Size, System.Drawing">
-    <value>450, 75</value>
-  </data>
-  <data name="&gt;&gt;CloseButton.Parent" xml:space="preserve">
-    <value>NameBackground</value>
-  </data>
-  <data name="&gt;&gt;OpenListButton.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <data name="ErrorHelpLab.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>Top, Left, Right</value>
-  </data>
-  <data name="&gt;&gt;ErrorHelpLab.Parent" xml:space="preserve">
-    <value>panel1</value>
-  </data>
-  <data name="ChangeProfileButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>315, 125</value>
-  </data>
-  <data name="&gt;&gt;ChangeProfileButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="ClearListButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 100</value>
-  </data>
-  <data name="&gt;&gt;AffairListLab.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;MinimizeButton.Parent" xml:space="preserve">
-    <value>NameBackground</value>
-  </data>
-  <data name="ChangeListButton.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Tahoma, 9.75pt, style=Bold</value>
-  </data>
-  <data name="ReplaceAffairListButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+  <data name="OpenListButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
     <value>Flat</value>
-  </data>
-  <data name="ErrorHelpLab.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
-    <value>MiddleCenter</value>
-  </data>
-  <data name="&gt;&gt;CloseButton.Name" xml:space="preserve">
-    <value>CloseButton</value>
-  </data>
-  <data name="ChangeProfileButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
-    <value>Flat</value>
-  </data>
-  <data name="OpenListButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>380, 100</value>
-  </data>
-  <data name="CloseButton.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Unispace, 20pt, style=Bold</value>
-  </data>
-  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="&gt;&gt;ChangeListButton.ZOrder" xml:space="preserve">
-    <value>6</value>
   </data>
   <data name="OpenListButton.Font" type="System.Drawing.Font, System.Drawing">
     <value>Tahoma, 9.75pt, style=Bold</value>
   </data>
-  <data name="SettingsButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>175, 125</value>
+  <data name="OpenListButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>35, 366</value>
   </data>
-  <data name="CloseButton.AutoSize" type="System.Boolean, mscorlib">
-    <value>True</value>
+  <data name="OpenListButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>380, 88</value>
+  </data>
+  <data name="OpenListButton.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="OpenListButton.Text" xml:space="preserve">
+    <value>OpenList</value>
+  </data>
+  <data name="&gt;&gt;OpenListButton.Name" xml:space="preserve">
+    <value>OpenListButton</value>
+  </data>
+  <data name="&gt;&gt;OpenListButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;OpenListButton.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;OpenListButton.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="ReplaceAffairListButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="ReplaceAffairListButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Tahoma, 9.75pt, style=Bold</value>
+  </data>
+  <data name="ReplaceAffairListButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>315, 241</value>
+  </data>
+  <data name="ReplaceAffairListButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 100</value>
+  </data>
+  <data name="ReplaceAffairListButton.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="ReplaceAffairListButton.Text" xml:space="preserve">
+    <value>ReplaceList</value>
+  </data>
+  <data name="&gt;&gt;ReplaceAffairListButton.Name" xml:space="preserve">
+    <value>ReplaceAffairListButton</value>
+  </data>
+  <data name="&gt;&gt;ReplaceAffairListButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ReplaceAffairListButton.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;ReplaceAffairListButton.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="panel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>450, 463</value>
+  </data>
+  <data name="panel1.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;panel1.Name" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
   </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, System.Private.CoreLib, Culture=neutral, PublicKeyToken=7cec85d7bea7798e">
-    <value>en</value>
-  </metadata>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>7, 15</value>
+  </data>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>450, 463</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>MainMenu</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

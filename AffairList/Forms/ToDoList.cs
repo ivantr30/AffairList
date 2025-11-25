@@ -52,6 +52,8 @@ namespace AffairList
         }
         private async Task LoadTextAsync()
         {
+
+            Affairs.Text = "";
             if (_settings.CurrentListNotNull())
             {
                 StringBuilder affairsShower = new StringBuilder();
@@ -97,11 +99,13 @@ namespace AffairList
 
         private void Affairs_MouseDown(object sender, MouseEventArgs e) => OnListMouseDown(e);
         private void Affairs_MouseMove(object sender, MouseEventArgs e) => OnListMouseMove(e);
-        private void Affairs_MouseUp(object sender, MouseEventArgs e) => OnListMouseUpAsync(e);
+        private async void Affairs_MouseUp(object sender, MouseEventArgs e) 
+            => await OnListMouseUpAsync(e);
         private void List_MouseDown(object sender, MouseEventArgs e) => OnListMouseDown(e);
         private void List_MouseMove(object sender, MouseEventArgs e) => OnListMouseMove(e);
 
-        private void List_MouseUp(object sender, MouseEventArgs e) => OnListMouseUpAsync(e);
+        private async void List_MouseUp(object sender, MouseEventArgs e) 
+            => await OnListMouseUpAsync(e);
         private void OnListMouseDown(MouseEventArgs e)
         {
             if (canReplace || _settings.CanBeAlwaysReplaced()) ParentElement.SetLastPoint(e);
@@ -110,7 +114,7 @@ namespace AffairList
         {
             if (canReplace || _settings.CanBeAlwaysReplaced()) ParentElement.MoveChildForm(e);
         }
-        private async void OnListMouseUpAsync(MouseEventArgs e)
+        private async Task OnListMouseUpAsync(MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left && canReplace)
             {
@@ -125,6 +129,7 @@ namespace AffairList
                 _settings.SetProfileX(Left + Affairs.Left);
                 _settings.SetProfileY(Top + Affairs.Top);
                 await _settings.SaveSettingsAsync();
+                await LoadTextAsync();
             }
         }
         public Label GetAffairs()

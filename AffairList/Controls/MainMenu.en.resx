@@ -117,15 +117,91 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="AffairListLab.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Dubai, 30pt</value>
+  </data>
+  <data name="AffairListLab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>139, 0</value>
+  </data>
+  <data name="AffairListLab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>182, 67</value>
+  </data>
+  <data name="MinimizeButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>24, 31</value>
+  </data>
+  <data name="CloseButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>33, 31</value>
+  </data>
+  <data name="NameBackground.Size" type="System.Drawing.Size, System.Drawing">
+    <value>450, 66</value>
+  </data>
+  <data name="ErrorHelpLab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>25, 78</value>
+  </data>
+  <data name="ErrorHelpLab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>296, 17</value>
+  </data>
+  <data name="ChangeProfileButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>315, 110</value>
+  </data>
+  <data name="ChangeProfileButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 88</value>
+  </data>
+  <data name="HotKeyButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>35, 110</value>
+  </data>
+  <data name="HotKeyButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 88</value>
+  </data>
+  <data name="SettingsButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>175, 110</value>
+  </data>
+  <data name="SettingsButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 88</value>
+  </data>
+  <data name="ChangeListButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>175, 221</value>
+  </data>
+  <data name="ChangeListButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 88</value>
+  </data>
+  <data name="ClearListButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>35, 221</value>
+  </data>
+  <data name="ClearListButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 88</value>
+  </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="ClearListButton.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
+  <data name="OpenListButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>35, 326</value>
+  </data>
+  <data name="OpenListButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>380, 88</value>
+  </data>
   <data name="OpenListButton.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
+  </data>
+  <data name="ReplaceAffairListButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>315, 221</value>
+  </data>
+  <data name="ReplaceAffairListButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>100, 88</value>
+  </data>
+  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>450, 425</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>7, 15</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="$this.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
+  </data>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>450, 425</value>
   </data>
 </root>
