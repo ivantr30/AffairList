@@ -116,7 +116,7 @@ namespace AffairList
         }
         private async Task OnListMouseUpAsync(MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left && canReplace)
+            if (canReplace)
             {
                 canReplace = false;
                 _settings.SetProfileX(Left + Affairs.Left);
@@ -129,6 +129,7 @@ namespace AffairList
                 _settings.SetProfileX(Left + Affairs.Left);
                 _settings.SetProfileY(Top + Affairs.Top);
                 await _settings.SaveSettingsAsync();
+                UpdateLocation(Affairs.Top, Affairs.Left);
                 await LoadTextAsync();
             }
         }
@@ -141,6 +142,14 @@ namespace AffairList
         {
             Affairs.BackColor = _settings.GetBgColor();
             canReplace = false;
+        }
+        /// <summary>
+        /// Used to repaint the list 
+        /// </summary>
+        private void UpdateLocation(int top, int left)
+        {
+            Affairs.Left = left;
+            Affairs.Top = top;
         }
     }
 }

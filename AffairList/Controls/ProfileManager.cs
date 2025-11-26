@@ -93,7 +93,8 @@ namespace AffairList
             => ParentElement.MoveForm(e);
         private void AddProfile(string profile)
         {
-            if (profile.Trim() == "")
+            profile = profile.Trim();
+            if (profile == "")
             {
                 MessageBox.Show("Error, textbox is null");
                 return;

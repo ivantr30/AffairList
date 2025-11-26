@@ -124,7 +124,7 @@ namespace AffairList
             }
             if (ContainKeyWords(AffairInput.Text)) return;
 
-            string inputText = CapitalizeAffair(AffairInput.Text) + ".";
+            string inputText = CapitalizeAffair(AffairInput.Text.Trim()) + ".";
 
             Task appendingText = AppendTextAsync(inputText + "\n");
 
