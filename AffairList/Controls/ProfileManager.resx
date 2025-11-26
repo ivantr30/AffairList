@@ -117,15 +117,542 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ExportButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="ExportButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="ExportButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 321</value>
+  </data>
+  <data name="ExportButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>62, 28</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ExportButton.TabIndex" type="System.Int32, mscorlib">
+    <value>30</value>
+  </data>
+  <data name="ExportButton.Text" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="&gt;&gt;ExportButton.Name" xml:space="preserve">
+    <value>ExportButton</value>
+  </data>
+  <data name="&gt;&gt;ExportButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ExportButton.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;ExportButton.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="ChangePriorityButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="ChangePriorityButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 9.75pt</value>
+  </data>
+  <data name="ChangePriorityButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="ChangePriorityButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>78, 321</value>
+  </data>
+  <data name="ChangePriorityButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>104, 28</value>
+  </data>
+  <data name="ChangePriorityButton.TabIndex" type="System.Int32, mscorlib">
+    <value>9</value>
+  </data>
+  <data name="ChangePriorityButton.Text" xml:space="preserve">
+    <value>ChangePriority</value>
+  </data>
+  <data name="&gt;&gt;ChangePriorityButton.Name" xml:space="preserve">
+    <value>ChangePriorityButton</value>
+  </data>
+  <data name="&gt;&gt;ChangePriorityButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ChangePriorityButton.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;ChangePriorityButton.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="RenameButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="RenameButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="RenameButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>320, 321</value>
+  </data>
+  <data name="RenameButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>70, 28</value>
+  </data>
+  <data name="RenameButton.TabIndex" type="System.Int32, mscorlib">
+    <value>8</value>
+  </data>
+  <data name="RenameButton.Text" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="&gt;&gt;RenameButton.Name" xml:space="preserve">
+    <value>RenameButton</value>
+  </data>
+  <data name="&gt;&gt;RenameButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;RenameButton.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;RenameButton.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="SelectProfileButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="SelectProfileButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="SelectProfileButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>188, 321</value>
+  </data>
+  <data name="SelectProfileButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 28</value>
+  </data>
+  <data name="SelectProfileButton.TabIndex" type="System.Int32, mscorlib">
+    <value>7</value>
+  </data>
+  <data name="SelectProfileButton.Text" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="&gt;&gt;SelectProfileButton.Name" xml:space="preserve">
+    <value>SelectProfileButton</value>
+  </data>
+  <data name="&gt;&gt;SelectProfileButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;SelectProfileButton.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;SelectProfileButton.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="DeleteButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="DeleteButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="DeleteButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>396, 321</value>
+  </data>
+  <data name="DeleteButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 28</value>
+  </data>
+  <data name="DeleteButton.TabIndex" type="System.Int32, mscorlib">
+    <value>6</value>
+  </data>
+  <data name="DeleteButton.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="&gt;&gt;DeleteButton.Name" xml:space="preserve">
+    <value>DeleteButton</value>
+  </data>
+  <data name="&gt;&gt;DeleteButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;DeleteButton.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;DeleteButton.ZOrder" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="BackButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="BackButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="BackButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>526, 321</value>
+  </data>
+  <data name="BackButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 28</value>
+  </data>
+  <data name="BackButton.TabIndex" type="System.Int32, mscorlib">
+    <value>5</value>
+  </data>
+  <data name="BackButton.Text" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="&gt;&gt;BackButton.Name" xml:space="preserve">
+    <value>BackButton</value>
+  </data>
+  <data name="&gt;&gt;BackButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;BackButton.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;BackButton.ZOrder" xml:space="preserve">
+    <value>6</value>
+  </data>
+  <data name="Profiles.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Segoe UI, 12pt</value>
+  </data>
+  <data name="Profiles.HorizontalScrollbar" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="Profiles.ItemHeight" type="System.Int32, mscorlib">
+    <value>21</value>
+  </data>
+  <data name="Profiles.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 107</value>
+  </data>
+  <data name="Profiles.Size" type="System.Drawing.Size, System.Drawing">
+    <value>576, 172</value>
+  </data>
+  <data name="Profiles.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="&gt;&gt;Profiles.Name" xml:space="preserve">
+    <value>Profiles</value>
+  </data>
+  <data name="&gt;&gt;Profiles.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;Profiles.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;Profiles.ZOrder" xml:space="preserve">
+    <value>7</value>
+  </data>
+  <data name="ClearButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="ClearButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="ClearButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>462, 321</value>
+  </data>
+  <data name="ClearButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 28</value>
+  </data>
+  <data name="ClearButton.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="ClearButton.Text" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="&gt;&gt;ClearButton.Name" xml:space="preserve">
+    <value>ClearButton</value>
+  </data>
+  <data name="&gt;&gt;ClearButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ClearButton.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;ClearButton.ZOrder" xml:space="preserve">
+    <value>8</value>
+  </data>
+  <data name="AddButton.FlatStyle" type="System.Windows.Forms.FlatStyle, System.Windows.Forms">
+    <value>Flat</value>
+  </data>
+  <data name="AddButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="AddButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>254, 321</value>
+  </data>
+  <data name="AddButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 28</value>
+  </data>
+  <data name="AddButton.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="AddButton.Text" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="&gt;&gt;AddButton.Name" xml:space="preserve">
+    <value>AddButton</value>
+  </data>
+  <data name="&gt;&gt;AddButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;AddButton.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;AddButton.ZOrder" xml:space="preserve">
+    <value>9</value>
+  </data>
+  <data name="ProfileInput.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 15pt</value>
+  </data>
+  <data name="ProfileInput.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 285</value>
+  </data>
+  <data name="ProfileInput.PlaceholderText" xml:space="preserve">
+    <value>Enter the name of a new profile</value>
+  </data>
+  <data name="ProfileInput.Size" type="System.Drawing.Size, System.Drawing">
+    <value>576, 30</value>
+  </data>
+  <data name="ProfileInput.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;ProfileInput.Name" xml:space="preserve">
+    <value>ProfileInput</value>
+  </data>
+  <data name="&gt;&gt;ProfileInput.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ProfileInput.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;ProfileInput.ZOrder" xml:space="preserve">
+    <value>10</value>
+  </data>
+  <data name="ProfilesListLab.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 15pt</value>
+  </data>
+  <data name="ProfilesListLab.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="ProfilesListLab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>10, 79</value>
+  </data>
+  <data name="ProfilesListLab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>76, 25</value>
+  </data>
+  <data name="ProfilesListLab.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="ProfilesListLab.Text" xml:space="preserve">
+    <value>Profiles</value>
+  </data>
+  <data name="ProfilesListLab.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleLeft</value>
+  </data>
+  <data name="&gt;&gt;ProfilesListLab.Name" xml:space="preserve">
+    <value>ProfilesListLab</value>
+  </data>
+  <data name="&gt;&gt;ProfilesListLab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ProfilesListLab.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;ProfilesListLab.ZOrder" xml:space="preserve">
+    <value>4</value>
+  </data>
+  <data name="CloseButtonLab.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="CloseButtonLab.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="CloseButtonLab.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 20pt, style=Bold</value>
+  </data>
+  <data name="CloseButtonLab.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="CloseButtonLab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>569, 0</value>
+  </data>
+  <data name="CloseButtonLab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>33, 31</value>
+  </data>
+  <data name="CloseButtonLab.TabIndex" type="System.Int32, mscorlib">
+    <value>11</value>
+  </data>
+  <data name="CloseButtonLab.Text" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="&gt;&gt;CloseButtonLab.Name" xml:space="preserve">
+    <value>CloseButtonLab</value>
+  </data>
+  <data name="&gt;&gt;CloseButtonLab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CloseButtonLab.Parent" xml:space="preserve">
+    <value>NameBackground</value>
+  </data>
+  <data name="&gt;&gt;CloseButtonLab.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="MinimizeButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="MinimizeButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 25pt, style=Bold</value>
+  </data>
+  <data name="MinimizeButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="MinimizeButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>534, 0</value>
+  </data>
+  <data name="MinimizeButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>29, 39</value>
+  </data>
+  <data name="MinimizeButton.TabIndex" type="System.Int32, mscorlib">
+    <value>4</value>
+  </data>
+  <data name="MinimizeButton.Text" xml:space="preserve">
+    <value>-</value>
+  </data>
+  <data name="MinimizeButton.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;MinimizeButton.Name" xml:space="preserve">
+    <value>MinimizeButton</value>
+  </data>
+  <data name="&gt;&gt;MinimizeButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;MinimizeButton.Parent" xml:space="preserve">
+    <value>NameBackground</value>
+  </data>
+  <data name="&gt;&gt;MinimizeButton.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="CloseButton.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Right</value>
+  </data>
+  <data name="CloseButton.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
+  <data name="CloseButton.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 20pt, style=Bold</value>
+  </data>
+  <data name="CloseButton.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="CloseButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>863, 0</value>
+  </data>
+  <data name="CloseButton.Size" type="System.Drawing.Size, System.Drawing">
+    <value>33, 31</value>
+  </data>
+  <data name="CloseButton.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="CloseButton.Text" xml:space="preserve">
+    <value>X</value>
+  </data>
+  <data name="&gt;&gt;CloseButton.Name" xml:space="preserve">
+    <value>CloseButton</value>
+  </data>
+  <data name="&gt;&gt;CloseButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;CloseButton.Parent" xml:space="preserve">
+    <value>NameBackground</value>
+  </data>
+  <data name="&gt;&gt;CloseButton.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="ProfilesLab.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>Top, Left, Right</value>
+  </data>
+  <data name="ProfilesLab.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Microsoft Sans Serif, 30pt</value>
+  </data>
+  <data name="ProfilesLab.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+    <value>NoControl</value>
+  </data>
+  <data name="ProfilesLab.Location" type="System.Drawing.Point, System.Drawing">
+    <value>230, 15</value>
+  </data>
+  <data name="ProfilesLab.Size" type="System.Drawing.Size, System.Drawing">
+    <value>154, 46</value>
+  </data>
+  <data name="ProfilesLab.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="ProfilesLab.Text" xml:space="preserve">
+    <value>Profiles</value>
+  </data>
+  <data name="ProfilesLab.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
+  </data>
+  <data name="&gt;&gt;ProfilesLab.Name" xml:space="preserve">
+    <value>ProfilesLab</value>
+  </data>
+  <data name="&gt;&gt;ProfilesLab.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;ProfilesLab.Parent" xml:space="preserve">
+    <value>NameBackground</value>
+  </data>
+  <data name="&gt;&gt;ProfilesLab.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+  <data name="NameBackground.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="NameBackground.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="NameBackground.Size" type="System.Drawing.Size, System.Drawing">
+    <value>600, 76</value>
+  </data>
+  <data name="NameBackground.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;NameBackground.Name" xml:space="preserve">
+    <value>NameBackground</value>
+  </data>
+  <data name="&gt;&gt;NameBackground.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;NameBackground.Parent" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;NameBackground.ZOrder" xml:space="preserve">
+    <value>11</value>
+  </data>
+  <data name="panel1.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>600, 359</value>
+  </data>
+  <data name="panel1.TabIndex" type="System.Int32, mscorlib">
+    <value>3</value>
+  </data>
+  <data name="&gt;&gt;panel1.Name" xml:space="preserve">
+    <value>panel1</value>
+  </data>
+  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Panel, System.Windows.Forms, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
     <value>7, 15</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>861, 518</value>
+    <value>600, 359</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>ProfileManager</value>

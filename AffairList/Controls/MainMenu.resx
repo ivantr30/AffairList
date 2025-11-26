@@ -130,7 +130,7 @@
     <value>Microsoft Sans Serif, 30pt</value>
   </data>
   <data name="AffairListLab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>137, 11</value>
+    <value>137, 10</value>
   </data>
   <data name="AffairListLab.Size" type="System.Drawing.Size, System.Drawing">
     <value>175, 46</value>
@@ -160,19 +160,22 @@
     <value>True</value>
   </data>
   <data name="MinimizeButton.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 20pt, style=Bold</value>
+    <value>Microsoft Sans Serif, 25pt, style=Bold</value>
   </data>
   <data name="MinimizeButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>384, 0</value>
+    <value>386, 0</value>
   </data>
   <data name="MinimizeButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>24, 31</value>
+    <value>29, 39</value>
   </data>
   <data name="MinimizeButton.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
   <data name="MinimizeButton.Text" xml:space="preserve">
     <value>-</value>
+  </data>
+  <data name="MinimizeButton.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>MiddleCenter</value>
   </data>
   <data name="&gt;&gt;MinimizeButton.Name" xml:space="preserve">
     <value>MinimizeButton</value>
@@ -250,7 +253,7 @@
     <value>Microsoft Sans Serif, 10pt</value>
   </data>
   <data name="ErrorHelpLab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>35, 87</value>
+    <value>35, 83</value>
   </data>
   <data name="ErrorHelpLab.Size" type="System.Drawing.Size, System.Drawing">
     <value>296, 17</value>
@@ -433,10 +436,10 @@
     <value>Tahoma, 9.75pt, style=Bold</value>
   </data>
   <data name="OpenListButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>35, 366</value>
+    <value>35, 361</value>
   </data>
   <data name="OpenListButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>380, 88</value>
+    <value>380, 100</value>
   </data>
   <data name="OpenListButton.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -493,7 +496,7 @@
     <value>0, 0</value>
   </data>
   <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>450, 463</value>
+    <value>450, 479</value>
   </data>
   <data name="panel1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -517,7 +520,7 @@
     <value>7, 15</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>450, 463</value>
+    <value>450, 479</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainMenu</value>

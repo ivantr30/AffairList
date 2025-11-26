@@ -54,7 +54,7 @@ namespace AffairList
             }
             return false;
         }
-        private void MinimizeButton_Click(object sender, EventArgs e) 
+        private void MinimizeButton_Click(object sender, EventArgs e)
             => ParentElement.MinimizeForm();
 
         private void BackButton_Click(object sender, EventArgs e) => ParentElement.Return();
@@ -84,13 +84,12 @@ namespace AffairList
         private void NameBackground_MouseMove(object sender, MouseEventArgs e)
             => ParentElement.MoveForm(e);
 
-        private void NameBackground_MouseDown(object sender, MouseEventArgs e) 
+        private void NameBackground_MouseDown(object sender, MouseEventArgs e)
+            => ParentElement.SetLastPoint(e);
+        private void ProfilesLab_MouseDown(object sender, MouseEventArgs e)
             => ParentElement.SetLastPoint(e);
 
-        private void ProfilesLab_MouseDown(object sender, MouseEventArgs e) 
-            => ParentElement.SetLastPoint(e);
-
-        private void ProfilesLab_MouseMove(object sender, MouseEventArgs e) 
+        private void ProfilesLab_MouseMove(object sender, MouseEventArgs e)
             => ParentElement.MoveForm(e);
         private void AddProfile(string profile)
         {
@@ -111,6 +110,10 @@ namespace AffairList
             else AddNewProfile(profile + ".txt");
 
             Profiles.SelectedIndex = Profiles.Items.Count - 1;
+            if(Profiles.Items.Count == 1)
+            {
+                _settings.SelectFirstProfile();
+            }
 
             ProfileInput.Clear();
         }
@@ -143,15 +146,15 @@ namespace AffairList
             // It is without / because lists directory path ends with / (look into Settings.cs)
             File.Delete($@"{Settings.listsDirectoryFullPath}{profile}");
 
-            if(profile.EndsWith(".txt")) 
+            if (profile.EndsWith(".txt"))
                 _profileLines.Remove(_profileLines.Where(x => x.EndsWith(profile)).First());
             else
                 _profileLines.Remove(_profileLines.Where(x => x.EndsWith(profile + ".txt")).First());
 
             int selectedIndex = Profiles.Items.IndexOf(profile);
-            if(Profiles.Items.Count > 1)
+            if (Profiles.Items.Count > 1)
             {
-                if(Profiles.SelectedIndex == 0)
+                if (Profiles.SelectedIndex == 0)
                 {
                     Profiles.SelectedIndex++;
                     selectedIndex = Profiles.SelectedIndex - 1;
@@ -168,7 +171,7 @@ namespace AffairList
 
         private void AddButton_Click(object sender, EventArgs e) => AddProfile(ProfileInput.Text);
 
-        private void DeleteButton_Click(object sender, EventArgs e) 
+        private void DeleteButton_Click(object sender, EventArgs e)
             => DeleteProfile(Profiles.SelectedItem.ToString());
 
         private void ClearButton_Click(object sender, EventArgs e) => ProfileInput.Clear();
@@ -227,6 +230,8 @@ namespace AffairList
             if (profile.EndsWith(_priorityWord)) newProfileName += _priorityWord;
             else newProfileName += ".txt";
 
+            if(selectedProfile.Name == newProfileName) return;
+
             if (ProfileExists(newProfileName))
             {
                 MessageBox.Show("Error, this profile already exists");
@@ -243,7 +248,7 @@ namespace AffairList
             LoadProfiles();
         }
 
-        private async void ChangePriorityButton_Click(object sender, EventArgs e)
+        private async void ChangePriorityButton_Click1(object sender, EventArgs e)
         {
             await ChangeProfilePriority(Profiles.SelectedItem.ToString());
         }
@@ -252,7 +257,7 @@ namespace AffairList
         {
             if (Profiles.SelectedIndex == -1) return;
 
-            FileInfo selectedProfileInfo; 
+            FileInfo selectedProfileInfo;
 
             if (profile.EndsWith(".txt"))
             {
@@ -287,7 +292,7 @@ namespace AffairList
             LoadProfiles();
         }
 
-        private void ExportButton_Click(object sender, EventArgs e)
+        private void ExportButton_Click1(object sender, EventArgs e)
         {
             ProfilesExportPicker exportPicker = new ProfilesExportPicker(_profileLines, _settings);
             exportPicker.ShowDialog();

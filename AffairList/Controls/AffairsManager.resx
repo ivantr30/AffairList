@@ -193,7 +193,7 @@
     <value>Microsoft Sans Serif, 30pt</value>
   </data>
   <data name="AffairsLab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>200, 23</value>
+    <value>215, 15</value>
   </data>
   <data name="AffairsLab.Size" type="System.Drawing.Size, System.Drawing">
     <value>133, 46</value>
@@ -244,7 +244,7 @@
     <value>11</value>
   </data>
   <data name="ProfileBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>372, 82</value>
+    <value>372, 83</value>
   </data>
   <data name="ProfileBox.Size" type="System.Drawing.Size, System.Drawing">
     <value>179, 23</value>
@@ -361,10 +361,10 @@
     <value>Flat</value>
   </data>
   <data name="RenameAffairButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>358, 327</value>
+    <value>358, 331</value>
   </data>
   <data name="RenameAffairButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>65, 24</value>
+    <value>65, 28</value>
   </data>
   <data name="RenameAffairButton.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -388,10 +388,10 @@
     <value>Flat</value>
   </data>
   <data name="AddDeadlineButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>120, 327</value>
+    <value>120, 331</value>
   </data>
   <data name="AddDeadlineButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 24</value>
+    <value>100, 28</value>
   </data>
   <data name="AddDeadlineButton.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -418,10 +418,10 @@
     <value>Segoe UI, 9pt</value>
   </data>
   <data name="PriorityButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 327</value>
+    <value>12, 331</value>
   </data>
   <data name="PriorityButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>102, 24</value>
+    <value>102, 28</value>
   </data>
   <data name="PriorityButton.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -445,10 +445,10 @@
     <value>Flat</value>
   </data>
   <data name="DeleteButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>292, 327</value>
+    <value>292, 331</value>
   </data>
   <data name="DeleteButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 24</value>
+    <value>60, 28</value>
   </data>
   <data name="DeleteButton.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -472,10 +472,10 @@
     <value>Flat</value>
   </data>
   <data name="BackButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>495, 327</value>
+    <value>495, 331</value>
   </data>
   <data name="BackButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>56, 24</value>
+    <value>56, 28</value>
   </data>
   <data name="BackButton.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -499,10 +499,10 @@
     <value>Flat</value>
   </data>
   <data name="ClearButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>429, 327</value>
+    <value>429, 331</value>
   </data>
   <data name="ClearButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 24</value>
+    <value>60, 28</value>
   </data>
   <data name="ClearButton.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -526,10 +526,10 @@
     <value>Flat</value>
   </data>
   <data name="AddAffairButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>226, 327</value>
+    <value>226, 331</value>
   </data>
   <data name="AddAffairButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 24</value>
+    <value>60, 28</value>
   </data>
   <data name="AddAffairButton.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -556,7 +556,7 @@
     <value>0, 0</value>
   </data>
   <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>563, 357</value>
+    <value>563, 370</value>
   </data>
   <data name="panel1.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -580,7 +580,7 @@
     <value>7, 15</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>563, 357</value>
+    <value>563, 370</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>AffairsManager</value>

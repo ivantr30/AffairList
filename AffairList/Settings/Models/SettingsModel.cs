@@ -14,7 +14,7 @@
         public bool askToDelete { get; set; } = true;
         public bool DoesNotificate { get; set; } = true;
         // For ToDoList.cs
-        public bool CanBeAlwaysReplaced { get; set; } = false;
+        public bool CanBeAlwaysReplaced { get; set; } = true;
 
         public int x { get; set; } = 0;
         public int y { get; set; } = 0;
