@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using IWshRuntimeLibrary;
-using System.Threading.Tasks;
 namespace AffairList
 {
     public class Settings
@@ -144,6 +143,7 @@ namespace AffairList
             shortcut.Description = "AffairList";
             shortcut.TargetPath = Application.ExecutablePath;    
             shortcut.WorkingDirectory = Application.StartupPath;
+            shortcut.Arguments = "--autostart";
 
             shortcut.Save();
         }

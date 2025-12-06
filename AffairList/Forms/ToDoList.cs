@@ -1,4 +1,5 @@
 ﻿using Gma.System.MouseKeyHook;
+using Microsoft.Win32;
 using System.Text;
 
 namespace AffairList
@@ -43,6 +44,7 @@ namespace AffairList
 
             BackColor = _settings.GetBgColor();
             TransparencyKey = _settings.GetBgColor();
+            SystemEvents.PowerModeChanged += OnPowerModeChanged;
         }
         private async Task LoadSettingsAsync()
         {
@@ -78,6 +80,19 @@ namespace AffairList
                 MessageBox.Show("Ошибка, не найден текущий список дел");
                 Close();
                 return;
+            }
+        }
+        /// <summary>
+        /// Если экран был выключен и включен, а список был в углу, этот метод восстанавливает 
+        /// исходное положение списка
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnPowerModeChanged(object sender, PowerModeChangedEventArgs e)
+        {
+            if (e.Mode == PowerModes.Resume)
+            {
+                UpdateLocation(Affairs.Top, Affairs.Left);
             }
         }
         private void SubscribeGlobalHook()
@@ -142,6 +157,7 @@ namespace AffairList
         {
             Affairs.BackColor = _settings.GetBgColor();
             canReplace = false;
+            SystemEvents.PowerModeChanged -= OnPowerModeChanged;
         }
         /// <summary>
         /// Used to repaint the list 
