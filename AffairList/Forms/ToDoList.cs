@@ -174,12 +174,16 @@ namespace AffairList
         }
         private async Task OnListMouseUpAsync(MouseEventArgs e)
         {
-            canReplace = false;
             _settings.SetProfileX(Left + Affairs.Left);
             _settings.SetProfileY(Top + Affairs.Top);
             await _settings.SaveSettingsAsync();
             TopMost = true;
-            if (canReplace) Close();
+            if (canReplace)
+            {
+                Close();
+                canReplace = false;
+                return;
+            }
         }
         public Label GetAffairs()
         {
