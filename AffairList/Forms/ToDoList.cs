@@ -26,6 +26,7 @@ namespace AffairList
 
             SubscribeGlobalHook();
             Task.WhenAll(settingLocation, loadingText);
+            SpecifyAffairsLocation();
         }
         private async Task SetLocationAsync()
         {
@@ -38,7 +39,10 @@ namespace AffairList
 
             Affairs.AutoSize = false;
             Affairs.Size = new Size(500, Height);
+            Affairs.MaximumSize = new Size(500, 0);
+            Affairs.MinimumSize = new Size(500, 0);
             Affairs.Padding = new Padding(0, 0, 180, 0);
+            Affairs.AutoSize = true;
 
             Affairs.ForeColor = _settings.GetTextColor();
 
@@ -92,7 +96,7 @@ namespace AffairList
         {
             if (e.Mode == PowerModes.Resume)
             {
-                UpdateLocation(Affairs.Top, Affairs.Left);
+                UpdateLocation();
             }
         }
         private void SubscribeGlobalHook()
@@ -114,12 +118,12 @@ namespace AffairList
 
         private void Affairs_MouseDown(object sender, MouseEventArgs e) => OnListMouseDown(e);
         private void Affairs_MouseMove(object sender, MouseEventArgs e) => OnListMouseMove(e);
-        private async void Affairs_MouseUp(object sender, MouseEventArgs e) 
+        private async void Affairs_MouseUp(object sender, MouseEventArgs e)
             => await OnListMouseUpAsync(e);
         private void List_MouseDown(object sender, MouseEventArgs e) => OnListMouseDown(e);
         private void List_MouseMove(object sender, MouseEventArgs e) => OnListMouseMove(e);
 
-        private async void List_MouseUp(object sender, MouseEventArgs e) 
+        private async void List_MouseUp(object sender, MouseEventArgs e)
             => await OnListMouseUpAsync(e);
         private void OnListMouseDown(MouseEventArgs e)
         {
@@ -127,26 +131,55 @@ namespace AffairList
         }
         private void OnListMouseMove(MouseEventArgs e)
         {
-            if (canReplace || _settings.CanBeAlwaysReplaced()) ParentElement.MoveChildForm(e);
+            if ((canReplace || _settings.CanBeAlwaysReplaced()) && e.Button == MouseButtons.Left)
+            {
+                ParentElement.MoveChildForm(e);
+
+                SpecifyListLocation();
+                TopMost = true;
+            }
+        }
+        private void SpecifyAffairsLocation()
+        {
+            if(Affairs.Left + Affairs.Width - 310 >= _settings.screenWidth)
+            {
+                Affairs.Left = _settings.screenWidth - Affairs.Width - Affairs.Width/4 + 315;
+            }
+            if (Affairs.Top + Affairs.Height >= _settings.screenHeight)
+            {
+                Affairs.Top = _settings.screenHeight - Affairs.Height*5 - Affairs.Height/2;
+            }
+            _settings.SetProfileX(Left + Affairs.Left);
+            _settings.SetProfileY(Top + Affairs.Top);
+            _settings.SaveSettingsAsync();
+        }
+        private void SpecifyListLocation()
+        {
+            if (Left + Affairs.Left + 310 >= _settings.screenWidth)
+            {
+                Left = _settings.screenWidth - 310 - Affairs.Left;
+            }
+            else if (Affairs.Left + Left <= 0)
+            {
+                Left = -Affairs.Left;
+            }
+            if (Top + Affairs.Top + Affairs.Height - 40 >= _settings.screenHeight)
+            {
+                Top = _settings.screenHeight - Affairs.Top - Affairs.Height + 40;
+            }
+            else if (Affairs.Top + Top <= 0)
+            {
+                Top = -Affairs.Top;
+            }
         }
         private async Task OnListMouseUpAsync(MouseEventArgs e)
         {
-            if (canReplace)
-            {
-                canReplace = false;
-                _settings.SetProfileX(Left + Affairs.Left);
-                _settings.SetProfileY(Top + Affairs.Top);
-                await _settings.SaveSettingsAsync();
-                Close();
-            }
-            else
-            {
-                _settings.SetProfileX(Left + Affairs.Left);
-                _settings.SetProfileY(Top + Affairs.Top);
-                await _settings.SaveSettingsAsync();
-                UpdateLocation(Affairs.Top, Affairs.Left);
-                await LoadTextAsync();
-            }
+            canReplace = false;
+            _settings.SetProfileX(Left + Affairs.Left);
+            _settings.SetProfileY(Top + Affairs.Top);
+            await _settings.SaveSettingsAsync();
+            TopMost = true;
+            if (canReplace) Close();
         }
         public Label GetAffairs()
         {
@@ -159,13 +192,10 @@ namespace AffairList
             canReplace = false;
             SystemEvents.PowerModeChanged -= OnPowerModeChanged;
         }
-        /// <summary>
-        /// Used to repaint the list 
-        /// </summary>
-        private void UpdateLocation(int top, int left)
+        private void UpdateLocation()
         {
-            Affairs.Left = left;
-            Affairs.Top = top;
+            Affairs.Left = Affairs.Left;
+            Affairs.Top = Affairs.Top;
         }
     }
 }

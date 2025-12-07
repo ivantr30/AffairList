@@ -35,11 +35,11 @@
             // Affairs
             // 
             Affairs.AutoSize = true;
-            Affairs.Font = new Font("Berlin Sans FB Demi", 16F, FontStyle.Bold);
+            Affairs.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Bold);
             Affairs.ForeColor = Color.MediumSpringGreen;
-            Affairs.Location = new Point(981, 9);
+            Affairs.Location = new Point(981, 8);
             Affairs.Name = "Affairs";
-            Affairs.Size = new Size(0, 25);
+            Affairs.Size = new Size(0, 26);
             Affairs.TabIndex = 0;
             Affairs.MouseDown += Affairs_MouseDown;
             Affairs.MouseMove += Affairs_MouseMove;
@@ -47,10 +47,10 @@
             // 
             // ToDoList
             // 
-            AutoScaleDimensions = new SizeF(7F, 17F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
-            ClientSize = new Size(1202, 666);
+            ClientSize = new Size(1202, 588);
             Controls.Add(Affairs);
             FormBorderStyle = FormBorderStyle.None;
             Icon = (Icon)resources.GetObject("$this.Icon");

@@ -118,6 +118,8 @@ namespace AffairList
 
                 await _settings.WriteBaseSettingsAsync();
 
+                _settings.SelectFirstProfile();
+
                 _isConfirmed = true;
 
                 LoadSettings();

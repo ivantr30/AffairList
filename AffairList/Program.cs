@@ -41,6 +41,7 @@ namespace AffairList
                     "\nif you dont see it check tray or try to press close or back buttons", "Error",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            SystemEvents.SessionSwitch -= SystemEvents_SessionSwitch;
         }
     }
 }
