@@ -8,7 +8,6 @@ namespace AffairList
         public IParentable ParentElement { get; private set; }
 
         private Settings _newSettings;
-        // проверить, можно ли закрыть настройки без сохранения и уведомления об этом
         public SettingsManager(Settings settings, IParentable parentElement)
         {
             InitializeComponent();
@@ -69,7 +68,7 @@ namespace AffairList
         }
         private void CloseButton_Click(object sender, EventArgs e)
         {
-            if (CanLeave()) ParentElement.Exit();
+            ParentElement.Exit();
         }
 
         private void CloseButton_MouseEnter(object sender, EventArgs e)
@@ -94,7 +93,7 @@ namespace AffairList
             => ParentElement.MoveForm(e);
         private void BackButton_Click(object sender, EventArgs e)
         {
-            if (CanLeave()) ParentElement.Return();
+            ParentElement.Return();
         }
 
         private async void ResetButton_Click(object sender, EventArgs e)
@@ -395,6 +394,11 @@ namespace AffairList
         private void CanBeAlwaysReplacable_MouseLeave(object sender, EventArgs e)
         {
             CanBeAlwaysReplacable.ForeColor = Color.White;
+        }
+
+        public bool OnRemoving(bool closing = false)
+        {
+            return CanLeave();
         }
     }
 }

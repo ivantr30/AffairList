@@ -52,9 +52,16 @@
 
         public void Exit()
         {
+            if (OnControlRemove())
+            {
+                DisposeObjects();
+                Application.Exit();
+            }
+        }
+        private void DisposeObjects()
+        {
             _trayIconManager.Dispose();
             _childForm?.Dispose();
-            Application.Exit();
         }
         public void Return()
         {
@@ -66,11 +73,18 @@
         public void MinimizeForm() => WindowState = FormWindowState.Minimized;
         public void SetControl(Control control)
         {
-            if (Controls.Count > 0 && Controls[0] is IKeyPreviewable ckp)
+            if (Controls.Count > 0)
             {
-                KeyDown -= ckp.KeyDownHandlers;
-                KeyPress -= ckp.KeyPressHandlers;
-                KeyUp -= ckp.KeyUpHandlers;
+                if (Controls[0] is IChildable child)
+                {
+                    if (!child.OnRemoving()) return;
+                }
+                if(Controls[0] is IKeyPreviewable ckp)
+                {
+                    KeyDown -= ckp.KeyDownHandlers;
+                    KeyPress -= ckp.KeyPressHandlers;
+                    KeyUp -= ckp.KeyUpHandlers;
+                }
             }
             if (control is IKeyPreviewable kp)
             {
@@ -150,7 +164,24 @@
         }
 
         private void AffairList_FormClosing(object sender, FormClosingEventArgs e)
-            => Exit();
+        {
+            if (!OnControlRemove())
+            {
+                e.Cancel = true;
+                TopMost = true;
+                TopMost = false;
+                return;
+            }
+            DisposeObjects();
+        }
+        private bool OnControlRemove()
+        {
+            if (Controls[0] is IChildable child)
+            {
+                return child.OnRemoving();
+            }
+            return true;
+        }
 
         private async void AffairList_KeyDown(object sender, KeyEventArgs e)
         {

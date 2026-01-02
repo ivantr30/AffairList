@@ -303,5 +303,7 @@ namespace AffairList
         {
             LoadProfiles();
         }
+
+        public bool OnRemoving(bool closing = false) => true;
     }
 }

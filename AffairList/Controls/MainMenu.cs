@@ -145,5 +145,7 @@
         {
             _loadTimeManager.Notificate();
         }
+
+        public bool OnRemoving(bool closing = false) => true;
     }
 }

@@ -189,5 +189,7 @@
         {
             LoadSettings();
         }
+
+        public bool OnRemoving(bool closing = false) => true;
     }
 }

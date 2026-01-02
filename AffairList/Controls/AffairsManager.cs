@@ -406,5 +406,7 @@ namespace AffairList
             LoadProfiles();
             await LoadTextAsync();
         }
+
+        public bool OnRemoving(bool closing = false) => true;
     }
 }
