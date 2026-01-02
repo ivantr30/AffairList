@@ -3,28 +3,17 @@ namespace AffairList
 {
     public partial class SettingsManager : UserControl, IChildable
     {
-        private bool _isConfirmed = true;
-
         private Settings _settings;
-
-        private Action _settingsUpdater;
 
         public IParentable ParentElement { get; private set; }
 
-        private int _newX;
-        private int _newY;
-        private uint _newDayDistanceToNotificate;
-        private uint _newHourDistanceToNotificate;
-
-        private Color _newTextColor;
-        private Color _newBgColor;
-
-        private bool _newAutostartState;
-
+        private Settings _newSettings;
+        // проверить, можно ли закрыть настройки без сохранения и уведомления об этом
         public SettingsManager(Settings settings, IParentable parentElement)
         {
             InitializeComponent();
             _settings = settings;
+            _newSettings = _settings.GetSettingsCopy();
             ParentElement = parentElement;
         }
         private void LoadSettings()
@@ -39,6 +28,7 @@ namespace AffairList
             else
             {
                 autostartStateLab.Text = "OFF";
+                autostartStateLab.Location.ChangeXPos(-14);
             }
             if (_settings.DoesAskToDelete())
             {
@@ -47,6 +37,7 @@ namespace AffairList
             else
             {
                 AskToDeleteState.Text = "OFF";
+                AskToDeleteState.Location.ChangeXPos(-14);
             }
             if (_settings.DoesNotificate())
             {
@@ -55,13 +46,14 @@ namespace AffairList
             else
             {
                 NotificationState.Text = "OFF";
+                NotificationState.Location.ChangeXPos(-14);
             }
             HourDistanceToNotificate.Text = _settings.GetNotificationHourDistance().ToString();
             DistanceToNotificate.Text = _settings.GetNotificationDayDistance().ToString();
         }
         private bool CanLeave()
         {
-            if (!_isConfirmed)
+            if (!_settings.SettingsEqual(_newSettings))
             {
                 DialogResult result = MessageBox.Show(
                     "Are you sure to leave with unsaved settings?",
@@ -120,7 +112,7 @@ namespace AffairList
 
                 _settings.SelectFirstProfile();
 
-                _isConfirmed = true;
+                _newSettings = _settings.GetSettingsCopy();
 
                 LoadSettings();
             }
@@ -128,32 +120,15 @@ namespace AffairList
 
         private async void ConfirmButton_Click(object sender, EventArgs e)
         {
-            _isConfirmed = true;
-            _settingsUpdater?.Invoke();
+            _settings.SetNewSettings(_newSettings);
             await _settings.SaveSettingsAsync();
         }
 
         private void autostartStateLab_MouseDown(object sender, MouseEventArgs e)
         {
-            if (_settingsUpdater != null &&
-                _settingsUpdater.GetInvocationList().Contains(ToggleAutostartState))
-            {
-                _settingsUpdater -= ToggleAutostartState;
-            }
-            else
-            {
-                _settingsUpdater += ToggleAutostartState;
-            }
-            autostartStateLab.Text = autostartStateLab.Text == "OFF" ? "On" : "OFF";
-            _newAutostartState = _newAutostartState ? false : true;
-            _isConfirmed = false;
-        }
-
-        private void ToggleAutostartState()
-        {
-            _settings.SetAutostart(!_settings.DoesAutostart());
-            if (_newAutostartState) _settings.EnableAutoStart();
-            else _settings.DisableAutoStart();
+            _newSettings.SetAutostart(_newSettings.DoesAutostart() ? false : true, false);
+            autostartStateLab.Text = _newSettings.DoesAutostart() ? "On" : "OFF";
+            autostartStateLab.Location.ChangeXPos(_newSettings.DoesAutostart() ? 14 : -14);
         }
 
         private void autostartStateLab_MouseLeave(object sender, EventArgs e)
@@ -171,36 +146,19 @@ namespace AffairList
             Color newColor = ListColorChanger();
             if (newColor == Color.Empty) return;
             ListTextColorLab.ForeColor = newColor;
-            _newTextColor = newColor;
-            _settingsUpdater -= SetTextColor;
-            _settingsUpdater += SetTextColor;
+            _newSettings.SetTextColor(newColor);
         }
-        private void SetTextColor()
-        {
-            _settings.SetTextColor(_newTextColor);
-        }
-
         private void PickBgColorButton_Click(object sender, EventArgs e)
         {
             Color newColor = ListColorChanger();
             if (newColor == Color.Empty) return;
             ListBgTextColorLab.ForeColor = newColor;
-            _newBgColor = newColor;
-            _settingsUpdater -= SetBgColor;
-            _settingsUpdater += SetBgColor;
-        }
-        private void SetBgColor()
-        {
-            _settings.SetBgColor(_newBgColor);
+            _newSettings.SetBgColor(newColor);
         }
         private Color ListColorChanger()
         {
             var dialogResult = ColorPicker.ShowDialog();
-            if (dialogResult == DialogResult.OK)
-            {
-                _isConfirmed = false;
-            }
-            else
+            if (dialogResult != DialogResult.OK)
             {
                 return Color.Empty;
             }
@@ -217,13 +175,9 @@ namespace AffairList
                     "InputWindow", ""));
 
                 if (newX > _settings.screenWidth || newX < 0) throw new ArgumentException();
-
-                _newX = newX;
-
-                _settingsUpdater -= SetXPosition;
-                _settingsUpdater += SetXPosition;
+                _newSettings.SetProfileX(newX);
             }
-            catch (ArgumentException ex)
+            catch (ArgumentException)
             {
                 MessageBox.Show("Error, x is out of the screen width");
                 return;
@@ -241,12 +195,9 @@ namespace AffairList
 
                 if (newY > _settings.screenHeight || newY < 0) throw new ArgumentException();
 
-                _newY = newY;
-
-                _settingsUpdater -= SetYPosition;
-                _settingsUpdater += SetYPosition;
+                _newSettings.SetProfileY(newY);
             }
-            catch (ArgumentException ex)
+            catch (ArgumentException)
             {
                 MessageBox.Show("Error, y is out of the screen height");
                 return;
@@ -256,18 +207,7 @@ namespace AffairList
                 MessageBox.Show("Error, wrong input format");
                 return;
             }
-            _isConfirmed = false;
             LocationLab.Text = newX + ", " + newY;
-        }
-
-        private void SetXPosition()
-        {
-            _settings.SetProfileX(_newX);
-        }
-
-        private void SetYPosition()
-        {
-            _settings.SetProfileY(_newY);
         }
 
         private void LocationLab_MouseEnter(object sender, EventArgs e)
@@ -282,24 +222,10 @@ namespace AffairList
 
         private void AskToDeleteState_MouseDown(object sender, MouseEventArgs e)
         {
-            if (_settingsUpdater != null &&
-                _settingsUpdater.GetInvocationList().Contains(ToggleAskToDeleteState))
-            {
-                _settingsUpdater -= ToggleAskToDeleteState;
-            }
-            else
-            {
-                _settingsUpdater += ToggleAskToDeleteState;
-            }
-            AskToDeleteState.Text = AskToDeleteState.Text == "OFF" ? "On" : "OFF";
-            _isConfirmed = false;
+            _newSettings.SetAskToDelete(_newSettings.DoesAskToDelete() ? false : true);
+            AskToDeleteState.Text = _newSettings.DoesAskToDelete() ? "On" : "OFF";
+            AskToDeleteState.Location.ChangeXPos(_newSettings.DoesAskToDelete() ? 14 : -14);
         }
-
-        private void ToggleAskToDeleteState()
-        {
-            _settings.SetAskToDelete(!_settings.DoesAskToDelete());
-        }
-
         private void AskToDeleteState_MouseLeave(object sender, EventArgs e)
         {
             AskToDeleteState.ForeColor = Color.White;
@@ -325,22 +251,9 @@ namespace AffairList
 
         private void NotificationState_MouseDown(object sender, MouseEventArgs e)
         {
-            if (_settingsUpdater != null &&
-                _settingsUpdater.GetInvocationList().Contains(ToggleNotificating))
-            {
-                _settingsUpdater -= ToggleNotificating;
-            }
-            else
-            {
-                _settingsUpdater += ToggleNotificating;
-            }
-            NotificationState.Text = NotificationState.Text == "OFF" ? "On" : "OFF";
-            _isConfirmed = false;
-        }
-
-        private void ToggleNotificating()
-        {
-            _settings.SetDoesNotificate(!_settings.DoesNotificate());
+            _newSettings.SetDoesNotificate(_newSettings.DoesNotificate() ? false : true);
+            NotificationState.Text = _newSettings.DoesNotificate() ? "On" : "OFF";
+            NotificationState.Location.ChangeXPos(_newSettings.DoesNotificate() ? 14 : -14);
         }
 
         private void NotificationState_MouseEnter(object sender, EventArgs e)
@@ -361,8 +274,7 @@ namespace AffairList
         {
             DistanceToNotificate.ForeColor = Color.White;
         }
-
-        private void DistanceToNotificate_DoubleClick(object sender, EventArgs e)
+        private void DayDistanceToNotificate_DoubleClick(object sender, EventArgs e)
         {
             try
             {
@@ -373,21 +285,13 @@ namespace AffairList
                 if (string.IsNullOrEmpty(distanceNotFormated)) return;
                 uint distanceToNotificate = uint.Parse(distanceNotFormated);
 
-                _newDayDistanceToNotificate = distanceToNotificate;
-                _settingsUpdater -= SetDistanceToNotificate;
-                _settingsUpdater += SetDistanceToNotificate;
+                _newSettings.SetNotificationDayDistance(distanceToNotificate);
                 DistanceToNotificate.Text = distanceToNotificate.ToString();
-                _isConfirmed = false;
             }
             catch
             {
                 MessageBox.Show("Error, wrong input type");
             }
-        }
-
-        private void SetDistanceToNotificate()
-        {
-            _settings.SetNotificationDayDistance(_newDayDistanceToNotificate);
         }
 
         private void ExportButton_Click(object sender, EventArgs e)
@@ -426,7 +330,7 @@ namespace AffairList
             }
             catch (UnauthorizedAccessException)
             {
-                MessageBox.Show("Error, the acces denied");
+                MessageBox.Show("Error, the access denied");
             }
 
             MessageBox.Show("Settings config was exported succesfully");
@@ -458,21 +362,13 @@ namespace AffairList
                 if (string.IsNullOrEmpty(distanceNotFormated)) return;
                 uint distanceToNotificate = uint.Parse(distanceNotFormated);
 
-                _newHourDistanceToNotificate = distanceToNotificate;
-                _settingsUpdater -= SetHourDistanceToNotificate;
-                _settingsUpdater += SetHourDistanceToNotificate;
+                _newSettings.SetNotificationHourDistance(distanceToNotificate);
                 HourDistanceToNotificate.Text = distanceToNotificate.ToString();
-                _isConfirmed = false;
             }
             catch
             {
                 MessageBox.Show("Error, wrong input type");
             }
-        }
-
-        private void SetHourDistanceToNotificate()
-        {
-            _settings.SetNotificationHourDistance(_newHourDistanceToNotificate);
         }
 
         private void HourDistanceToNotificate_MouseEnter(object sender, EventArgs e)
@@ -487,24 +383,10 @@ namespace AffairList
 
         private void CanBeAlwaysReplacable_MouseDown(object sender, MouseEventArgs e)
         {
-            if (_settingsUpdater != null &&
-                _settingsUpdater.GetInvocationList().Contains(ToggleCanBeAlwaysReplacableState))
-            {
-                _settingsUpdater -= ToggleCanBeAlwaysReplacableState;
-            }
-            else
-            {
-                _settingsUpdater += ToggleCanBeAlwaysReplacableState;
-            }
-            CanBeAlwaysReplacable.Text = CanBeAlwaysReplacable.Text == "OFF" ? "On" : "OFF";
-            _isConfirmed = false;
+            _newSettings.SetCanBeAlwaysReplaced(_newSettings.CanBeAlwaysReplaced() ? false : true);
+            CanBeAlwaysReplacable.Text = _newSettings.CanBeAlwaysReplaced() ? "On" : "OFF";
+            CanBeAlwaysReplacable.Location.ChangeXPos(_newSettings.CanBeAlwaysReplaced() ? 14 : -14);
         }
-
-        private void ToggleCanBeAlwaysReplacableState()
-        {
-            _settings.SetAlwaysReplacing(!_settings.CanBeAlwaysReplaced());
-        }
-
         private void CanBeAlwaysReplacable_MouseEnter(object sender, EventArgs e)
         {
             CanBeAlwaysReplacable.ForeColor = Color.Gray;

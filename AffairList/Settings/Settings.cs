@@ -16,18 +16,25 @@ namespace AffairList
         public readonly int screenWidth;
         public readonly int screenHeight;
 
-        private SettingsModel _settings;
+        private SettingsModel _settings = null!;
 
-        private FileLogger _fileLogger;
+        private FileLogger _fileLogger = null!;
 
-        public Settings()
+        public Settings(bool initialize = true)
         {
-            screenWidth = Screen.PrimaryScreen!.WorkingArea.Width;
-            screenHeight = Screen.PrimaryScreen.WorkingArea.Height;
+            if (initialize)
+            {
+                screenWidth = Screen.PrimaryScreen!.WorkingArea.Width;
+                screenHeight = Screen.PrimaryScreen.WorkingArea.Height;
 
-            _fileLogger = new FileLogger(logFileFullPath);
+                _fileLogger = new FileLogger(logFileFullPath);
 
-            Initialize();
+                Initialize();
+            }
+            else
+            {
+                _settings = new SettingsModel();
+            }
         }
         static Settings()
         {
@@ -39,26 +46,6 @@ namespace AffairList
             _defaultListFileFullPath = $@"{listsDirectoryFullPath}list.txt";
             settingsFileFullPath = $@"{programDirectoryFolderFullPath}settings.json";
             logFileFullPath = $@"{programDirectoryFolderFullPath}logs.txt";
-        }
-        private async Task InitializeAsync()
-        {
-            if (!LogFileExists()) CreateLogFile();
-            if (!ProgramDirectoryExists()) CreateProgramDirectory();
-            if (!SettingsFileExists()) await CreateSettingsFileAsync();
-            if (!ListsDirectoryExists()) CreateListsDirectory();
-            try
-            {
-                await LoadSettingsAsync();
-            }
-            catch
-            {
-                await WriteBaseSettingsAsync();
-                _fileLogger.LogError($"{DateTime.Now} settings file was not valid");
-            }
-            if (!System.IO.File.Exists(GetCurrentProfile()))
-            {
-                await SelectFirstProfileAsync();
-            }
         }
         private void Initialize()
         {
@@ -87,17 +74,11 @@ namespace AffairList
                     (System.IO.File.ReadAllText(settingsFileFullPath))!;
             _fileLogger.LogInformation($"{DateTime.Now} settings were loaded succesfully");
         }
-        private async Task LoadSettingsAsync()
-        {
-            _settings = JsonConvert.DeserializeObject<SettingsModel>
-                    (await System.IO.File.ReadAllTextAsync(settingsFileFullPath))!;
-            _fileLogger.LogInformation($"{DateTime.Now} settings were loaded succesfully");
-        }
         public async Task WriteBaseSettingsAsync()
         {
             _settings = new SettingsModel();
 
-            if (_settings.autostartState) EnableAutoStart();
+            if (_settings.AutostartState) EnableAutoStart();
             else DisableAutoStart();
 
             await System.IO.File.WriteAllTextAsync(settingsFileFullPath,
@@ -109,7 +90,7 @@ namespace AffairList
         {
             _settings = new SettingsModel();
 
-            if(_settings.autostartState) EnableAutoStart();
+            if(_settings.AutostartState) EnableAutoStart();
             else DisableAutoStart();
 
             System.IO.File.WriteAllText(settingsFileFullPath,
@@ -213,14 +194,6 @@ namespace AffairList
             _fileLogger.LogInformation(
                 $"{DateTime.Now} default list was created");
         }
-        public void CreateDefaultList()
-        {
-            using (System.IO.File.Create(_defaultListFileFullPath)) { }
-            SetCurrentProfile(_defaultListFileFullPath);
-            SaveSettings();
-            _fileLogger.LogInformation(
-                $"{DateTime.Now} default list was created");
-        }
         public void CreateProgramDirectory()
         {
             Directory.CreateDirectory(programDirectoryFolderFullPath);
@@ -242,59 +215,67 @@ namespace AffairList
         }
         public void SetCurrentProfile(string fullPath)
         {
-            _settings.currentListFileFullPath = fullPath ?? "";
+            _settings.CurrentListFileFullPath = fullPath ?? "";
         }
 
         public string GetCurrentProfile()
         {
-            return _settings.currentListFileFullPath;
+            return _settings.CurrentListFileFullPath;
         }
-        public void SetAutostart(bool autostart) => _settings.autostartState = autostart;
+        public void SetAutostart(bool autostart, bool enableOrDisable = true)
+        {
+            _settings.AutostartState = autostart;
+            if (enableOrDisable)
+            {
+                if (_settings.AutostartState) EnableAutoStart();
+                else DisableAutoStart();
+            }
+        }
 
         public bool DoesAutostart()
         {
-            return _settings.autostartState;
+            return _settings.AutostartState;
         }
-        public void SetAskToDelete(bool askToDelete) => _settings.askToDelete = askToDelete;
+        public void SetAskToDelete(bool askToDelete) => _settings.AskToDelete = askToDelete;
 
         public bool DoesAskToDelete()
         {
-            return _settings.askToDelete;
+            return _settings.AskToDelete;
         }
-        public void SetCloseKey(Keys key) => _settings.closeKey = key;
+        public void SetCloseKey(Keys key) => _settings.CloseKey = key;
 
         public Keys GetCloseKey()
         {
-            return _settings.closeKey;
+            return _settings.CloseKey;
         }
-        public void SetReturnKey(Keys key) => _settings.returnKey = key;
+        public void SetReturnKey(Keys key) => _settings.ReturnKey = key;
 
         public Keys GetReturnKey()
         {
-            return _settings.returnKey;
+            return _settings.ReturnKey;
         }
 
-        public void SetTextColor(Color color) => _settings.textColor = color;
+        public void SetTextColor(Color color) => _settings.TextColor = color;
 
         public Color GetTextColor()
         {
-            return _settings.textColor;
+            return _settings.TextColor;
         }
-        public void SetBgColor(Color color) => _settings.bgColor = color;
+        public void SetBgColor(Color color) => _settings.BgColor = color;
 
         public Color GetBgColor()
         {
-            return _settings.bgColor;
+            return _settings.BgColor;
         }
-        public void SetProfileX(int x) => _settings.x = x;
+        public void SetProfileX(int x) => _settings.X = x;
         public int GetProfileX()
         {
-            return _settings.x;
+            return _settings.X;
         }
-        public void SetProfileY(int y) => _settings.y = y;
+        public void SetProfileY(int y) => _settings.Y = y;
         public int GetProfileY()
         {
-            return _settings.y;
+            return _settings.Y;
         }
         public bool DoesNotificate()
         {
@@ -304,19 +285,19 @@ namespace AffairList
             => _settings.DoesNotificate = doesNotificate;
         public uint GetNotificationDayDistance()
         {
-            return _settings.notificationDayDistance;
+            return _settings.NotificationDayDistance;
         }
         public void SetNotificationDayDistance(uint notificationDayDistance)
         {
-            _settings.notificationDayDistance = notificationDayDistance;
+            _settings.NotificationDayDistance = notificationDayDistance;
         }
         public uint GetNotificationHourDistance()
         {
-            return _settings.notificationHourDistance;
+            return _settings.NotificationHourDistance;
         }
         public void SetNotificationHourDistance(uint notificationHourDistance)
         {
-            _settings.notificationHourDistance = notificationHourDistance;
+            _settings.NotificationHourDistance = notificationHourDistance;
         }
         /// <summary>
         /// For ToDoList.cs
@@ -330,7 +311,61 @@ namespace AffairList
         /// For ToDoList.cs
         /// </summary>
         /// <returns></returns>
-        public void SetAlwaysReplacing(bool canBeAlwaysReplace)
+        public void SetCanBeAlwaysReplaced(bool canBeAlwaysReplace)
             => _settings.CanBeAlwaysReplaced = canBeAlwaysReplace;
+
+        public Settings GetSettingsCopy()
+        {
+            Settings settingsCopy = new Settings(false);
+            settingsCopy.SetProfileX(GetProfileX());
+            settingsCopy.SetProfileY(GetProfileY());
+            settingsCopy.SetNotificationHourDistance(GetNotificationHourDistance());
+            settingsCopy.SetNotificationDayDistance(GetNotificationDayDistance()) ;
+            settingsCopy.SetDoesNotificate(DoesNotificate());
+            settingsCopy.SetCloseKey(GetCloseKey());
+            settingsCopy.SetReturnKey(GetReturnKey());
+            settingsCopy.SetAskToDelete(DoesAskToDelete());
+            settingsCopy.SetTextColor(GetTextColor());
+            settingsCopy.SetBgColor(GetBgColor());
+            settingsCopy.SetCanBeAlwaysReplaced(CanBeAlwaysReplaced());
+            settingsCopy.SetAutostart(DoesAutostart(), false);
+            settingsCopy.SetCurrentProfile(GetCurrentProfile());
+            return settingsCopy;
+        }
+        public void SetNewSettings(Settings newSettings)
+        {
+            SetProfileX(newSettings.GetProfileX());
+            SetProfileY(newSettings.GetProfileY());
+            SetAskToDelete(newSettings.DoesAskToDelete());
+            SetAutostart(newSettings.DoesAutostart());
+            SetDoesNotificate(newSettings.DoesNotificate());
+            SetTextColor(newSettings.GetTextColor());
+            SetBgColor(newSettings.GetBgColor());
+            SetCurrentProfile(newSettings.GetCurrentProfile());
+            SetCloseKey(newSettings.GetCloseKey());
+            SetReturnKey(newSettings.GetReturnKey());
+            SetNotificationDayDistance(newSettings.GetNotificationDayDistance());
+            SetNotificationHourDistance(newSettings.GetNotificationHourDistance());
+            SetCanBeAlwaysReplaced(newSettings.CanBeAlwaysReplaced());
+        }
+        public bool SettingsEqual(Settings otherSettings)
+        {
+            if (otherSettings == null) return false;
+
+            if (GetProfileX() != otherSettings.GetProfileX()) return false;
+            if (GetProfileY() != otherSettings.GetProfileY()) return false;
+            if (DoesAskToDelete() != otherSettings.DoesAskToDelete()) return false;
+            if (DoesAutostart() != otherSettings.DoesAutostart()) return false;
+            if (GetNotificationDayDistance() != otherSettings.GetNotificationDayDistance()) return false;
+            if (GetNotificationHourDistance() != otherSettings.GetNotificationHourDistance()) return false;
+            if (CanBeAlwaysReplaced() != otherSettings.CanBeAlwaysReplaced()) return false;
+            if (GetBgColor() != otherSettings.GetBgColor()) return false;
+            if (GetTextColor() != otherSettings.GetTextColor()) return false;
+            if (GetCloseKey() != otherSettings.GetCloseKey()) return false;
+            if (GetCurrentProfile() != otherSettings.GetCurrentProfile()) return false;
+            if (DoesNotificate() != otherSettings.DoesNotificate()) return false;
+            if (GetReturnKey() != otherSettings.GetReturnKey()) return false;
+            return true;
+        }
     }
 }

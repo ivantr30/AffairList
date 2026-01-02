@@ -2,24 +2,24 @@
 {
     public class SettingsModel
     {
-        public string currentListFileFullPath { get; set; } = "";
+        public string CurrentListFileFullPath { get; set; } = "";
 
-        public Color textColor { get; set; } = Color.MediumSpringGreen;
-        public Color bgColor { get; set; } = Color.Black;
+        public Color TextColor { get; set; } = Color.MediumSpringGreen;
+        public Color BgColor { get; set; } = Color.Black;
 
-        public Keys closeKey { get; set; } = Keys.F7;
-        public Keys returnKey { get; set; } = Keys.F6;
+        public Keys CloseKey { get; set; } = Keys.F7;
+        public Keys ReturnKey { get; set; } = Keys.F6;
 
-        public bool autostartState { get; set; } = false;
-        public bool askToDelete { get; set; } = true;
+        public bool AutostartState { get; set; } = false;
+        public bool AskToDelete { get; set; } = true;
         public bool DoesNotificate { get; set; } = true;
         // For ToDoList.cs
         public bool CanBeAlwaysReplaced { get; set; } = true;
 
-        public int x { get; set; } = 0;
-        public int y { get; set; } = 0;
-        public uint notificationDayDistance { get; set; } = 1;
-        public uint notificationHourDistance { get; set; } = 8;
+        public int X { get; set; } = 0;
+        public int Y { get; set; } = 0;
+        public uint NotificationDayDistance { get; set; } = 1;
+        public uint NotificationHourDistance { get; set; } = 8;
 
     }
 }

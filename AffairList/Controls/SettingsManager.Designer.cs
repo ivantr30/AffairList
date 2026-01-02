@@ -15,7 +15,6 @@
         {
             if (disposing && (components != null))
             {
-                _settingsUpdater = null;
                 components.Dispose();
             }
             base.Dispose(disposing);
@@ -70,9 +69,10 @@
             // 
             ExportButton.BackColor = Color.FromArgb(173, 102, 213);
             ExportButton.FlatStyle = FlatStyle.Flat;
-            ExportButton.Location = new Point(12, 473);
+            ExportButton.Location = new Point(14, 631);
+            ExportButton.Margin = new Padding(3, 4, 3, 4);
             ExportButton.Name = "ExportButton";
-            ExportButton.Size = new Size(75, 24);
+            ExportButton.Size = new Size(86, 32);
             ExportButton.TabIndex = 29;
             ExportButton.Text = "Export";
             ExportButton.UseVisualStyleBackColor = false;
@@ -84,13 +84,13 @@
             DistanceToNotificate.AutoSize = true;
             DistanceToNotificate.Font = new Font("Microsoft Sans Serif", 13F);
             DistanceToNotificate.ForeColor = Color.White;
-            DistanceToNotificate.Location = new Point(386, 341);
+            DistanceToNotificate.Location = new Point(441, 455);
             DistanceToNotificate.Name = "DistanceToNotificate";
-            DistanceToNotificate.Size = new Size(20, 22);
+            DistanceToNotificate.Size = new Size(24, 26);
             DistanceToNotificate.TabIndex = 28;
             DistanceToNotificate.Text = "0";
             DistanceToNotificate.TextAlign = ContentAlignment.MiddleRight;
-            DistanceToNotificate.DoubleClick += DistanceToNotificate_DoubleClick;
+            DistanceToNotificate.DoubleClick += DayDistanceToNotificate_DoubleClick;
             DistanceToNotificate.MouseEnter += DistanceToNotificate_MouseEnter;
             DistanceToNotificate.MouseLeave += DistanceToNotificate_MouseLeave;
             // 
@@ -100,9 +100,9 @@
             DistanceToNotificateLab.AutoSize = true;
             DistanceToNotificateLab.Font = new Font("Microsoft Sans Serif", 13F);
             DistanceToNotificateLab.ForeColor = Color.White;
-            DistanceToNotificateLab.Location = new Point(12, 341);
+            DistanceToNotificateLab.Location = new Point(14, 455);
             DistanceToNotificateLab.Name = "DistanceToNotificateLab";
-            DistanceToNotificateLab.Size = new Size(214, 22);
+            DistanceToNotificateLab.Size = new Size(259, 26);
             DistanceToNotificateLab.TabIndex = 27;
             DistanceToNotificateLab.Text = "Day Distance to notificate";
             DistanceToNotificateLab.TextAlign = ContentAlignment.MiddleCenter;
@@ -113,9 +113,9 @@
             NotificationState.AutoSize = true;
             NotificationState.Font = new Font("Microsoft Sans Serif", 13F);
             NotificationState.ForeColor = Color.White;
-            NotificationState.Location = new Point(375, 286);
+            NotificationState.Location = new Point(429, 381);
             NotificationState.Name = "NotificationState";
-            NotificationState.Size = new Size(34, 22);
+            NotificationState.Size = new Size(41, 26);
             NotificationState.TabIndex = 26;
             NotificationState.Text = "On";
             NotificationState.TextAlign = ContentAlignment.MiddleCenter;
@@ -129,9 +129,9 @@
             NotificationStateLab.AutoSize = true;
             NotificationStateLab.Font = new Font("Microsoft Sans Serif", 13F);
             NotificationStateLab.ForeColor = Color.White;
-            NotificationStateLab.Location = new Point(12, 286);
+            NotificationStateLab.Location = new Point(14, 381);
             NotificationStateLab.Name = "NotificationStateLab";
-            NotificationStateLab.Size = new Size(114, 22);
+            NotificationStateLab.Size = new Size(140, 26);
             NotificationStateLab.TabIndex = 25;
             NotificationStateLab.Text = "Notificate me";
             NotificationStateLab.TextAlign = ContentAlignment.MiddleCenter;
@@ -142,9 +142,9 @@
             AskToDeleteState.AutoSize = true;
             AskToDeleteState.Font = new Font("Microsoft Sans Serif", 13F);
             AskToDeleteState.ForeColor = Color.White;
-            AskToDeleteState.Location = new Point(375, 259);
+            AskToDeleteState.Location = new Point(429, 345);
             AskToDeleteState.Name = "AskToDeleteState";
-            AskToDeleteState.Size = new Size(34, 22);
+            AskToDeleteState.Size = new Size(41, 26);
             AskToDeleteState.TabIndex = 24;
             AskToDeleteState.Text = "On";
             AskToDeleteState.TextAlign = ContentAlignment.MiddleCenter;
@@ -158,9 +158,9 @@
             AskToDelete.AutoSize = true;
             AskToDelete.Font = new Font("Microsoft Sans Serif", 13F);
             AskToDelete.ForeColor = Color.White;
-            AskToDelete.Location = new Point(12, 259);
+            AskToDelete.Location = new Point(14, 345);
             AskToDelete.Name = "AskToDelete";
-            AskToDelete.Size = new Size(184, 22);
+            AskToDelete.Size = new Size(222, 26);
             AskToDelete.TabIndex = 23;
             AskToDelete.Text = "Ask to delete an affair";
             AskToDelete.TextAlign = ContentAlignment.MiddleCenter;
@@ -168,9 +168,10 @@
             // ThemeBoxCB
             // 
             ThemeBoxCB.FormattingEnabled = true;
-            ThemeBoxCB.Location = new Point(286, 395);
+            ThemeBoxCB.Location = new Point(327, 527);
+            ThemeBoxCB.Margin = new Padding(3, 4, 3, 4);
             ThemeBoxCB.Name = "ThemeBoxCB";
-            ThemeBoxCB.Size = new Size(121, 23);
+            ThemeBoxCB.Size = new Size(138, 28);
             ThemeBoxCB.TabIndex = 22;
             ThemeBoxCB.SelectedValueChanged += ThemeBoxCB_SelectedValueChanged;
             // 
@@ -180,9 +181,9 @@
             CurrentThemeLab.AutoSize = true;
             CurrentThemeLab.Font = new Font("Microsoft Sans Serif", 13F);
             CurrentThemeLab.ForeColor = Color.White;
-            CurrentThemeLab.Location = new Point(12, 395);
+            CurrentThemeLab.Location = new Point(14, 527);
             CurrentThemeLab.Name = "CurrentThemeLab";
-            CurrentThemeLab.Size = new Size(124, 22);
+            CurrentThemeLab.Size = new Size(151, 26);
             CurrentThemeLab.TabIndex = 21;
             CurrentThemeLab.Text = "Current theme";
             CurrentThemeLab.TextAlign = ContentAlignment.MiddleCenter;
@@ -194,9 +195,10 @@
             PickBgColorButton.FlatStyle = FlatStyle.Flat;
             PickBgColorButton.Font = new Font("Tahoma", 10F);
             PickBgColorButton.ForeColor = Color.White;
-            PickBgColorButton.Location = new Point(332, 196);
+            PickBgColorButton.Location = new Point(379, 261);
+            PickBgColorButton.Margin = new Padding(3, 4, 3, 4);
             PickBgColorButton.Name = "PickBgColorButton";
-            PickBgColorButton.Size = new Size(75, 26);
+            PickBgColorButton.Size = new Size(86, 35);
             PickBgColorButton.TabIndex = 18;
             PickBgColorButton.Text = "Pick color";
             PickBgColorButton.UseVisualStyleBackColor = false;
@@ -209,9 +211,10 @@
             PickTextColorButton.FlatStyle = FlatStyle.Flat;
             PickTextColorButton.Font = new Font("Tahoma", 10F);
             PickTextColorButton.ForeColor = Color.White;
-            PickTextColorButton.Location = new Point(332, 165);
+            PickTextColorButton.Location = new Point(379, 220);
+            PickTextColorButton.Margin = new Padding(3, 4, 3, 4);
             PickTextColorButton.Name = "PickTextColorButton";
-            PickTextColorButton.Size = new Size(75, 26);
+            PickTextColorButton.Size = new Size(86, 35);
             PickTextColorButton.TabIndex = 17;
             PickTextColorButton.Text = "Pick color";
             PickTextColorButton.UseVisualStyleBackColor = false;
@@ -249,8 +252,9 @@
             panel1.Controls.Add(NameBackground);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
+            panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(440, 508);
+            panel1.Size = new Size(503, 677);
             panel1.TabIndex = 2;
             // 
             // CanBeAlwaysReplacable
@@ -259,9 +263,9 @@
             CanBeAlwaysReplacable.AutoSize = true;
             CanBeAlwaysReplacable.Font = new Font("Microsoft Sans Serif", 13F);
             CanBeAlwaysReplacable.ForeColor = Color.White;
-            CanBeAlwaysReplacable.Location = new Point(375, 313);
+            CanBeAlwaysReplacable.Location = new Point(429, 417);
             CanBeAlwaysReplacable.Name = "CanBeAlwaysReplacable";
-            CanBeAlwaysReplacable.Size = new Size(34, 22);
+            CanBeAlwaysReplacable.Size = new Size(41, 26);
             CanBeAlwaysReplacable.TabIndex = 35;
             CanBeAlwaysReplacable.Text = "On";
             CanBeAlwaysReplacable.TextAlign = ContentAlignment.MiddleCenter;
@@ -275,9 +279,9 @@
             CanBeAlwaysReplacableLab.AutoSize = true;
             CanBeAlwaysReplacableLab.Font = new Font("Microsoft Sans Serif", 13F);
             CanBeAlwaysReplacableLab.ForeColor = Color.White;
-            CanBeAlwaysReplacableLab.Location = new Point(12, 313);
+            CanBeAlwaysReplacableLab.Location = new Point(14, 417);
             CanBeAlwaysReplacableLab.Name = "CanBeAlwaysReplacableLab";
-            CanBeAlwaysReplacableLab.Size = new Size(245, 22);
+            CanBeAlwaysReplacableLab.Size = new Size(296, 26);
             CanBeAlwaysReplacableLab.TabIndex = 34;
             CanBeAlwaysReplacableLab.Text = "List can be always replacable";
             CanBeAlwaysReplacableLab.TextAlign = ContentAlignment.MiddleCenter;
@@ -288,9 +292,9 @@
             HourDistanceToNotificate.AutoSize = true;
             HourDistanceToNotificate.Font = new Font("Microsoft Sans Serif", 13F);
             HourDistanceToNotificate.ForeColor = Color.White;
-            HourDistanceToNotificate.Location = new Point(386, 368);
+            HourDistanceToNotificate.Location = new Point(441, 491);
             HourDistanceToNotificate.Name = "HourDistanceToNotificate";
-            HourDistanceToNotificate.Size = new Size(20, 22);
+            HourDistanceToNotificate.Size = new Size(24, 26);
             HourDistanceToNotificate.TabIndex = 33;
             HourDistanceToNotificate.Text = "0";
             HourDistanceToNotificate.TextAlign = ContentAlignment.MiddleRight;
@@ -304,9 +308,9 @@
             HourDistanceToNotificateLab.AutoSize = true;
             HourDistanceToNotificateLab.Font = new Font("Microsoft Sans Serif", 13F);
             HourDistanceToNotificateLab.ForeColor = Color.White;
-            HourDistanceToNotificateLab.Location = new Point(12, 368);
+            HourDistanceToNotificateLab.Location = new Point(14, 491);
             HourDistanceToNotificateLab.Name = "HourDistanceToNotificateLab";
-            HourDistanceToNotificateLab.Size = new Size(221, 22);
+            HourDistanceToNotificateLab.Size = new Size(267, 26);
             HourDistanceToNotificateLab.TabIndex = 32;
             HourDistanceToNotificateLab.Text = "Hour Distance to notificate";
             HourDistanceToNotificateLab.TextAlign = ContentAlignment.MiddleCenter;
@@ -314,9 +318,10 @@
             // CurrentFontComboBox
             // 
             CurrentFontComboBox.FormattingEnabled = true;
-            CurrentFontComboBox.Location = new Point(286, 422);
+            CurrentFontComboBox.Location = new Point(327, 563);
+            CurrentFontComboBox.Margin = new Padding(3, 4, 3, 4);
             CurrentFontComboBox.Name = "CurrentFontComboBox";
-            CurrentFontComboBox.Size = new Size(121, 23);
+            CurrentFontComboBox.Size = new Size(138, 28);
             CurrentFontComboBox.TabIndex = 31;
             CurrentFontComboBox.SelectedValueChanged += CurrentFontComboBox_SelectedValueChanged;
             // 
@@ -326,9 +331,9 @@
             CurrentFontLab.AutoSize = true;
             CurrentFontLab.Font = new Font("Microsoft Sans Serif", 13F);
             CurrentFontLab.ForeColor = Color.White;
-            CurrentFontLab.Location = new Point(12, 422);
+            CurrentFontLab.Location = new Point(14, 563);
             CurrentFontLab.Name = "CurrentFontLab";
-            CurrentFontLab.Size = new Size(105, 22);
+            CurrentFontLab.Size = new Size(126, 26);
             CurrentFontLab.TabIndex = 30;
             CurrentFontLab.Text = "Current font";
             CurrentFontLab.TextAlign = ContentAlignment.MiddleCenter;
@@ -339,9 +344,9 @@
             autostartStateLab.AutoSize = true;
             autostartStateLab.Font = new Font("Microsoft Sans Serif", 13F);
             autostartStateLab.ForeColor = Color.White;
-            autostartStateLab.Location = new Point(375, 231);
+            autostartStateLab.Location = new Point(429, 308);
             autostartStateLab.Name = "autostartStateLab";
-            autostartStateLab.Size = new Size(34, 22);
+            autostartStateLab.Size = new Size(41, 26);
             autostartStateLab.TabIndex = 16;
             autostartStateLab.Text = "On";
             autostartStateLab.TextAlign = ContentAlignment.MiddleCenter;
@@ -355,9 +360,9 @@
             AutostartLab.AutoSize = true;
             AutostartLab.Font = new Font("Microsoft Sans Serif", 13F);
             AutostartLab.ForeColor = Color.White;
-            AutostartLab.Location = new Point(12, 231);
+            AutostartLab.Location = new Point(14, 308);
             AutostartLab.Name = "AutostartLab";
-            AutostartLab.Size = new Size(126, 22);
+            AutostartLab.Size = new Size(152, 26);
             AutostartLab.TabIndex = 14;
             AutostartLab.Text = "Autostart state";
             AutostartLab.TextAlign = ContentAlignment.MiddleCenter;
@@ -368,9 +373,9 @@
             ListBgTextColorLab.AutoSize = true;
             ListBgTextColorLab.Font = new Font("Microsoft Sans Serif", 13F);
             ListBgTextColorLab.ForeColor = Color.White;
-            ListBgTextColorLab.Location = new Point(12, 198);
+            ListBgTextColorLab.Location = new Point(14, 264);
             ListBgTextColorLab.Name = "ListBgTextColorLab";
-            ListBgTextColorLab.Size = new Size(181, 22);
+            ListBgTextColorLab.Size = new Size(218, 26);
             ListBgTextColorLab.TabIndex = 11;
             ListBgTextColorLab.Text = "List background color";
             ListBgTextColorLab.TextAlign = ContentAlignment.MiddleCenter;
@@ -381,9 +386,9 @@
             ListTextColorLab.AutoSize = true;
             ListTextColorLab.Font = new Font("Microsoft Sans Serif", 13F);
             ListTextColorLab.ForeColor = Color.White;
-            ListTextColorLab.Location = new Point(12, 167);
+            ListTextColorLab.Location = new Point(14, 223);
             ListTextColorLab.Name = "ListTextColorLab";
-            ListTextColorLab.Size = new Size(116, 22);
+            ListTextColorLab.Size = new Size(140, 26);
             ListTextColorLab.TabIndex = 10;
             ListTextColorLab.Text = "List text color";
             ListTextColorLab.TextAlign = ContentAlignment.MiddleCenter;
@@ -393,10 +398,10 @@
             LocationLab.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             LocationLab.Font = new Font("Microsoft Sans Serif", 13F);
             LocationLab.ForeColor = Color.White;
-            LocationLab.Location = new Point(286, 136);
+            LocationLab.Location = new Point(327, 181);
             LocationLab.Name = "LocationLab";
             LocationLab.RightToLeft = RightToLeft.No;
-            LocationLab.Size = new Size(121, 19);
+            LocationLab.Size = new Size(138, 25);
             LocationLab.TabIndex = 9;
             LocationLab.Text = "0, 0";
             LocationLab.TextAlign = ContentAlignment.MiddleRight;
@@ -410,9 +415,9 @@
             ListLocationLab.AutoSize = true;
             ListLocationLab.Font = new Font("Microsoft Sans Serif", 13F);
             ListLocationLab.ForeColor = Color.White;
-            ListLocationLab.Location = new Point(12, 136);
+            ListLocationLab.Location = new Point(14, 181);
             ListLocationLab.Name = "ListLocationLab";
-            ListLocationLab.Size = new Size(133, 22);
+            ListLocationLab.Size = new Size(161, 26);
             ListLocationLab.TabIndex = 3;
             ListLocationLab.Text = "List x,y location";
             ListLocationLab.TextAlign = ContentAlignment.MiddleCenter;
@@ -421,9 +426,10 @@
             // 
             ConfirmButton.BackColor = Color.FromArgb(173, 102, 213);
             ConfirmButton.FlatStyle = FlatStyle.Flat;
-            ConfirmButton.Location = new Point(191, 473);
+            ConfirmButton.Location = new Point(218, 631);
+            ConfirmButton.Margin = new Padding(3, 4, 3, 4);
             ConfirmButton.Name = "ConfirmButton";
-            ConfirmButton.Size = new Size(75, 24);
+            ConfirmButton.Size = new Size(86, 32);
             ConfirmButton.TabIndex = 8;
             ConfirmButton.Text = "Confirm";
             ConfirmButton.UseVisualStyleBackColor = false;
@@ -433,9 +439,10 @@
             // 
             ResetButton.BackColor = Color.FromArgb(173, 102, 213);
             ResetButton.FlatStyle = FlatStyle.Flat;
-            ResetButton.Location = new Point(272, 473);
+            ResetButton.Location = new Point(311, 631);
+            ResetButton.Margin = new Padding(3, 4, 3, 4);
             ResetButton.Name = "ResetButton";
-            ResetButton.Size = new Size(75, 24);
+            ResetButton.Size = new Size(86, 32);
             ResetButton.TabIndex = 7;
             ResetButton.Text = "Reset";
             ResetButton.UseVisualStyleBackColor = false;
@@ -445,9 +452,10 @@
             // 
             BackButton.BackColor = Color.FromArgb(173, 102, 213);
             BackButton.FlatStyle = FlatStyle.Flat;
-            BackButton.Location = new Point(353, 473);
+            BackButton.Location = new Point(403, 631);
+            BackButton.Margin = new Padding(3, 4, 3, 4);
             BackButton.Name = "BackButton";
-            BackButton.Size = new Size(75, 24);
+            BackButton.Size = new Size(86, 32);
             BackButton.TabIndex = 6;
             BackButton.Text = "Back";
             BackButton.UseVisualStyleBackColor = false;
@@ -461,8 +469,9 @@
             NameBackground.Controls.Add(SettingsLab);
             NameBackground.Dock = DockStyle.Top;
             NameBackground.Location = new Point(0, 0);
+            NameBackground.Margin = new Padding(3, 4, 3, 4);
             NameBackground.Name = "NameBackground";
-            NameBackground.Size = new Size(440, 125);
+            NameBackground.Size = new Size(503, 167);
             NameBackground.TabIndex = 0;
             NameBackground.MouseDown += NameBackground_MouseDown;
             NameBackground.MouseMove += NameBackground_MouseMove;
@@ -471,9 +480,9 @@
             // 
             MinimizeButton.AutoSize = true;
             MinimizeButton.Font = new Font("Microsoft Sans Serif", 20F, FontStyle.Bold);
-            MinimizeButton.Location = new Point(376, 0);
+            MinimizeButton.Location = new Point(430, 0);
             MinimizeButton.Name = "MinimizeButton";
-            MinimizeButton.Size = new Size(24, 31);
+            MinimizeButton.Size = new Size(29, 39);
             MinimizeButton.TabIndex = 25;
             MinimizeButton.Text = "-";
             MinimizeButton.Click += MinimizeButton_Click;
@@ -484,9 +493,9 @@
             // 
             CloseButton.AutoSize = true;
             CloseButton.Font = new Font("Microsoft Sans Serif", 20F, FontStyle.Bold);
-            CloseButton.Location = new Point(409, 0);
+            CloseButton.Location = new Point(467, 0);
             CloseButton.Name = "CloseButton";
-            CloseButton.Size = new Size(33, 31);
+            CloseButton.Size = new Size(41, 39);
             CloseButton.TabIndex = 2;
             CloseButton.Text = "X";
             CloseButton.Click += CloseButton_Click;
@@ -498,9 +507,9 @@
             SettingsLab.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             SettingsLab.AutoSize = true;
             SettingsLab.Font = new Font("Microsoft Sans Serif", 30F);
-            SettingsLab.Location = new Point(138, 46);
+            SettingsLab.Location = new Point(158, 61);
             SettingsLab.Name = "SettingsLab";
-            SettingsLab.Size = new Size(164, 46);
+            SettingsLab.Size = new Size(206, 58);
             SettingsLab.TabIndex = 1;
             SettingsLab.Text = "Settings";
             SettingsLab.TextAlign = ContentAlignment.MiddleCenter;
@@ -509,11 +518,12 @@
             // 
             // SettingsManager
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(panel1);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "SettingsManager";
-            Size = new Size(440, 508);
+            Size = new Size(503, 677);
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             NameBackground.ResumeLayout(false);

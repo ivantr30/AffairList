@@ -151,7 +151,7 @@ namespace AffairList
             }
             _settings.SetProfileX(Left + Affairs.Left);
             _settings.SetProfileY(Top + Affairs.Top);
-            _settings.SaveSettingsAsync();
+            _settings.SaveSettings();
         }
         private void SpecifyListLocation()
         {

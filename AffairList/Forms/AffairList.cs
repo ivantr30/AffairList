@@ -2,12 +2,12 @@
 {
     public partial class AffairList : Form, IParentable
     {
-        private LoadTimeManager _loadTimeManager;
-        private Settings _settings;
-        private TrayIconManager _trayIconManager;
+        private LoadTimeManager _loadTimeManager = null!;
+        private Settings _settings = null!;
+        private TrayIconManager _trayIconManager = null!;
 
         private Form _childForm;
-        private MainMenu _mainMenu;
+        private MainMenu _mainMenu = null!;
 
         public Point LastPoint { get; set; }
 
@@ -19,8 +19,8 @@
         private void Initialize()
         {
             _trayIconManager = new TrayIconManager();
-            _trayIconManager.AddTrayMenuAction("Open", OnOpen);
-            _trayIconManager.AddTrayMenuAction("Close", OnExit);
+            _trayIconManager.AddTrayMenuAction("Open", OnOpen!);
+            _trayIconManager.AddTrayMenuAction("Close", OnExit!);
 
             _settings = new Settings();
             _loadTimeManager = new LoadTimeManager(_settings, _trayIconManager.TrayIcon);

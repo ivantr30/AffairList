@@ -24,7 +24,7 @@ namespace AffairList
             InitializeComponent();
             _settings = settings;
             ParentElement = parent;
-            KeyDownHandlers += ChangeProfileForm_KeyDown;
+            KeyDownHandlers += ChangeProfileForm_KeyDown!;
         }
 
         private void LoadProfiles()
@@ -173,7 +173,7 @@ namespace AffairList
         private void AddButton_Click(object sender, EventArgs e) => AddProfile(ProfileInput.Text);
 
         private void DeleteButton_Click(object sender, EventArgs e)
-            => DeleteProfile(Profiles.SelectedItem.ToString());
+            => DeleteProfile(Profiles.SelectedItem!.ToString()!);
 
         private void ClearButton_Click(object sender, EventArgs e) => ProfileInput.Clear();
 
@@ -185,21 +185,21 @@ namespace AffairList
             }
             if (e.KeyCode == Keys.Delete)
             {
-                DeleteProfile(Profiles.SelectedItem.ToString());
+                DeleteProfile(Profiles.SelectedItem!.ToString()!);
             }
         }
 
         private async void SelectProfileButton_Click(object sender, EventArgs e)
         {
             _settings.SetCurrentProfile(_profileLines
-                .Where(x => x.EndsWith(Profiles.SelectedItem.ToString()))
+                .Where(x => x.EndsWith(Profiles.SelectedItem!.ToString()!))
                 .First());
             await _settings.SaveSettingsAsync();
         }
 
         private async void RenameButton_Click(object sender, EventArgs e)
         {
-            await RenameProfileAsync(Profiles.SelectedItem.ToString());
+            await RenameProfileAsync(Profiles.SelectedItem!.ToString()!);
         }
 
         private async Task RenameProfileAsync(string profile)
@@ -239,7 +239,7 @@ namespace AffairList
                 return;
             }
 
-            newProfileName = $@"{selectedProfile.Directory.FullName}\{newProfileName}";
+            newProfileName = $@"{selectedProfile.Directory!.FullName}\{newProfileName}";
             if (_settings.GetCurrentProfile() == selectedProfile.FullName)
             {
                 _settings.SetCurrentProfile(newProfileName);
@@ -251,7 +251,7 @@ namespace AffairList
 
         private async void ChangePriorityButton_Click1(object sender, EventArgs e)
         {
-            await ChangeProfilePriority(Profiles.SelectedItem.ToString());
+            await ChangeProfilePriority(Profiles.SelectedItem!.ToString()!);
         }
 
         private async Task ChangeProfilePriority(string profile)
