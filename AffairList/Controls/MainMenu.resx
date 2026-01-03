@@ -130,10 +130,10 @@
     <value>Microsoft Sans Serif, 30pt</value>
   </data>
   <data name="AffairListLab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>137, 10</value>
+    <value>157, 13</value>
   </data>
   <data name="AffairListLab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>175, 46</value>
+    <value>220, 58</value>
   </data>
   <data name="AffairListLab.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -163,10 +163,10 @@
     <value>Microsoft Sans Serif, 25pt, style=Bold</value>
   </data>
   <data name="MinimizeButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>386, 0</value>
+    <value>425, 0</value>
   </data>
   <data name="MinimizeButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>29, 39</value>
+    <value>35, 48</value>
   </data>
   <data name="MinimizeButton.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -193,13 +193,13 @@
     <value>True</value>
   </data>
   <data name="CloseButton.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 20pt, style=Bold</value>
+    <value>Microsoft Sans Serif, 25pt, style=Bold</value>
   </data>
   <data name="CloseButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>419, 0</value>
+    <value>466, 0</value>
   </data>
   <data name="CloseButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>33, 31</value>
+    <value>49, 48</value>
   </data>
   <data name="CloseButton.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -225,8 +225,12 @@
   <data name="NameBackground.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="NameBackground.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
   <data name="NameBackground.Size" type="System.Drawing.Size, System.Drawing">
-    <value>450, 66</value>
+    <value>515, 88</value>
   </data>
   <data name="NameBackground.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -253,10 +257,10 @@
     <value>Microsoft Sans Serif, 10pt</value>
   </data>
   <data name="ErrorHelpLab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>35, 83</value>
+    <value>40, 111</value>
   </data>
   <data name="ErrorHelpLab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>296, 17</value>
+    <value>345, 20</value>
   </data>
   <data name="ErrorHelpLab.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -286,10 +290,13 @@
     <value>Tahoma, 9.75pt, style=Bold</value>
   </data>
   <data name="ChangeProfileButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>315, 121</value>
+    <value>342, 161</value>
+  </data>
+  <data name="ChangeProfileButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="ChangeProfileButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 100</value>
+    <value>133, 133</value>
   </data>
   <data name="ChangeProfileButton.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -316,10 +323,13 @@
     <value>Tahoma, 9.75pt, style=Bold</value>
   </data>
   <data name="HotKeyButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>35, 121</value>
+    <value>40, 161</value>
+  </data>
+  <data name="HotKeyButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="HotKeyButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 100</value>
+    <value>133, 133</value>
   </data>
   <data name="HotKeyButton.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -346,10 +356,13 @@
     <value>Tahoma, 9.75pt, style=Bold</value>
   </data>
   <data name="SettingsButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>175, 121</value>
+    <value>191, 161</value>
+  </data>
+  <data name="SettingsButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="SettingsButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 100</value>
+    <value>133, 133</value>
   </data>
   <data name="SettingsButton.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -376,10 +389,13 @@
     <value>Tahoma, 9.75pt, style=Bold</value>
   </data>
   <data name="ChangeListButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>175, 241</value>
+    <value>191, 321</value>
+  </data>
+  <data name="ChangeListButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="ChangeListButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 100</value>
+    <value>133, 133</value>
   </data>
   <data name="ChangeListButton.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -406,10 +422,13 @@
     <value>Tahoma, 9.75pt, style=Bold</value>
   </data>
   <data name="ClearListButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>35, 241</value>
+    <value>40, 321</value>
+  </data>
+  <data name="ClearListButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="ClearListButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 100</value>
+    <value>133, 133</value>
   </data>
   <data name="ClearListButton.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -436,10 +455,13 @@
     <value>Tahoma, 9.75pt, style=Bold</value>
   </data>
   <data name="OpenListButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>35, 361</value>
+    <value>40, 481</value>
+  </data>
+  <data name="OpenListButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="OpenListButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>380, 100</value>
+    <value>435, 133</value>
   </data>
   <data name="OpenListButton.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -466,10 +488,13 @@
     <value>Tahoma, 9.75pt, style=Bold</value>
   </data>
   <data name="ReplaceAffairListButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>315, 241</value>
+    <value>342, 321</value>
+  </data>
+  <data name="ReplaceAffairListButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="ReplaceAffairListButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>100, 100</value>
+    <value>133, 133</value>
   </data>
   <data name="ReplaceAffairListButton.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -495,8 +520,11 @@
   <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
+  <data name="panel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
   <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>450, 479</value>
+    <value>515, 639</value>
   </data>
   <data name="panel1.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -517,10 +545,13 @@
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>7, 15</value>
+    <value>8, 20</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>450, 479</value>
+    <value>515, 639</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>MainMenu</value>

@@ -8,12 +8,17 @@ namespace AffairList
         public IParentable ParentElement { get; private set; }
 
         private Settings _newSettings;
+
+        /// <summary>
+        /// an x position for all togglable settings
+        /// </summary>
+        private readonly int _globalTogglerX;
         public SettingsManager(Settings settings, IParentable parentElement)
         {
             InitializeComponent();
             _settings = settings;
-            _newSettings = _settings.GetSettingsCopy();
             ParentElement = parentElement;
+            _globalTogglerX =_settings.DoesAutostart() ? autostartStateLab.Left - 14 : autostartStateLab.Left;
         }
         private void LoadSettings()
         {
@@ -23,29 +28,42 @@ namespace AffairList
             if (_settings.DoesAutostart())
             {
                 autostartStateLab.Text = "On";
+                autostartStateLab.Left = _globalTogglerX;
             }
             else
             {
                 autostartStateLab.Text = "OFF";
-                autostartStateLab.Location.ChangeXPos(-14);
+                autostartStateLab.Left = _globalTogglerX - 14;
             }
             if (_settings.DoesAskToDelete())
             {
                 AskToDeleteState.Text = "On";
+                AskToDeleteState.Left = _globalTogglerX;
             }
             else
             {
                 AskToDeleteState.Text = "OFF";
-                AskToDeleteState.Location.ChangeXPos(-14);
+                AskToDeleteState.Left = _globalTogglerX - 14;
             }
             if (_settings.DoesNotificate())
             {
                 NotificationState.Text = "On";
+                NotificationState.Left = _globalTogglerX;
             }
             else
             {
                 NotificationState.Text = "OFF";
-                NotificationState.Location.ChangeXPos(-14);
+                NotificationState.Left = _globalTogglerX - 14;
+            }
+            if (_settings.CanBeAlwaysReplaced())
+            {
+                CanBeAlwaysReplacable.Text = "On";
+                CanBeAlwaysReplacable.Left = _globalTogglerX;
+            }
+            else
+            {
+                CanBeAlwaysReplacable.Text = "OFF";
+                CanBeAlwaysReplacable.Left = _globalTogglerX - 14;
             }
             HourDistanceToNotificate.Text = _settings.GetNotificationHourDistance().ToString();
             DistanceToNotificate.Text = _settings.GetNotificationDayDistance().ToString();
@@ -98,18 +116,35 @@ namespace AffairList
 
         private async void ResetButton_Click(object sender, EventArgs e)
         {
+            Settings defaultSettings = new Settings(false);
+            string currentProfile = _settings.GetCurrentProfile();
+            defaultSettings.SetCurrentProfile(currentProfile);
+            if (!_newSettings.SettingsEqual(_settings))
+            {
+                DialogResult restorationResult = MessageBox.Show(
+                    "Do you really want to restore last-confirmed settings?",
+                    "Confirm window",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+                if (restorationResult == DialogResult.Yes)
+                {
+                    _newSettings = _settings.GetSettingsCopy();
+                    LoadSettings();
+                }
+                defaultSettings = null;
+                return;
+            }
+            defaultSettings = null;
             DialogResult result = MessageBox.Show(
-                "Do you really want to reset the settings?",
+                "Do you really want to set settings to default?",
                 "Confirm window",
                 MessageBoxButtons.YesNo,
                 MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                if (!_settings.SettingsFileExists()) await _settings.CreateSettingsFileAsync();
-
                 await _settings.WriteBaseSettingsAsync();
 
-                _settings.SelectFirstProfile();
+                _settings.SetCurrentProfile(currentProfile);
 
                 _newSettings = _settings.GetSettingsCopy();
 
@@ -127,7 +162,7 @@ namespace AffairList
         {
             _newSettings.SetAutostart(_newSettings.DoesAutostart() ? false : true, false);
             autostartStateLab.Text = _newSettings.DoesAutostart() ? "On" : "OFF";
-            autostartStateLab.Location.ChangeXPos(_newSettings.DoesAutostart() ? 14 : -14);
+            autostartStateLab.Left = _newSettings.DoesAutostart() ? _globalTogglerX : _globalTogglerX - 14;
         }
 
         private void autostartStateLab_MouseLeave(object sender, EventArgs e)
@@ -223,7 +258,7 @@ namespace AffairList
         {
             _newSettings.SetAskToDelete(_newSettings.DoesAskToDelete() ? false : true);
             AskToDeleteState.Text = _newSettings.DoesAskToDelete() ? "On" : "OFF";
-            AskToDeleteState.Location.ChangeXPos(_newSettings.DoesAskToDelete() ? 14 : -14);
+            AskToDeleteState.Left = _newSettings.DoesAskToDelete() ? _globalTogglerX : _globalTogglerX - 14;
         }
         private void AskToDeleteState_MouseLeave(object sender, EventArgs e)
         {
@@ -252,7 +287,7 @@ namespace AffairList
         {
             _newSettings.SetDoesNotificate(_newSettings.DoesNotificate() ? false : true);
             NotificationState.Text = _newSettings.DoesNotificate() ? "On" : "OFF";
-            NotificationState.Location.ChangeXPos(_newSettings.DoesNotificate() ? 14 : -14);
+            NotificationState.Left = _newSettings.DoesNotificate() ? _globalTogglerX : _globalTogglerX - 14;
         }
 
         private void NotificationState_MouseEnter(object sender, EventArgs e)
@@ -348,6 +383,7 @@ namespace AffairList
         public void OnAddition()
         {
             LoadSettings();
+            _newSettings = _settings.GetSettingsCopy();
         }
 
         private void HourDistanceToNotificate_DoubleClick(object sender, EventArgs e)
@@ -384,7 +420,7 @@ namespace AffairList
         {
             _newSettings.SetCanBeAlwaysReplaced(_newSettings.CanBeAlwaysReplaced() ? false : true);
             CanBeAlwaysReplacable.Text = _newSettings.CanBeAlwaysReplaced() ? "On" : "OFF";
-            CanBeAlwaysReplacable.Location.ChangeXPos(_newSettings.CanBeAlwaysReplaced() ? 14 : -14);
+            CanBeAlwaysReplacable.Left = _newSettings.CanBeAlwaysReplaced() ? _globalTogglerX : _globalTogglerX - 14;
         }
         private void CanBeAlwaysReplacable_MouseEnter(object sender, EventArgs e)
         {
@@ -398,7 +434,12 @@ namespace AffairList
 
         public bool OnRemoving(bool closing = false)
         {
-            return CanLeave();
+            if (CanLeave())
+            {
+                _newSettings = null;
+                return true;
+            }
+            else return false;
         }
     }
 }

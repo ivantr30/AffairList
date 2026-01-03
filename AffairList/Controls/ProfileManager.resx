@@ -126,10 +126,14 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="ExportButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 321</value>
+    <value>11, 424</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="ExportButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="ExportButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>62, 28</value>
+    <value>71, 37</value>
   </data>
   <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="ExportButton.TabIndex" type="System.Int32, mscorlib">
@@ -160,10 +164,13 @@
     <value>NoControl</value>
   </data>
   <data name="ChangePriorityButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>78, 321</value>
+    <value>88, 423</value>
+  </data>
+  <data name="ChangePriorityButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="ChangePriorityButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>104, 28</value>
+    <value>142, 37</value>
   </data>
   <data name="ChangePriorityButton.TabIndex" type="System.Int32, mscorlib">
     <value>9</value>
@@ -190,10 +197,13 @@
     <value>NoControl</value>
   </data>
   <data name="RenameButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>320, 321</value>
+    <value>386, 423</value>
+  </data>
+  <data name="RenameButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="RenameButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>70, 28</value>
+    <value>80, 37</value>
   </data>
   <data name="RenameButton.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -220,10 +230,13 @@
     <value>NoControl</value>
   </data>
   <data name="SelectProfileButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>188, 321</value>
+    <value>236, 423</value>
+  </data>
+  <data name="SelectProfileButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="SelectProfileButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 28</value>
+    <value>69, 37</value>
   </data>
   <data name="SelectProfileButton.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -250,10 +263,13 @@
     <value>NoControl</value>
   </data>
   <data name="DeleteButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>396, 321</value>
+    <value>472, 423</value>
+  </data>
+  <data name="DeleteButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="DeleteButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 28</value>
+    <value>69, 37</value>
   </data>
   <data name="DeleteButton.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -280,10 +296,13 @@
     <value>NoControl</value>
   </data>
   <data name="BackButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>526, 321</value>
+    <value>622, 423</value>
+  </data>
+  <data name="BackButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="BackButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 28</value>
+    <value>69, 37</value>
   </data>
   <data name="BackButton.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -310,13 +329,16 @@
     <value>True</value>
   </data>
   <data name="Profiles.ItemHeight" type="System.Int32, mscorlib">
-    <value>21</value>
+    <value>28</value>
   </data>
   <data name="Profiles.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 107</value>
+    <value>11, 143</value>
+  </data>
+  <data name="Profiles.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="Profiles.Size" type="System.Drawing.Size, System.Drawing">
-    <value>576, 172</value>
+    <value>680, 228</value>
   </data>
   <data name="Profiles.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -340,10 +362,13 @@
     <value>NoControl</value>
   </data>
   <data name="ClearButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>462, 321</value>
+    <value>547, 423</value>
+  </data>
+  <data name="ClearButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="ClearButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 28</value>
+    <value>69, 37</value>
   </data>
   <data name="ClearButton.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -370,10 +395,13 @@
     <value>NoControl</value>
   </data>
   <data name="AddButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>254, 321</value>
+    <value>311, 423</value>
+  </data>
+  <data name="AddButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="AddButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 28</value>
+    <value>69, 37</value>
   </data>
   <data name="AddButton.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -397,13 +425,16 @@
     <value>Microsoft Sans Serif, 15pt</value>
   </data>
   <data name="ProfileInput.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 285</value>
+    <value>11, 380</value>
+  </data>
+  <data name="ProfileInput.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="ProfileInput.PlaceholderText" xml:space="preserve">
     <value>Enter the name of a new profile</value>
   </data>
   <data name="ProfileInput.Size" type="System.Drawing.Size, System.Drawing">
-    <value>576, 30</value>
+    <value>680, 36</value>
   </data>
   <data name="ProfileInput.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -427,10 +458,10 @@
     <value>NoControl</value>
   </data>
   <data name="ProfilesListLab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>10, 79</value>
+    <value>11, 106</value>
   </data>
   <data name="ProfilesListLab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>76, 25</value>
+    <value>115, 33</value>
   </data>
   <data name="ProfilesListLab.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -460,16 +491,16 @@
     <value>True</value>
   </data>
   <data name="CloseButtonLab.Font" type="System.Drawing.Font, System.Drawing">
-    <value>Microsoft Sans Serif, 20pt, style=Bold</value>
+    <value>Microsoft Sans Serif, 25pt, style=Bold</value>
   </data>
   <data name="CloseButtonLab.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
   <data name="CloseButtonLab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>569, 0</value>
+    <value>653, 0</value>
   </data>
   <data name="CloseButtonLab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>33, 31</value>
+    <value>49, 48</value>
   </data>
   <data name="CloseButtonLab.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -499,10 +530,10 @@
     <value>NoControl</value>
   </data>
   <data name="MinimizeButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>534, 0</value>
+    <value>612, 0</value>
   </data>
   <data name="MinimizeButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>29, 39</value>
+    <value>35, 48</value>
   </data>
   <data name="MinimizeButton.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -538,10 +569,10 @@
     <value>NoControl</value>
   </data>
   <data name="CloseButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>863, 0</value>
+    <value>1002, 0</value>
   </data>
   <data name="CloseButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>33, 31</value>
+    <value>41, 39</value>
   </data>
   <data name="CloseButton.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -571,10 +602,10 @@
     <value>NoControl</value>
   </data>
   <data name="ProfilesLab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>230, 15</value>
+    <value>263, 20</value>
   </data>
   <data name="ProfilesLab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>154, 46</value>
+    <value>209, 61</value>
   </data>
   <data name="ProfilesLab.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -603,8 +634,11 @@
   <data name="NameBackground.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
+  <data name="NameBackground.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
   <data name="NameBackground.Size" type="System.Drawing.Size, System.Drawing">
-    <value>600, 76</value>
+    <value>702, 101</value>
   </data>
   <data name="NameBackground.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -627,8 +661,11 @@
   <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
+  <data name="panel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
+  </data>
   <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>600, 359</value>
+    <value>702, 479</value>
   </data>
   <data name="panel1.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -649,10 +686,13 @@
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>7, 15</value>
+    <value>8, 20</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>600, 359</value>
+    <value>702, 479</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>ProfileManager</value>

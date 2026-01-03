@@ -119,69 +119,94 @@
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="HotKeySettingsLab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>135, 39</value>
+    <value>154, 52</value>
   </data>
   <data name="HotKeySettingsLab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>171, 46</value>
+    <value>214, 58</value>
+  </data>
+  <data name="MinimizeButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>441, 0</value>
   </data>
   <data name="MinimizeButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>24, 31</value>
+    <value>29, 39</value>
+  </data>
+  <data name="CloseButton.Location" type="System.Drawing.Point, System.Drawing">
+    <value>467, 0</value>
   </data>
   <data name="CloseButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>33, 31</value>
+    <value>41, 39</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="NameBackground.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="NameBackground.Size" type="System.Drawing.Size, System.Drawing">
-    <value>440, 125</value>
+    <value>503, 167</value>
   </data>
   <data name="BackKeyType.Location" type="System.Drawing.Point, System.Drawing">
-    <value>307, 168</value>
+    <value>351, 224</value>
   </data>
   <data name="BackKeyType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>121, 19</value>
+    <value>138, 25</value>
   </data>
   <data name="BackKeyLab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 168</value>
+    <value>14, 224</value>
   </data>
   <data name="BackKeyLab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>83, 22</value>
+    <value>101, 26</value>
   </data>
   <data name="CloseKeyType.Location" type="System.Drawing.Point, System.Drawing">
-    <value>307, 137</value>
+    <value>351, 183</value>
   </data>
   <data name="CloseKeyType.Size" type="System.Drawing.Size, System.Drawing">
-    <value>121, 19</value>
+    <value>138, 25</value>
   </data>
   <data name="CloseKeyLab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>12, 137</value>
+    <value>14, 183</value>
   </data>
   <data name="CloseKeyLab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>89, 22</value>
+    <value>108, 26</value>
   </data>
   <data name="ConfirmButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>191, 416</value>
+    <value>218, 555</value>
+  </data>
+  <data name="ConfirmButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="ConfirmButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 24</value>
+    <value>86, 32</value>
   </data>
   <data name="ResetButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>272, 416</value>
+    <value>311, 555</value>
+  </data>
+  <data name="ResetButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="ResetButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 24</value>
+    <value>86, 32</value>
   </data>
   <data name="BackButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>353, 416</value>
+    <value>403, 555</value>
+  </data>
+  <data name="BackButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="BackButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>75, 24</value>
+    <value>86, 32</value>
+  </data>
+  <data name="panel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>440, 451</value>
+    <value>503, 601</value>
   </data>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>7, 15</value>
+    <value>8, 20</value>
+  </data>
+  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>3, 4, 3, 4</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>440, 451</value>
+    <value>503, 601</value>
   </data>
 </root>

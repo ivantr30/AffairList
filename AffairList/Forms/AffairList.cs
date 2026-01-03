@@ -52,11 +52,7 @@
 
         public void Exit()
         {
-            if (OnControlRemove())
-            {
-                DisposeObjects();
-                Application.Exit();
-            }
+            Application.Exit();
         }
         private void DisposeObjects()
         {
@@ -73,13 +69,10 @@
         public void MinimizeForm() => WindowState = FormWindowState.Minimized;
         public void SetControl(Control control)
         {
+            if (!OnControlRemove(false)) return;
             if (Controls.Count > 0)
             {
-                if (Controls[0] is IChildable child)
-                {
-                    if (!child.OnRemoving()) return;
-                }
-                if(Controls[0] is IKeyPreviewable ckp)
+                if (Controls[0] is IKeyPreviewable ckp)
                 {
                     KeyDown -= ckp.KeyDownHandlers;
                     KeyPress -= ckp.KeyPressHandlers;
@@ -104,6 +97,7 @@
         }
         public void OpenForm(Form form, bool asDialog)
         {
+            if (!OnControlRemove(false)) return;
             Hide();
             _childForm = form;
             if (asDialog)
@@ -127,6 +121,17 @@
                 }
                 catch (ObjectDisposedException) { AfterFormClosed(); }
             }
+        }
+        private bool OnControlRemove(bool closing)
+        {
+            if (Controls.Count > 0)
+            {
+                if (Controls[0] is IChildable child)
+                {
+                    return child.OnRemoving(closing);
+                }
+            }
+            return true;
         }
         private void AfterFormClosed(object? sender, FormClosedEventArgs e)
         {
@@ -165,7 +170,7 @@
 
         private void AffairList_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!OnControlRemove())
+            if (!OnControlRemove(true))
             {
                 e.Cancel = true;
                 TopMost = true;
@@ -173,14 +178,6 @@
                 return;
             }
             DisposeObjects();
-        }
-        private bool OnControlRemove()
-        {
-            if (Controls[0] is IChildable child)
-            {
-                return child.OnRemoving();
-            }
-            return true;
         }
 
         private async void AffairList_KeyDown(object sender, KeyEventArgs e)

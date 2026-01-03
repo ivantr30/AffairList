@@ -195,10 +195,10 @@
             PickBgColorButton.FlatStyle = FlatStyle.Flat;
             PickBgColorButton.Font = new Font("Tahoma", 10F);
             PickBgColorButton.ForeColor = Color.White;
-            PickBgColorButton.Location = new Point(379, 261);
+            PickBgColorButton.Location = new Point(355, 261);
             PickBgColorButton.Margin = new Padding(3, 4, 3, 4);
             PickBgColorButton.Name = "PickBgColorButton";
-            PickBgColorButton.Size = new Size(86, 35);
+            PickBgColorButton.Size = new Size(110, 35);
             PickBgColorButton.TabIndex = 18;
             PickBgColorButton.Text = "Pick color";
             PickBgColorButton.UseVisualStyleBackColor = false;
@@ -211,10 +211,10 @@
             PickTextColorButton.FlatStyle = FlatStyle.Flat;
             PickTextColorButton.Font = new Font("Tahoma", 10F);
             PickTextColorButton.ForeColor = Color.White;
-            PickTextColorButton.Location = new Point(379, 220);
+            PickTextColorButton.Location = new Point(355, 220);
             PickTextColorButton.Margin = new Padding(3, 4, 3, 4);
             PickTextColorButton.Name = "PickTextColorButton";
-            PickTextColorButton.Size = new Size(86, 35);
+            PickTextColorButton.Size = new Size(110, 35);
             PickTextColorButton.TabIndex = 17;
             PickTextColorButton.Text = "Pick color";
             PickTextColorButton.UseVisualStyleBackColor = false;
@@ -479,10 +479,10 @@
             // MinimizeButton
             // 
             MinimizeButton.AutoSize = true;
-            MinimizeButton.Font = new Font("Microsoft Sans Serif", 20F, FontStyle.Bold);
-            MinimizeButton.Location = new Point(430, 0);
+            MinimizeButton.Font = new Font("Microsoft Sans Serif", 25F, FontStyle.Bold);
+            MinimizeButton.Location = new Point(413, 0);
             MinimizeButton.Name = "MinimizeButton";
-            MinimizeButton.Size = new Size(29, 39);
+            MinimizeButton.Size = new Size(35, 48);
             MinimizeButton.TabIndex = 25;
             MinimizeButton.Text = "-";
             MinimizeButton.Click += MinimizeButton_Click;
@@ -492,10 +492,10 @@
             // CloseButton
             // 
             CloseButton.AutoSize = true;
-            CloseButton.Font = new Font("Microsoft Sans Serif", 20F, FontStyle.Bold);
-            CloseButton.Location = new Point(467, 0);
+            CloseButton.Font = new Font("Microsoft Sans Serif", 25F, FontStyle.Bold);
+            CloseButton.Location = new Point(454, 0);
             CloseButton.Name = "CloseButton";
-            CloseButton.Size = new Size(41, 39);
+            CloseButton.Size = new Size(49, 48);
             CloseButton.TabIndex = 2;
             CloseButton.Text = "X";
             CloseButton.Click += CloseButton_Click;

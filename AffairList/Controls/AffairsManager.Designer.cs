@@ -38,7 +38,6 @@
             CloseButton = new Label();
             AffairsLab = new Label();
             ProfileBox = new ComboBox();
-            DeadlineLab = new Label();
             Affairs = new ListBox();
             AffairInput = new TextBox();
             panel1 = new Panel();
@@ -94,12 +93,6 @@
             ProfileBox.Name = "ProfileBox";
             ProfileBox.SelectionChangeCommitted += ProfileBox_SelectionChangeCommitted;
             // 
-            // DeadlineLab
-            // 
-            resources.ApplyResources(DeadlineLab, "DeadlineLab");
-            DeadlineLab.ForeColor = SystemColors.ButtonHighlight;
-            DeadlineLab.Name = "DeadlineLab";
-            // 
             // Affairs
             // 
             resources.ApplyResources(Affairs, "Affairs");
@@ -120,7 +113,6 @@
             panel1.Controls.Add(RenameAffairButton);
             panel1.Controls.Add(ProfileBox);
             panel1.Controls.Add(AddDeadlineButton);
-            panel1.Controls.Add(DeadlineLab);
             panel1.Controls.Add(PriorityButton);
             panel1.Controls.Add(DeleteButton);
             panel1.Controls.Add(BackButton);
@@ -207,7 +199,6 @@
         private Panel NameBackground;
         private Label AffairsLab;
         private ComboBox ProfileBox;
-        private Label DeadlineLab;
         private ListBox Affairs;
         private TextBox AffairInput;
         private Panel panel1;

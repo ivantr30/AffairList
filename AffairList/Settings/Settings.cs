@@ -98,12 +98,12 @@ namespace AffairList
 
             _fileLogger.LogInformation($"{DateTime.Now} settings were dropped to default succesfully");
         }
-        public async Task SelectFirstProfileAsync()
+        public async Task SelectFirstProfileAsync(bool logInfo = true)
         {
             Directory.GetFiles(listsDirectoryFullPath);
             SetCurrentProfile(Directory.EnumerateFiles(listsDirectoryFullPath).First());
             await SaveSettingsAsync();
-            _fileLogger.LogInformation($"{DateTime.Now} first profile was selected succesfully");
+            if(logInfo) _fileLogger.LogInformation($"{DateTime.Now} first profile was selected succesfully");
         }
         public void SelectFirstProfile()
         {
