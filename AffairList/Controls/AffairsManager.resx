@@ -248,7 +248,7 @@
     <value>10</value>
   </data>
   <data name="ProfileBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>425, 111</value>
+    <value>425, 114</value>
   </data>
   <data name="ProfileBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 4, 3, 4</value>

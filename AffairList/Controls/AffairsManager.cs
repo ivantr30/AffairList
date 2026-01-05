@@ -1,4 +1,7 @@
-﻿using Microsoft.VisualBasic;
+﻿using AffairList.Classes.Commands.AffairsManagerCommands;
+using AffairList.Interfaces;
+using Microsoft.VisualBasic;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AffairList
 {
@@ -6,7 +9,6 @@ namespace AffairList
     {
         private int _currentDragIndex = 0;
         private int _deadlineDateNTagLength = 21;
-        private int _selectedAffairIndex = -1;
 
         private string _priorityTag = "<priority>";
         private string _priorityWord = "\"Priority\"";
@@ -22,29 +24,32 @@ namespace AffairList
         private Settings _settings;
         public IParentable ParentElement { get; private set; }
         public KeyEventHandler KeyDownHandlers { get; private set; }
-        public KeyPressEventHandler KeyPressHandlers  { get; private set; }
+        public KeyPressEventHandler KeyPressHandlers { get; private set; }
         public KeyEventHandler KeyUpHandlers { get; private set; }
+
+        private Stack<ICommandAf> _undoOperations = null!;
+        private Stack<ICommandAf> _redoOperations = null!;
 
         public AffairsManager(Settings settings, IParentable parentElement)
         {
             InitializeComponent();
             _settings = settings;
             ParentElement = parentElement;
-            KeyDownHandlers += AffairsManager_KeyDown;
+            KeyDownHandlers += AffairsManager_KeyDown!;
+            _undoOperations = new Stack<ICommandAf>();
+            _redoOperations = new Stack<ICommandAf>();
         }
         private void LoadProfiles()
         {
-            int profilesCount = 0;
             ProfileBox.Items.Clear();
             foreach (string profile in Directory.EnumerateFiles(Settings.listsDirectoryFullPath))
             {
-                profilesCount++;
                 FileInfo profileInfo = new FileInfo(profile);
                 ProfileBox.Items.Add(profileInfo.Name);
             }
-            if (profilesCount > 0)
+            if (ProfileBox.Items.Count > 0)
             {
-                if(!File.Exists(_settings.GetCurrentProfile())) _settings.SelectFirstProfile();
+                if (!File.Exists(_settings.GetCurrentProfile())) _settings.SelectFirstProfile();
                 FileInfo selectedProfile = new FileInfo(_settings.GetCurrentProfile());
                 ProfileBox.SelectedIndex = ProfileBox.Items.IndexOf(selectedProfile.Name);
             }
@@ -72,24 +77,65 @@ namespace AffairList
                     }
                     Affairs.Items.Add(currentLine);
                 }
-                if (_selectedAffairIndex != -1 && Affairs.Items.Count > 0) 
-                    Affairs.SelectedIndex = _selectedAffairIndex;
-                else if (Affairs.Items.Count > 0) Affairs.SelectedIndex = 0;
             }
+            if (Affairs.Items.Count > 0) Affairs.SelectedIndex = 0;
         }
 
         public async void AffairsManager_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == _addAffairKey)
             {
-                await AddAffairAsync();
+                await Task.Run(CreateNExecuteAddAffairCommand);
             }
-            if (e.KeyCode == _deleteAffairKey)
+            else if (e.KeyCode == _deleteAffairKey)
             {
-                await DeleteAffairAsync();
+                await DeleteAffairAsync(Affairs.SelectedIndex);
+            }
+            else if (e.Control)
+            {
+                if (e.KeyCode == Keys.Z)
+                {
+                    Undo();
+                }
+                else if (e.KeyCode == Keys.Y)
+                {
+                    Redo();
+                }
+                else if (e.KeyCode == Keys.C)
+                {
+                    
+                }
+            }
+            // добавить ctrl + z и ctrl + y, ctrl + c
+        }
+        private void CopySelectedAffair()
+        {
+            if(Affairs.SelectedIndex == -1)
+            {
+                MessageBox.Show("Nothing to copy");
+            }
+        }
+        private void CreateNExecuteAddAffairCommand()
+        {
+            _undoOperations.Push(new AddAffairCommand(this, AffairInput.Text));
+            _undoOperations.Peek().Execute();
+        }
+        private void Undo()
+        {
+            if (_undoOperations.Count > 0)
+            {
+                _redoOperations.Push(_undoOperations.Peek());
+                _undoOperations.Pop().Undo();
             }
         }
 
+        private void Redo()
+        {
+            if (_redoOperations.Count > 0)
+            {
+                _redoOperations.Pop().Redo();
+            }
+        }
         private void CloseButton_Click(object sender, EventArgs e)
             => ParentElement.Exit();
 
@@ -114,17 +160,23 @@ namespace AffairList
         {
             CloseButton.ForeColor = Color.Black;
         }
-
-        private async Task AddAffairAsync()
+        /// <summary>
+        /// Adds an affair and returns its
+        /// </summary>
+        /// <param name="affair"></param>
+        /// <param name="clearInputLine"></param>
+        /// <returns></returns>
+        public async Task<int> AddAffairAsync(string affair, bool clearInputLine = true)
         {
-            if (AffairInput.Text.Trim() == "")
+            affair = affair.Trim();
+            if (affair == "")
             {
-                MessageBox.Show("Error, textbox is null");
-                return;
+                MessageBox.Show("The input line is null");
+                return -1;
             }
-            if (ContainKeyWords(AffairInput.Text)) return;
+            if (ContainKeyWords(affair)) return -1;
 
-            string inputText = CapitalizeAffair(AffairInput.Text.Trim()) + ".";
+            string inputText = CapitalizeAffair(affair) + ".";
 
             Task appendingText = AppendTextAsync(inputText + "\n");
 
@@ -133,12 +185,17 @@ namespace AffairList
 
             _lines.Add(inputText);
 
-            AffairInput.Text = "";
+            if (clearInputLine) AffairInput.Text = "";
             await appendingText;
+            return Affairs.SelectedIndex;
         }
-        private async Task DeleteAffairAsync()
+        public async Task DeleteAffairAsync(int affairIndex)
         {
-            if (Affairs.SelectedIndex == -1) return;
+            if (affairIndex == -1)
+            {
+                MessageBox.Show("Nothing to delete");
+                return;
+            }
 
             if (_settings.DoesAskToDelete())
             {
@@ -148,30 +205,31 @@ namespace AffairList
                 if (dialogres == DialogResult.No) return;
             }
 
-            _lines.RemoveAt(Affairs.SelectedIndex);
+            _lines.RemoveAt(affairIndex);
 
             Task savingText = SaveTextAsync(_lines);
 
-            int selectedIndex = 0;
-            if (Affairs.SelectedIndex == 0 && Affairs.Items.Count > 1)
+            int selectedIndex = Affairs.SelectedIndex;
+
+            if(affairIndex <= Affairs.SelectedIndex)
             {
-                Affairs.SelectedIndex++;
-                selectedIndex = Affairs.SelectedIndex - 1;
-            }
-            else if (Affairs.Items.Count > 1)
-            {
-                Affairs.SelectedIndex--;
-                selectedIndex = Affairs.SelectedIndex + 1;
+                if (Affairs.SelectedIndex == 0 && Affairs.Items.Count > 1) 
+                    Affairs.SelectedIndex = 1;
+                else if (Affairs.Items.Count > 1) Affairs.SelectedIndex--;
             }
 
-            Affairs.Items.RemoveAt(selectedIndex);
+            Affairs.Items.RemoveAt(affairIndex);
             await savingText;
         }
-        private async void AddAffairButton_Click(object sender, EventArgs e) => await AddAffairAsync();
-        private async void DeleteButton_Click(object sender, EventArgs e) => await DeleteAffairAsync();
-        private void ClearButton_Click(object sender, EventArgs e) => AffairInput.Clear();
+        private async void AddAffairButton_Click(object sender, EventArgs e)
+            => await Task.Run(CreateNExecuteAddAffairCommand);
+        private async void DeleteButton_Click(object sender, EventArgs e)
+            => await DeleteAffairAsync(Affairs.SelectedIndex);
+        private void ClearButton_Click(object sender, EventArgs e)
+            => AffairInput.Clear();
 
-        private void BackButton_Click(object sender, EventArgs e) => ParentElement.Return();
+        private void BackButton_Click(object sender, EventArgs e)
+            => ParentElement.Return();
 
         private async void AddDeadlineButton_Click(object sender, EventArgs e)
         {
@@ -179,7 +237,11 @@ namespace AffairList
         }
         private async Task ManageDeadline()
         {
-            if (Affairs.SelectedIndex == -1) return;
+            if (Affairs.SelectedIndex == -1)
+            {
+                MessageBox.Show("There is no affair selected");
+                return;
+            }
 
             if (_lines[Affairs.SelectedIndex].StartsWith(_deadlineTag))
             {
@@ -232,7 +294,11 @@ namespace AffairList
         }
         private async Task RenameAffair()
         {
-            if (Affairs.SelectedIndex == -1) return;
+            if (Affairs.SelectedIndex == -1)
+            {
+                MessageBox.Show("Nothing to rename");
+                return;
+            }
 
             string selectedWord = _lines[Affairs.SelectedIndex];
             string affair = selectedWord;
@@ -245,7 +311,7 @@ namespace AffairList
             {
                 affair = affair.Substring(0, affair.Length - _priorityTag.Length - 1);
             }
-            affair = affair.Remove(affair.Length - 1); // Убираем точку в конце
+            affair = affair.Remove(affair.Length - 1); // Убираем точку в конце, не блядско-нейроночный комментарий
 
             string renaming = Interaction
                 .InputBox("Enter renaming", "Input box", affair);
@@ -280,7 +346,11 @@ namespace AffairList
 
         private async void PriorityButton_Click(object sender, EventArgs e)
         {
-            if (Affairs.SelectedIndex == -1) return;
+            if (Affairs.SelectedIndex == -1)
+            {
+                MessageBox.Show("There is no affair selected");
+                return;
+            }
 
             if (_lines[Affairs.SelectedIndex].EndsWith(_priorityTag))
             {
@@ -321,7 +391,11 @@ namespace AffairList
         }
         private async Task SwitchAffairs()
         {
-            if (Affairs.SelectedIndex == -1) return;
+            if (Affairs.SelectedIndex == -1)
+            {
+                MessageBox.Show("There is no affair selected");
+                return;
+            }
             bool newPlacePriority = _lines[Affairs.SelectedIndex].EndsWith(_priorityTag);
             bool oldPlacePriority = _lines[_currentDragIndex].EndsWith(_priorityTag);
 
@@ -329,7 +403,7 @@ namespace AffairList
             {
                 _isDragging = false;
                 return;
-            } 
+            }
 
             // Не менять, уже нечего
             string switcher = _lines[_currentDragIndex];
@@ -359,6 +433,8 @@ namespace AffairList
         }
         private async Task ChangeProfileAsync()
         {
+            if (new FileInfo(_settings.GetCurrentProfile()).Name == 
+                new FileInfo(ProfileBox.SelectedItem!.ToString()!).Name) return;
             foreach (var profile in Directory.EnumerateFiles(Settings.listsDirectoryFullPath))
             {
                 FileInfo profileInfo = new FileInfo(profile);
@@ -366,32 +442,15 @@ namespace AffairList
                 {
                     _settings.SetCurrentProfile(profileInfo.FullName);
                     await _settings.SaveSettingsAsync();
-                    _selectedAffairIndex = 0;
+                    if(Affairs.Items.Count > 0) Affairs.SelectedIndex = 0;
                     return;
                 }
             }
         }
-
-        private async void ProfileBox_TextUpdate(object sender, EventArgs e)
-        {
-            if (!File.Exists(ProfileBox.Text))
-            {
-                ProfileBox.Text = _settings.GetCurrentProfile();
-                return;
-            }
-            await ChangeProfileAsync();
-            await LoadTextAsync();
-        }
-
         private async void ProfileBox_SelectionChangeCommitted(object sender, EventArgs e)
         {
             await ChangeProfileAsync();
             await LoadTextAsync();
-        }
-
-        private void Affairs_SelectedValueChanged(object sender, EventArgs e)
-        {
-            _selectedAffairIndex = Affairs.SelectedIndex;
         }
         private async Task SaveTextAsync(List<string> lines)
         {

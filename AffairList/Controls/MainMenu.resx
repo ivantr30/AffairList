@@ -302,7 +302,7 @@
     <value>8</value>
   </data>
   <data name="ChangeProfileButton.Text" xml:space="preserve">
-    <value>Change Profile</value>
+    <value>Manage profiles</value>
   </data>
   <data name="&gt;&gt;ChangeProfileButton.Name" xml:space="preserve">
     <value>ChangeProfileButton</value>
@@ -368,7 +368,7 @@
     <value>5</value>
   </data>
   <data name="SettingsButton.Text" xml:space="preserve">
-    <value>Settings-Customize</value>
+    <value>Settings</value>
   </data>
   <data name="&gt;&gt;SettingsButton.Name" xml:space="preserve">
     <value>SettingsButton</value>
@@ -401,7 +401,7 @@
     <value>2</value>
   </data>
   <data name="ChangeListButton.Text" xml:space="preserve">
-    <value>ChangeList</value>
+    <value>Manage affairs</value>
   </data>
   <data name="&gt;&gt;ChangeListButton.Name" xml:space="preserve">
     <value>ChangeListButton</value>
@@ -434,7 +434,7 @@
     <value>1</value>
   </data>
   <data name="ClearListButton.Text" xml:space="preserve">
-    <value>ClearList</value>
+    <value>Clear List</value>
   </data>
   <data name="&gt;&gt;ClearListButton.Name" xml:space="preserve">
     <value>ClearListButton</value>
@@ -500,7 +500,7 @@
     <value>3</value>
   </data>
   <data name="ReplaceAffairListButton.Text" xml:space="preserve">
-    <value>ReplaceList</value>
+    <value>Replace List</value>
   </data>
   <data name="&gt;&gt;ReplaceAffairListButton.Name" xml:space="preserve">
     <value>ReplaceAffairListButton</value>
