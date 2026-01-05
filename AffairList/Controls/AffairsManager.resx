@@ -316,6 +316,9 @@
   <data name="AffairInput.PlaceholderText" xml:space="preserve">
     <value>Enter the name of a new affair</value>
   </data>
+  <data name="AffairInput.ScrollBars" type="System.Windows.Forms.ScrollBars, System.Windows.Forms">
+    <value>Horizontal</value>
+  </data>
   <data name="AffairInput.Size" type="System.Drawing.Size, System.Drawing">
     <value>615, 36</value>
   </data>

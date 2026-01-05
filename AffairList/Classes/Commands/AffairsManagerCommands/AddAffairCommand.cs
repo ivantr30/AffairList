@@ -6,7 +6,6 @@ namespace AffairList.Classes.Commands.AffairsManagerCommands
     {
         private AffairsManager _affairsManager = null!;
         private string _affair;
-        private int _affairIndex;
         public AddAffairCommand(AffairsManager affairsManager, string affair)
         {
             _affairsManager = affairsManager;
@@ -14,17 +13,17 @@ namespace AffairList.Classes.Commands.AffairsManagerCommands
         }
         public async void Execute()
         {
-            _affairIndex = await _affairsManager.AddAffairAsync(_affair);
+            _affairsManager.AddAffairAsync(_affair);
         }
 
         public async void Redo()
         {
-            _affairIndex = await _affairsManager.AddAffairAsync(_affair, false);
+            _affairsManager.AddAffairAsync(_affair, false);
         }
 
         public async void Undo()
         {
-            await _affairsManager.DeleteAffairAsync(_affairIndex);
+            await _affairsManager.DeleteAffairAsync(_affair);
         }
     }
 }

@@ -2,7 +2,7 @@
 {
     public interface ICommandAf
     {
-        void Execute();
+        void Execute(); // переписать с возвращаемым результатом в виде int
         void Undo();
         void Redo();
     }

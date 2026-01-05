@@ -98,6 +98,7 @@
             resources.ApplyResources(Affairs, "Affairs");
             Affairs.FormattingEnabled = true;
             Affairs.Name = "Affairs";
+            Affairs.SelectedIndexChanged += Affairs_SelectedIndexChanged;
             Affairs.MouseDown += Affairs_MouseDown;
             Affairs.MouseUp += Affairs_MouseUp;
             // 

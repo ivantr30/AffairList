@@ -1,7 +1,6 @@
 ﻿using AffairList.Classes.Commands.AffairsManagerCommands;
 using AffairList.Interfaces;
 using Microsoft.VisualBasic;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AffairList
 {
@@ -9,6 +8,7 @@ namespace AffairList
     {
         private int _currentDragIndex = 0;
         private int _deadlineDateNTagLength = 21;
+        private int _selectedAffair = 0;
 
         private string _priorityTag = "<priority>";
         private string _priorityWord = "\"Priority\"";
@@ -78,18 +78,21 @@ namespace AffairList
                     Affairs.Items.Add(currentLine);
                 }
             }
-            if (Affairs.Items.Count > 0) Affairs.SelectedIndex = 0;
+            if (Affairs.Items.Count > 0)
+            {
+                Affairs.SelectedIndex = _selectedAffair;
+            }
         }
 
         public async void AffairsManager_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == _addAffairKey)
             {
-                await Task.Run(CreateNExecuteAddAffairCommand);
+                CreateNExecuteAddAffairCommand();
             }
             else if (e.KeyCode == _deleteAffairKey)
             {
-                await DeleteAffairAsync(Affairs.SelectedIndex);
+                CreateNExecuteDeleteAffairCommand();
             }
             else if (e.Control)
             {
@@ -101,23 +104,50 @@ namespace AffairList
                 {
                     Redo();
                 }
-                else if (e.KeyCode == Keys.C)
+                else if (e.KeyCode == Keys.C && !AffairInput.Focused)
                 {
-                    
+                    CopySelectedAffair();
                 }
             }
-            // добавить ctrl + z и ctrl + y, ctrl + c
+            else if (!AffairInput.Focused)
+            {
+                if (e.KeyCode.ToString().Length == 1)
+                {
+                    AffairInput.AppendText(e.KeyCode.ToString().ToUpper());
+                }
+                AffairInput.Focus();
+            }
         }
         private void CopySelectedAffair()
         {
-            if(Affairs.SelectedIndex == -1)
+            if (Affairs.SelectedIndex == -1)
             {
                 MessageBox.Show("Nothing to copy");
+                return;
             }
+            MessageBox.Show("The affair is copied");
+            string selectedAffair = Affairs.SelectedItem!.ToString()!;
+            Clipboard.SetText(selectedAffair.Remove(selectedAffair.Length - 1));
         }
         private void CreateNExecuteAddAffairCommand()
         {
-            _undoOperations.Push(new AddAffairCommand(this, AffairInput.Text));
+            string affair = AffairInput.Text;
+            if (string.IsNullOrEmpty(affair))
+            {
+                return;
+            }
+            _undoOperations.Push(new AddAffairCommand(this, affair));
+            _undoOperations.Peek().Execute();
+        }
+        private void CreateNExecuteDeleteAffairCommand()
+        {
+            string affair = Affairs.SelectedItem?.ToString() ?? "";
+            if (string.IsNullOrEmpty(affair))
+            {
+                return;
+            }
+            _undoOperations.Push(
+                new DeleteAffairCommand(this, affair));
             _undoOperations.Peek().Execute();
         }
         private void Undo()
@@ -166,15 +196,15 @@ namespace AffairList
         /// <param name="affair"></param>
         /// <param name="clearInputLine"></param>
         /// <returns></returns>
-        public async Task<int> AddAffairAsync(string affair, bool clearInputLine = true)
+        public async Task AddAffairAsync(string affair, bool clearInputLine = true)
         {
             affair = affair.Trim();
             if (affair == "")
             {
                 MessageBox.Show("The input line is null");
-                return -1;
+                return;
             }
-            if (ContainKeyWords(affair)) return -1;
+            if (ContainKeyWords(affair)) return;
 
             string inputText = CapitalizeAffair(affair) + ".";
 
@@ -187,10 +217,10 @@ namespace AffairList
 
             if (clearInputLine) AffairInput.Text = "";
             await appendingText;
-            return Affairs.SelectedIndex;
         }
-        public async Task DeleteAffairAsync(int affairIndex)
+        public async Task DeleteAffairAsync(string affair)
         {
+            int affairIndex = Affairs.Items.IndexOf(affair);
             if (affairIndex == -1)
             {
                 MessageBox.Show("Nothing to delete");
@@ -205,15 +235,23 @@ namespace AffairList
                 if (dialogres == DialogResult.No) return;
             }
 
-            _lines.RemoveAt(affairIndex);
+            for (int i = 0; i < _lines.Count; i++)
+            {
+                if (_lines[i].Replace(_deadlineTag, "")
+                        .Replace(_priorityTag, " " + _priorityWord) == affair)
+                {
+                    _lines.RemoveAt(i);
+                    break;
+                }
+            }
 
             Task savingText = SaveTextAsync(_lines);
 
             int selectedIndex = Affairs.SelectedIndex;
 
-            if(affairIndex <= Affairs.SelectedIndex)
+            if (affairIndex <= Affairs.SelectedIndex)
             {
-                if (Affairs.SelectedIndex == 0 && Affairs.Items.Count > 1) 
+                if (Affairs.SelectedIndex == 0 && Affairs.Items.Count > 1)
                     Affairs.SelectedIndex = 1;
                 else if (Affairs.Items.Count > 1) Affairs.SelectedIndex--;
             }
@@ -222,9 +260,9 @@ namespace AffairList
             await savingText;
         }
         private async void AddAffairButton_Click(object sender, EventArgs e)
-            => await Task.Run(CreateNExecuteAddAffairCommand);
+            => CreateNExecuteAddAffairCommand();
         private async void DeleteButton_Click(object sender, EventArgs e)
-            => await DeleteAffairAsync(Affairs.SelectedIndex);
+            => CreateNExecuteDeleteAffairCommand();
         private void ClearButton_Click(object sender, EventArgs e)
             => AffairInput.Clear();
 
@@ -363,9 +401,8 @@ namespace AffairList
                 _lines[Affairs.SelectedIndex] += " " + _priorityTag;
             }
 
-            Task savingText = SaveTextAsync(_lines);
-            Task loadingText = LoadTextAsync();
-            await Task.WhenAll(savingText, loadingText);
+            await SaveTextAsync(_lines);
+            await LoadTextAsync();
         }
 
         private string CapitalizeAffair(string affair)
@@ -433,7 +470,7 @@ namespace AffairList
         }
         private async Task ChangeProfileAsync()
         {
-            if (new FileInfo(_settings.GetCurrentProfile()).Name == 
+            if (new FileInfo(_settings.GetCurrentProfile()).Name ==
                 new FileInfo(ProfileBox.SelectedItem!.ToString()!).Name) return;
             foreach (var profile in Directory.EnumerateFiles(Settings.listsDirectoryFullPath))
             {
@@ -442,7 +479,11 @@ namespace AffairList
                 {
                     _settings.SetCurrentProfile(profileInfo.FullName);
                     await _settings.SaveSettingsAsync();
-                    if(Affairs.Items.Count > 0) Affairs.SelectedIndex = 0;
+                    if (Affairs.Items.Count > 0)
+                    {
+                        Affairs.SelectedIndex = 0;
+                        _selectedAffair = 0;
+                    }
                     return;
                 }
             }
@@ -464,8 +505,16 @@ namespace AffairList
         {
             LoadProfiles();
             await LoadTextAsync();
+
+            _selectedAffair = 0;
+            Affairs.SelectedIndex = 0;
         }
 
         public bool OnRemoving(bool closing = false) => true;
+
+        private void Affairs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            _selectedAffair = Affairs.SelectedIndex;
+        }
     }
 }
