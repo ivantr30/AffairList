@@ -2,7 +2,7 @@
 
 namespace AffairList.Classes.Commands.AffairsManagerCommands
 {
-    public class DeleteAffairCommand : ICommandAf
+    public class DeleteAffairCommand : IAsyncCommandAf
     {
         private string _affair;
         private AffairsManager _affairsManager;
@@ -11,21 +11,34 @@ namespace AffairList.Classes.Commands.AffairsManagerCommands
             _affairsManager = affairsManager;
             _affair = affair;
         }
-        public async void Execute()
+        public int Execute()
         {
-            await _affairsManager.DeleteAffairAsync(_affair);
+            return _affairsManager.DeleteAffairAsync(_affair).Result;
         }
 
-        public async void Redo()
+        public int Redo()
         {
-            await _affairsManager.DeleteAffairAsync(_affair);
+            return _affairsManager.DeleteAffairAsync(_affair).Result;
         }
 
-        public async void Undo()
+        public int Undo()
         {
-            if (_affair.EndsWith("."))
-                _affairsManager.AddAffairAsync(_affair.Remove(_affair.Length - 1), false);
-            else _affairsManager.AddAffairAsync(_affair, false);
+            return _affairsManager.AddAffairAsync(_affair, false).Result;
+        }
+
+        public async Task<int> ExecuteAsync()
+        {
+            return await _affairsManager.DeleteAffairAsync(_affair);
+        }
+
+        public async Task<int> UndoAsync()
+        {
+            return await _affairsManager.AddAffairAsync(_affair, false);
+        }
+
+        public async Task<int> RedoAsync()
+        {
+            return await _affairsManager.DeleteAffairAsync(_affair);
         }
     }
 }

@@ -69,7 +69,11 @@ namespace AffairList
                     currentAffair = affair;
                     if (currentAffair.EndsWith(_priorityTag))
                     {
-                        currentAffair = currentAffair.Replace($". {_priorityTag}", $"{_priorityWord}.");
+                        currentAffair = currentAffair.Replace($"{_priorityTag}", $"{_priorityWord}.");
+                    }
+                    else
+                    {
+                        currentAffair += '.';
                     }
                     if (currentAffair.StartsWith(_deadlineTag))
                     {
