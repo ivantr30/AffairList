@@ -79,7 +79,7 @@ namespace AffairList
                     {
                         currentAffair = currentAffair.Remove(0, _deadlineTag.Length);
                     }
-                    affairsShower.AppendLine(currentAffair.Trim());
+                    affairsShower.AppendLine(currentAffair);
                 }
                 Affairs.Text += affairsShower.ToString() + "Это весь список ваших дел";
             }

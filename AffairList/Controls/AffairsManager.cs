@@ -277,21 +277,16 @@ namespace AffairList
                         .Replace(_priorityTag, _priorityWord) == affair)
                 {
                     _lines.RemoveAt(i);
-                    break;
+                    break; 
                 }
             }
 
             await SaveTextAsync(_lines);
 
-            try
-            {
-
-                if (Affairs.SelectedIndex == 0 && Affairs.Items.Count > 1)
-                    Affairs.SetSelected(affairIndex + 1, true);
-                else if (Affairs.Items.Count > 1)
-                    Affairs.SetSelected(affairIndex - 1, true);
-            }
-            catch {}
+            if (Affairs.SelectedIndex == 0 && Affairs.Items.Count > 1)
+                Affairs.SetSelected(affairIndex + 1, true);
+            else if (Affairs.Items.Count > 1)
+                Affairs.SetSelected(affairIndex - 1, true);
 
             Affairs.Items.RemoveAt(affairIndex);
 
@@ -366,9 +361,9 @@ namespace AffairList
         }
         private async void RenameAffairButton_Click(object sender, EventArgs e)
         {
-            await RenameAffair();
+            await RenameAffairAsync();
         }
-        private async Task RenameAffair()
+        private async Task RenameAffairAsync()
         {
             if (Affairs.SelectedIndex == -1)
             {
@@ -394,7 +389,7 @@ namespace AffairList
             if (ContainKeyWords(renaming)) return;
             if (string.IsNullOrEmpty(renaming)) return;
 
-            renaming = CapitalizeAffair(renaming);
+            renaming = CapitalizeAffair(renaming).Trim();
 
             selectedWord = selectedWord.Replace(affair, renaming);
 
