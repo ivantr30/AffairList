@@ -33,7 +33,7 @@ namespace AffairList
             else
             {
                 autostartStateLab.Text = "OFF";
-                autostartStateLab.Left = _globalTogglerX - 14;
+                autostartStateLab.Left = _globalTogglerX - 8;
             }
             if (_settings.DoesAskToDelete())
             {
@@ -43,7 +43,7 @@ namespace AffairList
             else
             {
                 AskToDeleteState.Text = "OFF";
-                AskToDeleteState.Left = _globalTogglerX - 14;
+                AskToDeleteState.Left = _globalTogglerX - 8;
             }
             if (_settings.DoesNotificate())
             {
@@ -53,7 +53,7 @@ namespace AffairList
             else
             {
                 NotificationState.Text = "OFF";
-                NotificationState.Left = _globalTogglerX - 14;
+                NotificationState.Left = _globalTogglerX - 8;
             }
             if (_settings.CanBeAlwaysReplaced())
             {
@@ -63,7 +63,7 @@ namespace AffairList
             else
             {
                 CanBeAlwaysReplacable.Text = "OFF";
-                CanBeAlwaysReplacable.Left = _globalTogglerX - 14;
+                CanBeAlwaysReplacable.Left = _globalTogglerX - 8;
             }
             HourDistanceToNotificate.Text = _settings.GetNotificationHourDistance().ToString();
             DistanceToNotificate.Text = _settings.GetNotificationDayDistance().ToString();
@@ -162,7 +162,7 @@ namespace AffairList
         {
             _newSettings.SetAutostart(_newSettings.DoesAutostart() ? false : true, false);
             autostartStateLab.Text = _newSettings.DoesAutostart() ? "On" : "OFF";
-            autostartStateLab.Left = _newSettings.DoesAutostart() ? _globalTogglerX : _globalTogglerX - 14;
+            autostartStateLab.Left = _newSettings.DoesAutostart() ? _globalTogglerX : _globalTogglerX - 8;
         }
 
         private void autostartStateLab_MouseLeave(object sender, EventArgs e)
@@ -258,7 +258,7 @@ namespace AffairList
         {
             _newSettings.SetAskToDelete(_newSettings.DoesAskToDelete() ? false : true);
             AskToDeleteState.Text = _newSettings.DoesAskToDelete() ? "On" : "OFF";
-            AskToDeleteState.Left = _newSettings.DoesAskToDelete() ? _globalTogglerX : _globalTogglerX - 14;
+            AskToDeleteState.Left = _newSettings.DoesAskToDelete() ? _globalTogglerX : _globalTogglerX - 8;
         }
         private void AskToDeleteState_MouseLeave(object sender, EventArgs e)
         {
@@ -287,7 +287,7 @@ namespace AffairList
         {
             _newSettings.SetDoesNotificate(_newSettings.DoesNotificate() ? false : true);
             NotificationState.Text = _newSettings.DoesNotificate() ? "On" : "OFF";
-            NotificationState.Left = _newSettings.DoesNotificate() ? _globalTogglerX : _globalTogglerX - 14;
+            NotificationState.Left = _newSettings.DoesNotificate() ? _globalTogglerX : _globalTogglerX - 8;
         }
 
         private void NotificationState_MouseEnter(object sender, EventArgs e)
@@ -420,7 +420,7 @@ namespace AffairList
         {
             _newSettings.SetCanBeAlwaysReplaced(_newSettings.CanBeAlwaysReplaced() ? false : true);
             CanBeAlwaysReplacable.Text = _newSettings.CanBeAlwaysReplaced() ? "On" : "OFF";
-            CanBeAlwaysReplacable.Left = _newSettings.CanBeAlwaysReplaced() ? _globalTogglerX : _globalTogglerX - 14;
+            CanBeAlwaysReplacable.Left = _newSettings.CanBeAlwaysReplaced() ? _globalTogglerX : _globalTogglerX - 8;
         }
         private void CanBeAlwaysReplacable_MouseEnter(object sender, EventArgs e)
         {
