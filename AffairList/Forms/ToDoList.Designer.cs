@@ -59,11 +59,13 @@
             MinimizeBox = false;
             Name = "ToDoList";
             Text = "List";
+            TopMost = true;
             TransparencyKey = Color.Black;
             FormClosing += ToDoList_FormClosing;
             MouseDown += List_MouseDown;
             MouseMove += List_MouseMove;
             MouseUp += List_MouseUp;
+            Resize += ToDoList_Resize;
             ResumeLayout(false);
             PerformLayout();
         }

@@ -32,6 +32,7 @@ namespace AffairList
             if (!_settings.ListsDirectoryExists()) _settings.CreateListsDirectory();
 
             Profiles.Items.Clear();
+            
             _profileLines = Directory.GetFiles(Settings.listsDirectoryFullPath)
                     .OrderByDescending(x => x.EndsWith(_priorityWord)).ToList();
 

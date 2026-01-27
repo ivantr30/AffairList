@@ -1,9 +1,7 @@
-﻿using AffairList.Classes.Commands.AffairsManagerCommands;
-using AffairList.Classes.Factories;
+﻿using AffairList.Classes.Factories;
 using AffairList.Enums;
 using AffairList.Interfaces;
 using Microsoft.VisualBasic;
-using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace AffairList
 {
@@ -66,22 +64,10 @@ namespace AffairList
             if (_settings.CurrentListNotNull())
             {
                 _lines = (await File.ReadAllLinesAsync(_settings.GetCurrentProfile()))
-                    .OrderByDescending(x => x.EndsWith(_priorityTag)).AsParallel().ToList();
-                string currentLine;
-                foreach (string line in _lines)
+                    .OrderByDescending(x => x.EndsWith(_priorityTag)).ToList();
+                for (int i = 0; i < _lines.Count; i++)
                 {
-                    currentLine = line.Trim();
-                    if (currentLine.EndsWith(_priorityTag))
-                    {
-                        currentLine = currentLine
-                            .Remove(currentLine.Length - _priorityTag.Length);
-                        currentLine += _priorityWord;
-                    }
-                    if (currentLine.StartsWith(_deadlineTag))
-                    {
-                        currentLine = currentLine.Remove(0, _deadlineTag.Length);
-                    }
-                    Affairs.Items.Add(currentLine);
+                    Affairs.Items.Add(_lines[i].Replace(_priorityTag, _priorityWord).Replace(_deadlineTag, ""));
                 }
             }
             if (Affairs.Items.Count > 0)

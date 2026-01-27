@@ -63,25 +63,12 @@ namespace AffairList
             if (_settings.CurrentListNotNull())
             {
                 StringBuilder affairsShower = new StringBuilder();
-                string currentAffair = "";
-                await foreach (string affair in File.ReadLinesAsync(_settings.GetCurrentProfile()))
-                {
-                    currentAffair = affair;
-                    if (currentAffair.EndsWith(_priorityTag))
-                    {
-                        currentAffair = currentAffair.Replace($"{_priorityTag}", $"{_priorityWord}.");
-                    }
-                    else
-                    {
-                        currentAffair += '.';
-                    }
-                    if (currentAffair.StartsWith(_deadlineTag))
-                    {
-                        currentAffair = currentAffair.Remove(0, _deadlineTag.Length);
-                    }
-                    affairsShower.AppendLine(currentAffair);
-                }
-                Affairs.Text += affairsShower.ToString() + "Это весь список ваших дел";
+                affairsShower.AppendJoin('\n', await File.ReadAllLinesAsync(_settings.GetCurrentProfile()));
+                affairsShower.Replace(_priorityTag, _priorityWord);
+                affairsShower.Replace(_deadlineTag, "");
+                affairsShower.Replace("\n", ".\n");
+                Affairs.Text += affairsShower.ToString() + "\nЭто весь список ваших дел";
+                affairsShower.Clear();
             }
             else
             {
@@ -145,13 +132,13 @@ namespace AffairList
         }
         private void SpecifyAffairsLocation()
         {
-            if(Affairs.Left + Affairs.Width - 310 >= _settings.screenWidth)
+            if (Affairs.Left + Affairs.Width - 310 >= _settings.screenWidth)
             {
-                Affairs.Left = _settings.screenWidth - Affairs.Width - Affairs.Width/4 + 315;
+                Affairs.Left = _settings.screenWidth - Affairs.Width - Affairs.Width / 4 + 315;
             }
             if (Affairs.Top + Affairs.Height >= _settings.screenHeight)
             {
-                Affairs.Top = _settings.screenHeight - Affairs.Height*5 - Affairs.Height/2;
+                Affairs.Top = _settings.screenHeight - Affairs.Height * 5 - Affairs.Height / 2;
             }
             _settings.SetProfileX(Left + Affairs.Left);
             _settings.SetProfileY(Top + Affairs.Top);
@@ -204,6 +191,11 @@ namespace AffairList
         {
             Affairs.Left = Affairs.Left;
             Affairs.Top = Affairs.Top;
+        }
+
+        private void ToDoList_Resize(object sender, EventArgs e)
+        {
+            WindowState = FormWindowState.Normal;
         }
     }
 }
