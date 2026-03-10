@@ -1,9 +1,8 @@
-﻿namespace AffairList
+﻿namespace AffairList;
+
+public interface IKeyPreviewable
 {
-    public interface IKeyPreviewable
-    {
-        KeyEventHandler KeyDownHandlers { get; }
-        KeyPressEventHandler KeyPressHandlers { get; }
-        KeyEventHandler KeyUpHandlers { get; }
-    }
+    KeyEventHandler KeyDownHandlers { get; }
+    KeyPressEventHandler KeyPressHandlers { get; }
+    KeyEventHandler KeyUpHandlers { get; }
 }

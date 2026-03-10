@@ -1,8 +1,10 @@
-﻿namespace AffairList
+﻿using AffairList.Infrastructure.Settings;
+
+namespace AffairList
 {
     public partial class ProfilesExportPicker : Form
     {
-        private Settings _settings;
+        private readonly Settings _settings;
         public ProfilesExportPicker(List<string> profiles, Settings settings)
         {
             InitializeComponent();
@@ -78,7 +80,6 @@
                         MessageBox.Show("Error, the acces denied");
                     }
                 }
-
             }
             MessageBox.Show("Success");
             Close();

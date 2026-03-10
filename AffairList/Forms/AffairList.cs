@@ -1,195 +1,199 @@
-﻿namespace AffairList
+﻿using System.ComponentModel;
+
+using AffairList.Infrastructure.Classes;
+using AffairList.Infrastructure.Settings;
+
+namespace AffairList;
+
+public partial class AffairList : Form, IParentable
 {
-    public partial class AffairList : Form, IParentable
+    private LoadTimeManager _loadTimeManager = null!;
+    private Settings _settings = null!;
+    private TrayIconManager _trayIconManager = null!;
+
+    private Form _childForm = null!;
+    private MainMenu _mainMenu = null!;
+
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public Point LastPoint { get; set; }
+
+    public AffairList()
     {
-        private LoadTimeManager _loadTimeManager = null!;
-        private Settings _settings = null!;
-        private TrayIconManager _trayIconManager = null!;
+        InitializeComponent();
+        Initialize();
+    }
 
-        private Form _childForm;
-        private MainMenu _mainMenu = null!;
+    private void Initialize()
+    {
+        _trayIconManager = new TrayIconManager();
+        _trayIconManager.AddTrayMenuAction("Open", OnOpen!);
+        _trayIconManager.AddTrayMenuAction("Close", OnExit!);
 
-        public Point LastPoint { get; set; }
+        _settings = new Settings();
+        _loadTimeManager = new LoadTimeManager(_settings, _trayIconManager.TrayIcon);
 
-        public AffairList()
+        _mainMenu = new MainMenu(_settings, _loadTimeManager, this);
+        SetControl(_mainMenu);
+    }
+
+    private void AffairList_Load(object sender, EventArgs e)
+        => TopMost = true;
+
+    private void AffairList_Shown(object sender, EventArgs e)
+        => TopMost = false;
+
+    private void OnOpen(object sender, EventArgs e)
+    {
+        if (_childForm != null)
         {
-            InitializeComponent();
-            Initialize();
+            _childForm.Show();
+            return;
         }
-        private void Initialize()
-        {
-            _trayIconManager = new TrayIconManager();
-            _trayIconManager.AddTrayMenuAction("Open", OnOpen!);
-            _trayIconManager.AddTrayMenuAction("Close", OnExit!);
+        TopMost = true;
+        ShowInTaskbar = true;
+        Show();
+    }
 
-            _settings = new Settings();
-            _loadTimeManager = new LoadTimeManager(_settings, _trayIconManager.TrayIcon);
+    private void OnExit(object sender, EventArgs e) => Exit();
 
-            _mainMenu = new MainMenu(_settings, _loadTimeManager, this);
+    public void Exit()
+        => Application.Exit();
+    
+    private void DisposeObjects()
+    {
+        _trayIconManager.Dispose();
+        _childForm?.Dispose();
+    }
+    
+    public void Return()
+    {
+        if (Controls[0] != _mainMenu)
             SetControl(_mainMenu);
-        }
-        private void AffairList_Load(object sender, EventArgs e)
+    }
+    
+    public void MinimizeForm() => WindowState = FormWindowState.Minimized;
+    
+    public void SetControl(Control control)
+    {
+        if (!OnControlRemove(false)) return;
+        if (Controls.Count > 0)
         {
-            TopMost = true;
+            if (Controls[0] is IKeyPreviewable ckp)
+            {
+                KeyDown -= ckp.KeyDownHandlers;
+                KeyPress -= ckp.KeyPressHandlers;
+                KeyUp -= ckp.KeyUpHandlers;
+            }
         }
-        private void AffairList_Shown(object sender, EventArgs e)
+        if (control is IKeyPreviewable kp)
         {
-            TopMost = false;
+            KeyDown += kp.KeyDownHandlers;
+            KeyPress += kp.KeyPressHandlers;
+            KeyUp += kp.KeyUpHandlers;
         }
-        private void OnOpen(object sender, EventArgs e)
+        Width = control.Width;
+        Height = control.Height;
+        Controls.Clear();
+        Controls.Add(control);
+        if (control is IChildable childControl)
         {
-            if (_childForm != null)
+            childControl.OnAddition();
+        }
+        Focus();
+    }
+
+    public void OpenForm(Form form, bool asDialog)
+    {
+        if (!OnControlRemove(false)) return;
+        Hide();
+        _childForm = form;
+        if (asDialog)
+        {
+            try
+            {
+                _childForm.ShowDialog();
+            }
+            catch (ObjectDisposedException) { }
+            finally
+            {
+                AfterFormClosed();
+            }
+        }
+        else
+        {
+            try
             {
                 _childForm.Show();
-                return;
-            } 
-            TopMost = true;
-            ShowInTaskbar = true;
-            Show();
+                _childForm.FormClosed += AfterFormClosed;
+            }
+            catch (ObjectDisposedException) { AfterFormClosed(); }
         }
+    }
 
-        private void OnExit(object sender, EventArgs e) => Exit();
+    private bool OnControlRemove(bool closing)
+    {
+        if (Controls.Count > 0)
+        {
+            if (Controls[0] is IChildable child)
+            {
+                return child.OnRemoving(closing);
+            }
+        }
+        return true;
+    }
 
-        public void Exit()
+    private void AfterFormClosed(object? sender, FormClosedEventArgs e)
+        => AfterFormClosed();
+
+    private void AfterFormClosed()
+    {
+        _childForm.FormClosed -= AfterFormClosed;
+        _childForm?.Dispose();
+        _childForm = null!;
+        TopMost = true;
+        Show();
+        if (Controls[0] == _mainMenu)
+            _mainMenu.OnAddition();
+        TopMost = false;
+    }
+
+    public void SetLastPoint(MouseEventArgs e) => LastPoint = new Point(e.X, e.Y);
+
+    public void MoveForm(MouseEventArgs e)
+    {
+        if (e.Button == MouseButtons.Left)
         {
-            Application.Exit();
+            Left += e.X - LastPoint.X;
+            Top += e.Y - LastPoint.Y;
         }
-        private void DisposeObjects()
+    }
+
+    public void MoveChildForm(MouseEventArgs e)
+    {
+        if (e.Button == MouseButtons.Left)
         {
-            _trayIconManager.Dispose();
-            _childForm?.Dispose();
+            _childForm.Left += e.X - LastPoint.X;
+            _childForm.Top += e.Y - LastPoint.Y;
         }
-        public void Return()
+    }
+
+    private void AffairList_FormClosing(object sender, FormClosingEventArgs e)
+    {
+        if (!OnControlRemove(true))
         {
-            if (Controls[0] != _mainMenu)
-            {
-                SetControl(_mainMenu);
-            }
-        }
-        public void MinimizeForm() => WindowState = FormWindowState.Minimized;
-        public void SetControl(Control control)
-        {
-            if (!OnControlRemove(false)) return;
-            if (Controls.Count > 0)
-            {
-                if (Controls[0] is IKeyPreviewable ckp)
-                {
-                    KeyDown -= ckp.KeyDownHandlers;
-                    KeyPress -= ckp.KeyPressHandlers;
-                    KeyUp -= ckp.KeyUpHandlers;
-                }
-            }
-            if (control is IKeyPreviewable kp)
-            {
-                KeyDown += kp.KeyDownHandlers;
-                KeyPress += kp.KeyPressHandlers;
-                KeyUp += kp.KeyUpHandlers;
-            }
-            Width = control.Width;
-            Height = control.Height;
-            Controls.Clear();
-            Controls.Add(control);
-            if(control is IChildable childControl)
-            {
-                childControl.OnAddition();
-            }
-            Focus();
-        }
-        public void OpenForm(Form form, bool asDialog)
-        {
-            if (!OnControlRemove(false)) return;
-            Hide();
-            _childForm = form;
-            if (asDialog)
-            {
-                try
-                {
-                    _childForm.ShowDialog();
-                }
-                catch (ObjectDisposedException) { }
-                finally
-                {
-                    AfterFormClosed();
-                }
-            }
-            else
-            {
-                try
-                {
-                    _childForm.Show();
-                    _childForm.FormClosed += AfterFormClosed;
-                }
-                catch (ObjectDisposedException) { AfterFormClosed(); }
-            }
-        }
-        private bool OnControlRemove(bool closing)
-        {
-            if (Controls.Count > 0)
-            {
-                if (Controls[0] is IChildable child)
-                {
-                    return child.OnRemoving(closing);
-                }
-            }
-            return true;
-        }
-        private void AfterFormClosed(object? sender, FormClosedEventArgs e)
-        {
-            AfterFormClosed();
-        }
-        private void AfterFormClosed()
-        {
-            _childForm.FormClosed -= AfterFormClosed;
-            _childForm?.Dispose();
-            _childForm = null;
+            e.Cancel = true;
             TopMost = true;
-            Show();
-            if (Controls[0] == _mainMenu)
-            {
-                _mainMenu.OnAddition();
-            }
             TopMost = false;
+            return;
         }
-        public void SetLastPoint(MouseEventArgs e) => LastPoint = new Point(e.X, e.Y);
-        public void MoveForm(MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                Left += e.X - LastPoint.X;
-                Top += e.Y - LastPoint.Y;
-            }
-        }
-        public void MoveChildForm(MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                _childForm.Left += e.X - LastPoint.X;
-                _childForm.Top += e.Y - LastPoint.Y;
-            }
-        }
+        DisposeObjects();
+    }
 
-        private void AffairList_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            if (!OnControlRemove(true))
-            {
-                e.Cancel = true;
-                TopMost = true;
-                TopMost = false;
-                return;
-            }
-            DisposeObjects();
-        }
-
-        private async void AffairList_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == _settings.GetCloseKey())
-            {
-                Exit();
-            }
-            if (e.KeyCode == _settings.GetReturnKey())
-            {
-                Return();
-            }
-        }
+    private async void AffairList_KeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.KeyCode == _settings.GetCloseKey())
+            Exit();
+        if (e.KeyCode == _settings.GetReturnKey())
+            Return();
     }
 }

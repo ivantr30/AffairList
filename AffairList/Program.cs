@@ -1,47 +1,21 @@
-using Microsoft.Win32;
+namespace AffairList;
 
-namespace AffairList
+internal static class Program
 {
-    internal static class Program
+    [STAThread]
+    private static void Main(string[] args)
     {
-        [STAThread]
-        static void Main(string[] args)
-        {
-            ApplicationConfiguration.Initialize();
-            if (args.Contains("--autostart"))
-            {
-                SystemEvents.SessionSwitch += SystemEvents_SessionSwitch;
-            }
-            else
-            {
-                using Mutex mutex = new Mutex(true, name: "AffairList", out bool createdNew);
-                if (createdNew)
-                {
-                    Application.Run(new AffairList());
-                }
-                else
-                {
-                    MessageBox.Show("The program(AffairList) has been already started!" +
-                        "\nif you dont see it check tray or try to press close or back buttons", "Error",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
+        ApplicationConfiguration.Initialize();
 
-        private static void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
+        using Mutex mutex = new Mutex(true, name: "AffairList", out bool createdNew);
+        if (createdNew)
         {
-            using Mutex mutex = new Mutex(true, name: "AffairList", out bool createdNew);
-            if (createdNew)
-            {
-                Application.Run(new AffairList());
-            }
-            else
-            {
-                MessageBox.Show("The program(AffairList) has been already started!" +
-                    "\nif you dont see it check tray or try to press close or back buttons", "Error",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            SystemEvents.SessionSwitch -= SystemEvents_SessionSwitch;
+            Application.Run(new AffairList());
+        }
+        else
+        {
+            if (!args.Contains("--autostart"))
+                MessageBox.Show("The program (AffairList) has been already started!\nIf you dont see it check tray or try to press close or back buttons", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

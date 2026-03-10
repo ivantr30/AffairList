@@ -1,20 +1,28 @@
-﻿using Gma.System.MouseKeyHook;
-using Microsoft.Win32;
+﻿using System.ComponentModel;
 using System.Text;
+
+using AffairList.Infrastructure.Settings;
+
+using Gma.System.MouseKeyHook;
+
+using Microsoft.Win32;
 
 namespace AffairList
 {
     public partial class ToDoList : Form
     {
-        private IKeyboardMouseEvents _globalHook;
+        private IKeyboardMouseEvents _globalHook = null!;
 
-        public bool canReplace { get; set; }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public bool CanReplace { get; set; }
 
-        private string _priorityTag = "<priority>";
-        private string _priorityWord = " Priority";
-        private string _deadlineTag = "<deadline>";
+        private const string _priorityTag = "<priority>";
+        private const string _priorityWord = " Priority";
+        private const string _deadlineTag = "<deadline>";
+
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public IParentable ParentElement { get; set; }
-        private Settings _settings;
+        private readonly Settings _settings;
 
         public ToDoList(Settings settings, IParentable parent)
         {
@@ -28,6 +36,7 @@ namespace AffairList
             Task.WhenAll(settingLocation, loadingText);
             SpecifyAffairsLocation();
         }
+
         private async Task SetLocationAsync()
         {
             TopMost = true;
@@ -50,12 +59,14 @@ namespace AffairList
             TransparencyKey = _settings.GetBgColor();
             SystemEvents.PowerModeChanged += OnPowerModeChanged;
         }
+
         private async Task LoadSettingsAsync()
         {
-            if (!_settings.SettingsFileExists()) await _settings.CreateSettingsFileAsync();
+            if (!Settings.SettingsFileExists()) await _settings.CreateSettingsFileAsync();
             Affairs.Left = _settings.GetProfileX();
             Affairs.Top = _settings.GetProfileY();
         }
+
         private async Task LoadTextAsync()
         {
 
@@ -78,116 +89,98 @@ namespace AffairList
                 return;
             }
         }
-        /// <summary>
-        /// Если экран был выключен и включен, а список был в углу, этот метод восстанавливает 
-        /// исходное положение списка
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+
         private void OnPowerModeChanged(object sender, PowerModeChangedEventArgs e)
         {
             if (e.Mode == PowerModes.Resume)
-            {
                 UpdateLocation();
-            }
         }
+
         private void SubscribeGlobalHook()
         {
             _globalHook = Hook.GlobalEvents();
             _globalHook.KeyDown += GlobalHook_KeyDown!;
         }
+
         private void GlobalHook_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == _settings.GetCloseKey())
-            {
                 ParentElement.Exit();
-            }
             if (e.KeyCode == _settings.GetReturnKey())
-            {
                 Close();
-            }
         }
 
         private void Affairs_MouseDown(object sender, MouseEventArgs e) => OnListMouseDown(e);
         private void Affairs_MouseMove(object sender, MouseEventArgs e) => OnListMouseMove(e);
-        private async void Affairs_MouseUp(object sender, MouseEventArgs e)
-            => await OnListMouseUpAsync(e);
+        private async void Affairs_MouseUp(object sender, MouseEventArgs e) => await OnListMouseUpAsync(e);
         private void List_MouseDown(object sender, MouseEventArgs e) => OnListMouseDown(e);
         private void List_MouseMove(object sender, MouseEventArgs e) => OnListMouseMove(e);
 
-        private async void List_MouseUp(object sender, MouseEventArgs e)
-            => await OnListMouseUpAsync(e);
+        private async void List_MouseUp(object sender, MouseEventArgs e) => await OnListMouseUpAsync(e);
+
         private void OnListMouseDown(MouseEventArgs e)
         {
-            if (canReplace || _settings.CanBeAlwaysReplaced()) ParentElement.SetLastPoint(e);
+            if (CanReplace || _settings.GetCanBeAlwaysReplaced()) ParentElement.SetLastPoint(e);
         }
+
         private void OnListMouseMove(MouseEventArgs e)
         {
-            if ((canReplace || _settings.CanBeAlwaysReplaced()) && e.Button == MouseButtons.Left)
+            if ((CanReplace || _settings.GetCanBeAlwaysReplaced()) && e.Button == MouseButtons.Left)
             {
                 ParentElement.MoveChildForm(e);
-
                 SpecifyListLocation();
                 TopMost = true;
             }
         }
+
         private void SpecifyAffairsLocation()
         {
             if (Affairs.Left + Affairs.Width - 310 >= _settings.screenWidth)
-            {
                 Affairs.Left = _settings.screenWidth - Affairs.Width - Affairs.Width / 4 + 315;
-            }
             if (Affairs.Top + Affairs.Height >= _settings.screenHeight)
-            {
                 Affairs.Top = _settings.screenHeight - Affairs.Height * 5 - Affairs.Height / 2;
-            }
+
             _settings.SetProfileX(Left + Affairs.Left);
             _settings.SetProfileY(Top + Affairs.Top);
-            _settings.SaveSettings();
+            _settings.SaveSettingsAsync().Wait();
         }
+
         private void SpecifyListLocation()
         {
             if (Left + Affairs.Left + 310 >= _settings.screenWidth)
-            {
                 Left = _settings.screenWidth - 310 - Affairs.Left;
-            }
             else if (Affairs.Left + Left <= 0)
-            {
                 Left = -Affairs.Left;
-            }
+
             if (Top + Affairs.Top + Affairs.Height - 40 >= _settings.screenHeight)
-            {
                 Top = _settings.screenHeight - Affairs.Top - Affairs.Height + 40;
-            }
             else if (Affairs.Top + Top <= 0)
-            {
                 Top = -Affairs.Top;
-            }
         }
+
         private async Task OnListMouseUpAsync(MouseEventArgs e)
         {
             _settings.SetProfileX(Left + Affairs.Left);
             _settings.SetProfileY(Top + Affairs.Top);
             await _settings.SaveSettingsAsync();
             TopMost = true;
-            if (canReplace)
+            if (CanReplace)
             {
                 Close();
-                canReplace = false;
+                CanReplace = false;
                 return;
             }
         }
-        public Label GetAffairs()
-        {
-            return Affairs;
-        }
+
+        public Label GetAffairs() => Affairs;
 
         private void ToDoList_FormClosing(object sender, FormClosingEventArgs e)
         {
             Affairs.BackColor = _settings.GetBgColor();
-            canReplace = false;
+            CanReplace = false;
             SystemEvents.PowerModeChanged -= OnPowerModeChanged;
         }
+
         private void UpdateLocation()
         {
             Affairs.Left = Affairs.Left;
@@ -195,8 +188,6 @@ namespace AffairList
         }
 
         private void ToDoList_Resize(object sender, EventArgs e)
-        {
-            WindowState = FormWindowState.Normal;
-        }
+            => WindowState = FormWindowState.Normal;
     }
 }

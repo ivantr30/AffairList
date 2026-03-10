@@ -1,9 +1,8 @@
-﻿namespace AffairList
+﻿namespace AffairList;
+
+public interface IChildable
 {
-    public interface IChildable
-    {
-        IParentable ParentElement { get; }
-        void OnAddition();
-        bool OnRemoving(bool closing = false);
-    }
+    IParentable ParentElement { get; }
+    void OnAddition();
+    bool OnRemoving(bool closing = false);
 }
