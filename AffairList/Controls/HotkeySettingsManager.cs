@@ -25,10 +25,10 @@ public partial class HotKeySettingsManager : UserControl, IChildable
 
     private void LoadSettings()
     {
-        _сloseKey = _settings.GetCloseKey();
-        _returnKey = _settings.GetReturnKey();
-        CloseKeyType.Text = _settings.GetCloseKey().ToString();
-        BackKeyType.Text = _settings.GetReturnKey().ToString();
+        _сloseKey = (Keys)_settings.GetCloseKeyId();
+        _returnKey = (Keys)_settings.GetReturnKeyId();
+        CloseKeyType.Text = ((Keys)_settings.GetCloseKeyId()).ToString();
+        BackKeyType.Text = ((Keys)_settings.GetReturnKeyId()).ToString();
     }
 
     private void BackButton_Click(object sender, EventArgs e)
@@ -54,8 +54,8 @@ public partial class HotKeySettingsManager : UserControl, IChildable
             MessageBoxButtons.YesNo);
         if (resetOrNot == DialogResult.No) return;
 
-        _settings.SetCloseKey(Keys.F7);
-        _settings.SetReturnKey(Keys.F6);
+        _settings.SetCloseKeyId((int)Keys.F7);
+        _settings.SetReturnKeyId((int)Keys.F6);
         await _settings.SaveSettingsAsync();
 
         CloseKeyType.Text = "F7";
@@ -101,10 +101,10 @@ public partial class HotKeySettingsManager : UserControl, IChildable
         => key == Keys.Escape;
 
     private void SetCloseKey()
-        => _settings.SetCloseKey(_сloseKey);
+        => _settings.SetCloseKeyId((int)_сloseKey);
 
     private void SetReturnKey()
-        => _settings.SetReturnKey(_returnKey);
+        => _settings.SetReturnKeyId((int)_returnKey);
 
     private void BackKeyType_DoubleClick(object sender, EventArgs e)
     {

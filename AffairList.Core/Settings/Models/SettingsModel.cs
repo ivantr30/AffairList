@@ -4,11 +4,11 @@ public class SettingsModel
 {
     public string CurrentListFileFullPath { get; set; } = "";
 
-    public Color TextColor { get; set; } = Color.MediumSpringGreen;
-    public Color BgColor { get; set; } = Color.Black;
+    public string TextColorHex { get; set; } = "#00FA9A"; // MediumSpringGreen
+    public string BgColorHex { get; set; } = "#000000"; // Black
 
-    public Keys CloseKey { get; set; } = Keys.F7;
-    public Keys ReturnKey { get; set; } = Keys.F6;
+    public int CloseKeyId { get; set; } = 118; // F7
+    public int ReturnKeyId { get; set; } = 117; // F6
 
     public bool AutostartState { get; set; } = false;
     public bool AskToDelete { get; set; } = true;
@@ -20,5 +20,4 @@ public class SettingsModel
 
     public uint NotificationDayDistance { get; set; } = 1;
     public uint NotificationHourDistance { get; set; } = 8;
-
 }

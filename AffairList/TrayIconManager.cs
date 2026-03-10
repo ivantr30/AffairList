@@ -1,4 +1,4 @@
-﻿namespace AffairList.Infrastructure.Classes;
+﻿namespace AffairList;
 
 public class TrayIconManager
 {

@@ -1,6 +1,7 @@
 ﻿using System.Text.Json;
 
 using AffairList.Core;
+using AffairList.Core.Interfaces;
 using AffairList.Core.Settings.Models;
 
 namespace AffairList.Infrastructure.Settings;
@@ -19,20 +20,19 @@ public class LoadTimeManager
 
     private FileLogger _fileLogger = null!;
 
-    private NotifyIcon _notification = null!;
+    private INotificationService _notificationService = null!;
 
-    public LoadTimeManager(Settings settings, NotifyIcon notification)
+    public LoadTimeManager(Settings settings)
     {
         _settings = settings;
         LoadTimeFileFullPath = $@"{Settings.programDirectoryFolderFullPath}\loadtime.json";
-        Initialize(notification);
     }
 
-    public void Initialize(NotifyIcon notification)
+    public void Initialize(INotificationService notificationService)
     {
         _fileLogger = new FileLogger(Settings.logFileFullPath);
 
-        _notification = notification;
+        _notificationService = notificationService;
 
         if (!LoadTimeFileExist())
         {
@@ -57,7 +57,7 @@ public class LoadTimeManager
 
         _fileLogger.LogInformation($"{DateTime.Now} Starting notificating");
 
-        Dictionary<string, ToolTipIcon> notifications = [];
+        Dictionary<string, bool> notifications = [];
 
         SaveTimeAsync().Wait();
 
@@ -77,30 +77,23 @@ public class LoadTimeManager
 
                 if (daysLeft == 0)
                 {
-                    TimeSpan day = new TimeSpan(24, 0, 0);
-                    TimeSpan now = new TimeSpan(
-                        DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
-                    notifications.Add(
-                        AffairWithoutTags(affairs[j]) + $" - осталось {day - now}",
-                        ToolTipIcon.Info);
+                    TimeSpan day = TimeSpan.FromHours(24);
+                    TimeSpan now = TimeSpan.FromTicks(DateTime.Now.Ticks);
+                    notifications.Add(AffairWithoutTags(affairs[j]) + $" - осталось {day - now}", false);
                 }
                 else if (daysLeft > 0)
                 {
-                    notifications.Add(
-                        AffairWithoutTags(affairs[j]) + $" - осталось {daysLeft} дней",
-                        ToolTipIcon.Info);
+                    notifications.Add(AffairWithoutTags(affairs[j]) + $" - осталось {daysLeft} дней", false);
                 }
                 else
                 {
-                    notifications.Add(
-                        AffairWithoutTags(affairs[j]) + " - просрочено",
-                        ToolTipIcon.Warning);
+                    notifications.Add( AffairWithoutTags(affairs[j]) + " - просрочено", true);
                 }
             }
         }
 
-        foreach (KeyValuePair<string, ToolTipIcon> notification in notifications)
-            _notification.ShowBalloonTip(3000, "AffairList", notification.Key, notification.Value);
+        foreach (KeyValuePair<string, bool> notification in notifications)
+            _notificationService.ShowNotification("AffairList", notification.Key, notification.Value == notification.Value);
 
         _fileLogger.LogInformation($"{DateTime.Now} notified");
     }

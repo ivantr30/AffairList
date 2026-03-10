@@ -18,9 +18,6 @@ public class Settings
     public static readonly string settingsFileFullPath;
     public static readonly string logFileFullPath;
 
-    public readonly int screenWidth;
-    public readonly int screenHeight;
-
     private SettingsModel _settings = null!;
 
     private readonly FileLogger _fileLogger = null!;
@@ -29,8 +26,6 @@ public class Settings
     {
         if (initialize)
         {
-            screenWidth = Screen.PrimaryScreen!.WorkingArea.Width;
-            screenHeight = Screen.PrimaryScreen.WorkingArea.Height;
             _fileLogger = new FileLogger(logFileFullPath);
             _ = Initialize();
         }
@@ -110,8 +105,8 @@ public class Settings
         IWshShortcut shortcut = (IWshShortcut)shell.CreateShortcut(shortcutPath);
 
         shortcut.Description = "AffairList";
-        shortcut.TargetPath = Application.ExecutablePath;
-        shortcut.WorkingDirectory = Application.StartupPath;
+        shortcut.TargetPath = Environment.ProcessPath;
+        shortcut.WorkingDirectory = AppDomain.CurrentDomain.BaseDirectory;
         shortcut.Arguments = "--autostart";
 
         shortcut.Save();
@@ -127,7 +122,7 @@ public class Settings
     private static string GetAutostartShortcut()
     {
         string startupFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
-        return Path.Combine(startupFolderPath, Application.ProductName + ".lnk");
+        return Path.Combine(startupFolderPath, "AffairList.lnk");
     }
 
     public static bool ProgramDirectoryExists()
@@ -203,18 +198,18 @@ public class Settings
     
     public void SetAskToDelete(bool askToDelete) => _settings.AskToDelete = askToDelete;
     public bool GetAskToDelete() => _settings.AskToDelete;
-    
-    public void SetCloseKey(Keys key) => _settings.CloseKey = key;
-    public Keys GetCloseKey() => _settings.CloseKey;
-    
-    public void SetReturnKey(Keys key) => _settings.ReturnKey = key;
-    public Keys GetReturnKey() => _settings.ReturnKey;
 
-    public void SetTextColor(Color color) => _settings.TextColor = color;
-    public Color GetTextColor() => _settings.TextColor;
-    
-    public void SetBgColor(Color color) => _settings.BgColor = color;
-    public Color GetBgColor() => _settings.BgColor;
+    public void SetCloseKeyId(int keyId) => _settings.CloseKeyId = keyId;
+    public int GetCloseKeyId() => _settings.CloseKeyId;
+
+    public void SetReturnKeyId(int keyId) => _settings.ReturnKeyId = keyId;
+    public int GetReturnKeyId() => _settings.ReturnKeyId;
+
+    public void SetTextColorHex(string colorHex) => _settings.TextColorHex = colorHex;
+    public string GetTextColorHex() => _settings.TextColorHex;
+
+    public void SetBgColorHex(string colorHex) => _settings.BgColorHex = colorHex;
+    public string GetBgColorHex() => _settings.BgColorHex;
 
     public void SetProfileX(int x) => _settings.X = x;
     public int GetProfileX() => _settings.X;
@@ -249,11 +244,11 @@ public class Settings
         settingsCopy.SetNotificationHourDistance(GetNotificationHourDistance());
         settingsCopy.SetNotificationDayDistance(GetNotificationDayDistance());
         settingsCopy.SetDoesNotificate(DoesNotificate());
-        settingsCopy.SetCloseKey(GetCloseKey());
-        settingsCopy.SetReturnKey(GetReturnKey());
+        settingsCopy.SetCloseKeyId(GetCloseKeyId());
+        settingsCopy.SetReturnKeyId(GetReturnKeyId());
         settingsCopy.SetAskToDelete(GetAskToDelete());
-        settingsCopy.SetTextColor(GetTextColor());
-        settingsCopy.SetBgColor(GetBgColor());
+        settingsCopy.SetTextColorHex(GetTextColorHex());
+        settingsCopy.SetBgColorHex(GetBgColorHex());
         settingsCopy.SetCanBeAlwaysReplaced(GetCanBeAlwaysReplaced());
         settingsCopy.SetAutostart(GetAutostart(), false);
         settingsCopy.SetCurrentProfile(GetCurrentProfile());
@@ -266,11 +261,11 @@ public class Settings
         SetAskToDelete(newSettings.GetAskToDelete());
         SetAutostart(newSettings.GetAutostart());
         SetDoesNotificate(newSettings.DoesNotificate());
-        SetTextColor(newSettings.GetTextColor());
-        SetBgColor(newSettings.GetBgColor());
+        SetTextColorHex(newSettings.GetTextColorHex());
+        SetBgColorHex(newSettings.GetBgColorHex());
         SetCurrentProfile(newSettings.GetCurrentProfile());
-        SetCloseKey(newSettings.GetCloseKey());
-        SetReturnKey(newSettings.GetReturnKey());
+        SetCloseKeyId(newSettings.GetCloseKeyId());
+        SetReturnKeyId(newSettings.GetReturnKeyId());
         SetNotificationDayDistance(newSettings.GetNotificationDayDistance());
         SetNotificationHourDistance(newSettings.GetNotificationHourDistance());
         SetCanBeAlwaysReplaced(newSettings.GetCanBeAlwaysReplaced());
@@ -285,12 +280,12 @@ public class Settings
         if (GetNotificationDayDistance() != otherSettings.GetNotificationDayDistance()) return false;
         if (GetNotificationHourDistance() != otherSettings.GetNotificationHourDistance()) return false;
         if (GetCanBeAlwaysReplaced() != otherSettings.GetCanBeAlwaysReplaced()) return false;
-        if (GetBgColor() != otherSettings.GetBgColor()) return false;
-        if (GetTextColor() != otherSettings.GetTextColor()) return false;
-        if (GetCloseKey() != otherSettings.GetCloseKey()) return false;
+        if (GetBgColorHex() != otherSettings.GetBgColorHex()) return false;
+        if (GetTextColorHex() != otherSettings.GetTextColorHex()) return false;
+        if (GetCloseKeyId() != otherSettings.GetCloseKeyId()) return false;
         if (GetCurrentProfile() != otherSettings.GetCurrentProfile()) return false;
         if (DoesNotificate() != otherSettings.DoesNotificate()) return false;
-        if (GetReturnKey() != otherSettings.GetReturnKey()) return false;
+        if (GetReturnKeyId() != otherSettings.GetReturnKeyId()) return false;
         return true;
     }
 }

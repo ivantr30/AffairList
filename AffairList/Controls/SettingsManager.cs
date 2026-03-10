@@ -23,8 +23,8 @@ public partial class SettingsManager : UserControl, IChildable
     private void LoadSettings()
     {
         LocationLab.Text = _settings.GetProfileX() + ", " + _settings.GetProfileY();
-        ListTextColorLab.ForeColor = _settings.GetTextColor();
-        ListBgTextColorLab.ForeColor = _settings.GetBgColor();
+        ListTextColorLab.ForeColor = ColorTranslator.FromHtml(_settings.GetTextColorHex());
+        ListBgTextColorLab.ForeColor = ColorTranslator.FromHtml(_settings.GetBgColorHex());
         if (_settings.GetAutostart())
         {
             autostartStateLab.Text = "On";
@@ -161,28 +161,24 @@ public partial class SettingsManager : UserControl, IChildable
     }
 
     private void autostartStateLab_MouseLeave(object sender, EventArgs e)
-    {
-        autostartStateLab.ForeColor = Color.White;
-    }
+        => autostartStateLab.ForeColor = Color.White;
 
     private void autostartStateLab_MouseEnter(object sender, EventArgs e)
-    {
-        autostartStateLab.ForeColor = Color.Gray;
-    }
+        => autostartStateLab.ForeColor = Color.Gray;
 
     private void PickTextColorButton_Click(object sender, EventArgs e)
     {
         Color newColor = ListColorChanger();
         if (newColor == Color.Empty) return;
         ListTextColorLab.ForeColor = newColor;
-        _newSettings.SetTextColor(newColor);
+        _newSettings.SetTextColorHex(ColorTranslator.ToHtml(newColor));
     }
     private void PickBgColorButton_Click(object sender, EventArgs e)
     {
         Color newColor = ListColorChanger();
         if (newColor == Color.Empty) return;
         ListBgTextColorLab.ForeColor = newColor;
-        _newSettings.SetBgColor(newColor);
+        _newSettings.SetBgColorHex(ColorTranslator.ToHtml(newColor));
     }
     private Color ListColorChanger()
     {
@@ -200,10 +196,10 @@ public partial class SettingsManager : UserControl, IChildable
         try
         {
             newX = int.Parse(Interaction.InputBox(
-                $"Enter x coordinate, max width is {_settings.screenWidth}",
+                $"Enter x coordinate, max width is {Screen.PrimaryScreen!.Bounds.Width}",
                 "InputWindow", ""));
 
-            if (newX > _settings.screenWidth || newX < 0)
+            if (newX > Screen.PrimaryScreen!.Bounds.Width || newX < 0)
                 throw new ArgumentException();
 
             _newSettings.SetProfileX(newX);
@@ -221,10 +217,10 @@ public partial class SettingsManager : UserControl, IChildable
         try
         {
             newY = int.Parse(Interaction.InputBox(
-                $"Enter y coordinate max height is {_settings.screenHeight}",
+                $"Enter y coordinate max height is {Screen.PrimaryScreen!.Bounds.Height}",
                 "InputWindow", ""));
 
-            if (newY > _settings.screenHeight || newY < 0)
+            if (newY > Screen.PrimaryScreen!.Bounds.Height || newY < 0)
                 throw new ArgumentException();
 
             _newSettings.SetProfileY(newY);

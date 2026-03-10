@@ -43,8 +43,8 @@ namespace AffairList
 
             await LoadSettingsAsync();
 
-            Width = _settings.screenWidth;
-            Height = _settings.screenHeight + _settings.screenHeight / 10;
+            Width = Screen.PrimaryScreen!.Bounds.Width;
+            Height = Screen.PrimaryScreen!.Bounds.Height + Screen.PrimaryScreen!.Bounds.Height / 10;
 
             Affairs.AutoSize = false;
             Affairs.Size = new Size(500, Height);
@@ -53,10 +53,10 @@ namespace AffairList
             Affairs.Padding = new Padding(0, 0, 180, 0);
             Affairs.AutoSize = true;
 
-            Affairs.ForeColor = _settings.GetTextColor();
+            Affairs.ForeColor = ColorTranslator.FromHtml(_settings.GetTextColorHex());
 
-            BackColor = _settings.GetBgColor();
-            TransparencyKey = _settings.GetBgColor();
+            BackColor = ColorTranslator.FromHtml(_settings.GetBgColorHex());
+            TransparencyKey = ColorTranslator.FromHtml(_settings.GetBgColorHex());
             SystemEvents.PowerModeChanged += OnPowerModeChanged;
         }
 
@@ -104,9 +104,9 @@ namespace AffairList
 
         private void GlobalHook_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == _settings.GetCloseKey())
+            if (e.KeyCode == (Keys)_settings.GetCloseKeyId())
                 ParentElement.Exit();
-            if (e.KeyCode == _settings.GetReturnKey())
+            if (e.KeyCode == (Keys)_settings.GetReturnKeyId())
                 Close();
         }
 
@@ -135,10 +135,10 @@ namespace AffairList
 
         private void SpecifyAffairsLocation()
         {
-            if (Affairs.Left + Affairs.Width - 310 >= _settings.screenWidth)
-                Affairs.Left = _settings.screenWidth - Affairs.Width - Affairs.Width / 4 + 315;
-            if (Affairs.Top + Affairs.Height >= _settings.screenHeight)
-                Affairs.Top = _settings.screenHeight - Affairs.Height * 5 - Affairs.Height / 2;
+            if (Affairs.Left + Affairs.Width - 310 >= Screen.PrimaryScreen!.Bounds.Width)
+                Affairs.Left = Screen.PrimaryScreen!.Bounds.Width - Affairs.Width - Affairs.Width / 4 + 315;
+            if (Affairs.Top + Affairs.Height >= Screen.PrimaryScreen!.Bounds.Height)
+                Affairs.Top = Screen.PrimaryScreen!.Bounds.Height - Affairs.Height * 5 - Affairs.Height / 2;
 
             _settings.SetProfileX(Left + Affairs.Left);
             _settings.SetProfileY(Top + Affairs.Top);
@@ -147,13 +147,13 @@ namespace AffairList
 
         private void SpecifyListLocation()
         {
-            if (Left + Affairs.Left + 310 >= _settings.screenWidth)
-                Left = _settings.screenWidth - 310 - Affairs.Left;
+            if (Left + Affairs.Left + 310 >= Screen.PrimaryScreen!.Bounds.Width)
+                Left = Screen.PrimaryScreen!.Bounds.Width - 310 - Affairs.Left;
             else if (Affairs.Left + Left <= 0)
                 Left = -Affairs.Left;
 
-            if (Top + Affairs.Top + Affairs.Height - 40 >= _settings.screenHeight)
-                Top = _settings.screenHeight - Affairs.Top - Affairs.Height + 40;
+            if (Top + Affairs.Top + Affairs.Height - 40 >= Screen.PrimaryScreen!.Bounds.Height)
+                Top = Screen.PrimaryScreen!.Bounds.Height - Affairs.Top - Affairs.Height + 40;
             else if (Affairs.Top + Top <= 0)
                 Top = -Affairs.Top;
         }
@@ -176,7 +176,7 @@ namespace AffairList
 
         private void ToDoList_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Affairs.BackColor = _settings.GetBgColor();
+            Affairs.BackColor = ColorTranslator.FromHtml(_settings.GetBgColorHex());
             CanReplace = false;
             SystemEvents.PowerModeChanged -= OnPowerModeChanged;
         }

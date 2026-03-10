@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 
+using AffairList.Classes;
 using AffairList.Infrastructure.Classes;
 using AffairList.Infrastructure.Settings;
 
@@ -30,7 +31,8 @@ public partial class AffairList : Form, IParentable
         _trayIconManager.AddTrayMenuAction("Close", OnExit!);
 
         _settings = new Settings();
-        _loadTimeManager = new LoadTimeManager(_settings, _trayIconManager.TrayIcon);
+        _loadTimeManager = new LoadTimeManager(_settings);
+        _loadTimeManager.Initialize(new WinFormsNotificationService(_trayIconManager.TrayIcon));
 
         _mainMenu = new MainMenu(_settings, _loadTimeManager, this);
         SetControl(_mainMenu);
@@ -191,9 +193,9 @@ public partial class AffairList : Form, IParentable
 
     private async void AffairList_KeyDown(object sender, KeyEventArgs e)
     {
-        if (e.KeyCode == _settings.GetCloseKey())
+        if (e.KeyCode == (Keys)_settings.GetCloseKeyId())
             Exit();
-        if (e.KeyCode == _settings.GetReturnKey())
+        if (e.KeyCode == (Keys)_settings.GetReturnKeyId())
             Return();
     }
 }
