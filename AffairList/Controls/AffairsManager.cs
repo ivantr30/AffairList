@@ -1,4 +1,5 @@
-﻿using AffairList.Classes.Factories;
+﻿using AffairList.Classes.Commands;
+using AffairList.Classes.Factories;
 using AffairList.Enums;
 using AffairList.Interfaces;
 using Microsoft.VisualBasic;
@@ -82,11 +83,11 @@ namespace AffairList
         {
             if (e.KeyCode == _addAffairKey)
             {
-                await ExecuteAddAffairCommandAsync(AffairInput.Text);
+                await CreateAndExecuteCommandAsync(AffairInput.Text, commandType: CommandTypeAf.AddAffair);
             }
             else if (e.KeyCode == _deleteAffairKey)
             {
-                await ExecuteDeleteAffairCommandAsync(Affairs.SelectedItem?.ToString() ?? "");
+                await CreateAndExecuteCommandAsync(Affairs.SelectedItem?.ToString() ?? "", commandType: CommandTypeAf.DeleteAffair);
             }
             else if (e.Control)
             {
@@ -128,23 +129,24 @@ namespace AffairList
             string selectedAffair = Affairs.SelectedItem!.ToString()!;
             Clipboard.SetText(selectedAffair.Remove(selectedAffair.Length - 1));
         }
-        private async Task<int> ExecuteAddAffairCommandAsync(string affair)
+        private async Task<int> CreateAndExecuteCommandAsync(string affair, CommandTypeAf commandType)
         {
-            IAsyncCommandAf addAffairCommand = CommandFactory.CreateAddAffairCommand(this, affair);
-            int result = await addAffairCommand.ExecuteAsync();
-            if (result != (int)MethodResults.Success)
-                return (int)MethodResults.NothingHappened;
-            _undoOperations.Push(addAffairCommand);
-            return result;
-        }
-        private async Task<int> ExecuteDeleteAffairCommandAsync(string affair)
-        {
-            IAsyncCommandAf deleteAffairCommand = 
-                CommandFactory.CreateDeleteAffairCommand(this, affair);
-            int result = await deleteAffairCommand.ExecuteAsync();
-            if (result != (int)MethodResults.Success)
-                return (int)MethodResults.NothingHappened;
-            _undoOperations.Push(deleteAffairCommand);
+            IAsyncCommandAf command = new DefaultCommandAsync();
+            switch (commandType)
+            {
+                case CommandTypeAf.AddAffair:
+                    command = CommandFactory.CreateAddAffairCommand(this, affair);
+                    break;
+                case CommandTypeAf.DeleteAffair:
+                    command = CommandFactory.CreateDeleteAffairCommand(this, affair);
+                    break;
+                case CommandTypeAf.RenameAffair:
+                    command = CommandFactory.CreateRenameAffairCommand(this, ref affair);
+                    break;
+            }
+            int result = await command.ExecuteAsync();
+            if (result != (int)MethodResults.Success) return (int)MethodResults.NothingHappened;
+            _undoOperations.Push(command);
             return result;
         }
         private async Task<int> UndoAsync()
@@ -158,7 +160,7 @@ namespace AffairList
                     result = await commandAsync.UndoAsync();
                     if (result != (int)MethodResults.Success)
                         return (int)MethodResults.NothingHappened;
-                    _redoOperations.Push(command);
+                    _redoOperations.Push(commandAsync);
                     return result;
                 }
 
@@ -279,9 +281,9 @@ namespace AffairList
             return (int)MethodResults.Success;
         }
         private async void AddAffairButton_Click(object sender, EventArgs e)
-            => await ExecuteAddAffairCommandAsync(AffairInput.Text);
+            => await CreateAndExecuteCommandAsync(AffairInput.Text, commandType: CommandTypeAf.AddAffair);
         private async void DeleteButton_Click(object sender, EventArgs e)
-            => await ExecuteDeleteAffairCommandAsync(Affairs.SelectedItem?.ToString() ?? "");
+            => await CreateAndExecuteCommandAsync(Affairs.SelectedItem?.ToString() ?? "", commandType: CommandTypeAf.DeleteAffair);
         private void ClearButton_Click(object sender, EventArgs e)
             => AffairInput.Clear();
 
@@ -347,46 +349,60 @@ namespace AffairList
         }
         private async void RenameAffairButton_Click(object sender, EventArgs e)
         {
-            await RenameAffairAsync();
+            // не работает, решить проблему + исправить addaffair
+            await CreateAndExecuteCommandAsync(Affairs.SelectedItem!.ToString()!, commandType: CommandTypeAf.RenameAffair);
         }
-        private async Task RenameAffairAsync()
+        public async Task<string> RenameAffairAsync(string affair, string baseAffair = "", bool check=true)
         {
-            if (Affairs.SelectedIndex == -1)
+            string selectedWord = affair;
+            if (baseAffair != string.Empty) selectedWord = baseAffair;
+            string inputAffair = selectedWord;
+            string renaming = string.Empty;
+            int affairIndex = 0;
+
+            if (check)
             {
-                MessageBox.Show("Nothing to rename");
-                return;
+                if (string.IsNullOrEmpty(affair))
+                {
+                    MessageBox.Show("Nothing to rename");
+                    return string.Empty;
+                }
+
+                if (selectedWord.StartsWith(_deadlineTag))
+                {
+                    inputAffair = inputAffair.Substring(_deadlineDateNTagLength);
+                }
+                if (selectedWord.EndsWith(_priorityTag))
+                {
+                    inputAffair = inputAffair.Substring(0, inputAffair.Length - _priorityTag.Length - 1);
+                }
+
+                renaming = Interaction
+                    .InputBox("Enter renaming", "Input box", inputAffair);
+
+                if (ContainKeyWords(renaming) || string.IsNullOrEmpty(renaming)) return string.Empty;
+
+                renaming = CapitalizeAffair(renaming).Trim();
+                affairIndex = Affairs.Items.IndexOf(affair);
+            }
+            else
+            {
+                renaming = affair;
+                affairIndex = Affairs.Items.IndexOf(baseAffair);
             }
 
-            string selectedWord = _lines[Affairs.SelectedIndex];
-            string affair = selectedWord;
+            selectedWord = selectedWord.Replace(inputAffair, renaming);
 
-            if (selectedWord.StartsWith(_deadlineTag))
-            {
-                affair = affair.Substring(_deadlineDateNTagLength);
-            }
-            if (selectedWord.EndsWith(_priorityTag))
-            {
-                affair = affair.Substring(0, affair.Length - _priorityTag.Length - 1);
-            }
+            Affairs.Items[affairIndex] = selectedWord;
 
-            string renaming = Interaction
-                .InputBox("Enter renaming", "Input box", affair);
-
-            if (ContainKeyWords(renaming)) return;
-            if (string.IsNullOrEmpty(renaming)) return;
-
-            renaming = CapitalizeAffair(renaming).Trim();
-
-            selectedWord = selectedWord.Replace(affair, renaming);
-
-            _lines[Affairs.SelectedIndex] = selectedWord;
+            _lines[affairIndex] = selectedWord;
 
             Task savingText = SaveTextAsync(_lines);
 
-            Affairs.Items[Affairs.SelectedIndex] = Affairs.Items[Affairs.SelectedIndex]
-                .ToString()!.Replace(affair, renaming);
+            affair = affair.Replace(inputAffair, renaming);
 
             await savingText;
+            return affair;
         }
         private bool ContainKeyWords(string word)
         {

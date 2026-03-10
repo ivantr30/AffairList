@@ -100,7 +100,6 @@ namespace AffairList
                 MessageBox.Show("Error, textbox is null");
                 return;
             }
-            // If input ended with .txt or without
             if (ProfileExists(profile))
             {
                 MessageBox.Show("Error, this profile already exists");

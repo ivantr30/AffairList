@@ -14,5 +14,10 @@ namespace AffairList.Classes.Factories
         {
             return new DeleteAffairCommand(affairsManager, affair);
         }
+        public static RenameAffairCommand CreateRenameAffairCommand
+            (AffairsManager affairsManager, ref string affair)
+        {
+            return new RenameAffairCommand(affairsManager, ref affair);
+        }
     }
 }

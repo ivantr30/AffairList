@@ -63,7 +63,8 @@ namespace AffairList
             if (_settings.CurrentListNotNull())
             {
                 StringBuilder affairsShower = new StringBuilder();
-                affairsShower.AppendJoin('\n', await File.ReadAllLinesAsync(_settings.GetCurrentProfile()));
+                affairsShower.Append("* ");
+                affairsShower.AppendJoin("\n* ", await File.ReadAllLinesAsync(_settings.GetCurrentProfile()));
                 affairsShower.Replace(_priorityTag, _priorityWord);
                 affairsShower.Replace(_deadlineTag, "");
                 affairsShower.Replace("\n", ".\n");

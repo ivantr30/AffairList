@@ -4,10 +4,10 @@
     <_LastSelectedProfileId>C:\Users\ivantr\source\repos\AffairList\AffairList\Properties\PublishProfiles\FolderProfile1.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Update="Controls\ProfileManager.cs">
+    <Compile Update="Controls\AffairsManager.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Update="Controls\AffairsManager.cs">
+    <Compile Update="Controls\ProfileManager.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Update="Controls\HotKeySettingsManager.cs">

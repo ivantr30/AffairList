@@ -1,5 +1,4 @@
-﻿using AffairList.Enums;
-using AffairList.Interfaces;
+﻿using AffairList.Interfaces;
 
 namespace AffairList.Classes.Commands.AffairsManagerCommands
 {
@@ -22,8 +21,7 @@ namespace AffairList.Classes.Commands.AffairsManagerCommands
         public async Task<int> ExecuteAsync()
         {
             int result = await _affairsManager.AddAffairAsync(_affair);
-            if (result == (int)MethodResults.Success)
-                _affairsManager.affairAdded -= OnAffairAdded;
+            _affairsManager.affairAdded -= OnAffairAdded;
             return result;
         }
         private void OnAffairAdded(string affair)
