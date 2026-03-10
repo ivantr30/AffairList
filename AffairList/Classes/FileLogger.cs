@@ -33,7 +33,7 @@
         public async Task LogAsync(LogType logType, string msg)
         {
             if (!File.Exists(_filePath)) throw new FileNotFoundException();
-            await File.WriteAllTextAsync(_filePath, $"{logType.ToString()} | {msg}");
+            await File.AppendAllTextAsync(_filePath, $"{logType.ToString()} | {msg}");
         }
         public async Task LogInformationAsync(string msg)
         {

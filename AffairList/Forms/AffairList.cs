@@ -119,7 +119,7 @@
                     _childForm.Show();
                     _childForm.FormClosed += AfterFormClosed;
                 }
-                catch (ObjectDisposedException) { AfterFormClosed(); }
+                catch(ObjectDisposedException) { AfterFormClosed(); }
             }
         }
         private bool OnControlRemove(bool closing)

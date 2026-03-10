@@ -8,7 +8,7 @@ namespace AffairList
     {
         private IKeyboardMouseEvents _globalHook;
 
-        public bool canReplace { get; set; }
+        public bool CanReplace { get; set; }
 
         private string _priorityTag = "<priority>";
         private string _priorityWord = " Priority";
@@ -119,11 +119,11 @@ namespace AffairList
             => await OnListMouseUpAsync(e);
         private void OnListMouseDown(MouseEventArgs e)
         {
-            if (canReplace || _settings.CanBeAlwaysReplaced()) ParentElement.SetLastPoint(e);
+            if (CanReplace || _settings.CanBeAlwaysReplaced()) ParentElement.SetLastPoint(e);
         }
         private void OnListMouseMove(MouseEventArgs e)
         {
-            if ((canReplace || _settings.CanBeAlwaysReplaced()) && e.Button == MouseButtons.Left)
+            if ((CanReplace || _settings.CanBeAlwaysReplaced()) && e.Button == MouseButtons.Left)
             {
                 ParentElement.MoveChildForm(e);
 
@@ -170,10 +170,10 @@ namespace AffairList
             _settings.SetProfileY(Top + Affairs.Top);
             await _settings.SaveSettingsAsync();
             TopMost = true;
-            if (canReplace)
+            if (CanReplace)
             {
                 Close();
-                canReplace = false;
+                CanReplace = false;
                 return;
             }
         }
@@ -185,7 +185,7 @@ namespace AffairList
         private void ToDoList_FormClosing(object sender, FormClosingEventArgs e)
         {
             Affairs.BackColor = _settings.GetBgColor();
-            canReplace = false;
+            CanReplace = false;
             SystemEvents.PowerModeChanged -= OnPowerModeChanged;
         }
         private void UpdateLocation()

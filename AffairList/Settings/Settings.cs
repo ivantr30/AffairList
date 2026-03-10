@@ -36,6 +36,7 @@ namespace AffairList
                 _settings = new SettingsModel();
             }
         }
+        // УБРАТЬ SETTINGSMODEL, раскидать логику на разные классы. Убрать логику SystemEvents_SessionSwitch в program.cs, поменять на булевую переменную с событием
         static Settings()
         {
             if (AffairListDebug.DEBUG)

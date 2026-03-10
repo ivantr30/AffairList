@@ -72,7 +72,7 @@
                 MessageBox.Show("Error, there is no list available");
                 return;
             }
-            using ToDoList toDoList = new ToDoList(_settings, ParentElement) { canReplace = true };
+            using ToDoList toDoList = new ToDoList(_settings, ParentElement) { CanReplace = true };
             toDoList.GetAffairs().BackColor = Color.White;
             ParentElement.OpenForm(toDoList, asDialog: true);
         }
