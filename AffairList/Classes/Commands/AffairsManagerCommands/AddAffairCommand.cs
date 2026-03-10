@@ -1,4 +1,5 @@
-﻿using AffairList.Interfaces;
+﻿using AffairList.Enums;
+using AffairList.Interfaces;
 
 namespace AffairList.Classes.Commands.AffairsManagerCommands
 {
@@ -9,39 +10,36 @@ namespace AffairList.Classes.Commands.AffairsManagerCommands
         public AddAffairCommand(AffairsManager affairsManager, string affair)
         {
             _affairsManager = affairsManager;
-            _affairsManager.affairAdded += OnAffairAdded;
             _affair = affair;
         }
 
         public int Execute()
         {
-            return _affairsManager.AddAffairAsync(_affair).Result;
+            return ExecuteAsync().Result;
         }
 
         public async Task<int> ExecuteAsync()
         {
-            int result = await _affairsManager.AddAffairAsync(_affair);
-            _affairsManager.affairAdded -= OnAffairAdded;
-            return result;
-        }
-        private void OnAffairAdded(string affair)
-        {
-            _affair = affair;
+            _affair = await _affairsManager.AddAffairAsync(_affair);
+            if (_affair == string.Empty) return (int)MethodResults.Error;
+            return (int)MethodResults.Success;
         }
 
         public int Redo()
         {
-            return _affairsManager.AddAffairAsync(_affair, false).Result;
+            return RedoAsync().Result;
         }
 
         public async Task<int> RedoAsync()
         {
-            return await _affairsManager.AddAffairAsync(_affair, false);
+            _affair = await _affairsManager.AddAffairAsync(_affair, false);
+            if (_affair == string.Empty) return (int)MethodResults.Error;
+            return (int)MethodResults.Success;
         }
 
         public int Undo()
         {
-            return _affairsManager.DeleteAffairAsync(_affair).Result;
+            return UndoAsync().Result;
         }
 
         public async Task<int> UndoAsync()

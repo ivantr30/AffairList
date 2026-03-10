@@ -32,8 +32,6 @@ namespace AffairList
         private Stack<ICommandAf> _undoOperations = null!;
         private Stack<ICommandAf> _redoOperations = null!;
 
-        public event Action<string> affairAdded;
-
         public AffairsManager(Settings settings, IParentable parentElement)
         {
             InitializeComponent();
@@ -219,14 +217,14 @@ namespace AffairList
         {
             CloseButton.ForeColor = Color.Black;
         }
-        public async Task<int> AddAffairAsync(string affair, bool clearInputLine = true)
+        public async Task<string> AddAffairAsync(string affair, bool clearInputLine = true)
         {
             affair = affair.Trim();
             if (affair == "")
             {
-                return (int)MethodResults.Error;
+                return string.Empty;
             }
-            if (ContainKeyWords(affair)) return (int)MethodResults.Error;
+            if (ContainKeyWords(affair)) return string.Empty;
 
             string inputText = CapitalizeAffair(affair);
 
@@ -239,8 +237,7 @@ namespace AffairList
 
             if (clearInputLine) AffairInput.Text = "";
             await appendingText;
-            affairAdded?.Invoke(inputText);
-            return (int)MethodResults.Success;
+            return inputText;
         }
         public async Task<int> DeleteAffairAsync(string affair)
         {
@@ -349,7 +346,6 @@ namespace AffairList
         }
         private async void RenameAffairButton_Click(object sender, EventArgs e)
         {
-            // не работает, решить проблему + исправить addaffair
             await CreateAndExecuteCommandAsync(Affairs.SelectedItem!.ToString()!, commandType: CommandTypeAf.RenameAffair);
         }
         public async Task<string> RenameAffairAsync(string affair, string baseAffair = "", bool check=true)
