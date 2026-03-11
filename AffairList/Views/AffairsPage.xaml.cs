@@ -25,38 +25,36 @@ public sealed partial class AffairsPage : Page
                 ViewModel.AddAffairCommand.Execute(null);
     }
 
-    private void TogglePriority_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    private void TogglePriority_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs _)
     {
         SelectContextItem(sender);
         if (ViewModel.TogglePriorityCommand.CanExecute(null))
             ViewModel.TogglePriorityCommand.Execute(null);
     }
 
-    private void Delete_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    private void Delete_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs _)
     {
         SelectContextItem(sender);
         if (ViewModel.DeleteAffairCommand.CanExecute(null))
             ViewModel.DeleteAffairCommand.Execute(null);
     }
 
-    private async void Rename_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    private async void Rename_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs _)
     {
         SelectContextItem(sender);
-
         if (ViewModel.SelectedAffair == null) return;
 
-        RenameTextBox.Text = ViewModel.SelectedAffair.DisplayText;
+        RenameTextBox.Text = ViewModel.SelectedAffair.Title;
         RenameDialog.XamlRoot = XamlRoot;
 
         var result = await RenameDialog.ShowAsync();
-
         if (result == ContentDialogResult.Primary)
-            await ViewModel.RenameAffairAsync(ViewModel.SelectedAffair.OriginalString, RenameTextBox.Text);
+            await ViewModel.RenameAffairAsync(RenameTextBox.Text);
     }
 
     private void SelectContextItem(object sender)
     {
-        if (sender is MenuFlyoutItem item && item.DataContext is AffairItem affairItem)
-            ViewModel.SelectedAffair = affairItem;
+        if (sender is MenuFlyoutItem item && item.DataContext is Core.Models.Affair affair)
+            ViewModel.SelectedAffair = affair;
     }
 }

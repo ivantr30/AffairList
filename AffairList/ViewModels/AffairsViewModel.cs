@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 
 using AffairList.Core.Enums;
 using AffairList.Core.Interfaces;
+using AffairList.Core.Models;
 using AffairList.Infrastructure.Classes.Factories;
 
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -11,33 +12,20 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace AffairList.ViewModels;
 
-public partial class AffairItem(string original) : ObservableObject
-{
-    [ObservableProperty]
-    public partial string OriginalString { get; set; } = original;
-
-    [ObservableProperty]
-    public partial string DisplayText { get; set; } = original.Replace(" <priority>", "").Replace("<priority>", "").Trim();
-
-    [ObservableProperty]
-    public partial bool IsPriority { get; set; } = original.Contains("<priority>");
-}
-
 public partial class AffairsViewModel : ObservableObject
 {
     private readonly IAffairsService _affairsService;
     private readonly Stack<ICommandAf> _undoOperations = new();
     private readonly Stack<ICommandAf> _redoOperations = new();
-    private const string PriorityTag = "<priority>";
 
     [ObservableProperty]
-    public partial ObservableCollection<AffairItem> Affairs { get; set; } = [];
+    public partial ObservableCollection<Affair> Affairs { get; set; } = [];
 
     [ObservableProperty]
     public partial string InputText { get; set; } = string.Empty;
 
     [ObservableProperty]
-    public partial AffairItem? SelectedAffair { get; set; }
+    public partial Affair? SelectedAffair { get; set; }
 
     public AffairsViewModel(IAffairsService affairsService)
     {
@@ -51,7 +39,7 @@ public partial class AffairsViewModel : ObservableObject
         var loadedAffairs = await _affairsService.LoadAffairsAsync();
         Affairs.Clear();
         foreach (var affair in loadedAffairs)
-            Affairs.Add(new AffairItem(affair));
+            Affairs.Add(affair);
     }
 
     private async Task ExecuteCommandAsync(IAsyncCommandAf command)
@@ -69,7 +57,9 @@ public partial class AffairsViewModel : ObservableObject
     private async Task AddAffairAsync()
     {
         if (string.IsNullOrWhiteSpace(InputText)) return;
-        var cmd = CommandFactory.CreateAddAffairCommand(_affairsService, InputText);
+        var newAffair = new Affair { Title = InputText };
+        var cmd = CommandFactory.CreateAddAffairCommand(_affairsService, newAffair);
+
         await ExecuteCommandAsync(cmd);
         InputText = string.Empty;
     }
@@ -78,20 +68,19 @@ public partial class AffairsViewModel : ObservableObject
     private async Task DeleteAffairAsync()
     {
         if (SelectedAffair == null) return;
-        var cmd = CommandFactory.CreateDeleteAffairCommand(_affairsService, SelectedAffair.OriginalString);
+        var cmd = CommandFactory.CreateDeleteAffairCommand(_affairsService, SelectedAffair);
         await ExecuteCommandAsync(cmd);
     }
 
-    public async Task RenameAffairAsync(string oldNameOriginal, string newDisplayName)
+    public async Task RenameAffairAsync(string newTitle)
     {
-        if (string.IsNullOrWhiteSpace(newDisplayName)) return;
+        if (SelectedAffair == null || string.IsNullOrWhiteSpace(newTitle) || SelectedAffair.Title == newTitle) return;
 
-        bool hadPriority = oldNameOriginal.Contains(PriorityTag);
-        string newNameWithTags = hadPriority ? newDisplayName + " " + PriorityTag : newDisplayName;
+        var oldAffair = SelectedAffair.Clone();
+        var newAffair = SelectedAffair.Clone();
+        newAffair.Title = newTitle;
 
-        if (oldNameOriginal == newNameWithTags) return;
-
-        var cmd = CommandFactory.CreateRenameAffairCommand(_affairsService, oldNameOriginal, newNameWithTags);
+        var cmd = CommandFactory.CreateUpdateAffairCommand(_affairsService, oldAffair, newAffair);
         await ExecuteCommandAsync(cmd);
     }
 
@@ -100,12 +89,11 @@ public partial class AffairsViewModel : ObservableObject
     {
         if (SelectedAffair == null) return;
 
-        string oldName = SelectedAffair.OriginalString;
-        string newName = oldName.Contains(PriorityTag)
-            ? oldName.Replace(" " + PriorityTag, "").Replace(PriorityTag, "")
-            : oldName + " " + PriorityTag;
+        var oldAffair = SelectedAffair.Clone();
+        var newAffair = SelectedAffair.Clone();
+        newAffair.IsPriority = !newAffair.IsPriority;
 
-        var cmd = CommandFactory.CreateRenameAffairCommand(_affairsService, oldName, newName);
+        var cmd = CommandFactory.CreateUpdateAffairCommand(_affairsService, oldAffair, newAffair);
         await ExecuteCommandAsync(cmd);
     }
 

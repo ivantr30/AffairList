@@ -23,22 +23,25 @@ public partial class App : Application
         Services = ConfigureServices();
     }
 
-    private static IServiceProvider ConfigureServices()
+    private static ServiceProvider ConfigureServices()
     {
         var services = new ServiceCollection();
 
         services.AddSingleton<Settings>();
         services.AddTransient<IAffairsService, AffairsService>();
 
-        services.AddTransient<AffairsViewModel>();
+        services.AddSingleton<AffairsViewModel>();
         services.AddTransient<ProfilesViewModel>();
         services.AddTransient<SettingsViewModel>();
 
         return services.BuildServiceProvider();
     }
 
-    protected override void OnLaunched(LaunchActivatedEventArgs args)
+    protected override async void OnLaunched(LaunchActivatedEventArgs args)
     {
+        var settings = Services.GetRequiredService<Settings>();
+        await settings.InitializeAsync();
+
         _window = new MainWindow();
         _window.Activate();
     }

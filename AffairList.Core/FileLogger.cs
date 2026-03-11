@@ -4,26 +4,8 @@ namespace AffairList.Core;
 
 public class FileLogger(string filePath)
 {
-    public void Log(LogType logType, string msg)
-    {
-        if (!File.Exists(filePath)) throw new FileNotFoundException();
-        File.AppendAllText(filePath, $"{logType} | {msg} \n");
-    }
-
-    public void LogInformation(string msg)
-        => Log(LogType.Information, msg);
-
-    public void LogWarning(string msg)
-        => Log(LogType.Warning, msg);
-
-    public void LogError(string msg)
-        => Log(LogType.Error, msg);
-
-    public async Task LogAsync(LogType logType, string msg)
-    {
-        if (!File.Exists(filePath)) throw new FileNotFoundException();
-        await File.WriteAllTextAsync(filePath, $"{logType} | {msg}");
-    }
+    private async Task LogAsync(LogType logType, string msg)
+        => await File.AppendAllTextAsync(filePath, $"{logType} | {msg}\n");
 
     public async Task LogInformationAsync(string msg)
         => await LogAsync(LogType.Information, msg);

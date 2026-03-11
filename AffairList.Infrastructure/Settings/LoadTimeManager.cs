@@ -2,6 +2,7 @@
 
 using AffairList.Core;
 using AffairList.Core.Interfaces;
+using AffairList.Core.Models;
 using AffairList.Core.Settings.Models;
 
 namespace AffairList.Infrastructure.Settings;
@@ -10,26 +11,21 @@ public class LoadTimeManager(Settings settings)
 {
     public readonly string LoadTimeFileFullPath = $@"{Settings.programDirectoryFolderFullPath}\loadtime.json";
 
-    private const string _priorityTag = "<priority>";
-    private const string _priorityWord = "\"Priority\"";
-    private const string _deadlineTag = "<deadline>";
-
     private LoadTimeModel _loadTime = null!;
     private FileLogger _fileLogger = null!;
 
     private INotificationService _notificationService = null!;
 
-    public void Initialize(INotificationService notificationService)
+    public async Task Initialize(INotificationService notificationService)
     {
         _fileLogger = new FileLogger(Settings.logFileFullPath);
-
         _notificationService = notificationService;
 
-        if (!LoadTimeFileExist())
+        if (!File.Exists(LoadTimeFileFullPath))
         {
-            CreateLoadTimeFile();
-            WriteBaseTime();
-            _fileLogger.LogWarning($"{DateTime.Now} LoadTimeFile wasn't present and was created");
+            await CreateLoadTimeFile();
+            await WriteBaseTime();
+            await _fileLogger.LogWarningAsync($"{DateTime.Now} LoadTimeFile wasn't present and was created");
         }
         try
         {
@@ -37,85 +33,80 @@ public class LoadTimeManager(Settings settings)
         }
         catch
         {
-            WriteBaseTime();
-            _fileLogger.LogWarning(
+            await WriteBaseTime();
+            await _fileLogger.LogWarningAsync(
                 $"{DateTime.Now} LoadTimeFile wasn't in right format and was rewritten");
         }
     }
-    public void Notificate()
+
+    public async Task Notificate()
     {
         if (!settings.DoesNotificate() || !ShouldNotificate()) return;
-
-        _fileLogger.LogInformation($"{DateTime.Now} Starting notificating");
+        await _fileLogger.LogInformationAsync($"{DateTime.Now} Starting notificating");
 
         Dictionary<string, bool> notifications = [];
-
-        SaveTimeAsync().Wait();
+        SaveTime();
 
         string[] profiles = Directory.GetFiles(Settings.listsDirectoryFullPath);
-
-        for (int i = 0; i < profiles.Length; i++)
+        foreach (var profile in profiles)
         {
-            string[] affairs = File.ReadAllLines(profiles[i]);
-            for (int j = 0; j < affairs.Length; j++)
+            try
             {
-                if (!affairs[j].StartsWith(_deadlineTag)) continue;
+                var content = File.ReadAllText(profile);
+                var affairs = JsonSerializer.Deserialize<List<Affair>>(content) ?? [];
 
-                DateTime deadline = DateTime.Parse(affairs[j].Substring(10, 11));
+                foreach (var affair in affairs)
+                {
+                    if (!affair.Deadline.HasValue) continue;
 
-                int daysLeft = (deadline.Date - DateTime.Now.Date).Days;
-                if (daysLeft > settings.GetNotificationDayDistance()) continue;
+                    int daysLeft = (affair.Deadline.Value.Date - DateTime.Now.Date).Days;
+                    if (daysLeft > settings.GetNotificationDayDistance()) continue;
 
-                if (daysLeft == 0)
-                {
-                    TimeSpan day = TimeSpan.FromHours(24);
-                    TimeSpan now = TimeSpan.FromTicks(DateTime.Now.Ticks);
-                    notifications.Add(AffairWithoutTags(affairs[j]) + $" - осталось {day - now}", false);
-                }
-                else if (daysLeft > 0)
-                {
-                    notifications.Add(AffairWithoutTags(affairs[j]) + $" - осталось {daysLeft} дней", false);
-                }
-                else
-                {
-                    notifications.Add( AffairWithoutTags(affairs[j]) + " - просрочено", true);
+                    if (daysLeft == 0)
+                    {
+                        TimeSpan timeLeft = TimeSpan.FromHours(24) - DateTime.Now.TimeOfDay;
+                        notifications.Add($"{affair.Title} - осталось {timeLeft.Hours}ч {timeLeft.Minutes}м", false);
+                    }
+                    else if (daysLeft > 0)
+                    {
+                        notifications.Add($"{affair.Title} - осталось {daysLeft} дней", false);
+                    }
+                    else
+                    {
+                        notifications.Add($"{affair.Title} - просрочено", true);
+                    }
                 }
             }
+            catch { }
         }
 
         foreach (KeyValuePair<string, bool> notification in notifications)
-            _notificationService.ShowNotification("AffairList", notification.Key, notification.Value == notification.Value);
+            _notificationService.ShowNotification("AffairList", notification.Key, notification.Value);
 
-        _fileLogger.LogInformation($"{DateTime.Now} notified");
+        await _fileLogger.LogInformationAsync($"{DateTime.Now} notified");
     }
 
     private bool ShouldNotificate()
         => GetPreviousLoadTime().Date != DateTime.Now.Date ||
         DateTime.Now.Hour - GetPreviousLoadTime().Hour >= settings.GetNotificationHourDistance();
 
-    private static string AffairWithoutTags(string affair)
-        => affair[10..].Replace(_priorityTag, _priorityWord);
-
-    private void WriteBaseTime()
+    private async Task WriteBaseTime()
     {
         _loadTime = new LoadTimeModel();
         File.WriteAllText(LoadTimeFileFullPath, JsonSerializer.Serialize(_loadTime));
-        _fileLogger.LogInformation($"{DateTime.Now} load time was set to base");
+        await _fileLogger.LogInformationAsync($"{DateTime.Now} load time was set to base");
     }
 
-    public async Task SaveTimeAsync()
+    public void SaveTime()
     {
         SetPreviousLoadTime(DateTime.Now);
-        await File.WriteAllTextAsync(LoadTimeFileFullPath, JsonSerializer.Serialize(_loadTime));
+        File.WriteAllText(LoadTimeFileFullPath, JsonSerializer.Serialize(_loadTime));
     }
 
-    public bool LoadTimeFileExist()
-        => File.Exists(LoadTimeFileFullPath);
-
-    public void CreateLoadTimeFile()
+    public async Task CreateLoadTimeFile()
     {
         using (File.Create(LoadTimeFileFullPath)) { }
-        _fileLogger.LogInformation($"{DateTime.Now} load time file was created");
+        await _fileLogger.LogInformationAsync($"{DateTime.Now} load time file was created");
     }
 
     public DateTime GetPreviousLoadTime()

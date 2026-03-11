@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="using:AffairList.ViewModels"
+    xmlns:models="using:AffairList.Core.Models"
     mc:Ignorable="d">
 
     <Grid Padding="24,24,24,0">
@@ -30,7 +31,7 @@
             SelectionMode="Single">
 
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="viewmodels:AffairItem">
+                <DataTemplate x:DataType="models:Affair">
                     <Grid Padding="0,12" ColumnDefinitions="Auto, *">
                         <Grid.ContextFlyout>
                             <MenuFlyout>
@@ -41,15 +42,15 @@
                             </MenuFlyout>
                         </Grid.ContextFlyout>
 
-                        <FontIcon Grid.Column="0" 
-                                  Glyph="&#xE734;" 
+                        <FontIcon Grid.Column="0"
+                                  Glyph="&#xE734;"
                                   Visibility="{x:Bind IsPriority, Mode=OneWay}"
                                   Margin="0,0,12,0"
                                   FontSize="16"
                                   VerticalAlignment="Center"/>
 
                         <TextBlock Grid.Column="1" 
-                                   Text="{x:Bind DisplayText, Mode=OneWay}" 
+                                   Text="{x:Bind Title, Mode=OneWay}" 
                                    FontSize="16" 
                                    VerticalAlignment="Center"
                                    TextWrapping="Wrap"/>

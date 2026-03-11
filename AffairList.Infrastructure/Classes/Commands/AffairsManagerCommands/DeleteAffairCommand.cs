@@ -1,9 +1,10 @@
 ﻿using AffairList.Core.Enums;
 using AffairList.Core.Interfaces;
+using AffairList.Core.Models;
 
 namespace AffairList.Infrastructure.Classes.Commands.AffairsManagerCommands;
 
-public class DeleteAffairCommand(IAffairsService affairsService, string affair) : IAsyncCommandAf
+public class DeleteAffairCommand(IAffairsService affairsService, Affair affair) : IAsyncCommandAf
 {
     public int Execute() => ExecuteAsync().Result;
     public int Redo() => RedoAsync().Result;
@@ -17,8 +18,8 @@ public class DeleteAffairCommand(IAffairsService affairsService, string affair) 
 
     public async Task<int> UndoAsync()
     {
-        string result = await affairsService.AddAffairAsync(affair);
-        return string.IsNullOrEmpty(result) ? (int)MethodResults.Error : (int)MethodResults.Success;
+        var result = await affairsService.AddAffairAsync(affair);
+        return result == null ? (int)MethodResults.Error : (int)MethodResults.Success;
     }
 
     public async Task<int> RedoAsync() => await ExecuteAsync();

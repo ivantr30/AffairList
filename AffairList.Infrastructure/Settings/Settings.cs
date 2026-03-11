@@ -25,14 +25,9 @@ public class Settings
     public Settings(bool initialize = true)
     {
         if (initialize)
-        {
             _fileLogger = new FileLogger(logFileFullPath);
-            _ = Initialize();
-        }
         else
-        {
             _settings = new SettingsModel();
-        }
     }
 
     static Settings()
@@ -47,20 +42,20 @@ public class Settings
         logFileFullPath = $@"{programDirectoryFolderFullPath}logs.txt";
     }
 
-    private async Task Initialize()
+    public async Task InitializeAsync()
     {
         if (!ProgramDirectoryExists()) CreateProgramDirectory();
-        if (!LogFileExists()) CreateLogFile();
+        if (!LogFileExists()) await CreateLogFile();
         if (!SettingsFileExists()) await CreateSettingsFileAsync();
-        if (!ListsDirectoryExists()) CreateListsDirectory();
+        if (!ListsDirectoryExists()) await CreateListsDirectory();
         try
         {
-            LoadSettings();
+            await LoadSettings();
         }
         catch
         {
             await WriteBaseSettingsAsync();
-            _fileLogger.LogError($"{DateTime.Now} settings file was not valid");
+            await _fileLogger.LogErrorAsync($"{DateTime.Now} settings file was not valid");
         }
         if (!System.IO.File.Exists(GetCurrentProfile()) &&
             Directory.EnumerateFiles(listsDirectoryFullPath).FirstOrDefault() != default)
@@ -69,10 +64,10 @@ public class Settings
         }
     }
 
-    private void LoadSettings()
+    private async Task LoadSettings()
     {
         _settings = JsonSerializer.Deserialize<SettingsModel>(System.IO.File.ReadAllText(settingsFileFullPath))!;
-        _fileLogger.LogInformation($"{DateTime.Now} settings were loaded succesfully");
+        await _fileLogger.LogInformationAsync($"{DateTime.Now} settings were loaded succesfully");
     }
 
     public async Task WriteBaseSettingsAsync()
@@ -83,8 +78,7 @@ public class Settings
         else DisableAutoStart();
 
         await System.IO.File.WriteAllTextAsync(settingsFileFullPath, JsonSerializer.Serialize(_settings));
-
-        _fileLogger.LogInformation($"{DateTime.Now} settings were dropped to default succesfully");
+        await _fileLogger.LogInformationAsync($"{DateTime.Now} settings were dropped to default succesfully");
     }
 
     public async Task SelectFirstProfileAsync(bool logInfo = true)
@@ -92,7 +86,7 @@ public class Settings
         Directory.GetFiles(listsDirectoryFullPath);
         SetCurrentProfile(Directory.EnumerateFiles(listsDirectoryFullPath).First());
         await SaveSettingsAsync();
-        if (logInfo) _fileLogger.LogInformation($"{DateTime.Now} first profile was selected succesfully");
+        if (logInfo) await _fileLogger.LogInformationAsync($"{DateTime.Now} first profile was selected succesfully");
     }
 
     public static void EnableAutoStart()
@@ -147,14 +141,14 @@ public class Settings
     {
         using (System.IO.File.Create(settingsFileFullPath)) { }
         await WriteBaseSettingsAsync();
-        _fileLogger.LogInformation(
+        await _fileLogger.LogInformationAsync(
             $"{DateTime.Now} settings was created");
     }
 
-    public void CreateListsDirectory()
+    public async Task CreateListsDirectory()
     {
         Directory.CreateDirectory(listsDirectoryFullPath);
-        _fileLogger.LogInformation(
+        await _fileLogger.LogInformationAsync(
             $"{DateTime.Now} lists directory was created");
     }
 
@@ -163,17 +157,17 @@ public class Settings
         using (System.IO.File.Create(_defaultListFileFullPath)) { }
         SetCurrentProfile(_defaultListFileFullPath);
         await SaveSettingsAsync();
-        _fileLogger.LogInformation(
+        await _fileLogger.LogInformationAsync(
             $"{DateTime.Now} default list was created");
     }
 
     public static void CreateProgramDirectory()
         => Directory.CreateDirectory(programDirectoryFolderFullPath);
 
-    public void CreateLogFile()
+    public async Task CreateLogFile()
     {
         using (System.IO.File.Create(logFileFullPath)) { }
-        _fileLogger.LogInformation(
+        await _fileLogger.LogInformationAsync(
             $"{DateTime.Now} log file was created");
     }
 

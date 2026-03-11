@@ -4,13 +4,12 @@ using AffairList.Core.Models;
 
 namespace AffairList.Infrastructure.Classes.Commands.AffairsManagerCommands;
 
-public class AddAffairCommand(IAffairsService affairsService, Affair affair) : IAsyncCommandAf
+public class UpdateAffairCommand(IAffairsService affairsService, Affair oldAffair, Affair newAffair) : IAsyncCommandAf
 {
     public int Execute() => ExecuteAsync().Result;
-
     public async Task<int> ExecuteAsync()
     {
-        var result = await affairsService.AddAffairAsync(affair);
+        var result = await affairsService.UpdateAffairAsync(newAffair);
         return result == null ? (int)MethodResults.Error : (int)MethodResults.Success;
     }
 
@@ -20,7 +19,7 @@ public class AddAffairCommand(IAffairsService affairsService, Affair affair) : I
     public int Undo() => UndoAsync().Result;
     public async Task<int> UndoAsync()
     {
-        bool success = await affairsService.DeleteAffairAsync(affair);
-        return success ? (int)MethodResults.Success : (int)MethodResults.Error;
+        var result = await affairsService.UpdateAffairAsync(oldAffair);
+        return result == null ? (int)MethodResults.Error : (int)MethodResults.Success;
     }
 }

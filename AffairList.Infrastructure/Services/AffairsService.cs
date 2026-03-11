@@ -1,52 +1,91 @@
-﻿using AffairList.Core.Interfaces;
+﻿using System.Text.Json;
+
+using AffairList.Core.Interfaces;
+using AffairList.Core.Models;
 
 namespace AffairList.Infrastructure.Services;
 
 public class AffairsService(Settings.Settings settings) : IAffairsService
 {
-    public async Task<List<string>> LoadAffairsAsync()
+    private readonly JsonSerializerOptions _jsonOptions = new() { WriteIndented = true };
+
+    public async Task<List<Affair>> LoadAffairsAsync()
     {
         if (!settings.CurrentListNotNull()) return [];
-        var lines = await File.ReadAllLinesAsync(settings.GetCurrentProfile());
-        return [.. lines];
+        var content = await File.ReadAllTextAsync(settings.GetCurrentProfile());
+        if (string.IsNullOrWhiteSpace(content)) return [];
+
+        try
+        {
+            return JsonSerializer.Deserialize<List<Affair>>(content, _jsonOptions) ?? [];
+        }
+        catch
+        {
+            var lines = content.Split(['\r', '\n'], StringSplitOptions.RemoveEmptyEntries);
+            var list = new List<Affair>();
+            foreach (var line in lines)
+            {
+                var affair = new Affair();
+                string temp = line.Trim();
+
+                if (temp.EndsWith("<priority>"))
+                {
+                    affair.IsPriority = true;
+                    temp = temp.Replace("<priority>", "").Trim();
+                }
+                if (temp.StartsWith("<deadline>") && temp.Length > 21)
+                {
+                    if (DateTime.TryParse(temp.AsSpan(10, 10), out DateTime dt))
+                        affair.Deadline = dt;
+                    temp = temp[21..].Trim();
+                }
+
+                affair.Title = temp;
+                list.Add(affair);
+            }
+
+            await SaveAffairsAsync(list);
+            return list;
+        }
     }
 
-    public async Task SaveAffairsAsync(List<string> affairs)
+    public async Task SaveAffairsAsync(List<Affair> affairs)
     {
         if (!settings.CurrentListNotNull()) return;
-        await File.WriteAllLinesAsync(settings.GetCurrentProfile(), affairs);
+        var json = JsonSerializer.Serialize(affairs, _jsonOptions);
+        await File.WriteAllTextAsync(settings.GetCurrentProfile(), json);
     }
 
-    public async Task<string> AddAffairAsync(string affair)
+    public async Task<Affair?> AddAffairAsync(Affair affair)
     {
-        if (string.IsNullOrWhiteSpace(affair)) return string.Empty;
-        string inputText = char.ToUpper(affair[0]) + affair[1..];
-        await File.AppendAllTextAsync(settings.GetCurrentProfile(), inputText + "\n");
-        return inputText;
+        if (string.IsNullOrWhiteSpace(affair.Title)) return null;
+        affair.Title = char.ToUpper(affair.Title[0]) + affair.Title[1..];
+
+        var affairs = await LoadAffairsAsync();
+        affairs.Add(affair);
+        await SaveAffairsAsync(affairs);
+        return affair;
     }
 
-    public async Task<bool> DeleteAffairAsync(string affair)
+    public async Task<bool> DeleteAffairAsync(Affair affair)
     {
-        var lines = await LoadAffairsAsync();
-
-        int index = lines.IndexOf(affair);
+        var affairs = await LoadAffairsAsync();
+        int index = affairs.FindIndex(a => a.Id == affair.Id);
         if (index == -1) return false;
 
-        lines.RemoveAt(index);
-        await SaveAffairsAsync(lines);
+        affairs.RemoveAt(index);
+        await SaveAffairsAsync(affairs);
         return true;
     }
 
-    public async Task<string> RenameAffairAsync(string oldAffair, string newAffair)
+    public async Task<Affair?> UpdateAffairAsync(Affair affair)
     {
-        var lines = await LoadAffairsAsync();
+        var affairs = await LoadAffairsAsync();
+        int index = affairs.FindIndex(a => a.Id == affair.Id);
+        if (index == -1) return null;
 
-        int index = lines.IndexOf(oldAffair);
-        if (index == -1) return string.Empty;
-
-        lines[index] = newAffair;
-
-        await SaveAffairsAsync(lines);
-        return newAffair;
+        affairs[index] = affair;
+        await SaveAffairsAsync(affairs);
+        return affair;
     }
 }
