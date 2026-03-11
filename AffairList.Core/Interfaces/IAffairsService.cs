@@ -2,7 +2,9 @@
 
 public interface IAffairsService
 {
-    Task<string> AddAffairAsync(string affair, bool clearInputLine = true);
-    Task<int> DeleteAffairAsync(string affair);
-    Task<string> RenameAffairAsync(string affair, string baseAffair = "", bool check = true);
+    Task<List<string>> LoadAffairsAsync();
+    Task SaveAffairsAsync(List<string> affairs);
+    Task<string> AddAffairAsync(string affair);
+    Task<bool> DeleteAffairAsync(string affair);
+    Task<string> RenameAffairAsync(string oldAffair, string newAffair);
 }

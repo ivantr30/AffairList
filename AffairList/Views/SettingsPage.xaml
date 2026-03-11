@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="AffairList.Views.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <StackPanel Padding="24" Spacing="24">
+        <TextBlock Text="Settings" FontSize="28" FontWeight="SemiBold"/>
+
+        <ToggleSwitch 
+            Header="Run at Windows startup" 
+            IsOn="{x:Bind ViewModel.AutostartState, Mode=TwoWay}"/>
+
+        <ToggleSwitch 
+            Header="Ask before deleting an affair" 
+            IsOn="{x:Bind ViewModel.AskToDelete, Mode=TwoWay}"/>
+
+        <ToggleSwitch 
+            Header="Enable Notifications" 
+            IsOn="{x:Bind ViewModel.DoesNotificate, Mode=TwoWay}"/>
+
+        <Button 
+            Content="Save Settings" 
+            Command="{x:Bind ViewModel.SaveSettingsCommand}"
+            Style="{StaticResource AccentButtonStyle}"
+            Margin="0,16,0,0"/>
+    </StackPanel>
+</Page>

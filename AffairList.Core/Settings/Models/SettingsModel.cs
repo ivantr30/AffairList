@@ -4,8 +4,8 @@ public class SettingsModel
 {
     public string CurrentListFileFullPath { get; set; } = "";
 
-    public string TextColorHex { get; set; } = "#00FA9A"; // MediumSpringGreen
-    public string BgColorHex { get; set; } = "#000000"; // Black
+    public string TextColorHex { get; set; } = "#111827"; // AppTextPrimary (Light)
+    public string BgColorHex { get; set; } = "#F9FAFB";   // AppBackground (Light)
 
     public int CloseKeyId { get; set; } = 118; // F7
     public int ReturnKeyId { get; set; } = 117; // F6

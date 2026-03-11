@@ -10,11 +10,16 @@ public class DeleteAffairCommand(IAffairsService affairsService, string affair) 
     public int Undo() => UndoAsync().Result;
 
     public async Task<int> ExecuteAsync()
-        => await affairsService.DeleteAffairAsync(affair);
+    {
+        bool success = await affairsService.DeleteAffairAsync(affair);
+        return success ? (int)MethodResults.Success : (int)MethodResults.Error;
+    }
 
     public async Task<int> UndoAsync()
-        => string.IsNullOrEmpty(await affairsService.AddAffairAsync(affair, false))
-        ? (int)MethodResults.Error : (int)MethodResults.Success;
+    {
+        string result = await affairsService.AddAffairAsync(affair);
+        return string.IsNullOrEmpty(result) ? (int)MethodResults.Error : (int)MethodResults.Success;
+    }
 
-    public async Task<int> RedoAsync() => await affairsService.DeleteAffairAsync(affair);
+    public async Task<int> RedoAsync() => await ExecuteAsync();
 }

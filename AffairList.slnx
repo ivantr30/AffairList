@@ -4,5 +4,8 @@
   </Folder>
   <Project Path="AffairList.Core/AffairList.Core.csproj" Id="5e4b5290-0870-49e1-9e5f-9ad540dd4bfc" />
   <Project Path="AffairList.Infrastructure/AffairList.Infrastructure.csproj" Id="91d44b2d-7df7-4dba-89f3-eab2c43da186" />
-  <Project Path="AffairList/AffairList.csproj" />
+  <Project Path="AffairList/AffairList.csproj" Id="1a70e3ac-d27e-4a28-b2b1-7626eb7d54f2">
+    <Platform Project="x64" />
+    <Deploy />
+  </Project>
 </Solution>

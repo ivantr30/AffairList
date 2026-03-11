@@ -6,21 +6,20 @@ namespace AffairList.Infrastructure.Classes.Commands.AffairsManagerCommands;
 public class AddAffairCommand(IAffairsService affairsService, string affair) : IAsyncCommandAf
 {
     public int Execute() => ExecuteAsync().Result;
+
     public async Task<int> ExecuteAsync()
     {
-        affair = await affairsService.AddAffairAsync(affair);
-        if (affair == string.Empty) return (int)MethodResults.Error;
-        return (int)MethodResults.Success;
+        string result = await affairsService.AddAffairAsync(affair);
+        return string.IsNullOrEmpty(result) ? (int)MethodResults.Error : (int)MethodResults.Success;
     }
 
     public int Redo() => RedoAsync().Result;
-    public async Task<int> RedoAsync()
-    {
-        affair = await affairsService.AddAffairAsync(affair, false);
-        if (affair == string.Empty) return (int)MethodResults.Error;
-        return (int)MethodResults.Success;
-    }
+    public async Task<int> RedoAsync() => await ExecuteAsync();
 
     public int Undo() => UndoAsync().Result;
-    public async Task<int> UndoAsync() => await affairsService.DeleteAffairAsync(affair);
+    public async Task<int> UndoAsync()
+    {
+        bool success = await affairsService.DeleteAffairAsync(affair);
+        return success ? (int)MethodResults.Success : (int)MethodResults.Error;
+    }
 }

@@ -6,27 +6,18 @@ using AffairList.Core.Settings.Models;
 
 namespace AffairList.Infrastructure.Settings;
 
-public class LoadTimeManager
+public class LoadTimeManager(Settings settings)
 {
-    public readonly string LoadTimeFileFullPath;
+    public readonly string LoadTimeFileFullPath = $@"{Settings.programDirectoryFolderFullPath}\loadtime.json";
 
     private const string _priorityTag = "<priority>";
     private const string _priorityWord = "\"Priority\"";
     private const string _deadlineTag = "<deadline>";
 
     private LoadTimeModel _loadTime = null!;
-
-    private readonly Settings _settings;
-
     private FileLogger _fileLogger = null!;
 
     private INotificationService _notificationService = null!;
-
-    public LoadTimeManager(Settings settings)
-    {
-        _settings = settings;
-        LoadTimeFileFullPath = $@"{Settings.programDirectoryFolderFullPath}\loadtime.json";
-    }
 
     public void Initialize(INotificationService notificationService)
     {
@@ -53,7 +44,7 @@ public class LoadTimeManager
     }
     public void Notificate()
     {
-        if (!_settings.DoesNotificate() || !ShouldNotificate()) return;
+        if (!settings.DoesNotificate() || !ShouldNotificate()) return;
 
         _fileLogger.LogInformation($"{DateTime.Now} Starting notificating");
 
@@ -73,7 +64,7 @@ public class LoadTimeManager
                 DateTime deadline = DateTime.Parse(affairs[j].Substring(10, 11));
 
                 int daysLeft = (deadline.Date - DateTime.Now.Date).Days;
-                if (daysLeft > _settings.GetNotificationDayDistance()) continue;
+                if (daysLeft > settings.GetNotificationDayDistance()) continue;
 
                 if (daysLeft == 0)
                 {
@@ -100,7 +91,7 @@ public class LoadTimeManager
 
     private bool ShouldNotificate()
         => GetPreviousLoadTime().Date != DateTime.Now.Date ||
-        DateTime.Now.Hour - GetPreviousLoadTime().Hour >= _settings.GetNotificationHourDistance();
+        DateTime.Now.Hour - GetPreviousLoadTime().Hour >= settings.GetNotificationHourDistance();
 
     private static string AffairWithoutTags(string affair)
         => affair[10..].Replace(_priorityTag, _priorityWord);
