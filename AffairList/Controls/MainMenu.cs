@@ -18,10 +18,9 @@
             _settings = settings;
             _loadTimeManager = loadTimeManager;
             ParentElement = parent;
-            if (AffairListDebug.DEBUG)
-            {
+            #if DEBUG
                 ErrorHelpLab.Text = "DEBUG MOD ON";
-            }
+            #endif
         }
 
         private void CloseButton_Click(object sender, EventArgs e)
@@ -72,8 +71,7 @@
                 MessageBox.Show("Error, there is no list available");
                 return;
             }
-            using ToDoList toDoList = new ToDoList(_settings, ParentElement) { CanReplace = true };
-            toDoList.GetAffairs().BackColor = Color.White;
+            ToDoList toDoList = new ToDoList(_settings, ParentElement, Color.White) { CanReplace = true };
             ParentElement.OpenForm(toDoList, asDialog: true);
         }
 

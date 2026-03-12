@@ -16,29 +16,39 @@ namespace AffairList
         public IParentable ParentElement { get; set; }
         private Settings _settings;
 
-        public ToDoList(Settings settings, IParentable parent)
+        Point _dragOffset;
+
+        public ToDoList(Settings settings, IParentable parent, Color backColor = default)
         {
             InitializeComponent();
             ParentElement = parent;
             _settings = settings;
-            Task settingLocation = SetLocationAsync();
-            Task loadingText = LoadTextAsync();
-
-            SubscribeGlobalHook();
-            Task.WhenAll(settingLocation, loadingText);
-            SpecifyAffairsLocation();
+            
+            if (backColor != default)
+                Affairs.BackColor = backColor;
+            this.Load += ToDoList_Load;
         }
-        private async Task SetLocationAsync()
+
+        private async void ToDoList_Load(object? sender, EventArgs e)
+        {
+            await LoadSettingsAsync();
+            await LoadTextAsync();
+            SetLocation();
+
+            SpecifyAffairsLocation();
+            SaveAffairsLocation();
+            SubscribeGlobalHook();
+        }
+
+        private void SetLocation()
         {
             TopMost = true;
 
-            await LoadSettingsAsync();
-
             Width = _settings.screenWidth;
-            Height = _settings.screenHeight + _settings.screenHeight / 10;
+            Height = _settings.screenHeight;
 
             Affairs.AutoSize = false;
-            Affairs.Size = new Size(500, Height);
+            Affairs.Size = new Size(500, 0);
             Affairs.MaximumSize = new Size(500, 0);
             Affairs.MinimumSize = new Size(500, 0);
             Affairs.Padding = new Padding(0, 0, 180, 0);
@@ -53,6 +63,8 @@ namespace AffairList
         private async Task LoadSettingsAsync()
         {
             if (!_settings.SettingsFileExists()) await _settings.CreateSettingsFileAsync();
+            this.StartPosition = FormStartPosition.Manual;
+            this.Location = new Point(0, 0);
             Affairs.Left = _settings.GetProfileX();
             Affairs.Top = _settings.GetProfileY();
         }
@@ -119,51 +131,54 @@ namespace AffairList
             => await OnListMouseUpAsync(e);
         private void OnListMouseDown(MouseEventArgs e)
         {
-            if (CanReplace || _settings.CanBeAlwaysReplaced()) ParentElement.SetLastPoint(e);
+            if (CanReplace || _settings.CanBeAlwaysReplaced())
+                _dragOffset = new Point(Cursor.Position.X - Affairs.Left, Cursor.Position.Y - Affairs.Top);
         }
         private void OnListMouseMove(MouseEventArgs e)
         {
             if ((CanReplace || _settings.CanBeAlwaysReplaced()) && e.Button == MouseButtons.Left)
             {
-                ParentElement.MoveChildForm(e);
+                int newLeft = Cursor.Position.X - _dragOffset.X;
+                int newTop = Cursor.Position.Y - _dragOffset.Y;
 
-                SpecifyListLocation();
+                newLeft = Math.Clamp(newLeft, 0, _settings.screenWidth - Affairs.Width + Affairs.Padding.Right);
+                newTop = Math.Clamp(newTop, 0, _settings.screenHeight - Affairs.Height);
+
+                Affairs.Left = newLeft;
+                Affairs.Top = newTop;
+
+                SaveAffairsLocation();
                 TopMost = true;
             }
         }
+        // УБРАТЬ SETTINGSMODEL, раскидать логику на разные классы.
+        // Убрать логику SystemEvents_SessionSwitch в program.cs, поменять на булевую переменную с событием
         private void SpecifyAffairsLocation()
         {
-            if (Affairs.Left + Affairs.Width - 310 >= _settings.screenWidth)
+            if (Affairs.Left > this.Width - Affairs.Width + Affairs.Padding.Right)
             {
-                Affairs.Left = _settings.screenWidth - Affairs.Width - Affairs.Width / 4 + 315;
+                Affairs.Left = this.Width - Affairs.Width + Affairs.Padding.Right;
             }
-            if (Affairs.Top + Affairs.Height >= _settings.screenHeight)
+            if (Affairs.Top > this.Height - Affairs.Height)
             {
-                Affairs.Top = _settings.screenHeight - Affairs.Height * 5 - Affairs.Height / 2;
+                Affairs.Top = this.Height - Affairs.Height;
             }
-            _settings.SetProfileX(Left + Affairs.Left);
-            _settings.SetProfileY(Top + Affairs.Top);
+            if (Affairs.Left < 0)
+            {
+                Affairs.Left = 0;
+            }
+            if (Affairs.Top < 0)
+            {
+                Affairs.Top = 0;
+            }
+        }
+        private void SaveAffairsLocation()
+        {
+            _settings.SetProfileX(Affairs.Left);
+            _settings.SetProfileY(Affairs.Top);
             _settings.SaveSettings();
         }
-        private void SpecifyListLocation()
-        {
-            if (Left + Affairs.Left + 310 >= _settings.screenWidth)
-            {
-                Left = _settings.screenWidth - 310 - Affairs.Left;
-            }
-            else if (Affairs.Left + Left <= 0)
-            {
-                Left = -Affairs.Left;
-            }
-            if (Top + Affairs.Top + Affairs.Height - 40 >= _settings.screenHeight)
-            {
-                Top = _settings.screenHeight - Affairs.Top - Affairs.Height + 40;
-            }
-            else if (Affairs.Top + Top <= 0)
-            {
-                Top = -Affairs.Top;
-            }
-        }
+
         private async Task OnListMouseUpAsync(MouseEventArgs e)
         {
             _settings.SetProfileX(Left + Affairs.Left);
@@ -176,10 +191,6 @@ namespace AffairList
                 CanReplace = false;
                 return;
             }
-        }
-        public Label GetAffairs()
-        {
-            return Affairs;
         }
 
         private void ToDoList_FormClosing(object sender, FormClosingEventArgs e)

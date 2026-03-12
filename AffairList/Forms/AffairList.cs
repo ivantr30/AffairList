@@ -102,24 +102,20 @@
             _childForm = form;
             if (asDialog)
             {
-                try
+                if (!_childForm.IsDisposed)
                 {
                     _childForm.ShowDialog();
                 }
-                catch (ObjectDisposedException) { }
-                finally
-                {
-                    AfterFormClosed();
-                }
+                AfterFormClosed();
             }
             else
             {
-                try
+                if (!_childForm.IsDisposed)
                 {
                     _childForm.Show();
                     _childForm.FormClosed += AfterFormClosed;
                 }
-                catch(ObjectDisposedException) { AfterFormClosed(); }
+                else AfterFormClosed();
             }
         }
         private bool OnControlRemove(bool closing)

@@ -36,13 +36,12 @@ namespace AffairList
                 _settings = new SettingsModel();
             }
         }
-        // УБРАТЬ SETTINGSMODEL, раскидать логику на разные классы. Убрать логику SystemEvents_SessionSwitch в program.cs, поменять на булевую переменную с событием
+        
         static Settings()
         {
-            if (AffairListDebug.DEBUG)
-            {
+            #if DEBUG
                 programDirectoryFolderFullPath += @"Debug\";
-            }
+            #endif
             listsDirectoryFullPath = $@"{programDirectoryFolderFullPath}profiles\";
             _defaultListFileFullPath = $@"{listsDirectoryFullPath}list.txt";
             settingsFileFullPath = $@"{programDirectoryFolderFullPath}settings.json";
