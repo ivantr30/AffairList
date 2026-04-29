@@ -1,4 +1,5 @@
-﻿namespace AffairList
+﻿using AffairList.Services.Managers;
+namespace AffairList
 {
     public partial class MainMenu : UserControl, IChildable
     {
@@ -57,22 +58,22 @@
 
         private void OpenListButton_Click(object sender, EventArgs e)
         {
-            if (!_settings.CurrentListNotNull())
+            if (!_settings.CurrentListExists())
             {
                 MessageBox.Show("Error, there is no list available");
                 return;
             }
-            ParentElement.OpenForm(new ToDoList(_settings, ParentElement), asDialog: false);
+            ParentElement.OpenFormAsync(new ToDoList(_settings, ParentElement), asDialog: false);
         }
         private void ReplaceAffairListButton_Click(object sender, EventArgs e)
         {
-            if (!_settings.CurrentListNotNull())
+            if (!_settings.CurrentListExists())
             {
                 MessageBox.Show("Error, there is no list available");
                 return;
             }
             ToDoList toDoList = new ToDoList(_settings, ParentElement, Color.White) { CanReplace = true };
-            ParentElement.OpenForm(toDoList, asDialog: true);
+            ParentElement.OpenFormAsync(toDoList, asDialog: true);
         }
 
         private async void ClearListButton_Click(object sender, EventArgs e)
@@ -86,12 +87,12 @@
 
             if (result == DialogResult.Yes)
             {
-                if (!_settings.CurrentListNotNull())
+                if (!_settings.CurrentListExists())
                 {
                     MessageBox.Show("Error, list file does not exist");
                     return;
                 }
-                await File.WriteAllTextAsync(_settings.GetCurrentProfile(), "");
+                await File.WriteAllTextAsync(_settings.Data.CurrentProfileFullPath, "");
                 MessageBox.Show("The list is cleared");
             }
         }
@@ -112,7 +113,7 @@
             {
                 _affairsManager = new AffairsManager(_settings, ParentElement);
             }
-            ParentElement.SetControl(_affairsManager);
+            await ParentElement.SetControlAsync(_affairsManager);
         }
         private void SettingsButton_Click(object sender, EventArgs e)
         {
@@ -120,7 +121,7 @@
             {
                 _settingsManager = new SettingsManager(_settings, ParentElement);
             }
-            ParentElement.SetControl(_settingsManager);
+            ParentElement.SetControlAsync(_settingsManager);
         }
         private void ChangeProfileButton_Click(object sender, EventArgs e)
         {
@@ -128,7 +129,7 @@
             {
                 _profileManager = new ProfileManager(_settings, ParentElement);
             }
-            ParentElement.SetControl(_profileManager);
+            ParentElement.SetControlAsync(_profileManager);
         }
         private void HotKeyButton_Click(object sender, EventArgs e)
         {
@@ -136,14 +137,15 @@
             {
                 _hotkeySettingsManager = new HotKeySettingsManager(_settings, ParentElement);
             }
-            ParentElement.SetControl(_hotkeySettingsManager);
+            ParentElement.SetControlAsync(_hotkeySettingsManager);
         }
 
-        public void OnAddition() 
+        public async Task OnAdditionAsync() 
         {
+            // Сделать асинхронным
             _loadTimeManager.Notificate();
         }
 
-        public bool OnRemoving(bool closing = false) => true;
+        public async Task<bool> OnRemovingAsync(bool closing = false) => true;
     }
 }

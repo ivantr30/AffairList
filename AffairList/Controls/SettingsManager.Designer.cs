@@ -511,6 +511,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(panel1);
+            DoubleBuffered = true;
             Name = "SettingsManager";
             Size = new Size(440, 508);
             panel1.ResumeLayout(false);

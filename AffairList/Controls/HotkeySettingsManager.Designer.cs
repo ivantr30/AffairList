@@ -51,9 +51,9 @@
             HotKeySettingsLab.AutoSize = true;
             HotKeySettingsLab.Font = new Font("Microsoft Sans Serif", 30F);
             HotKeySettingsLab.ImeMode = ImeMode.NoControl;
-            HotKeySettingsLab.Location = new Point(143, 59);
+            HotKeySettingsLab.Location = new Point(125, 44);
             HotKeySettingsLab.Name = "HotKeySettingsLab";
-            HotKeySettingsLab.Size = new Size(214, 58);
+            HotKeySettingsLab.Size = new Size(171, 46);
             HotKeySettingsLab.TabIndex = 1;
             HotKeySettingsLab.Text = "HotKeys";
             HotKeySettingsLab.TextAlign = ContentAlignment.MiddleCenter;
@@ -68,9 +68,8 @@
             NameBackground.Controls.Add(HotKeySettingsLab);
             NameBackground.Dock = DockStyle.Top;
             NameBackground.Location = new Point(0, 0);
-            NameBackground.Margin = new Padding(3, 4, 3, 4);
             NameBackground.Name = "NameBackground";
-            NameBackground.Size = new Size(503, 167);
+            NameBackground.Size = new Size(440, 125);
             NameBackground.TabIndex = 0;
             NameBackground.MouseDown += NameBackground_MouseDown;
             NameBackground.MouseMove += NameBackground_MouseMove;
@@ -80,9 +79,9 @@
             MinimizeButton.AutoSize = true;
             MinimizeButton.Font = new Font("Microsoft Sans Serif", 25F, FontStyle.Bold);
             MinimizeButton.ImeMode = ImeMode.NoControl;
-            MinimizeButton.Location = new Point(413, 0);
+            MinimizeButton.Location = new Point(361, 0);
             MinimizeButton.Name = "MinimizeButton";
-            MinimizeButton.Size = new Size(35, 48);
+            MinimizeButton.Size = new Size(29, 39);
             MinimizeButton.TabIndex = 3;
             MinimizeButton.Text = "-";
             MinimizeButton.Click += MinimizeButton_Click;
@@ -94,9 +93,9 @@
             CloseButton.AutoSize = true;
             CloseButton.Font = new Font("Microsoft Sans Serif", 25F, FontStyle.Bold);
             CloseButton.ImeMode = ImeMode.NoControl;
-            CloseButton.Location = new Point(454, 0);
+            CloseButton.Location = new Point(397, 0);
             CloseButton.Name = "CloseButton";
-            CloseButton.Size = new Size(49, 48);
+            CloseButton.Size = new Size(41, 39);
             CloseButton.TabIndex = 2;
             CloseButton.Text = "X";
             CloseButton.Click += CloseButton_Click;
@@ -109,10 +108,10 @@
             BackKeyType.Font = new Font("Microsoft Sans Serif", 13F);
             BackKeyType.ForeColor = Color.White;
             BackKeyType.ImeMode = ImeMode.NoControl;
-            BackKeyType.Location = new Point(351, 224);
+            BackKeyType.Location = new Point(307, 168);
             BackKeyType.Name = "BackKeyType";
             BackKeyType.RightToLeft = RightToLeft.No;
-            BackKeyType.Size = new Size(138, 25);
+            BackKeyType.Size = new Size(121, 19);
             BackKeyType.TabIndex = 19;
             BackKeyType.Text = "F6";
             BackKeyType.TextAlign = ContentAlignment.BottomRight;
@@ -127,9 +126,9 @@
             BackKeyLab.Font = new Font("Microsoft Sans Serif", 13F);
             BackKeyLab.ForeColor = Color.White;
             BackKeyLab.ImeMode = ImeMode.NoControl;
-            BackKeyLab.Location = new Point(14, 224);
+            BackKeyLab.Location = new Point(12, 168);
             BackKeyLab.Name = "BackKeyLab";
-            BackKeyLab.Size = new Size(101, 26);
+            BackKeyLab.Size = new Size(83, 22);
             BackKeyLab.TabIndex = 18;
             BackKeyLab.Text = "Back key";
             BackKeyLab.TextAlign = ContentAlignment.MiddleCenter;
@@ -140,10 +139,10 @@
             CloseKeyType.Font = new Font("Microsoft Sans Serif", 13F);
             CloseKeyType.ForeColor = Color.White;
             CloseKeyType.ImeMode = ImeMode.NoControl;
-            CloseKeyType.Location = new Point(351, 182);
+            CloseKeyType.Location = new Point(307, 136);
             CloseKeyType.Name = "CloseKeyType";
             CloseKeyType.RightToLeft = RightToLeft.No;
-            CloseKeyType.Size = new Size(138, 25);
+            CloseKeyType.Size = new Size(121, 19);
             CloseKeyType.TabIndex = 17;
             CloseKeyType.Text = "F7";
             CloseKeyType.TextAlign = ContentAlignment.BottomRight;
@@ -158,9 +157,9 @@
             CloseKeyLab.Font = new Font("Microsoft Sans Serif", 13F);
             CloseKeyLab.ForeColor = Color.White;
             CloseKeyLab.ImeMode = ImeMode.NoControl;
-            CloseKeyLab.Location = new Point(14, 182);
+            CloseKeyLab.Location = new Point(12, 136);
             CloseKeyLab.Name = "CloseKeyLab";
-            CloseKeyLab.Size = new Size(108, 26);
+            CloseKeyLab.Size = new Size(89, 22);
             CloseKeyLab.TabIndex = 16;
             CloseKeyLab.Text = "Close key";
             CloseKeyLab.TextAlign = ContentAlignment.MiddleCenter;
@@ -178,9 +177,8 @@
             panel1.Controls.Add(BackButton);
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
-            panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(503, 601);
+            panel1.Size = new Size(440, 451);
             panel1.TabIndex = 3;
             // 
             // ConfirmButton
@@ -188,10 +186,9 @@
             ConfirmButton.BackColor = Color.FromArgb(173, 102, 213);
             ConfirmButton.FlatStyle = FlatStyle.Flat;
             ConfirmButton.ImeMode = ImeMode.NoControl;
-            ConfirmButton.Location = new Point(218, 555);
-            ConfirmButton.Margin = new Padding(3, 4, 3, 4);
+            ConfirmButton.Location = new Point(191, 416);
             ConfirmButton.Name = "ConfirmButton";
-            ConfirmButton.Size = new Size(86, 32);
+            ConfirmButton.Size = new Size(75, 24);
             ConfirmButton.TabIndex = 11;
             ConfirmButton.Text = "Confirm";
             ConfirmButton.UseVisualStyleBackColor = false;
@@ -202,10 +199,9 @@
             ResetButton.BackColor = Color.FromArgb(173, 102, 213);
             ResetButton.FlatStyle = FlatStyle.Flat;
             ResetButton.ImeMode = ImeMode.NoControl;
-            ResetButton.Location = new Point(311, 555);
-            ResetButton.Margin = new Padding(3, 4, 3, 4);
+            ResetButton.Location = new Point(272, 416);
             ResetButton.Name = "ResetButton";
-            ResetButton.Size = new Size(86, 32);
+            ResetButton.Size = new Size(75, 24);
             ResetButton.TabIndex = 10;
             ResetButton.Text = "Reset";
             ResetButton.UseVisualStyleBackColor = false;
@@ -216,10 +212,9 @@
             BackButton.BackColor = Color.FromArgb(173, 102, 213);
             BackButton.FlatStyle = FlatStyle.Flat;
             BackButton.ImeMode = ImeMode.NoControl;
-            BackButton.Location = new Point(403, 555);
-            BackButton.Margin = new Padding(3, 4, 3, 4);
+            BackButton.Location = new Point(353, 416);
             BackButton.Name = "BackButton";
-            BackButton.Size = new Size(86, 32);
+            BackButton.Size = new Size(75, 24);
             BackButton.TabIndex = 9;
             BackButton.Text = "Back";
             BackButton.UseVisualStyleBackColor = false;
@@ -227,12 +222,12 @@
             // 
             // HotKeySettingsManager
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(panel1);
-            Margin = new Padding(3, 4, 3, 4);
+            DoubleBuffered = true;
             Name = "HotKeySettingsManager";
-            Size = new Size(503, 601);
+            Size = new Size(440, 451);
             NameBackground.ResumeLayout(false);
             NameBackground.PerformLayout();
             panel1.ResumeLayout(false);

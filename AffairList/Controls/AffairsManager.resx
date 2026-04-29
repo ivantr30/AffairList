@@ -126,10 +126,10 @@
     <value>Microsoft Sans Serif, 25pt, style=Bold</value>
   </data>
   <data name="MinimizeButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>553, 0</value>
+    <value>484, 0</value>
   </data>
   <data name="MinimizeButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>35, 48</value>
+    <value>29, 39</value>
   </data>
   <data name="MinimizeButton.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -160,10 +160,10 @@
     <value>Microsoft Sans Serif, 25pt, style=Bold</value>
   </data>
   <data name="CloseButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>594, 0</value>
+    <value>520, 0</value>
   </data>
   <data name="CloseButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>49, 48</value>
+    <value>41, 39</value>
   </data>
   <data name="CloseButton.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -193,10 +193,10 @@
     <value>Microsoft Sans Serif, 30pt</value>
   </data>
   <data name="AffairsLab.Location" type="System.Drawing.Point, System.Drawing">
-    <value>246, 20</value>
+    <value>215, 15</value>
   </data>
   <data name="AffairsLab.Size" type="System.Drawing.Size, System.Drawing">
-    <value>167, 58</value>
+    <value>133, 46</value>
   </data>
   <data name="AffairsLab.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -225,12 +225,8 @@
   <data name="NameBackground.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="NameBackground.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
   <data name="NameBackground.Size" type="System.Drawing.Size, System.Drawing">
-    <value>643, 101</value>
+    <value>563, 76</value>
   </data>
   <data name="NameBackground.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -248,13 +244,10 @@
     <value>10</value>
   </data>
   <data name="ProfileBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>425, 114</value>
-  </data>
-  <data name="ProfileBox.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
+    <value>372, 86</value>
   </data>
   <data name="ProfileBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>204, 28</value>
+    <value>179, 23</value>
   </data>
   <data name="ProfileBox.TabIndex" type="System.Int32, mscorlib">
     <value>11</value>
@@ -277,17 +270,11 @@
   <data name="Affairs.HorizontalScrollbar" type="System.Boolean, mscorlib">
     <value>True</value>
   </data>
-  <data name="Affairs.ItemHeight" type="System.Int32, mscorlib">
-    <value>28</value>
-  </data>
   <data name="Affairs.Location" type="System.Drawing.Point, System.Drawing">
-    <value>14, 156</value>
-  </data>
-  <data name="Affairs.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
+    <value>12, 117</value>
   </data>
   <data name="Affairs.Size" type="System.Drawing.Size, System.Drawing">
-    <value>615, 228</value>
+    <value>539, 172</value>
   </data>
   <data name="Affairs.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -308,10 +295,7 @@
     <value>Microsoft Sans Serif, 15pt</value>
   </data>
   <data name="AffairInput.Location" type="System.Drawing.Point, System.Drawing">
-    <value>14, 393</value>
-  </data>
-  <data name="AffairInput.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
+    <value>12, 295</value>
   </data>
   <data name="AffairInput.PlaceholderText" xml:space="preserve">
     <value>Enter the name of a new affair</value>
@@ -320,7 +304,7 @@
     <value>Horizontal</value>
   </data>
   <data name="AffairInput.Size" type="System.Drawing.Size, System.Drawing">
-    <value>615, 36</value>
+    <value>539, 30</value>
   </data>
   <data name="AffairInput.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -341,13 +325,10 @@
     <value>Flat</value>
   </data>
   <data name="RenameAffairButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>409, 441</value>
-  </data>
-  <data name="RenameAffairButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
+    <value>358, 331</value>
   </data>
   <data name="RenameAffairButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>74, 37</value>
+    <value>65, 28</value>
   </data>
   <data name="RenameAffairButton.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -371,13 +352,10 @@
     <value>Flat</value>
   </data>
   <data name="AddDeadlineButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>137, 441</value>
-  </data>
-  <data name="AddDeadlineButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
+    <value>120, 331</value>
   </data>
   <data name="AddDeadlineButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>114, 37</value>
+    <value>100, 28</value>
   </data>
   <data name="AddDeadlineButton.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -404,13 +382,10 @@
     <value>Segoe UI, 9pt</value>
   </data>
   <data name="PriorityButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>14, 441</value>
-  </data>
-  <data name="PriorityButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
+    <value>12, 331</value>
   </data>
   <data name="PriorityButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>117, 37</value>
+    <value>102, 28</value>
   </data>
   <data name="PriorityButton.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -434,13 +409,10 @@
     <value>Flat</value>
   </data>
   <data name="DeleteButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>334, 441</value>
-  </data>
-  <data name="DeleteButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
+    <value>292, 331</value>
   </data>
   <data name="DeleteButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>69, 37</value>
+    <value>60, 28</value>
   </data>
   <data name="DeleteButton.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
@@ -464,13 +436,10 @@
     <value>Flat</value>
   </data>
   <data name="BackButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>566, 441</value>
-  </data>
-  <data name="BackButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
+    <value>495, 331</value>
   </data>
   <data name="BackButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>64, 37</value>
+    <value>56, 28</value>
   </data>
   <data name="BackButton.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
@@ -494,13 +463,10 @@
     <value>Flat</value>
   </data>
   <data name="ClearButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>490, 441</value>
-  </data>
-  <data name="ClearButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
+    <value>429, 331</value>
   </data>
   <data name="ClearButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>69, 37</value>
+    <value>60, 28</value>
   </data>
   <data name="ClearButton.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -524,13 +490,10 @@
     <value>Flat</value>
   </data>
   <data name="AddAffairButton.Location" type="System.Drawing.Point, System.Drawing">
-    <value>258, 441</value>
-  </data>
-  <data name="AddAffairButton.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
+    <value>226, 331</value>
   </data>
   <data name="AddAffairButton.Size" type="System.Drawing.Size, System.Drawing">
-    <value>69, 37</value>
+    <value>60, 28</value>
   </data>
   <data name="AddAffairButton.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -556,11 +519,8 @@
   <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 0</value>
   </data>
-  <data name="panel1.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
-  </data>
   <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>643, 493</value>
+    <value>563, 370</value>
   </data>
   <data name="panel1.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -581,13 +541,10 @@
     <value>True</value>
   </metadata>
   <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>8, 20</value>
-  </data>
-  <data name="$this.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>3, 4, 3, 4</value>
+    <value>7, 15</value>
   </data>
   <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>643, 493</value>
+    <value>563, 370</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>AffairsManager</value>

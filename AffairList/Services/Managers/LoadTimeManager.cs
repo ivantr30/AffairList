@@ -1,8 +1,6 @@
-﻿using Newtonsoft.Json;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Text.Json;
 
-namespace AffairList
+namespace AffairList.Services.Managers
 {
     public class LoadTimeManager
     {
@@ -43,7 +41,7 @@ namespace AffairList
             }
             try
             {
-                _loadTime = JsonConvert.DeserializeObject<LoadTimeModel>
+                _loadTime = JsonSerializer.Deserialize<LoadTimeModel>
                         (File.ReadAllText(LoadTimeFileFullPath))!;
             }
             catch
@@ -55,7 +53,7 @@ namespace AffairList
         }
         public void Notificate()
         {
-            if (!_settings.DoesNotificate() || !ShouldNotificate()) return;
+            if (!_settings.Data.DoesNotificate || !ShouldNotificate()) return;
 
             _fileLogger.LogInformation($"{DateTime.Now} Starting notificating");
 
@@ -72,10 +70,10 @@ namespace AffairList
                 {
                     if (!affairs[j].StartsWith(_deadlineTag)) continue;
 
-                    DateTime deadline = DateTime.Parse(affairs[j].Substring(10, 11));
+                    DateTime deadline = DateTime.Parse(affairs[j].AsSpan(10, 11));
 
                     int daysLeft = (deadline.Date - DateTime.Now.Date).Days;
-                    if (daysLeft > _settings.GetNotificationDayDistance()) continue;
+                    if (daysLeft > _settings.Data.NotificationDayDistance) continue;
 
                     if (daysLeft == 0)
                     {
@@ -110,7 +108,7 @@ namespace AffairList
         private bool ShouldNotificate()
         {
             return (GetPreviousLoadTime().Date != DateTime.Now.Date) ||
-            (DateTime.Now.Hour - GetPreviousLoadTime().Hour >= _settings.GetNotificationHourDistance());
+            (DateTime.Now.Hour - GetPreviousLoadTime().Hour >= _settings.Data.NotificationHourDistance);
         }
         private string AffairWithoutTags(string affair)
         {
@@ -119,19 +117,19 @@ namespace AffairList
         private void WriteBaseTime()
         {
             _loadTime = new LoadTimeModel();
-            File.WriteAllText(LoadTimeFileFullPath, JsonConvert.SerializeObject(_loadTime));
+            File.WriteAllText(LoadTimeFileFullPath, JsonSerializer.Serialize(_loadTime));
             _fileLogger.LogInformation($"{DateTime.Now} load time was set to base");
         }
 
         public async Task SaveTimeAsync()
         {
             SetPreviousLoadTime(DateTime.Now);
-            await File.WriteAllTextAsync(LoadTimeFileFullPath, JsonConvert.SerializeObject(_loadTime));
+            await File.WriteAllTextAsync(LoadTimeFileFullPath, JsonSerializer.Serialize(_loadTime));
         }
         public void SaveTime()
         {
             SetPreviousLoadTime(DateTime.Now);
-            File.WriteAllText(LoadTimeFileFullPath, JsonConvert.SerializeObject(_loadTime));
+            File.WriteAllText(LoadTimeFileFullPath, JsonSerializer.Serialize(_loadTime));
         }
 
         public bool LoadTimeFileExist()

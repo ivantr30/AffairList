@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualBasic;
+using AffairList.Services.Managers;
 namespace AffairList
 {
     public partial class ProfileManager : UserControl, IChildable, IKeyPreviewable
@@ -43,7 +44,7 @@ namespace AffairList
             }
             if (Profiles.Items.Count > 0)
             {
-                Profiles.SelectedItem = new FileInfo(_settings.GetCurrentProfile()).Name;
+                Profiles.SelectedItem = new FileInfo(_settings.Data.CurrentProfileFullPath).Name;
             }
         }
         private bool ContainKeyWords(string fileName)
@@ -58,7 +59,7 @@ namespace AffairList
         private void MinimizeButton_Click(object sender, EventArgs e)
             => ParentElement.MinimizeForm();
 
-        private void BackButton_Click(object sender, EventArgs e) => ParentElement.Return();
+        private void BackButton_Click(object sender, EventArgs e) => ParentElement.ReturnAsync();
 
         private void CloseButtonLab_Click(object sender, EventArgs e) => ParentElement.Exit();
 
@@ -191,9 +192,9 @@ namespace AffairList
 
         private async void SelectProfileButton_Click(object sender, EventArgs e)
         {
-            _settings.SetCurrentProfile(_profileLines
+            _settings.Data.CurrentProfileFullPath = _profileLines
                 .Where(x => x.EndsWith(Profiles.SelectedItem!.ToString()!))
-                .First());
+                .First();
             await _settings.SaveSettingsAsync();
         }
 
@@ -240,9 +241,9 @@ namespace AffairList
             }
 
             newProfileName = $@"{selectedProfile.Directory!.FullName}\{newProfileName}";
-            if (_settings.GetCurrentProfile() == selectedProfile.FullName)
+            if (_settings.Data.CurrentProfileFullPath == selectedProfile.FullName)
             {
-                _settings.SetCurrentProfile(newProfileName);
+                _settings.Data.CurrentProfileFullPath = newProfileName;
                 await _settings.SaveSettingsAsync();
             }
             File.Move(selectedProfile.FullName, newProfileName);
@@ -283,9 +284,9 @@ namespace AffairList
             {
                 newProfileName += selectedProfileInfo.Name.Replace(".txt", _priorityWord);
             }
-            if (selectedProfileInfo.FullName == _settings.GetCurrentProfile())
+            if (selectedProfileInfo.FullName == _settings.Data.CurrentProfileFullPath)
             {
-                _settings.SetCurrentProfile(newProfileName);
+                _settings.Data.CurrentProfileFullPath = newProfileName;
                 await _settings.SaveSettingsAsync();
             }
 
@@ -299,11 +300,13 @@ namespace AffairList
             exportPicker.ShowDialog();
         }
 
-        public void OnAddition()
+        public async Task OnAdditionAsync()
         {
+            SuspendLayout();
             LoadProfiles();
+            ResumeLayout();
         }
 
-        public bool OnRemoving(bool closing = false) => true;
+        public async Task<bool> OnRemovingAsync(bool closing = false) => true;
     }
 }

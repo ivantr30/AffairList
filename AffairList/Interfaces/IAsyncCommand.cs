@@ -1,6 +1,6 @@
 ﻿namespace AffairList.Interfaces
 {
-    public interface IAsyncCommandAf : ICommandAf
+    public interface IAsyncCommand
     {
         Task<int> ExecuteAsync();
         Task<int> UndoAsync();

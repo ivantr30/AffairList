@@ -3,7 +3,7 @@
     public interface IChildable
     {
         IParentable ParentElement { get; }
-        void OnAddition();
-        bool OnRemoving(bool closing = false);
+        Task OnAdditionAsync();
+        Task<bool> OnRemovingAsync(bool closing = false);
     }
 }

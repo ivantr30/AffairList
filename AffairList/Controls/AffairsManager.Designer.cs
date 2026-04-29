@@ -15,7 +15,7 @@
         {
             if (disposing && (components != null))
             {
-                _lines = null;
+                _affairsCollection = null;
                 KeyDownHandlers = null;
                 KeyPressHandlers = null;
                 KeyUpHandlers = null;
@@ -185,6 +185,7 @@
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(panel1);
+            DoubleBuffered = true;
             Name = "AffairsManager";
             NameBackground.ResumeLayout(false);
             NameBackground.PerformLayout();

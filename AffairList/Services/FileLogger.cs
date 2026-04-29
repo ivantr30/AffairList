@@ -9,14 +9,34 @@
     public class FileLogger
     {
         private string _filePath;
+        private SemaphoreSlim _semaphoreSlim = new(1,1);
         public FileLogger(string filePath)
         {
             _filePath = filePath;
         }
         public void Log(LogType logType, string msg)
         {
-            if (!File.Exists(_filePath)) throw new FileNotFoundException();
-            File.AppendAllText(_filePath, $"{logType.ToString()} | {msg} \n");
+            if (!File.Exists(_filePath))
+            {
+                try
+                {
+                    File.Create(_filePath);
+                }
+                catch(Exception e)
+                {
+                    MessageBox.Show($"Log file cannot be created, error - {e.ToString()}, exiting...");
+                    Application.Exit();
+                }
+            }
+            _semaphoreSlim.Wait();
+            try
+            { 
+                File.AppendAllText(_filePath, $"{logType.ToString()} | {msg} \n");
+            }
+            finally
+            {
+                _semaphoreSlim.Release();
+            }
         }
         public void LogInformation(string msg)
         {
@@ -33,7 +53,15 @@
         public async Task LogAsync(LogType logType, string msg)
         {
             if (!File.Exists(_filePath)) throw new FileNotFoundException();
-            await File.AppendAllTextAsync(_filePath, $"{logType.ToString()} | {msg}");
+            await _semaphoreSlim.WaitAsync();
+            try
+            {
+                await File.AppendAllTextAsync(_filePath, $"{logType.ToString()} | {msg}").ConfigureAwait(false);
+            }
+            finally
+            {
+                _semaphoreSlim.Release();
+            }
         }
         public async Task LogInformationAsync(string msg)
         {

@@ -2,10 +2,10 @@
 {
     public interface IParentable
     {
-        void SetControl(Control control);
-        void OpenForm(Form form, bool asDialog);
+        Task SetControlAsync(Control control);
+        Task OpenFormAsync(Form form, bool asDialog);
         void Exit();
-        void Return();
+        Task ReturnAsync();
         void MinimizeForm();
         void SetLastPoint(MouseEventArgs e);
         void MoveForm(MouseEventArgs e);

@@ -198,6 +198,7 @@
             resources.ApplyResources(this, "$this");
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(panel1);
+            DoubleBuffered = true;
             Name = "ProfileManager";
             KeyDown += ChangeProfileForm_KeyDown;
             panel1.ResumeLayout(false);

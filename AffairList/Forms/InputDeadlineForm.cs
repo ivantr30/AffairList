@@ -2,7 +2,7 @@
 {
     public partial class InputDeadlineForm : Form
     {
-        public DateTime deadline { get; set; }
+        public DateOnly? deadline { get; set; } = null;
 
         public event Action OnConfirm;
         public InputDeadlineForm()
@@ -16,7 +16,7 @@
         private void ConfirmButton_Click(object sender, EventArgs e) => Confirm();
         private void Confirm()
         {
-            deadline = DeadlinePicker.Value;
+            deadline = new DateOnly(DeadlinePicker.Value.Year, DeadlinePicker.Value.Month, DeadlinePicker.Value.Day);
             OnConfirm?.Invoke();
             Close();
         }

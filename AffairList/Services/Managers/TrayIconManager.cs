@@ -1,6 +1,4 @@
-﻿using System.Reflection;
-
-namespace AffairList
+﻿namespace AffairList.Services.Managers
 {
     public class TrayIconManager
     {

@@ -73,6 +73,7 @@
             Controls.Add(OkButton);
             Controls.Add(BackButton);
             Controls.Add(ProfilePicker);
+            DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
             Name = "ProfilesExportPicker";
             ShowIcon = false;

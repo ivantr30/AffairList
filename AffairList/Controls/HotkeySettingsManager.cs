@@ -1,9 +1,11 @@
-﻿namespace AffairList
+﻿using AffairList.Services.Managers;
+
+namespace AffairList
 {
     public partial class HotKeySettingsManager : UserControl, IChildable
     {
         private bool _isConfirmed = true;
-        private Keys _сloseKey;
+        private Keys _closekey;
         private Keys _returnKey;
 
         private Settings _settings;
@@ -20,10 +22,10 @@
         }
         private void LoadSettings()
         {
-            _сloseKey = _settings.GetCloseKey();
-            _returnKey = _settings.GetReturnKey();
-            CloseKeyType.Text = _settings.GetCloseKey().ToString();
-            BackKeyType.Text = _settings.GetReturnKey().ToString();
+            _closekey = _settings.Data.CloseKey;
+            _returnKey = _settings.Data.ReturnKey;
+            CloseKeyType.Text = _settings.Data.CloseKey.ToString();
+            BackKeyType.Text = _settings.Data.ReturnKey.ToString();
         }
         private void BackButton_Click(object sender, EventArgs e)
         {
@@ -34,7 +36,7 @@
                 MessageBoxButtons.YesNo);
                 if (saveOrNot == DialogResult.No) return;
             }
-            ParentElement.Return();
+            ParentElement.ReturnAsync();
         }
 
         private void CloseButton_Click(object sender, EventArgs e) => ParentElement.Exit();
@@ -48,8 +50,8 @@
                 MessageBoxButtons.YesNo);
             if (resetOrNot == DialogResult.No) return;
 
-            _settings.SetCloseKey(Keys.F7);
-            _settings.SetReturnKey(Keys.F6);
+            _settings.Data.CloseKey = Keys.F7;
+            _settings.Data.ReturnKey = Keys.F6;
             await _settings.SaveSettingsAsync();
 
             CloseKeyType.Text = "F7";
@@ -72,14 +74,14 @@
            if(inputKey == _returnKey)
            {
                 BackKeyType.Text = CloseKeyType.Text;
-                SwitchKeys(ref _returnKey, ref _сloseKey, SetReturnKey);
+                SwitchKeys(ref _returnKey, ref _closekey, SetReturnKey);
            }
 
-            _сloseKey = inputKey;
+            _closekey = inputKey;
 
             _hotkeysUpdater -= SetCloseKey;
             _hotkeysUpdater += SetCloseKey;
-            CloseKeyType.Text = _сloseKey.ToString();
+            CloseKeyType.Text = _closekey.ToString();
             _isConfirmed = false;
         }
         
@@ -97,12 +99,12 @@
 
         private void SetCloseKey()
         {
-            _settings.SetCloseKey(_сloseKey);
+            _settings.Data.CloseKey = _closekey;
         }
 
         private void SetReturnKey()
         {
-            _settings.SetReturnKey(_returnKey);
+            _settings.Data.ReturnKey = _returnKey;
         }
 
         private void BackKeyType_DoubleClick(object sender, EventArgs e)
@@ -111,10 +113,10 @@
 
             if (IsKeyEscape(ref inputKey)) return;
 
-            if (inputKey == _сloseKey)
+            if (inputKey == _closekey)
             {
                 CloseKeyType.Text = BackKeyType.Text;
-                SwitchKeys(ref _сloseKey, ref _returnKey, SetCloseKey);
+                SwitchKeys(ref _closekey, ref _returnKey, SetCloseKey);
             }
 
             _returnKey = inputKey;
@@ -185,11 +187,13 @@
         private void HotKeySettingsLab_MouseDown(object sender, MouseEventArgs e)
             => ParentElement.SetLastPoint(e);
 
-        public void OnAddition()
+        public async Task OnAdditionAsync()
         {
+            SuspendLayout();
             LoadSettings();
+            ResumeLayout();
         }
 
-        public bool OnRemoving(bool closing = false) => true;
+        public async Task<bool> OnRemovingAsync(bool closing = false) => true;
     }
 }

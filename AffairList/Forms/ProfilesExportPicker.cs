@@ -1,4 +1,5 @@
-﻿namespace AffairList
+﻿using AffairList.Services.Managers;
+namespace AffairList
 {
     public partial class ProfilesExportPicker : Form
     {

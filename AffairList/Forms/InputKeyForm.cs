@@ -8,11 +8,8 @@
 
         private void InputKeyForm_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode != Keys.Escape)
-            {
-                Key = e.KeyCode;
-                OnKeyPressed?.Invoke();
-            }
+            Key = e.KeyCode;
+            OnKeyPressed?.Invoke();
             Close();
         }
     }

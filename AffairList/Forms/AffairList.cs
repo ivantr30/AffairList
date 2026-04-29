@@ -1,4 +1,6 @@
-﻿namespace AffairList
+﻿using AffairList.Services.Managers;
+
+namespace AffairList
 {
     public partial class AffairList : Form, IParentable
     {
@@ -11,12 +13,19 @@
 
         public Point LastPoint { get; set; }
 
-        public AffairList()
+        private AffairList()
         {
             InitializeComponent();
-            Initialize();
         }
-        private void Initialize()
+
+        public static async Task<AffairList> CreateAsync()
+        {
+            var instance = new AffairList();
+            await instance.InitializeAsync();
+            return instance;
+        }
+
+        private async Task InitializeAsync()
         {
             _trayIconManager = new TrayIconManager();
             _trayIconManager.AddTrayMenuAction("Open", OnOpen!);
@@ -26,7 +35,7 @@
             _loadTimeManager = new LoadTimeManager(_settings, _trayIconManager.TrayIcon);
 
             _mainMenu = new MainMenu(_settings, _loadTimeManager, this);
-            SetControl(_mainMenu);
+            await SetControlAsync(_mainMenu);
         }
         private void AffairList_Load(object sender, EventArgs e)
         {
@@ -59,17 +68,18 @@
             _trayIconManager.Dispose();
             _childForm?.Dispose();
         }
-        public void Return()
+        public async Task ReturnAsync()
         {
             if (Controls[0] != _mainMenu)
             {
-                SetControl(_mainMenu);
+                await SetControlAsync(_mainMenu);
             }
         }
         public void MinimizeForm() => WindowState = FormWindowState.Minimized;
-        public void SetControl(Control control)
+        public async Task SetControlAsync(Control control)
         {
-            if (!OnControlRemove(false)) return;
+            if (!await OnControlRemoveAsync(closing: false)) return;
+            SuspendLayout();
             if (Controls.Count > 0)
             {
                 if (Controls[0] is IKeyPreviewable ckp)
@@ -85,19 +95,20 @@
                 KeyPress += kp.KeyPressHandlers;
                 KeyUp += kp.KeyUpHandlers;
             }
-            Width = control.Width;
-            Height = control.Height;
             Controls.Clear();
             Controls.Add(control);
+            Width = control.Width;
+            Height = control.Height;
             if(control is IChildable childControl)
             {
-                childControl.OnAddition();
+                await childControl.OnAdditionAsync();
             }
+            ResumeLayout();
             Focus();
         }
-        public void OpenForm(Form form, bool asDialog)
+        public async Task OpenFormAsync(Form form, bool asDialog)
         {
-            if (!OnControlRemove(false)) return;
+            if (!await OnControlRemoveAsync(false)) return;
             Hide();
             _childForm = form;
             if (asDialog)
@@ -106,7 +117,7 @@
                 {
                     _childForm.ShowDialog();
                 }
-                AfterFormClosed();
+                await AfterFormClosedAsync();
             }
             else
             {
@@ -115,25 +126,25 @@
                     _childForm.Show();
                     _childForm.FormClosed += AfterFormClosed;
                 }
-                else AfterFormClosed();
+                else await AfterFormClosedAsync();
             }
         }
-        private bool OnControlRemove(bool closing)
+        private async Task<bool> OnControlRemoveAsync(bool closing)
         {
             if (Controls.Count > 0)
             {
                 if (Controls[0] is IChildable child)
                 {
-                    return child.OnRemoving(closing);
+                    return await child.OnRemovingAsync(closing);
                 }
             }
             return true;
         }
-        private void AfterFormClosed(object? sender, FormClosedEventArgs e)
+        private async void AfterFormClosed(object? sender, FormClosedEventArgs e)
         {
-            AfterFormClosed();
+            await AfterFormClosedAsync();
         }
-        private void AfterFormClosed()
+        private async Task AfterFormClosedAsync()
         {
             _childForm.FormClosed -= AfterFormClosed;
             _childForm?.Dispose();
@@ -142,7 +153,7 @@
             Show();
             if (Controls[0] == _mainMenu)
             {
-                _mainMenu.OnAddition();
+                await _mainMenu.OnAdditionAsync();
             }
             TopMost = false;
         }
@@ -164,9 +175,9 @@
             }
         }
 
-        private void AffairList_FormClosing(object sender, FormClosingEventArgs e)
+        private async void AffairList_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!OnControlRemove(true))
+            if (!await OnControlRemoveAsync(true))
             {
                 e.Cancel = true;
                 TopMost = true;
@@ -178,13 +189,14 @@
 
         private async void AffairList_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == _settings.GetCloseKey())
+            if (e.KeyCode == _settings.Data.CloseKey)
             {
+                _trayIconManager.Dispose();
                 Exit();
             }
-            if (e.KeyCode == _settings.GetReturnKey())
+            if (e.KeyCode == _settings.Data.ReturnKey)
             {
-                Return();
+                await ReturnAsync();
             }
         }
     }

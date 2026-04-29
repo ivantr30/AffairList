@@ -1,6 +1,7 @@
 ﻿using Gma.System.MouseKeyHook;
 using Microsoft.Win32;
 using System.Text;
+using AffairList.Services.Managers;
 
 namespace AffairList
 {
@@ -54,10 +55,10 @@ namespace AffairList
             Affairs.Padding = new Padding(0, 0, 180, 0);
             Affairs.AutoSize = true;
 
-            Affairs.ForeColor = _settings.GetTextColor();
+            Affairs.ForeColor = _settings.Data.TextColor;
 
-            BackColor = _settings.GetBgColor();
-            TransparencyKey = _settings.GetBgColor();
+            BackColor = _settings.Data.BgColor;
+            TransparencyKey = _settings.Data.BgColor;
             SystemEvents.PowerModeChanged += OnPowerModeChanged;
         }
         private async Task LoadSettingsAsync()
@@ -65,18 +66,18 @@ namespace AffairList
             if (!_settings.SettingsFileExists()) await _settings.CreateSettingsFileAsync();
             this.StartPosition = FormStartPosition.Manual;
             this.Location = new Point(0, 0);
-            Affairs.Left = _settings.GetProfileX();
-            Affairs.Top = _settings.GetProfileY();
+            Affairs.Left = _settings.Data.TodoListX;
+            Affairs.Top = _settings.Data.ToDoListY;
         }
         private async Task LoadTextAsync()
         {
-
             Affairs.Text = "";
-            if (_settings.CurrentListNotNull())
+            if (_settings.CurrentListExists())
             {
                 StringBuilder affairsShower = new StringBuilder();
-                affairsShower.Append("* ");
-                affairsShower.AppendJoin("\n* ", await File.ReadAllLinesAsync(_settings.GetCurrentProfile()));
+                string[] affairs = await File.ReadAllLinesAsync(_settings.Data.CurrentProfileFullPath);
+                if(affairs.Any()) affairsShower.Append("* ");
+                affairsShower.AppendJoin("\n* ", affairs);
                 affairsShower.Replace(_priorityTag, _priorityWord);
                 affairsShower.Replace(_deadlineTag, "");
                 affairsShower.Replace("\n", ".\n");
@@ -110,11 +111,11 @@ namespace AffairList
         }
         private void GlobalHook_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == _settings.GetCloseKey())
+            if (e.KeyCode == _settings.Data.CloseKey)
             {
                 ParentElement.Exit();
             }
-            if (e.KeyCode == _settings.GetReturnKey())
+            if (e.KeyCode == _settings.Data.ReturnKey)
             {
                 Close();
             }
@@ -131,12 +132,12 @@ namespace AffairList
             => await OnListMouseUpAsync(e);
         private void OnListMouseDown(MouseEventArgs e)
         {
-            if (CanReplace || _settings.CanBeAlwaysReplaced())
+            if (CanReplace || _settings.Data.CanBeAlwaysReplaced)
                 _dragOffset = new Point(Cursor.Position.X - Affairs.Left, Cursor.Position.Y - Affairs.Top);
         }
         private void OnListMouseMove(MouseEventArgs e)
         {
-            if ((CanReplace || _settings.CanBeAlwaysReplaced()) && e.Button == MouseButtons.Left)
+            if ((CanReplace || _settings.Data.CanBeAlwaysReplaced) && e.Button == MouseButtons.Left)
             {
                 int newLeft = Cursor.Position.X - _dragOffset.X;
                 int newTop = Cursor.Position.Y - _dragOffset.Y;
@@ -151,8 +152,12 @@ namespace AffairList
                 TopMost = true;
             }
         }
-        // УБРАТЬ SETTINGSMODEL, раскидать логику на разные классы.
-        // Убрать логику SystemEvents_SessionSwitch в program.cs, поменять на булевую переменную с событием
+        // ПРЕОБРАЗОВАТЬ профили В ОБЪЕКТЫ
+        // Доделать manageaffaircommand и loadtimemanager( + notify сделать асинхронным)
+        // придумать механизм защиты данных от потери во время выхода из программы
+        // ИСПРАВИТЬ ПОДГРУЗКУ ТЕКСТА В TODOLIST
+        // понакидать семафор
+        // локализация
         private void SpecifyAffairsLocation()
         {
             if (Affairs.Left > this.Width - Affairs.Width + Affairs.Padding.Right)
@@ -174,15 +179,15 @@ namespace AffairList
         }
         private void SaveAffairsLocation()
         {
-            _settings.SetProfileX(Affairs.Left);
-            _settings.SetProfileY(Affairs.Top);
+            _settings.Data.TodoListX = Affairs.Left;
+            _settings.Data.ToDoListY = Affairs.Top;
             _settings.SaveSettings();
         }
 
         private async Task OnListMouseUpAsync(MouseEventArgs e)
         {
-            _settings.SetProfileX(Left + Affairs.Left);
-            _settings.SetProfileY(Top + Affairs.Top);
+            _settings.Data.TodoListX = Left + Affairs.Left;
+            _settings.Data.ToDoListY = Top + Affairs.Top;
             await _settings.SaveSettingsAsync();
             TopMost = true;
             if (CanReplace)
@@ -195,9 +200,10 @@ namespace AffairList
 
         private void ToDoList_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Affairs.BackColor = _settings.GetBgColor();
+            Affairs.BackColor = _settings.Data.BgColor;
             CanReplace = false;
-            SystemEvents.PowerModeChanged -= OnPowerModeChanged;
+            SystemEvents.PowerModeChanged -= OnPowerModeChanged; 
+            _globalHook?.Dispose();
         }
         private void UpdateLocation()
         {

@@ -68,6 +68,7 @@
             Controls.Add(BackButton);
             Controls.Add(ConfirmButton);
             Controls.Add(DeadlinePicker);
+            DoubleBuffered = true;
             ForeColor = SystemColors.WindowFrame;
             FormBorderStyle = FormBorderStyle.None;
             KeyPreview = true;
