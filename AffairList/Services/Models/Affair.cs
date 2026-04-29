@@ -14,6 +14,10 @@ namespace AffairList.Services.Models
         {
             InnerText = innerText;
         }
+        /// <summary>
+        /// Only for JSON
+        /// </summary>
+        public Affair() { }
 
         public override string ToString()
         {

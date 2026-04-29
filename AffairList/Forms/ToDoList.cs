@@ -153,11 +153,12 @@ namespace AffairList
             }
         }
         // ПРЕОБРАЗОВАТЬ профили В ОБЪЕКТЫ
-        // Доделать manageaffaircommand и loadtimemanager( + notify сделать асинхронным)
+        // Доделать loadtimemanager( + notify сделать асинхронным)
         // придумать механизм защиты данных от потери во время выхода из программы
         // ИСПРАВИТЬ ПОДГРУЗКУ ТЕКСТА В TODOLIST
         // понакидать семафор
         // локализация
+        // подумать над разбиением managedeadlinecommand на 3 разных
         private void SpecifyAffairsLocation()
         {
             if (Affairs.Left > this.Width - Affairs.Width + Affairs.Padding.Right)

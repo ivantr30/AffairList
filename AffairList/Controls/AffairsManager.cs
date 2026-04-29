@@ -4,10 +4,8 @@ using Microsoft.VisualBasic;
 using AffairList.Services.Models;
 using AffairList.Services.Providers;
 using AffairList.Services.Managers;
-using AffairList.Commands.AffairCommands;
 using AffairList.Constants;
 using System.Text.Json;
-using System.Xml.Linq;
 
 namespace AffairList
 {
@@ -87,6 +85,17 @@ namespace AffairList
         private void SortAffairs()
         {
             _affairsCollection.Affairs = _affairsCollection.Affairs.OrderByDescending(x => x.IsPrioritized).ToList();
+        }
+        private void RefreshAffairsList()
+        {
+            Affairs.BeginUpdate();
+            Affairs.Items.Clear();
+            foreach (var affair in _affairsCollection.Affairs)
+            {
+                Affairs.Items.Add(affair.ToString());
+            }
+            if (Affairs.Items.Count > 0) Affairs.SelectedIndex = _selectedAffairIndex;
+            Affairs.EndUpdate();
         }
 
         public async void AffairsManager_KeyDown(object sender, KeyEventArgs e)
@@ -229,10 +238,11 @@ namespace AffairList
             {
                 Text = "Do you want to delete the deadline or just change it?",
                 Caption = "Action for the existing deadline",
-                Buttons = { updateDeadlineButton, deleteDeadlineButton, cancelButton }
+                Buttons = { updateDeadlineButton, deleteDeadlineButton, cancelButton },
+                
             };
 
-            TaskDialogButton userChoice = TaskDialog.ShowDialog(actionInputDialog);
+            TaskDialogButton userChoice = TaskDialog.ShowDialog(this, actionInputDialog);
 
             if (userChoice == cancelButton) return action;
 
@@ -396,6 +406,7 @@ namespace AffairList
 
             await AffairsProvider.SaveAffairsAsync(_settings.Data.CurrentProfileFullPath, _affairsCollection);
             SortAffairs();
+            RefreshAffairsList();
             return (int)MethodResults.Success;
         }
 
