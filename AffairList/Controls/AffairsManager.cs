@@ -1,16 +1,19 @@
 ﻿using AffairList.Classes.Factories;
+using AffairList.Constants;
 using AffairList.Enums;
-using Microsoft.VisualBasic;
+using AffairList.Services.Managers;
 using AffairList.Services.Models;
 using AffairList.Services.Providers;
-using AffairList.Services.Managers;
-using AffairList.Constants;
+using Microsoft.VisualBasic;
 using System.Text.Json;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace AffairList
 {
     public partial class AffairsManager : UserControl, IChildable, IKeyPreviewable
     {
+        private string _lastLoadedProfileFullPath = string.Empty;
+
         private int _currentDragIndex = 0;
         private int _selectedAffairIndex = 0;
 
@@ -22,12 +25,17 @@ namespace AffairList
         private Keys _deleteAffairKey = Keys.Delete;
 
         private Settings _settings;
+
+        #region Interface variables
         public IParentable ParentElement { get; private set; }
         public KeyEventHandler KeyDownHandlers { get; private set; }
         public KeyPressEventHandler KeyPressHandlers { get; private set; }
         public KeyEventHandler KeyUpHandlers { get; private set; }
+        #endregion 
 
         private CommandManager _commandManager;
+
+        private TaskDialogPage _taskDialog;
 
         public AffairsManager(Settings settings, IParentable parentElement)
         {
@@ -36,6 +44,7 @@ namespace AffairList
             ParentElement = parentElement;
             KeyDownHandlers += AffairsManager_KeyDown!;
             _commandManager = new CommandManager();
+            _taskDialog = new TaskDialogPage();
         }
         private void LoadProfiles()
         {
@@ -54,6 +63,11 @@ namespace AffairList
         }
         private async Task LoadTextAsync()
         {
+            if(_lastLoadedProfileFullPath != string.Empty &&
+               _settings.Data.CurrentProfileFullPath == _lastLoadedProfileFullPath)
+            {
+               return;
+            }
             Affairs.Items.Clear();
             Affairs.BeginUpdate();
             if (_settings.CurrentListExists())
@@ -77,16 +91,18 @@ namespace AffairList
             }
             if (Affairs.Items.Count > 0)
             {
-                if (_selectedAffairIndex == -1) _selectedAffairIndex = 0;
+                if (_selectedAffairIndex >= _affairsCollection.Affairs.Capacity) _selectedAffairIndex = 0;
                 Affairs.SelectedIndex = _selectedAffairIndex;
             }
+            else _selectedAffairIndex = -1;
             Affairs.EndUpdate();
+            _lastLoadedProfileFullPath = _settings.Data.CurrentProfileFullPath;
         }
         private void SortAffairs()
         {
             _affairsCollection.Affairs = _affairsCollection.Affairs.OrderByDescending(x => x.IsPrioritized).ToList();
         }
-        private void RefreshAffairsList()
+        private void RefreshAffairsUI()
         {
             Affairs.BeginUpdate();
             Affairs.Items.Clear();
@@ -106,6 +122,11 @@ namespace AffairList
             }
             else if (e.KeyCode == _deleteAffairKey)
             {
+                if (_selectedAffairIndex == -1)
+                {
+                    AffairDoesNotExistsException();
+                    return;
+                }
                 await _commandManager
                     .ExecuteAsync(CommandFactory.CreateDeleteAffairCommand(this, _affairsCollection.Affairs[_selectedAffairIndex]));
             }
@@ -131,31 +152,35 @@ namespace AffairList
             }
             else if (!AffairInput.Focused)
             {
-                if (e.KeyCode.ToString().Length == 1)
+                string keyString = e.KeyCode.ToString();
+                if (keyString.Length == 1)
                 {
-                    AffairInput.AppendText(e.KeyCode.ToString());
+                    AffairInput.AppendText(keyString);
                 }
                 AffairInput.Focus();
             }
         }
         private void CopySelectedAffair()
         {
-            if (Affairs.SelectedIndex == -1)
+            if (_selectedAffairIndex == -1)
             {
-                MessageBox.Show("Nothing to copy");
+                ShowDialog("Nothing to copy", "Input error");
                 return;
             }
-            MessageBox.Show("The affair is copied");
+            ShowDialog("The affair is copied", "Copy success");
             string selectedAffair = Affairs.SelectedItem!.ToString()!;
-            Clipboard.SetText(selectedAffair.Remove(selectedAffair.Length - 1));
+            Clipboard.SetText(selectedAffair);
         }
         public async Task<int> AddAffairAsync(Affair affair, bool clearInputLine = true)
         {
             affair.InnerText = affair.InnerText.Trim();
+
             if (string.IsNullOrEmpty(affair.InnerText))
             {
+                ShowDialog("There is nothing to add to your affair list", "Input error");
                 return (int)MethodResults.Error;
             }
+
             if (ContainKeyWords(affair.InnerText))
             {
                 AffairContainsKeyWordsException();
@@ -177,21 +202,13 @@ namespace AffairList
         }
         public async Task<int> DeleteAffairAsync(Affair affair)
         {
-            if (!_affairsCollection.Affairs.Contains(affair))
-            {
-                MessageBox.Show("Nothing to delete");
-                return (int)MethodResults.Error;
-            }
+            int affairIndex = _affairsCollection.Affairs.IndexOf(affair);
 
             if (_settings.Data.AskToDelete)
             {
-                DialogResult dialogres = MessageBox.Show("Do you want to delete the affair?",
-                    "Confirm form",
-                    MessageBoxButtons.YesNo);
-                if (dialogres == DialogResult.No) return (int)MethodResults.NothingHappened;
+                var dialogRes = ShowDialog("Do you want to delete the affair?", MessageBoxButtons.YesNo, "Confirm form");
+                if (dialogRes.Text == "No") return (int)MethodResults.NothingHappened;
             }
-
-            int affairIndex = _affairsCollection.Affairs.IndexOf(affair);
 
             if (!_affairsCollection.Affairs.Remove(affair))
                 return (int)MethodResults.Error;
@@ -211,8 +228,15 @@ namespace AffairList
             => await _commandManager
             .ExecuteAsync(CommandFactory.CreateAddAffairCommand(this, AffairInput.Text));
         private async void DeleteButton_Click(object sender, EventArgs e)
-            => await _commandManager
+        {
+            if (_selectedAffairIndex == -1)
+            {
+                AffairDoesNotExistsException();
+                return;
+            }
+            await _commandManager
             .ExecuteAsync(CommandFactory.CreateDeleteAffairCommand(this, _affairsCollection.Affairs[_selectedAffairIndex]));
+        }
         private void ClearButton_Click(object sender, EventArgs e)
             => AffairInput.Clear();
 
@@ -221,6 +245,11 @@ namespace AffairList
 
         private async void AddDeadlineButton_Click(object sender, EventArgs e)
         {
+            if (_selectedAffairIndex == -1)
+            {
+                AffairDoesNotExistsException();
+                return;
+            }
             await _commandManager
                 .ExecuteAsync(
                 await CommandFactory.CreateManageAffairDeadlineCommandAsync(this, _affairsCollection.Affairs[_selectedAffairIndex]));
@@ -261,11 +290,7 @@ namespace AffairList
         {
             DateOnly? oldDeadline = affair.Deadline;
             int affairIndex = _affairsCollection.Affairs.IndexOf(affair);
-            if (affairIndex == -1)
-            {
-                MessageBox.Show("There is no affair to work on");
-                return null;
-            }
+
             if(deadline != null)
             {
                 affair.Deadline = deadline;
@@ -284,12 +309,6 @@ namespace AffairList
         {
             int affairIndex = _affairsCollection.Affairs.IndexOf(affair);
 
-            if (affairIndex == -1)
-            {
-                MessageBox.Show("There is no affair to work on");
-                return null;
-            }
-
             DateOnly? deadline = affair.Deadline;
 
             affair.Deadline = null;
@@ -303,11 +322,6 @@ namespace AffairList
         {
             int affairIndex = _affairsCollection.Affairs.IndexOf(affair);
 
-            if (affairIndex == -1)
-            {
-                MessageBox.Show("There is no affair to work on");
-                return null;
-            }
             if(deadline != null)
             {
                 affair.Deadline = deadline;
@@ -335,18 +349,18 @@ namespace AffairList
         }
         private async void RenameAffairButton_Click(object sender, EventArgs e)
         {
-            var renameAffairCommand = CommandFactory.CreateRenameAffairCommand(this, _affairsCollection.Affairs[_selectedAffairIndex]);
+            if (_selectedAffairIndex == -1)
+            {
+                AffairDoesNotExistsException();
+                return;
+            }
+            var renameAffairCommand = CommandFactory.CreateRenameAffairCommand(this, 
+                _affairsCollection.Affairs[_selectedAffairIndex]);
             await _commandManager.ExecuteAsync(renameAffairCommand);
         }
         public async Task RenameAffairAsync(Affair affair)
         {
             int affairIndex = _affairsCollection.Affairs.IndexOf(affair);
-
-            if (affairIndex == -1)
-            {
-                MessageBox.Show("There is no affair selected");
-                return;
-            }
 
             string renaming = Interaction.InputBox("Enter renaming", "Input box", affair.InnerText);
 
@@ -368,24 +382,19 @@ namespace AffairList
 
             await AffairsProvider.SaveAffairsAsync(_settings.Data.CurrentProfileFullPath, _affairsCollection);
         }
-        private bool ContainKeyWords(string word)
-        {
-            if (   word.Contains(AffairConstants.DeadlineTag)
-                || word.Contains(AffairConstants.PriorityTag)
-                || word.Contains(AffairConstants.PriorityWord))
-                return true;
-
-            return false;
-        }
-        private void AffairContainsKeyWordsException()
-        {
-            MessageBox.Show("Error, you word is perhibited to contain - " +
-                $"{AffairConstants.DeadlineTag}, {AffairConstants.PriorityTag}, {AffairConstants.PriorityWord}");
-        }
 
         private async void PriorityButton_Click(object sender, EventArgs e)
         {
+<<<<<<< HEAD
             var TogglePriorityCommand = CommandFactory.CreateToggleAffairPriorityCommand(
+=======
+            if (_selectedAffairIndex == -1)
+            {
+                AffairDoesNotExistsException();
+                return;
+            }
+            var TogglePriorityCommand = CommandFactory.CreatToggleAffairPriorityCommand(
+>>>>>>> refs/remotes/AffairList/master
                 this, 
                 _affairsCollection.Affairs[_selectedAffairIndex]);
 
@@ -406,14 +415,8 @@ namespace AffairList
 
             await AffairsProvider.SaveAffairsAsync(_settings.Data.CurrentProfileFullPath, _affairsCollection);
             SortAffairs();
-            RefreshAffairsList();
+            RefreshAffairsUI();
             return (int)MethodResults.Success;
-        }
-
-        private string CapitalizeAffair(string affair)
-        {
-            if (affair.Length < 1) return "";
-            return char.ToUpper(affair[0]) + affair[1..];
         }
         private void Affairs_MouseDown(object sender, MouseEventArgs e)
         {
@@ -430,7 +433,16 @@ namespace AffairList
 
         private async void Affairs_MouseUp(object sender, MouseEventArgs e)
         {
+<<<<<<< HEAD
             var commandAsync = CommandFactory.CreateSwitchAffairCommand(this,
+=======
+            if (_selectedAffairIndex == -1 || _currentDragIndex == -1)
+            {
+                AffairDoesNotExistsException();
+                return;
+            }
+            var commandAsync = CommandFactory.CreatSwitchAffairCommand(this,
+>>>>>>> refs/remotes/AffairList/master
                 _affairsCollection.Affairs[_selectedAffairIndex],
                 _affairsCollection.Affairs[_currentDragIndex]);
 
@@ -440,12 +452,16 @@ namespace AffairList
         {
             int firstAffairIndex = _affairsCollection.Affairs.IndexOf(firstAffair);
             int secondAffairIndex = _affairsCollection.Affairs.IndexOf(secondAffair);
+<<<<<<< HEAD
             if (firstAffairIndex == -1 || secondAffairIndex == -1)
             {
                 _isDragging = false;
                 MessageBox.Show("There is no affair selected");
                 return (int)MethodResults.Error;
             }
+=======
+
+>>>>>>> refs/remotes/AffairList/master
             bool newPlacePriority = _affairsCollection.Affairs[firstAffairIndex].IsPrioritized;
             bool oldPlacePriority = _affairsCollection.Affairs[secondAffairIndex].IsPrioritized;
 
@@ -472,23 +488,13 @@ namespace AffairList
         }
         private async Task ChangeProfileAsync()
         {
-            if (new FileInfo(_settings.Data.CurrentProfileFullPath).Name ==
-                new FileInfo(ProfileBox.SelectedItem!.ToString()!).Name) return;
-            foreach (var profile in Directory.EnumerateFiles(Settings.listsDirectoryFullPath))
-            {
-                FileInfo profileInfo = new FileInfo(profile);
-                if (profileInfo.Name == ProfileBox.SelectedItem!.ToString())
-                {
-                    _settings.Data.CurrentProfileFullPath = profileInfo.FullName;
-                    await _settings.SaveSettingsAsync();
-                    if (Affairs.Items.Count > 0)
-                    {
-                        Affairs.SelectedIndex = 0;
-                        _selectedAffairIndex = 0;
-                    }
-                    return;
-                }
-            }
+            string newSelectedProfilePath = Path.Combine(Settings.listsDirectoryFullPath, ProfileBox.SelectedItem.ToString());
+
+            if (_settings.Data.CurrentProfileFullPath == newSelectedProfilePath) return;
+
+            _settings.Data.CurrentProfileFullPath = newSelectedProfilePath;
+
+            await _settings.SaveSettingsAsync();
         }
         public async Task UpdateAffairInnerText(Affair affair, string innerText)
         {
@@ -508,13 +514,78 @@ namespace AffairList
         public async Task OnAdditionAsync()
         {
             SuspendLayout();
-            _selectedAffairIndex = -1;
             LoadProfiles();
             await LoadTextAsync();
             ResumeLayout();
         }
 
         public async Task<bool> OnRemovingAsync(bool closing = false) => true;
+        private string CapitalizeAffair(string affair)
+        {
+            if (affair.Length < 1) return "";
+            return char.ToUpper(affair[0]) + affair[1..];
+        }
+        private bool ContainKeyWords(string word)
+        {
+            if (word.Contains(AffairConstants.DeadlineTag)
+                || word.Contains(AffairConstants.PriorityTag)
+                || word.Contains(AffairConstants.PriorityWord))
+                return true;
+
+            return false;
+        }
+        private void AffairContainsKeyWordsException()
+        {
+            ShowDialog(
+                $"Error, you word is perhibited to contain - {AffairConstants.DeadlineTag}, {AffairConstants.PriorityTag}, {AffairConstants.PriorityWord}",
+                "Input error");
+        }
+        private void AffairDoesNotExistsException()
+        {
+            ShowDialog("There is no affair present to work on", "Input error");
+        }
+        private TaskDialogButton ShowDialog(string information, MessageBoxButtons buttons, string caption = "")
+        {
+            switch (buttons)
+            {
+                case MessageBoxButtons.OK:
+                    TaskDialogButton buttonOk = new TaskDialogButton("Ok");
+                    _taskDialog.Buttons.Add(buttonOk);
+                    break;
+                case MessageBoxButtons.YesNo:
+                    TaskDialogButton buttonYes = new TaskDialogButton("Yes");
+                    TaskDialogButton buttonNo = new TaskDialogButton("No");
+                    _taskDialog.Buttons.Add(buttonYes);
+                    _taskDialog.Buttons.Add(buttonNo);
+                    break;
+                default:
+                    break;
+            }
+
+            return ShowDialog(information, caption);
+        }
+        private TaskDialogButton ShowDialog(string information, string caption = "", params TaskDialogButton[] buttons)
+        {
+            for (int i = 0; i < buttons.Length; i++)
+            {
+                _taskDialog.Buttons.Add(buttons[i]);    
+            }
+
+            return ShowDialog(information, caption);
+        }
+        private TaskDialogButton ShowDialog(string information, string caption = "")
+        {
+            _taskDialog.Text = information;
+            if (!string.IsNullOrEmpty(caption))
+            {
+                _taskDialog.Caption = caption;
+            }
+            var dialogResult = TaskDialog.ShowDialog(this, _taskDialog);
+            _taskDialog.Text = "";
+            _taskDialog.Caption = "";
+            _taskDialog.Buttons.Clear();
+            return dialogResult;
+        }
 
         private void Affairs_SelectedIndexChanged(object sender, EventArgs e)
         {
