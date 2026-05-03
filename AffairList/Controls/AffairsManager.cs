@@ -6,7 +6,6 @@ using AffairList.Services.Models;
 using AffairList.Services.Providers;
 using Microsoft.VisualBasic;
 using System.Text.Json;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace AffairList
 {
@@ -423,7 +422,7 @@ namespace AffairList
 
         private async void Affairs_MouseUp(object sender, MouseEventArgs e)
         {
-            if (_selectedAffairIndex == -1 || _currentDragIndex == -1)
+            if (_selectedAffairIndex == -1 || _currentDragIndex == -1 || _selectedAffairIndex == _currentDragIndex)
             {
                 _isDragging = false;
                 return;

@@ -5,13 +5,13 @@ namespace AffairList.Services.Managers
 {
     public class CommandManager
     {
-        private Stack<IAsyncCommand> _undoOperations;
-        private Stack<IAsyncCommand> _redoOperations;
+        private LimitedStack<IAsyncCommand> _undoOperations;
+        private LimitedStack<IAsyncCommand> _redoOperations;
 
         public CommandManager()
         {
-            _undoOperations = new();
-            _redoOperations = new();
+            _undoOperations = new(25);
+            _redoOperations = new(25);
         }
 
         public async Task<int> ExecuteAsync(IAsyncCommand asyncCommand)
