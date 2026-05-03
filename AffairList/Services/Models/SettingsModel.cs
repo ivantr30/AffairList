@@ -10,7 +10,7 @@ namespace AffairList
             {
                 field = value ?? "";
             }
-        } = "";
+        } = string.Empty;
 
         [JsonIgnore]
         public Color TextColor { get; set; } = Color.MediumSpringGreen;

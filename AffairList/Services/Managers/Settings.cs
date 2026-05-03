@@ -199,7 +199,7 @@ namespace AffairList.Services.Managers
         {
             try
             {
-                using (System.IO.File.Create(settingsFileFullPath)) { }
+                System.IO.File.Create(settingsFileFullPath).Dispose();
 
                 _fileLogger.LogInformation($"{DateTime.Now} settings file was created");
             }
@@ -227,7 +227,7 @@ namespace AffairList.Services.Managers
         {
             try
             {
-                using (System.IO.File.Create(_defaultListFileFullPath)) { }
+                System.IO.File.Create(_defaultListFileFullPath).Dispose();
             }
             catch (Exception ex)
             {
@@ -254,7 +254,7 @@ namespace AffairList.Services.Managers
         {
             try
             {
-                using (System.IO.File.Create(logFileFullPath)) { }
+                System.IO.File.Create(logFileFullPath).Dispose();
             }
             catch(Exception ex)
             {

@@ -63,7 +63,7 @@ namespace AffairList
         }
         private async Task LoadTextAsync()
         {
-            if(_lastLoadedProfileFullPath != string.Empty &&
+            if(_settings.Data.CurrentProfileFullPath != string.Empty &&
                _settings.Data.CurrentProfileFullPath == _lastLoadedProfileFullPath)
             {
                return;
@@ -91,7 +91,7 @@ namespace AffairList
             }
             if (Affairs.Items.Count > 0)
             {
-                if (_selectedAffairIndex >= _affairsCollection.Affairs.Capacity) _selectedAffairIndex = 0;
+                if (_selectedAffairIndex >= Affairs.Items.Count) _selectedAffairIndex = 0;
                 Affairs.SelectedIndex = _selectedAffairIndex;
             }
             else _selectedAffairIndex = -1;
@@ -263,15 +263,9 @@ namespace AffairList
             var deleteDeadlineButton = new TaskDialogButton("Delete");
             var cancelButton = new TaskDialogButton("Cancel");
 
-            var actionInputDialog = new TaskDialogPage()
-            {
-                Text = "Do you want to delete the deadline or just change it?",
-                Caption = "Action for the existing deadline",
-                Buttons = { updateDeadlineButton, deleteDeadlineButton, cancelButton },
-                
-            };
-
-            TaskDialogButton userChoice = TaskDialog.ShowDialog(this, actionInputDialog);
+            var userChoice = ShowDialog("Do you want to delete the deadline or just change it?",
+                "Action for the existing deadline",
+                updateDeadlineButton, deleteDeadlineButton, cancelButton);
 
             if (userChoice == cancelButton) return action;
 
@@ -385,16 +379,12 @@ namespace AffairList
 
         private async void PriorityButton_Click(object sender, EventArgs e)
         {
-<<<<<<< HEAD
-            var TogglePriorityCommand = CommandFactory.CreateToggleAffairPriorityCommand(
-=======
             if (_selectedAffairIndex == -1)
             {
                 AffairDoesNotExistsException();
                 return;
             }
-            var TogglePriorityCommand = CommandFactory.CreatToggleAffairPriorityCommand(
->>>>>>> refs/remotes/AffairList/master
+            var TogglePriorityCommand = CommandFactory.CreateToggleAffairPriorityCommand(
                 this, 
                 _affairsCollection.Affairs[_selectedAffairIndex]);
 
@@ -433,16 +423,12 @@ namespace AffairList
 
         private async void Affairs_MouseUp(object sender, MouseEventArgs e)
         {
-<<<<<<< HEAD
-            var commandAsync = CommandFactory.CreateSwitchAffairCommand(this,
-=======
             if (_selectedAffairIndex == -1 || _currentDragIndex == -1)
             {
-                AffairDoesNotExistsException();
+                _isDragging = false;
                 return;
             }
-            var commandAsync = CommandFactory.CreatSwitchAffairCommand(this,
->>>>>>> refs/remotes/AffairList/master
+            var commandAsync = CommandFactory.CreateSwitchAffairCommand(this,
                 _affairsCollection.Affairs[_selectedAffairIndex],
                 _affairsCollection.Affairs[_currentDragIndex]);
 
@@ -452,16 +438,7 @@ namespace AffairList
         {
             int firstAffairIndex = _affairsCollection.Affairs.IndexOf(firstAffair);
             int secondAffairIndex = _affairsCollection.Affairs.IndexOf(secondAffair);
-<<<<<<< HEAD
-            if (firstAffairIndex == -1 || secondAffairIndex == -1)
-            {
-                _isDragging = false;
-                MessageBox.Show("There is no affair selected");
-                return (int)MethodResults.Error;
-            }
-=======
 
->>>>>>> refs/remotes/AffairList/master
             bool newPlacePriority = _affairsCollection.Affairs[firstAffairIndex].IsPrioritized;
             bool oldPlacePriority = _affairsCollection.Affairs[secondAffairIndex].IsPrioritized;
 
