@@ -63,6 +63,10 @@ namespace AffairList
                     {
                         MessageBox.Show("Error, the acces denied");
                     }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Error, the unexpected error");
+                    }
                 }
                 else
                 {
@@ -77,6 +81,10 @@ namespace AffairList
                     catch (UnauthorizedAccessException)
                     {
                         MessageBox.Show("Error, the acces denied");
+                    }
+                    catch (Exception)
+                    {
+                        MessageBox.Show("Error, the unexpected error");
                     }
                 }
 

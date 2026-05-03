@@ -20,7 +20,7 @@
             {
                 try
                 {
-                    File.Create(_filePath);
+                    File.Create(_filePath).Dispose();
                 }
                 catch(Exception e)
                 {

@@ -21,17 +21,17 @@ namespace AffairList.Classes.Factories
         {
             return new RenameAffairCommand(affairsManager, affair);
         }
-        public static SwitchAffairsCommand CreatSwitchAffairCommand
+        public static SwitchAffairsCommand CreateSwitchAffairCommand
             (AffairsManager affairsManager, Affair firstAffair, Affair secondAffair)
         {
             return new SwitchAffairsCommand(affairsManager, firstAffair, secondAffair);
         }
-        public static ToggleAffairPriorityCommand CreatToggleAffairPriorityCommand
+        public static ToggleAffairPriorityCommand CreateToggleAffairPriorityCommand
             (AffairsManager affairsManager, Affair affair)
         {
             return new ToggleAffairPriorityCommand(affairsManager, affair);
         }
-        public async static Task<ManageAffairDeadlineCommand> CreatManageAffairDeadlineCommandAsync
+        public async static Task<ManageAffairDeadlineCommand> CreateManageAffairDeadlineCommandAsync
             (AffairsManager affairsManager, Affair affair)
         {
             var action = await affairsManager.DetermineDeadlineActionAsync(affair);

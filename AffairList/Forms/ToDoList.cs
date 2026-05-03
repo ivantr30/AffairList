@@ -159,6 +159,12 @@ namespace AffairList
         // понакидать семафор
         // локализация
         // подумать над разбиением managedeadlinecommand на 3 разных
+        // Внедрить binding source
+        // Заменить MessageBox на TaskDialog
+        // Подгрузка текста при заходе в прогу и дальнейшее использование
+        // Индикатор несохранённых данных
+        // Сделать проверку на занятые клавиши в настройках
+        // Добавить автопроверку для notificate в фоне
         private void SpecifyAffairsLocation()
         {
             if (Affairs.Left > this.Width - Affairs.Width + Affairs.Padding.Right)

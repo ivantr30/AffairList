@@ -168,7 +168,7 @@ namespace AffairList
 
             Task appendingText = AffairsProvider.SaveAffairsAsync(_settings.Data.CurrentProfileFullPath, _affairsCollection);
 
-            Affairs.Items.Add(affair.InnerText);
+            Affairs.Items.Add(affair.ToString());
             Affairs.SelectedIndex = Affairs.Items.Count - 1;
 
             if (clearInputLine) AffairInput.Text = "";
@@ -223,7 +223,7 @@ namespace AffairList
         {
             await _commandManager
                 .ExecuteAsync(
-                await CommandFactory.CreatManageAffairDeadlineCommandAsync(this, _affairsCollection.Affairs[_selectedAffairIndex]));
+                await CommandFactory.CreateManageAffairDeadlineCommandAsync(this, _affairsCollection.Affairs[_selectedAffairIndex]));
         }
         public async Task<DeadlineActions> DetermineDeadlineActionAsync(Affair affair)
         {
@@ -325,7 +325,7 @@ namespace AffairList
         private DateOnly? GetDeadline()
         {
             DateOnly? deadline = null;
-            InputDeadlineForm inputDeadline = new InputDeadlineForm();
+            using InputDeadlineForm inputDeadline = new InputDeadlineForm();
             inputDeadline.OnConfirm += delegate
             {
                 deadline = inputDeadline.deadline;
@@ -385,7 +385,7 @@ namespace AffairList
 
         private async void PriorityButton_Click(object sender, EventArgs e)
         {
-            var TogglePriorityCommand = CommandFactory.CreatToggleAffairPriorityCommand(
+            var TogglePriorityCommand = CommandFactory.CreateToggleAffairPriorityCommand(
                 this, 
                 _affairsCollection.Affairs[_selectedAffairIndex]);
 
@@ -430,7 +430,7 @@ namespace AffairList
 
         private async void Affairs_MouseUp(object sender, MouseEventArgs e)
         {
-            var commandAsync = CommandFactory.CreatSwitchAffairCommand(this,
+            var commandAsync = CommandFactory.CreateSwitchAffairCommand(this,
                 _affairsCollection.Affairs[_selectedAffairIndex],
                 _affairsCollection.Affairs[_currentDragIndex]);
 
@@ -442,6 +442,7 @@ namespace AffairList
             int secondAffairIndex = _affairsCollection.Affairs.IndexOf(secondAffair);
             if (firstAffairIndex == -1 || secondAffairIndex == -1)
             {
+                _isDragging = false;
                 MessageBox.Show("There is no affair selected");
                 return (int)MethodResults.Error;
             }
