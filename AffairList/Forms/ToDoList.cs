@@ -2,6 +2,8 @@
 using Microsoft.Win32;
 using System.Text;
 using AffairList.Services.Managers;
+using AffairList.Services.Providers;
+using AffairList.Services.Models;
 
 namespace AffairList
 {
@@ -75,12 +77,11 @@ namespace AffairList
             if (_settings.CurrentListExists())
             {
                 StringBuilder affairsShower = new StringBuilder();
-                string[] affairs = await File.ReadAllLinesAsync(_settings.Data.CurrentProfileFullPath);
-                if(affairs.Any()) affairsShower.Append("* ");
-                affairsShower.AppendJoin("\n* ", affairs);
+                AffairsCollection affairs = await AffairsProvider.GetAffairsAsync(_settings.Data.CurrentProfileFullPath);
+                if(affairs.Affairs.Any()) affairsShower.Append("* ");
+                affairsShower.AppendJoin("\n* ", affairs.Affairs);
                 affairsShower.Replace(_priorityTag, _priorityWord);
                 affairsShower.Replace(_deadlineTag, "");
-                affairsShower.Replace("\n", ".\n");
                 Affairs.Text += affairsShower.ToString() + "\nЭто весь список ваших дел";
                 affairsShower.Clear();
             }
@@ -155,7 +156,6 @@ namespace AffairList
         // ПРЕОБРАЗОВАТЬ профили В ОБЪЕКТЫ
         // Доделать loadtimemanager( + notify сделать асинхронным)
         // придумать механизм защиты данных от потери во время выхода из программы
-        // ИСПРАВИТЬ ПОДГРУЗКУ ТЕКСТА В TODOLIST
         // понакидать семафор
         // локализация
         // подумать над разбиением managedeadlinecommand на 3 разных

@@ -5,13 +5,13 @@ namespace AffairList
     internal static class Program
     {
         [STAThread]
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
             ApplicationConfiguration.Initialize();
             using Mutex mutex = new Mutex(true, name: "AffairList", out bool createdNew);
             if (createdNew)
             {
-                Application.Run(await AffairList.CreateAsync());
+                Application.Run(AffairList.CreateAsync().GetAwaiter().GetResult());
             }
             else
             {
