@@ -33,7 +33,7 @@ namespace AffairList
             if (!_settings.ListsDirectoryExists()) _settings.CreateListsDirectory();
 
             Profiles.Items.Clear();
-            
+
             _profileLines = Directory.GetFiles(Settings.listsDirectoryFullPath)
                     .OrderByDescending(x => x.EndsWith(_priorityWord)).ToList();
 
@@ -112,7 +112,7 @@ namespace AffairList
             else AddNewProfile(profile + ".txt");
 
             Profiles.SelectedIndex = Profiles.Items.Count - 1;
-            if(Profiles.Items.Count == 1)
+            if (Profiles.Items.Count == 1)
             {
                 _settings.SelectFirstProfile();
             }
@@ -232,7 +232,7 @@ namespace AffairList
             if (profile.EndsWith(_priorityWord)) newProfileName += _priorityWord;
             else newProfileName += ".txt";
 
-            if(selectedProfile.Name == newProfileName) return;
+            if (selectedProfile.Name == newProfileName) return;
 
             if (ProfileExists(newProfileName))
             {

@@ -336,9 +336,14 @@ namespace AffairList
         private void ExportButton_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Select folder to export config into");
-            ExportSettingsFileDialog.ShowDialog();
-            if (string.IsNullOrEmpty(ExportSettingsFileDialog.SelectedPath)) return;
-            string destSettingsFilePath = ExportSettingsFileDialog.SelectedPath + "\\settings.json";
+
+            bool _operationSuceed = false;
+
+            var res = ExportSettingsFileDialog.ShowDialog();
+
+            if (string.IsNullOrEmpty(ExportSettingsFileDialog.SelectedPath) || res == DialogResult.Cancel) return;
+
+            string destSettingsFilePath = Path.Combine(ExportSettingsFileDialog.SelectedPath, "settings.json");
             if (File.Exists(destSettingsFilePath))
             {
                 DialogResult rewriteOrCancel = MessageBox
@@ -362,17 +367,18 @@ namespace AffairList
             try
             {
                 File.Copy(Settings.settingsFileFullPath, destSettingsFilePath);
+                _operationSuceed = true;
             }
             catch (IOException)
             {
-                MessageBox.Show("Error, the file is in use");
+                MessageBox.Show($"Error, couldn't find the file or it is in use");
             }
             catch (UnauthorizedAccessException)
             {
                 MessageBox.Show("Error, the access denied");
             }
 
-            MessageBox.Show("Settings config was exported succesfully");
+            if(_operationSuceed) MessageBox.Show("Settings config was exported succesfully");
         }
 
         private void ThemeBoxCB_SelectedValueChanged(object sender, EventArgs e)

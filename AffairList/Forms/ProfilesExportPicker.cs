@@ -27,17 +27,16 @@ namespace AffairList
                 Close();
                 return;
             }
+            bool _operationSuceed = false;
 
-            ProfilesExportDialog.ShowDialog();
+            var res = ProfilesExportDialog.ShowDialog();
 
-            if (string.IsNullOrEmpty(ProfilesExportDialog.SelectedPath)) return;
+            if (string.IsNullOrEmpty(ProfilesExportDialog.SelectedPath) || res == DialogResult.Cancel) return;
 
             for (int i = 0; i < ProfilePicker.CheckedItems.Count; i++)
             {
-                string sourceFilePath = Settings.listsDirectoryFullPath +
-                    ProfilePicker.CheckedItems[i];
-                string destinationFilePath = ProfilesExportDialog.SelectedPath + "\\" +
-                    ProfilePicker.CheckedItems[i];
+                string sourceFilePath = Path.Combine(Settings.listsDirectoryFullPath, ProfilePicker.CheckedItems[i].ToString());
+                string destinationFilePath = Path.Combine(ProfilesExportDialog.SelectedPath, ProfilePicker.CheckedItems[i].ToString());
 
                 if (File.Exists(destinationFilePath))
                 {
@@ -73,10 +72,11 @@ namespace AffairList
                     try
                     {
                         File.Copy(sourceFilePath, destinationFilePath);
+                        _operationSuceed = true;
                     }
                     catch (IOException)
                     {
-                        MessageBox.Show("Error, the file is in use");
+                        MessageBox.Show($"Error, couldn't find the file or it is in use");
                     }
                     catch (UnauthorizedAccessException)
                     {
@@ -89,7 +89,9 @@ namespace AffairList
                 }
 
             }
-            MessageBox.Show("Success");
+
+            if(_operationSuceed) MessageBox.Show("Success");
+
             Close();
         }
     }

@@ -34,12 +34,13 @@ namespace AffairList
 
         private async void ToDoList_Load(object? sender, EventArgs e)
         {
-            await LoadSettingsAsync();
+            Affairs.Left = _settings.Data.TodoListX;
+            Affairs.Top = _settings.Data.ToDoListY;
             await LoadTextAsync();
             SetLocation();
 
             SpecifyAffairsLocation();
-            SaveAffairsLocation();
+            await SaveAffairsLocation();
             SubscribeGlobalHook();
         }
 
@@ -63,14 +64,6 @@ namespace AffairList
             TransparencyKey = _settings.Data.BgColor;
             SystemEvents.PowerModeChanged += OnPowerModeChanged;
         }
-        private async Task LoadSettingsAsync()
-        {
-            if (!_settings.SettingsFileExists()) await _settings.CreateSettingsFileAsync();
-            this.StartPosition = FormStartPosition.Manual;
-            this.Location = new Point(0, 0);
-            Affairs.Left = _settings.Data.TodoListX;
-            Affairs.Top = _settings.Data.ToDoListY;
-        }
         private async Task LoadTextAsync()
         {
             Affairs.Text = "";
@@ -78,12 +71,16 @@ namespace AffairList
             {
                 StringBuilder affairsShower = new StringBuilder();
                 AffairsCollection affairs = await AffairsProvider.GetAffairsAsync(_settings.Data.CurrentProfileFullPath);
-                if(affairs.Affairs.Any()) affairsShower.Append("* ");
-                affairsShower.AppendJoin("\n* ", affairs.Affairs);
-                affairsShower.Replace(_priorityTag, _priorityWord);
-                affairsShower.Replace(_deadlineTag, "");
-                Affairs.Text += affairsShower.ToString() + "\nЭто весь список ваших дел";
-                affairsShower.Clear();
+                if (affairs.Affairs.Any())
+                {
+                    affairsShower.Append("* ");
+                    affairsShower.AppendJoin("\n* ", affairs.Affairs);
+                    affairsShower.Replace(_priorityTag, _priorityWord);
+                    affairsShower.Replace(_deadlineTag, "");
+                    Affairs.Text += affairsShower.ToString() + "\nЭто весь список ваших дел";
+                    affairsShower.Clear();
+                }
+                else Affairs.Text = "Это весь список ваших дел";
             }
             else
             {
@@ -102,7 +99,7 @@ namespace AffairList
         {
             if (e.Mode == PowerModes.Resume)
             {
-                UpdateLocation();
+                RefreshLocation();
             }
         }
         private void SubscribeGlobalHook()
@@ -123,20 +120,19 @@ namespace AffairList
         }
 
         private void Affairs_MouseDown(object sender, MouseEventArgs e) => OnListMouseDown(e);
-        private void Affairs_MouseMove(object sender, MouseEventArgs e) => OnListMouseMove(e);
-        private async void Affairs_MouseUp(object sender, MouseEventArgs e)
-            => await OnListMouseUpAsync(e);
-        private void List_MouseDown(object sender, MouseEventArgs e) => OnListMouseDown(e);
-        private void List_MouseMove(object sender, MouseEventArgs e) => OnListMouseMove(e);
+        private async void Affairs_MouseMove(object sender, MouseEventArgs e) => await OnListMouseMove(e);
+        private async void Affairs_MouseUp(object sender, MouseEventArgs e) => await OnListMouseUpAsync(e);
 
-        private async void List_MouseUp(object sender, MouseEventArgs e)
-            => await OnListMouseUpAsync(e);
+        private void List_MouseDown(object sender, MouseEventArgs e) => OnListMouseDown(e);
+        private async void List_MouseMove(object sender, MouseEventArgs e) => await OnListMouseMove(e);
+        private async void List_MouseUp(object sender, MouseEventArgs e) => await OnListMouseUpAsync(e);
+
         private void OnListMouseDown(MouseEventArgs e)
         {
             if (CanReplace || _settings.Data.CanBeAlwaysReplaced)
                 _dragOffset = new Point(Cursor.Position.X - Affairs.Left, Cursor.Position.Y - Affairs.Top);
         }
-        private void OnListMouseMove(MouseEventArgs e)
+        private async Task OnListMouseMove(MouseEventArgs e)
         {
             if ((CanReplace || _settings.Data.CanBeAlwaysReplaced) && e.Button == MouseButtons.Left)
             {
@@ -149,17 +145,13 @@ namespace AffairList
                 Affairs.Left = newLeft;
                 Affairs.Top = newTop;
 
-                SaveAffairsLocation();
                 TopMost = true;
             }
         }
         // ПРЕОБРАЗОВАТЬ профили В ОБЪЕКТЫ
         // Доделать loadtimemanager( + notify сделать асинхронным)
         // придумать механизм защиты данных от потери во время выхода из программы
-        // понакидать семафор
         // локализация
-        // подумать над разбиением managedeadlinecommand на 3 разных
-        // Внедрить binding source
         // Подгрузка текста при заходе в прогу и дальнейшее использование
         // Индикатор несохранённых данных
         // Сделать проверку на занятые клавиши в настройках
@@ -183,18 +175,17 @@ namespace AffairList
                 Affairs.Top = 0;
             }
         }
-        private void SaveAffairsLocation()
+
+        private async Task SaveAffairsLocation()
         {
             _settings.Data.TodoListX = Affairs.Left;
             _settings.Data.ToDoListY = Affairs.Top;
-            _settings.SaveSettings();
+            await _settings.SaveSettingsAsync();
         }
 
         private async Task OnListMouseUpAsync(MouseEventArgs e)
         {
-            _settings.Data.TodoListX = Left + Affairs.Left;
-            _settings.Data.ToDoListY = Top + Affairs.Top;
-            await _settings.SaveSettingsAsync();
+            await SaveAffairsLocation();
             TopMost = true;
             if (CanReplace)
             {
@@ -211,7 +202,7 @@ namespace AffairList
             SystemEvents.PowerModeChanged -= OnPowerModeChanged; 
             _globalHook?.Dispose();
         }
-        private void UpdateLocation()
+        private void RefreshLocation()
         {
             Affairs.Left = Affairs.Left;
             Affairs.Top = Affairs.Top;

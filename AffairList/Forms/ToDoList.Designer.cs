@@ -58,6 +58,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "ToDoList";
+            StartPosition = FormStartPosition.Manual;
             Text = "List";
             TopMost = true;
             TransparencyKey = Color.Black;
